@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
+import { ButtonGroup } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import Button from 'react-bootstrap/Button';
-import { Col, Row } from 'react-bootstrap';
 
 export default function Header() {
 
@@ -10,24 +9,14 @@ export default function Header() {
   }, [])
 
   return (
-    <div>
-      <ul>
-        <li>
-          <Link to="/courses">Courses</Link>
-        </li>
-        <li>
-          <Link to="/classes">Classes</Link>
-        </li>
-        <li>
-          <Link to="/exam">Exam</Link>
-        </li>
-        <li>
-          <Link to="/files">Files</Link>
-        </li>
-        <li>
-          <Link to="/reports">Reports</Link>
-        </li>
-      </ul>    
+    <div className="header bg-white">
+      <div className="header-links">
+        <Link to="/courses" className="active">Courses</Link>
+        <Link to="/courses">Classes</Link>
+        <Link to="/exam">Exam</Link>
+        <Link to="/files">Files</Link>
+        <Link to="/reports">Reports</Link>
+      </div>
     </div>
   )
 }
