@@ -12,7 +12,7 @@ export default function Header() {
     <div className="header bg-white">
       <div className="header-links">
         <Link to="/courses" className="active">Courses</Link>
-        <Link to="/courses">Classes</Link>
+        <Link to="/classes">Classes</Link>
         <Link to="/exam">Exam</Link>
         <Link to="/files">Files</Link>
         <Link to="/reports">Reports</Link>
