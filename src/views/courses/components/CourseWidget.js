@@ -1,11 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Tab, ListGroup, Row, Col } from 'react-bootstrap';
-import CourseEdit from "./CourseEdit";
-import "../../../../node_modules/@fortawesome/fontawesome-free/css/all.css"
-import { Link } from 'react-router-dom'
 
 export default function CourseWidget() {
-   
   return (
       <Tab.Container className="course-widget-font" id="list-group-tabs-example " defaultActiveKey="#link1">
         <div className="row">

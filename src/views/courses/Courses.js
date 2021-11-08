@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import CoursesItem from "../../views/courses/components/CourseItem";
 import CourseCreate from "../../views/courses/components/CourseCreate";
 import MainContainer from '../../components/layouts/MainContainer'
 import { Button, InputGroup, FormControl } from 'react-bootstrap';
 
 export default function Courses() {
-  const [course, setCourse] = useState([])
   const [openModal, setOpenModal] = useState(false)
-  const [openEditModal, setOpenEditModal] = useState(false)
 
   const handleOpenModal = e => {
       e.preventDefault()
