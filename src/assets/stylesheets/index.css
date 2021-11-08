@@ -86,3 +86,145 @@ letter-spacing: 0px;
 color: #EE9337;
 opacity: 1;
 }
+
+
+/* Haru */
+.containerpages {
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 31px;
+}
+
+.m-b-20 {
+ margin-bottom: 20px;
+}
+
+.m-b-10 {
+margin-bottom: 10px;
+}
+
+.pages-header {
+color:#707070;
+}
+
+.modal-header {
+font-size: 24px;
+font-family: "Segou UI" Regular;
+color:#7D7D7D;
+box-shadow: 0px 3px 6px #00000029;
+}
+
+.modal-label {
+font-size: 20px;
+color:#7D7D7D;
+}
+
+.modal-all {
+box-shadow: 0px 3px 6px #00000029;
+border-radius: 10px 10px 0px 0px;
+opacity: 1;
+border:0px !important;
+}
+
+.modal-content {
+border:0px transparent !important;
+box-shadow: 0px 3px 6px #00000029;
+}
+
+.b-0px {
+border:0px !important;
+}
+
+.tficolorbg-button {
+background-color: #EE9337 !important;
+border:1px solid #EE9337 !important;
+}
+
+.card-header {
+background-color:#EE9337 !important;
+height: 200px;
+border-radius: 10px 10px 0px 0px !important;
+}
+
+.search-button {
+background-color: transparent !important;
+border-left:0px !important;
+color:#BCBCBC !important;
+}
+
+.bread-margin {
+margin-left: 400px;
+}
+
+.bread-m-t-b {
+margin-top: 31px !important;
+margin-bottom: 31px;
+font-size: 20px;
+}
+
+.breadcrumb-item+.breadcrumb-item::before {
+
+content: var(--bs-breadcrumb-divider, ">") !important;
+}
+
+.list-group-item-o.active {
+background-color:#EE9337 !important;
+border: 0 !important;
+color: white !important;;
+}
+
+.list-group-item-o {
+border: 0 !important;
+color:#707070 !important;
+background-color: transparent !important;
+}
+
+.font-icon-size {
+font-size: 17px;
+}
+
+.t-a-r {
+text-align: right;
+}
+
+.card-design {
+/* style={{borderRadius:'0.9rem', boxShadow:'1px 2px 5px 1px #eeeeee'}}  */
+border-radius: 10px !important ;
+box-shadow: 1px 2px 5px 1px #eeeeee;
+}
+
+.course-widget-font {
+font-size: 20px !important;
+border-radius: 10px !important;
+background-color: transparent !important;
+}
+
+.course-subtitle {
+font-size: 16px !important;
+}
+
+.list-group-item-o:first-child {
+border-top-left-radius: 0px !important; 
+border-top-right-radius: 0px !important;
+}
+
+.row-course-bg {
+  background-color: white !important;
+  border: 0px !important;
+}
+
+.list-group-item-o:last-child {
+  border-bottom-right-radius: 0px !important;
+  border-bottom-left-radius: 0px !important;
+  margin-bottom: 18px !important;
+}
+
+.content-pane {
+  background-color: white !important;
+  border-radius: 10px;
+  padding:10px; 
+}
+
+
+
