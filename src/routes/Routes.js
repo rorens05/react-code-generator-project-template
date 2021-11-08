@@ -12,6 +12,7 @@ import ForgotPassword from "../views/forgot-password/ForgotPassword";
 import Home from "../views/home/Home";
 import Login from "../views/login/Login";
 import Reports from "../views/reports/Reports";
+import CourseContent from "../views/courses/CourseContent";
 
 export default function Routes() {
   return (
@@ -19,6 +20,7 @@ export default function Routes() {
       <Router>
         <Switch>
           <Route path='/courses' exact component={Courses}/>
+          <Route path='/coursecontent' exact component={CourseContent}/>
           <Route path='/exam' exact component={Exam}/>
           <Route path='/files' exact component={Files}/>
           <Route path='/reports' exact component={Reports}/>
