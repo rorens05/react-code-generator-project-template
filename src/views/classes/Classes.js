@@ -12,11 +12,13 @@ export default function Classes() {
       <div className='page-container'>
         <div className='containerpages'>
         <ClassHeader />
-          <CardGroup>
+          <CardGroup className='card-group2'>
               <ClassCard />
               <ClassCard />
               <ClassCard />
-              
+              <ClassCard />
+              <ClassCard />
+              <ClassCard />
           </CardGroup>
         </div>
       </div>

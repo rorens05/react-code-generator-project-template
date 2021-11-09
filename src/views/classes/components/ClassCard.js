@@ -21,8 +21,6 @@ function ClassCard() {
       }}
     >{children}</span> 
   ));
-
-  
   return (
     <div>  
       <Card className='class-card kb-0px'>
@@ -32,20 +30,19 @@ function ClassCard() {
               FXC57
             </div>
             <div className="col-md-6 ta-pt-10px">
-              
               <Dropdown isOpen={openDropdown} toggle={()=> setOpenDropdown(!openDropdown)}>
-                        <Dropdown.Toggle data-toggle="dropdown" as={CustomToggle} >
-                        <i className="fa fa-ellipsis-v fa-1x cursor-pointer"></i>
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu >
-                        <Dropdown.Item onClick={toggle} >
-                            Edit 
-                        </Dropdown.Item>
-                        <Dropdown.Item>
-                        Delete
-                        </Dropdown.Item>
-                        </Dropdown.Menu>
-                        </Dropdown>
+                <Dropdown.Toggle data-toggle="dropdown" as={CustomToggle} >
+                  <i className="fa fa-ellipsis-v fa-1x cursor-pointer"></i>
+                </Dropdown.Toggle>
+                <Dropdown.Menu >
+                  <Dropdown.Item onClick={toggle}>
+                    Edit 
+                  </Dropdown.Item>
+                  <Dropdown.Item>
+                    Delete
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
             </div>
             <div className="col-md-6 class-header-text">
               <h6><b> Grade 1 -  Faith</b><br />
@@ -56,7 +53,8 @@ function ClassCard() {
             </div>
           </div>
         </Card.Header>
-        <Card.Body>
+        <div >
+        <Card.Body >
           <Card.Title tag="h5" className='card-title'>
             Due Tomorrow
           </Card.Title>
@@ -68,6 +66,7 @@ function ClassCard() {
             Test #1</p>
           </Card.Text>
         </Card.Body>
+        </div>
       </Card>
         <EditClassModal modal={modal} toggle={toggle} />
     </div> 

@@ -184,10 +184,9 @@ border-top-right-radius: 0px !important;
 .class-card{
   border-radius: 0.9rem !important;
   box-shadow: 1px 2px 5px 1px #eeeeee;
- 
-  margin-bottom: 25px;
-  margin-left: 50px;
-  
+  margin-bottom: 20px;
+  margin-right: 35px;
+  margin-left: 35px;
 }
 .kb-0px{
   border:0px !important;
@@ -195,8 +194,8 @@ border-top-right-radius: 0px !important;
 .class-header-card{
   background-color: #EE9337;
   height: 125px;
-  width: 300px!important;
   border-radius: 15px 15px 0px 0px;
+  box-shadow:1px 2px 5px 1px #eeeeee ;
 }
 .row{
   color:#eeeeee !important;
@@ -260,4 +259,11 @@ border-top-right-radius: 0px !important;
 .card-group-tfi {
   margin-left: 50px
 }
+.card-group2{
+  padding-left: 50px;
+  padding-right: 50px;
+  margin-left: 22px;
+  margin-right: 22px;
+}
+
 
