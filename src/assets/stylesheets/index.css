@@ -54,7 +54,7 @@ code {
 
 .class-side-bar a.active{
   color: #EE9337;
-  background-color: #F5F5F5;
+  background-color: #F5F5F5 !important;
   
 }
 
@@ -68,20 +68,18 @@ code {
 }
 
 .font-class {
-  font: normal normal normal 36px/48px Segoe UI;
+  font: normal normal normal 36px/48px Segoe UI !important;
 }
 
-.class-bar {
-  background: #FFFFFF ;
-  border-radius: 10px;
-  opacity: 10;
-  border: 0px;
+.class-side-nav {
+  border:'none';
+  color:#EE9337
 }
 
 .font-side {
 color: var(--unnamed-color-ee9337);
 text-align: left;
-font: normal normal normal 16px/21px Segoe UI;
+font: normal normal normal 16px/21px Segoe UI !important;
 letter-spacing: 0px;
 color: #EE9337;
 opacity: 1;
@@ -151,6 +149,36 @@ border-radius: 10px 10px 0px 0px !important;
 background-color: transparent !important;
 border-left:0px !important;
 color:#BCBCBC !important;
+}
+
+.search-classes {
+  font: 'normal normal normal 20px/27px Segoe UI' !important;
+}
+
+.col-md-4 {
+  background-color: '#FFFFFF';
+  margin-right:'30px' ;
+  margin-top: '70px' ;
+  padding: '20px' ;
+  width:'300px' ;
+  height: '567px' ;
+}
+
+.class-padding {
+  background-color: #FFFFFF !important;
+  margin-top: 70px !important;
+  padding:20px;
+  width:976px;
+  height: 560px;
+}
+
+.class-row {
+  background-color: #FFFFFF;
+  margin-right:30px !important;
+  margin-top: 70px !important;
+  padding: 20px !important;
+  width:  300px !important;
+  height: 567px;
 }
 
 .bread-margin {

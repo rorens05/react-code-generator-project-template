@@ -6,18 +6,21 @@ import {Row, Col} from 'react-bootstrap'
 
 function ClassLinks() {
   return (
+
  
       <MainContainer>
      
        <Row style={{flexWrap:'wrap'}}>
-         <Col Col md={4} style={{backgroundColor: '#FFFFFF', marginRight:'30px', marginTop: '70px', padding: '20px', width:'300px', height: '567px'}}>
+         <Col Col md={4} className = "class-row">
         <ClassSideNavigation/>
         </Col>
-        <Col style={{backgroundColor: '#FFFFFF', marginTop: '70px', padding: '20px', width:'976px', height: '560px'}}>
-        <div className="font-class">
-        Class Links
-       </div>
+				
+        <Col className = "class-padding">
+        <div className = "font-class">
+           Class Links
+			 </div>
        </Col>
+			 
       </Row>
       
     
