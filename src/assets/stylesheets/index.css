@@ -183,8 +183,9 @@ border-top-right-radius: 0px !important;
 .class-card{
   border-radius: 0.9rem !important;
   box-shadow: 1px 2px 5px 1px #eeeeee;
-  margin-right: 5px;
+ 
   margin-bottom: 25px;
+  margin-left: 50px;
   
 }
 .kb-0px{

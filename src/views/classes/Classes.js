@@ -1,4 +1,5 @@
 import React from 'react'
+import { Card, CardGroup } from 'react-bootstrap'
 import MainContainer from '../../components/layouts/MainContainer'
 import ClassCard from './components/ClassCard'
 import ClassHeader from './components/ClassHeader'
@@ -11,18 +12,12 @@ export default function Classes() {
       <div className='page-container'>
         <div className='containerpages'>
         <ClassHeader />
-          <div className="row card-main-container">
-            <div className="col-md-3 card-container">
+          <CardGroup>
               <ClassCard />
               <ClassCard />
               <ClassCard />
-              <ClassCard />
-              <ClassCard />
-              <ClassCard />
-              <ClassCard />
-              <ClassCard />
-            </div>
-          </div>
+              
+          </CardGroup>
         </div>
       </div>
     </MainContainer>
