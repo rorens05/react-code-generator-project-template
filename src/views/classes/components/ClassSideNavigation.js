@@ -15,7 +15,6 @@ function ClassSideNavigation() {
             
             <ListGroupItem style={{border:'none',color:'#EE9337'}}>FXC57 <br />
             Grade 1 - Faith  <br />
-    
             Math 1 <br /> 
             
            Carlos Inigo</ListGroupItem>  
