@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import CoursesItem from "../../views/courses/components/CourseItem";
 import CourseCreate from "../../views/courses/components/CourseCreate";
 import MainContainer from '../../components/layouts/MainContainer'
-import { Button, InputGroup, FormControl } from 'react-bootstrap';
+import { Button, InputGroup, FormControl, CardGroup } from 'react-bootstrap';
 
 export default function Courses() {
   const [openModal, setOpenModal] = useState(false)
@@ -28,11 +28,13 @@ export default function Courses() {
               </InputGroup>
               </div>
           </div>
-          <div className="row">
+          <CardGroup className="card-group-tfi">
+              <CoursesItem />
+              <CoursesItem />
               <CoursesItem />
               <CourseCreate openModal={openModal} setOpenModal={setOpenModal} /> 
               {/* <CourseEdit openEditModal={openEditModal} setOpenEditModal={setOpenEditModal} />  */}
-          </div>
+          </CardGroup>
         </div>
       </div>
     </MainContainer>
