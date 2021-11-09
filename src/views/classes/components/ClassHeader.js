@@ -1,34 +1,32 @@
 import React, {useState} from 'react'
-import { Button, Form } from 'react-bootstrap'
-import CreateClassModal from '../modals/CreateClassModal'
+import { Button, InputGroup, FormControl } from 'react-bootstrap';
+import CreateClassModal from './CreateClassModal'
 
 
 function ClassHeader() {
 
-    const [modal, setModal] = useState(false)
+  const [modal, setModal] = useState(false)
 
-    const toggle = () =>{
-        setModal(!modal)
-    }
-
-    return (
-            <div>
-               
-                    <div className="row m-b-20">
-                            <div className="col-md-10"><h3>Classes <Button Button variant="outline-warning" onClick={() => setModal(true) }> <b> + Create Course </b> </Button></h3>
-                            </div>
-                    </div>
-                    <Form>
-                    <Form.Group className="mb-3">
-                            <Form.Control className='search'  placeholder="Search here for available classes" />
-                    </Form.Group>
-                    </Form>
-                
-                <CreateClassModal toggle={toggle} modal={modal} />
-
-             
-            </div>
-        )
+  const toggle = () =>{
+    setModal(!modal)
+  }
+	return (
+		<div>
+			<div className="row m-b-20">
+				<div className="col-md-10 pages-header"><h1>Classes <Button Button variant="outline-warning" onClick={() => setModal(true) }> <i className="fa fa-plus"></i>  Create Course  </Button></h1>
+				</div>
+			</div>
+			<div className="row m-b-20">
+				<div className="col-md-12">
+					<InputGroup size="lg">
+						<FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Search..." type="search"/>
+					<InputGroup.Text id="basic-addon2" className="search-button"><i className="fas fa-search fa-1x"></i></InputGroup.Text>
+					</InputGroup>
+					</div>
+				</div>
+				<CreateClassModal toggle={toggle} modal={modal} />
+		</div>
+	)
 }
 export default ClassHeader
 

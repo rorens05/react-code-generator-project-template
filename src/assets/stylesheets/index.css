@@ -179,5 +179,80 @@ border-top-right-radius: 0px !important;
   padding:10px; 
 }
 
+/* Kent */
+.class-card{
+  border-radius: 0.9rem !important;
+  box-shadow: 1px 2px 5px 1px #eeeeee;
+  margin-right: 5px;
+  margin-bottom: 25px;
+  
+}
+.kb-0px{
+  border:0px !important;
+}
+.class-header-card{
+  background-color: #EE9337;
+  height: 125px;
+  width: 300px!important;
+  border-radius: 15px 15px 0px 0px;
+}
+.row{
+  color:#eeeeee !important;
+}
+.pd-10px{
+  padding-top: 10px!important;
+}
+.ta-pt-10px{
+  text-align: right;
+  padding-top: 10px;
+}
+.fa-position{
+  float: right;
+}
+.card-title{
+  color: #7D7D7D!important;
+}
+.card-subtitle{
+  color: #BCBCBC;
+}
+.card-text{
+  color: #EE9337;
+}
+.card-main-container{
+  padding-left: 16px!important;
+  padding-right: 20px!important;
+}
+.card-container{
+  display: flex!important;
+  width: 100%!important;
+  flex-wrap: wrap!important;
+  
+}
+.class-header-text{
+  padding-top: 10px!important;
+  padding-bottom: 5px!important;
+}
+.containerClasses {
+  background-color: white;
+  border-radius: 10px;
+  padding: 15px;
+  padding-top: 15px;
+  margin-top: 25px;
+}
+.bg-btn{
+  color: #eeeeee!important;
+}
+.class-modal-header{
+  box-shadow: 0px 3px 6px #00000029;
+}
+.right-btn{
+  text-align: right;
+}
+.cursor-pointer{
+  cursor: pointer!important;
+}
+.icon-pd{
+  text-align: right;
+  padding-top: 26px;
 
-
+}
