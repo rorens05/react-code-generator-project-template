@@ -220,6 +220,7 @@ text-align: right;
 /* style={{borderRadius:'0.9rem', boxShadow:'1px 2px 5px 1px #eeeeee'}}  */
 border-radius: 10px !important ;
 box-shadow: 1px 2px 5px 1px #eeeeee;
+margin-right: 50px;
 }
 
 .course-widget-font {
@@ -252,6 +253,10 @@ border-top-right-radius: 0px !important;
   background-color: white !important;
   border-radius: 10px;
   padding:10px; 
+}
+
+.card-group-tfi {
+  margin-left: 50px
 }
 
 

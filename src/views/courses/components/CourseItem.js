@@ -30,8 +30,6 @@ export default function CoursesItem() {
       ));
     
   return (
-      <div className="col-md-3" style={{width:"29.637%"}}>
-        {/* Courses card */}
         <Card className="card-design b-0px">
           <Card.Header className="card-header">
             <div className="row" style={{color:"white"}}>
@@ -77,8 +75,6 @@ export default function CoursesItem() {
                 </Card.Text>
             </Card.Body>
         </Card>
-        {/* End courses card */}
-        <CourseEdit openEditModal={openEditModal} setOpenEditModal={setOpenEditModal} />
-    </div>
+        // <CourseEdit openEditModal={openEditModal} setOpenEditModal={setOpenEditModal} />
   )
 }
