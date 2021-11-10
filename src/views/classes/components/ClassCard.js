@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Card, Dropdown } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import EditClassModal from './EditClassModal'
 
 
@@ -22,12 +23,14 @@ function ClassCard() {
     >{children}</span> 
   ));
   return (
-    <div>  
+    <div>
       <Card className='class-card kb-0px'>
+        <Link to='#'>
         <Card.Header className='class-header-card'>
           <div className="row">
             <div className="col-md-6 pd-10px">
-              FXC57
+             <i class="fas fa-qrcode"></i>
+           {' '}  FXC57
             </div>
             <div className="col-md-6 ta-pt-10px">
               <Dropdown isOpen={openDropdown} toggle={()=> setOpenDropdown(!openDropdown)}>
@@ -45,11 +48,11 @@ function ClassCard() {
               </Dropdown>
             </div>
             <div className="col-md-6 class-header-text">
-              <h6><b> Grade 1 -  Faith</b><br />
+              <h6><b> Grade 1 -  Faith </b><br />
               MATH 1</h6>
             </div>
             <div className="col-md-6 icon-pd" >
-              <i className="fa-solid fa-user"></i> 30
+              <i className="fas fa-user"></i> 30
             </div>
           </div>
         </Card.Header>
@@ -67,6 +70,7 @@ function ClassCard() {
           </Card.Text>
         </Card.Body>
         </div>
+        </Link>
       </Card>
         <EditClassModal modal={modal} toggle={toggle} />
     </div> 

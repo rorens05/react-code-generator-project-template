@@ -184,9 +184,12 @@ border-top-right-radius: 0px !important;
 .class-card{
   border-radius: 0.9rem !important;
   box-shadow: 1px 2px 5px 1px #eeeeee;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   margin-right: 35px;
   margin-left: 35px;
+}
+.class-card a{
+  text-decoration: none!important;
 }
 .kb-0px{
   border:0px !important;
@@ -229,9 +232,17 @@ border-top-right-radius: 0px !important;
   flex-wrap: wrap!important;
   
 }
-.class-header-text{
+.class-header-text {
   padding-top: 10px!important;
   padding-bottom: 5px!important;
+  
+}
+.class-header-text a{
+  text-decoration: none !important;
+  color: #eeeeee;
+}
+.class-header-text a:hover{
+  color: #eeeeee;
 }
 .containerClasses {
   background-color: white;
@@ -260,10 +271,8 @@ border-top-right-radius: 0px !important;
   margin-left: 50px
 }
 .card-group2{
-  padding-left: 50px;
-  padding-right: 50px;
-  margin-left: 22px;
-  margin-right: 22px;
+
+  justify-content: center;
 }
 
 
