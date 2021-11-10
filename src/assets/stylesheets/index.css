@@ -154,8 +154,11 @@ color:#BCBCBC !important;
 .search-classes {
   font: 'normal normal normal 20px/27px Segoe UI' !important;
 }
+.search-discussion {
+  font: 'normal normal normal 20px/27px Segoe UI' !important;
+}
 
-.col-md-4 {
+.col-md-4 { 
   background-color: '#FFFFFF';
   margin-right:'30px' ;
   margin-top: '70px' ;
@@ -163,6 +166,7 @@ color:#BCBCBC !important;
   width:'300px' ;
   height: '567px' ;
 }
+
 
 .class-padding {
   background-color: #FFFFFF !important;
