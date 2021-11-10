@@ -21,8 +21,6 @@ export default function Classes() {
           </CardGroup>
         </div>
       </div>
-      This is classes
-      <ClassHeader/>
     </MainContainer>
   )
 }
