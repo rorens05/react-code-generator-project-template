@@ -39,6 +39,51 @@ code {
   color: #EE9337 !important;
 }
 
+.class-side-bar a{
+  text-align: center;
+  text-decoration: none !important;
+  color: #707070;
+  font-size: 20px;
+  font-style: normal normal normal 20px/27px Segoe UI;
+  margin: 0 !important;
+  height: 100%;
+  left: 30px;
+  width: 100px;
+
+}
+
+.class-side-bar a.active{
+  color: #EE9337;
+  background-color: #F5F5F5 !important;
+  
+}
+
+.class-side-bar a:hover{
+
+  padding: 5px;
+  background: #EE9337;
+  border-radius: 10px;
+  opacity: 1;
+
+}
+
+.font-class {
+  font: normal normal normal 36px/48px Segoe UI !important;
+}
+
+.class-side-nav {
+  border:'none';
+  color:#EE9337
+}
+
+.font-side {
+color: var(--unnamed-color-ee9337);
+text-align: left;
+font: normal normal normal 16px/21px Segoe UI !important;
+letter-spacing: 0px;
+color: #EE9337;
+opacity: 1;
+}
 
 
 /* Haru */
@@ -104,6 +149,40 @@ border-radius: 10px 10px 0px 0px !important;
 background-color: transparent !important;
 border-left:0px !important;
 color:#BCBCBC !important;
+}
+
+.search-classes {
+  font: 'normal normal normal 20px/27px Segoe UI' !important;
+}
+.search-discussion {
+  font: 'normal normal normal 20px/27px Segoe UI' !important;
+}
+
+.col-md-4 { 
+  background-color: '#FFFFFF';
+  margin-right:'30px' ;
+  margin-top: '70px' ;
+  padding: '20px' ;
+  width:'300px' ;
+  height: '567px' ;
+}
+
+
+.class-padding {
+  background-color: #FFFFFF !important;
+  margin-top: 70px !important;
+  padding:20px;
+  width:976px;
+  height: 560px;
+}
+
+.class-row {
+  background-color: #FFFFFF;
+  margin-right:30px !important;
+  margin-top: 70px !important;
+  padding: 20px !important;
+  width:  300px !important;
+  height: 567px;
 }
 
 .bread-margin {
