@@ -14,7 +14,7 @@ function ClassDiscussion({handleOpenModal}) {
         </Col>
         <Col className = "class-padding">
         <div className = "font-class">
-           <div className="col-md-10 pages-header"><h1>Discussion <Button variant="outline-warning" onClick={handleOpenModal}><i className="fa fa-plus"></i> Create Discussion</Button></h1></div>
+           
         <HeaderDiscussion/>
         <Form.Group className="m-b-20">	
 					<Form.Select id="subjectAreaId" name="subjectAreaId" size="lg">

@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import CreateDiscussion from "././CreateDiscussion"
 import { Button, InputGroup, FormControl, CardGroup } from 'react-bootstrap';
-import DiscussionItem from "./DiscussionItem";
-
 export default function Discussion() {
   const [openModal, setOpenModal] = useState(false)
+
   const handleOpenModal = e => {
       e.preventDefault()
       setOpenModal(true)
@@ -27,6 +26,9 @@ export default function Discussion() {
               </div>
           </div>
           <CardGroup className="card-group-tfi">
+              <CoursesItem />
+              <CoursesItem />
+              <CoursesItem />
               <CreateDiscussion openModal={openModal} setOpenModal={setOpenModal} /> 
           </CardGroup>
         </div>

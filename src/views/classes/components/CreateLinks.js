@@ -2,13 +2,13 @@ import React from 'react'
 import Modal from 'react-bootstrap/Modal'
 import { Form, Button, } from 'react-bootstrap'
 
-function CreateDiscussion({modal, toggle}) {
+function CreateLinks({modal, toggle}) {
 	return (
     <div>
     	<Modal size="lg" show={modal} onHide={toggle} aria-labelledby="example-modal-sizes-title-lg">
         <Modal.Header className='class-modal-header' closeButton>
           <Modal.Title id="example-modal-sizes-title-lg" >
-            Create Discussion
+            Create Links
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -34,5 +34,5 @@ function CreateDiscussion({modal, toggle}) {
     </div>
     )
 }
-export default CreateDiscussion
+export default CreateLinks
 

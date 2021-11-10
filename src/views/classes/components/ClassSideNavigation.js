@@ -17,7 +17,7 @@ function ClassSideNavigation() {
         </ListGroup>
         <div className="class-bar">
           <ListGroup className='class-side-bar' >
-            <ListGroup.Item  style={{border:'none',}}>
+            <ListGroup.Item  className="list-group-item-o">
               <Link to="#">Learn</Link>
           </ListGroup.Item>
           <ListGroup.Item  style={{border:'none',}}>
