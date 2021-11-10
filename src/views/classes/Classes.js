@@ -5,7 +5,6 @@ import ClassCard from './components/ClassCard'
 import ClassHeader from './components/ClassHeader'
 
 
-
 export default function Classes() {
   return (
     <MainContainer>
@@ -22,6 +21,8 @@ export default function Classes() {
           </CardGroup>
         </div>
       </div>
+      This is classes
+      <ClassHeader/>
     </MainContainer>
   )
 }
