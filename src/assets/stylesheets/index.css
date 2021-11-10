@@ -143,9 +143,8 @@ text-align: right;
 
 .card-design {
 /* style={{borderRadius:'0.9rem', boxShadow:'1px 2px 5px 1px #eeeeee'}}  */
-border-radius: 10px !important ;
-box-shadow: 1px 2px 5px 1px #eeeeee;
-margin-right: 50px;
+  border-radius: 10px !important ;
+  box-shadow: 1px 2px 5px 1px #eeeeee;
 }
 
 .course-widget-font {
@@ -181,7 +180,12 @@ border-top-right-radius: 0px !important;
 }
 
 .card-group-tfi {
-  margin-left: 50px
+  margin-right: 25px;
+  margin-left: 25px;
+}
+
+.justify-content-center {
+  justify-content: center;
 }
 
 
