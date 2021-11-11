@@ -235,6 +235,7 @@ background-color: transparent !important;
 
 .course-subtitle {
 font-size: 16px !important;
+color: #EE9337!important;
 }
 
 .list-group-item-o:first-child {
@@ -352,6 +353,11 @@ border-top-right-radius: 0px !important;
 .card-group2{
 
   justify-content: center;
+}
+.class-subtitle-code{
+  font-size: 16px !important;
+  color: #EE9337!important;
+  text-decoration-color:#EE9337!important;
 }
 
 

@@ -25,7 +25,7 @@ function ClassCard() {
   return (
     <div>
       <Card className='class-card kb-0px'>
-        <Link to='#'>
+        <Link to='/classcontent'>
         <Card.Header className='class-header-card'>
           <div className="row">
             <div className="col-md-6 pd-10px">

@@ -16,6 +16,7 @@ import ClassDiscussion from "../views/classes/ClassDiscussion"
 import ClassTask from "../views/classes/ClassTask";
 import ClassLinks from "../views/classes/ClassLinks";
 import CourseContent from "../views/courses/CourseContent";
+import ClassesContent from "../views/classes/ClassesContent";
 
 export default function Routes() {
   return (
@@ -28,6 +29,7 @@ export default function Routes() {
           <Route path='/files' exact component={Files}/>
           <Route path='/reports' exact component={Reports}/>
           <Route path='/classes' exact component={Classes}/>
+          <Route path='/classcontent' exact component={ClassesContent}/>
           <Route path='/discussion' exact component={ClassDiscussion}/>
           <Route path='/task' exact component={ClassTask}/>
           <Route path='/links' exact component={ClassLinks}/>
