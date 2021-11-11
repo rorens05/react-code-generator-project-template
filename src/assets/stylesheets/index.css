@@ -278,11 +278,11 @@ border-top-right-radius: 0px !important;
   border-radius: 15px 15px 0px 0px;
   box-shadow:1px 2px 5px 1px #eeeeee ;
 }
-.row{
-  /* TODO Fix this class */
-  /* color:#eeeeee !important; */
-  
+
+.class-card-font-color{
+  color: #eeeeee!important;
 }
+
 .pd-10px{
   padding-top: 10px!important;
 }
