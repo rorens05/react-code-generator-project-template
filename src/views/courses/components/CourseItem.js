@@ -30,6 +30,7 @@ export default function CoursesItem() {
       ));
     
   return (
+      <div className="col-md-3 card-group-tfi">
         <Card className="card-design b-0px">
           <Card.Header className="card-header">
             <div className="row" style={{color:"white"}}>
@@ -43,7 +44,7 @@ export default function CoursesItem() {
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
                         <Dropdown.Item onClick={handleOpeEditModal}>
-                            Edit 
+                        Edit 
                         </Dropdown.Item>
                         <Dropdown.Item>
                         Delete
@@ -75,6 +76,7 @@ export default function CoursesItem() {
                 </Card.Text>
             </Card.Body>
         </Card>
-        // <CourseEdit openEditModal={openEditModal} setOpenEditModal={setOpenEditModal} />
+        <CourseEdit openEditModal={openEditModal} setOpenEditModal={setOpenEditModal} />
+      </div>
   )
 }

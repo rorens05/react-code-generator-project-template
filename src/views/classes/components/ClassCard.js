@@ -27,7 +27,7 @@ function ClassCard() {
       <Card className='class-card kb-0px'>
         <Link to='/classcontent'>
         <Card.Header className='class-header-card'>
-          <div className="row">
+          <div className="row class-card-font-color">
             <div className="col-md-6 pd-10px">
              <i class="fas fa-qrcode"></i>
            {' '}  FXC57
