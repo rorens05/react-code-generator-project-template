@@ -1,5 +1,7 @@
 import React from 'react'
 import {ListGroup, Tab, Row, Col} from 'react-bootstrap'
+import ClassFeed from '../ClassFeed'
+import ClassCalendar from './ClassCalendar'
 
 function ClassSideNavigation() {
   return (
@@ -9,18 +11,22 @@ function ClassSideNavigation() {
               <ListGroup.Item className="list-group-item-o">
                 <Row>
                   <Col className="" sm={9} >
-                    <div className="class-subtitle-code" >FXC57</div>
-                    <div className="course-subtitle"><h5>Grade 1 - Faith</h5></div>
-                    <div className="course-subtitle">Math 1</div>
-                    <div className="course-subtitle">Carlos Inigo</div>
+                    
+                    <div className="class-subtitle-code" > <i class="fas fa-qrcode"></i> {' '}FXC57</div>
+                    <div className="class-subtitle-section">Grade 1 - Faith</div>
+                    <div className="class-subtitle-subject">Math 1</div>
+                    <div className="class-subtitle-name">Carlos Inigo</div>
                   </Col>
-                  <Col className="t-a-r" sm={3}>
-                    <i className="fa fa-ellipsis-v s"></i>
+                  <Col className="ellipsis-top-right" sm={3}>
+                    <i className="fa fa-ellipsis-v fa-1x cursor-pointer"></i>
+                    <div className='fa-user-size'>
+                    <i className="fas fa-user"></i> 30
+                    </div>
                   </Col>
                 </Row>
               </ListGroup.Item> 
             
-            <ListGroup>
+            <ListGroup style={{paddingLeft:'15px'}}>
               <ListGroup.Item className="list-group-item-o " action href="#link1">
                 Feed
               </ListGroup.Item>
@@ -51,9 +57,16 @@ function ClassSideNavigation() {
             </ListGroup>
           </div>
           <Col sm={9}>
-            <Tab.Content className="content-pane">
+            <Tab.Content>
               <Tab.Pane eventKey="#link1">
-                a
+              <Row>
+                <Col ms={6}>
+               <ClassFeed />
+               </Col>
+               <Col md="auto">
+               <ClassCalendar />
+               </Col>
+             </Row>
               </Tab.Pane>
               <Tab.Pane eventKey="#link2">
                 v

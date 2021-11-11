@@ -1,14 +1,13 @@
 import React from 'react'
-import MainContainer from '../../components/layouts/MainContainer'
-import ClassSideNavigation from './components/ClassSideNavigation'
+import {InputGroup, FormControl} from 'react-bootstrap'
 
 function ClassFeed() {
   return (
-    <div>
-      <MainContainer>
-        <ClassSideNavigation />
-        this is feed page
-      </MainContainer>
+    <div style={{backgroundColor:'white'}}>
+        <InputGroup size="lg">
+    
+    <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm" />
+  </InputGroup>
     </div>
   )
 }

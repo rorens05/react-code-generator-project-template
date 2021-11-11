@@ -234,7 +234,6 @@ background-color: transparent !important;
 
 .course-subtitle {
 font-size: 16px !important;
-color: #EE9337!important;
 }
 
 .list-group-item-o:first-child {
@@ -359,9 +358,33 @@ border-top-right-radius: 0px !important;
   justify-content: center;
 }
 .class-subtitle-code{
-  font-size: 16px !important;
+  font-size: 16px!important;
   color: #EE9337!important;
-  text-decoration-color:#EE9337!important;
 }
-
-
+.class-subtitle-section{
+  font-size: 20px!important;
+  color: #707070 !important;
+}
+.class-subtitle-subject{
+  font-size: 16px!important;
+  color: #EE9337!important;
+}
+.class-subtitle-name{
+  font-size: 16px!important;
+  color: #BCBCBC!important;
+}
+.ellipsis-top-right{
+  text-align: right;
+  color: #EE9337;
+}
+.fa-user-top-right{
+  text-align: right;
+  color: #EE9337; 
+}
+.fa-user-size{
+  margin-top: 45px;
+  font-size: 16px;
+}
+.calendar-header{
+  background-color: #eeeeee!important;
+}
