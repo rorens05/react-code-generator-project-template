@@ -4,17 +4,14 @@ import "../../../../node_modules/@fortawesome/fontawesome-free/css/all.css"
 import { Link } from 'react-router-dom'
 
 export default function HeaderArchive() {
-    const [openDropdown, setOpenDropdown] = useState(false)
-    const [openEditModal, setOpenEditModal] = useState(false)
-		const [modal, setModal] = useState(false)
-  
-    const handleOpeEditModal = e => {
+const [openDropdown, setOpenDropdown] = useState(false)
+const [openEditModal, setOpenEditModal] = useState(false)
+const [modal, setModal] = useState(false)
+const handleOpeEditModal = e => {
         e.preventDefault()
         setOpenEditModal(true)
     }
-
     const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
-      
         <span 
           href=""
           ref={ref}
@@ -23,15 +20,13 @@ export default function HeaderArchive() {
             onClick(e);
           }}
         >{children}</span>
-       
       ));
-    
   return (
 <div>
-<div>
-			<div className="row m-b-20">
-				<div className="col-md-10 pages-header"><h1>Archived Class </h1>
-				</div>
+  <div>
+		<div className="row m-b-20">
+			<div className="col-md-10 pages-header"><h1>Archived Class </h1>
+			</div>
         <Link to="/archive" className="class-archive"><h1><i class="fas fa-th"></i></h1></Link>
         <Link to="/classes" className="class-archive"><h1><i class="fas fa-th-list"></i></h1></Link>
 			</div>
@@ -44,7 +39,6 @@ export default function HeaderArchive() {
 					</div>
 				</div>
 		</div>
-		
       <div className="col-md-3 card-group-tfi">
         <Card className="card-design b-0px">
           <Card.Header className="card-header">

@@ -26,7 +26,6 @@ function ClassTask({handleOpenModal}) {
         <ClassSideNavigation/>
         </Col>
         <Col className = "class-padding">
-           
         <HeaderTask/> 
         <Accordion defaultActiveKey="0">
         <Card>

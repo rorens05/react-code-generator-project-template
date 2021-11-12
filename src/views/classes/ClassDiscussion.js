@@ -27,7 +27,6 @@ function ClassDiscussion({handleOpenModal}) {
         <ClassSideNavigation/>
         </Col>
         <Col className = "class-padding">
-           
         <HeaderDiscussion/> 
         <Accordion defaultActiveKey="0">
       <Card>

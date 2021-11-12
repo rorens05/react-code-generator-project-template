@@ -6,28 +6,18 @@ import HeaderLinks from './components/HeaderLinks'
 
 function ClassLinks() {
   return (
-
- 
       <MainContainer>
-     
        <Row style={{flexWrap:'wrap'}}>
          <Col Col md={4} className = "class-row">
         <ClassSideNavigation/>
         </Col>
-				
-        <Col className = "class-padding">
+      <Col className = "class-padding">
         <div className = "font-class">
         <HeaderLinks/>
 			 </div>
-       </Col>
-			 
+      </Col>
       </Row>
-      
-    
-        
-      </MainContainer>
-    
+    </MainContainer>
   )
 }
-
 export default ClassLinks

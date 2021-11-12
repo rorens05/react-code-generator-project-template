@@ -2,12 +2,9 @@ import React, {useState} from 'react'
 import { Button, InputGroup, FormControl } from 'react-bootstrap';
 import CreateTask from './CreateTask';
 
-
 function HeaderTask() {
-
-  const [modal, setModal] = useState(false)
-
-  const toggle = () =>{
+const [modal, setModal] = useState(false)
+const toggle = () =>{
     setModal(!modal)
   }
 	return (

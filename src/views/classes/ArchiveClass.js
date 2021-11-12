@@ -5,7 +5,6 @@ import ClassCard from './components/ClassCard'
 import ClassHeader from './components/ClassHeader'
 import HeaderArchive from './components/HeaderArchive'
 
-
 export default function Classes() {
   return (
     <MainContainer>

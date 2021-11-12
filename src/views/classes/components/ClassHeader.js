@@ -4,11 +4,8 @@ import CreateClassModal from './CreateClassModal'
 import HeaderArchive from './HeaderArchive';
 import { Link } from 'react-router-dom'
 
-
 function ClassHeader() {
-
   const [modal, setModal] = useState(false)
-
   const toggle = () =>{
     setModal(!modal)
   }
