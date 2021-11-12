@@ -1,10 +1,24 @@
 import React from 'react'
 import MainContainer from '../../components/layouts/MainContainer'
 import ClassSideNavigation from './components/ClassSideNavigation'
-import {Row, Col, Button, Form} from 'react-bootstrap'
+import {Row, Col, Button, Form, Card, Accordion, useAccordionButton, Nav} from 'react-bootstrap'
 import ClassHeader from './components/ClassHeader'
 import HeaderDiscussion from './components/HeaderDiscussion'
+import { Link } from 'react-router-dom'
 
+function CustomToggle({ children, eventKey }) {
+  const decoratedOnClick = useAccordionButton(eventKey, () =>
+    console.log('totally custom!'),
+  );
+  return (
+    <button
+      type="button"
+      onClick={decoratedOnClick}
+    >
+      {children}
+    </button>
+  );
+}
 function ClassDiscussion({handleOpenModal}) {
   return (
       <MainContainer>
@@ -13,24 +27,26 @@ function ClassDiscussion({handleOpenModal}) {
         <ClassSideNavigation/>
         </Col>
         <Col className = "class-padding">
-        <div className = "font-class">
            
-        <HeaderDiscussion/>
-        <Form.Group className="m-b-20">	
-					<Form.Select id="subjectAreaId" name="subjectAreaId" size="lg">
-												<option>
-												Unit 1
-												</option>
-						</Form.Select>
-			  </Form.Group>
-        <Form.Group className="m-b-20">	
-					<Form.Select id="subjectAreaId" name="subjectAreaId" size="lg">
-												<option>
-												Unit 2
-												</option>
-				  </Form.Select>
-				</Form.Group>
-			 </div>
+        <HeaderDiscussion/> 
+        <Accordion defaultActiveKey="0">
+      <Card>
+        <Card.Header className="discussion-unit">
+          <CustomToggle eventKey="0">Unit 1</CustomToggle>
+        </Card.Header>
+        <Accordion.Collapse eventKey="0">
+          <Card.Body className="discussion-unit" >Lesson 1</Card.Body>
+        </Accordion.Collapse>
+      </Card>
+      <Card>
+        <Card.Header className="discussion-unit">
+          <CustomToggle eventKey="1">Unit 2</CustomToggle>
+        </Card.Header>
+        <Accordion.Collapse eventKey="1">
+          <Card.Body className="discussion-unit">Lesson 1</Card.Body>
+        </Accordion.Collapse>
+      </Card>
+    </Accordion>
        </Col>
       </Row>
       </MainContainer>

@@ -1,14 +1,12 @@
 import React, { useState } from "react";
-import { Card, Dropdown } from 'react-bootstrap';
+import { Card, Dropdown,Button, InputGroup, FormControl } from 'react-bootstrap';
 import "../../../../node_modules/@fortawesome/fontawesome-free/css/all.css"
 import { Link } from 'react-router-dom'
 
-export default function CoursesItem() {
-    const [course, setCourse] = useState([])
-    const [openModal, setOpenModal] = useState(false)
+export default function HeaderArchive() {
     const [openDropdown, setOpenDropdown] = useState(false)
     const [openEditModal, setOpenEditModal] = useState(false)
-    const [haru] = useState("haru")
+		const [modal, setModal] = useState(false)
   
     const handleOpeEditModal = e => {
         e.preventDefault()
@@ -29,12 +27,30 @@ export default function CoursesItem() {
       ));
     
   return (
+<div>
+<div>
+			<div className="row m-b-20">
+				<div className="col-md-10 pages-header"><h1>Archived Class </h1>
+				</div>
+        <Link to="/archive" className="class-archive"><h1><i class="fas fa-th"></i></h1></Link>
+        <Link to="/classes" className="class-archive"><h1><i class="fas fa-th-list"></i></h1></Link>
+			</div>
+			<div className="row m-b-20">
+				<div className="col-md-12">
+					<InputGroup size="lg">
+						<FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Search here for archived class" type="search"/>
+					<InputGroup.Text id="basic-addon2" className="search-button"><i className="fas fa-search fa-1x"></i></InputGroup.Text>
+					</InputGroup>
+					</div>
+				</div>
+		</div>
+		
       <div className="col-md-3 card-group-tfi">
         <Card className="card-design b-0px">
           <Card.Header className="card-header">
             <div className="row" style={{color:"white"}}>
               <div className="col-md-6">
-                <i className="fa fa-lock fa-2x"></i>
+              <i class="fas fa-unlock"></i>
                   </div>
                     <div className="col-md-6 t-a-r">
                       <Dropdown isOpen={openDropdown} toggle={()=> setOpenDropdown(!openDropdown)}>
@@ -43,7 +59,7 @@ export default function CoursesItem() {
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
                         <Dropdown.Item onClick={handleOpeEditModal}>
-                        Edit 
+                        Restore 
                         </Dropdown.Item>
                         <Dropdown.Item>
                         Delete
@@ -76,5 +92,6 @@ export default function CoursesItem() {
             </Card.Body>
         </Card>
       </div>
+			</div>
   )
 }

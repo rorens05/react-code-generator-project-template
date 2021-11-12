@@ -26,9 +26,6 @@ export default function Discussion() {
               </div>
           </div>
           <CardGroup className="card-group-tfi">
-              <CoursesItem />
-              <CoursesItem />
-              <CoursesItem />
               <CreateDiscussion openModal={openModal} setOpenModal={setOpenModal} /> 
           </CardGroup>
         </div>

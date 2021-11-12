@@ -1,10 +1,23 @@
 import React from 'react'
 import MainContainer from '../../components/layouts/MainContainer'
 import ClassSideNavigation from './components/ClassSideNavigation'
-import {Row, Col, Button, Form} from 'react-bootstrap'
-import ClassHeader from './components/ClassHeader'
+import {Row, Col, Button, Form, Card, Accordion, useAccordionButton, Nav} from 'react-bootstrap'
 import HeaderTask from './components/HeaderTask'
+import { Link } from 'react-router-dom'
 
+function Links({ children, eventKey }) {
+  const decoratedOnClick = useAccordionButton(eventKey, () =>
+    console.log('totally custom!'),
+  );
+  return (
+    <button
+      type="button"
+      onClick={decoratedOnClick}
+    >
+      {children}
+    </button>
+  );
+}
 function ClassTask({handleOpenModal}) {
   return (
       <MainContainer>
@@ -13,23 +26,26 @@ function ClassTask({handleOpenModal}) {
         <ClassSideNavigation/>
         </Col>
         <Col className = "class-padding">
-        <div className = "font-class">
-        <HeaderTask/>
-        <Form.Group className="m-b-20">	
-					<Form.Select id="subjectAreaId" name="subjectAreaId" size="lg">
-												<option>
-												Unit 1
-												</option>
-						</Form.Select>
-			  </Form.Group>
-        <Form.Group className="m-b-20">	
-					<Form.Select id="subjectAreaId" name="subjectAreaId" size="lg">
-												<option>
-												Unit 2
-												</option>
-				  </Form.Select>
-				</Form.Group>
-			 </div>
+           
+        <HeaderTask/> 
+        <Accordion defaultActiveKey="0">
+        <Card>
+      <Card.Header className="discussion-unit">
+        <Link eventKey="1">Unit 1</Link>
+      </Card.Header>
+      <Accordion.Collapse eventKey="1">
+        <Card.Body>Hello! I'm another body</Card.Body>
+      </Accordion.Collapse>
+    </Card>
+    <Card>
+      <Card.Header className="discussion-unit">
+        <Link eventKey="1">Unit 2</Link>
+      </Card.Header>
+      <Accordion.Collapse eventKey="1">
+        <Card.Body>Hello! I'm another body</Card.Body>
+      </Accordion.Collapse>
+    </Card>
+  </Accordion>
        </Col>
       </Row>
       </MainContainer>
