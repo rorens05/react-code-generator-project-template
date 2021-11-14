@@ -12,7 +12,7 @@ function ClassSideNavigation() {
                 <Row>
                   <Col className="" sm={9} >
                     
-                    <div className="class-subtitle-code" > <i class="fas fa-qrcode"></i> {' '}FXC57</div>
+                    <div className="class-subtitle-code" > <i class="fas fa-expand"></i> {' '}FXC57</div>
                     <div className="class-subtitle-section">Grade 1 - Faith</div>
                     <div className="class-subtitle-subject">Math 1</div>
                     <div className="class-subtitle-name">Carlos Inigo</div>
@@ -60,7 +60,7 @@ function ClassSideNavigation() {
             <Tab.Content>
               <Tab.Pane eventKey="#link1">
               <Row>
-                <Col ms={6}>
+                <Col>
                <ClassFeed />
                </Col>
                <Col md="auto">
