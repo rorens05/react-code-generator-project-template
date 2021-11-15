@@ -6,8 +6,10 @@ export default function MainContainer({children, headerVisible = true, fluid}) {
   return (
     <div className="main-container">
       {headerVisible && <Header/>}
-      <div className={containerClass}>
-        {children}
+      <div className="content">
+        <div className={containerClass}>
+          {children}
+        </div>
       </div>
     </div>
   )

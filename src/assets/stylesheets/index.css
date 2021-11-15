@@ -279,9 +279,11 @@ border-top-right-radius: 0px !important;
   border-radius: 15px 15px 0px 0px;
   box-shadow:1px 2px 5px 1px #eeeeee ;
 }
+
 .class-card-font-color{
   color: #eeeeee!important;
 }
+
 .pd-10px{
   padding-top: 10px!important;
 }
@@ -342,10 +344,12 @@ border-top-right-radius: 0px !important;
 .cursor-pointer{
   cursor: pointer!important;
 }
+
 .icon-pd{
   text-align: right;
   padding-top: 26px;
 }
+
 .card-group-tfi {
   margin-right: 25px;
   margin-left: 25px;
@@ -354,8 +358,8 @@ border-top-right-radius: 0px !important;
 .justify-content-center {
   justify-content: center;
 }
-.card-group2{
 
+.card-group2{
   justify-content: center;
 }
 .class-subtitle-code{
@@ -426,4 +430,143 @@ border-top-right-radius: 0px !important;
   border-radius: 15px 15px 15px 15px!important;
   box-shadow:1px 2px 5px 1px #707070;
   margin-bottom: 10px;
+}
+
+.main-container{
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
+}
+
+.auth-container{
+  width: 100%;
+  padding: 86px 20px
+}
+
+.login-container{
+  background-color: white;
+  max-width: 1186px;
+  padding: 50px;
+  box-shadow: 0px 3px 6px #00000029;
+  border-radius: 10px;
+}
+
+.login-container .title{
+  text-align: left;
+  font: normal normal normal 36px/48px Segoe UI;
+  letter-spacing: 0px;
+  color: #707070
+}
+
+.login-container .subtitle{
+  color: #BCBCBC;
+  font: normal normal normal 20px/27px Segoe UI;
+  letter-spacing: 0px;
+  font-size: 20px;
+  margin-top: 0 !important;
+}
+
+.color-blue-green{
+  color: #1BBEAE
+}
+
+.custom-label{
+  color: #707070;
+  font-size: 24px;
+  margin-bottom: 20px !important;
+}
+
+.custom-input{
+  border: 1px solid #E9E9E9 !important
+}
+
+.custom-input::placeholder{
+  color: #BCBCBC !important
+}
+
+
+
+
+.link-orange{
+  text-decoration: none;
+  color: #EE9337;
+  font: normal normal normal 24px/32px Segoe UI;
+  letter-spacing: 0px;
+}
+
+.link-orange:hover{
+  color: #EE9337;
+  opacity: 0.8
+}
+
+.font-24{
+  font-size: 24px
+}
+
+.btn-auth{
+  background-color: #EE9337 !important;
+  border-color: #ff8103 !important;
+  font-size: 36px !important;
+}
+
+.login-with-qr-container{
+  padding-top: 10px;
+  text-align: center;
+}
+
+.login-with-qr-container .qr-container{
+  width: 218px;
+  height: 218px;
+  display: inline-block;
+  border: 1px solid #BCBCBC;
+  border-radius: 10px;
+
+}
+
+.login-with-qr-container .qr-container img{
+  width: 100%
+}
+.login-with-qr-container .qr-text{
+  color: #707070;
+  text-decoration: none;
+  font: normal normal normal 24px/32px Segoe UI;
+  letter-spacing: 0px;
+}
+
+.main-container .content{
+  height: calc(100vh - 104px) !important;
+  overflow: auto !important;
+}
+
+.header .floating-options{
+  position: absolute;
+  top: 18px;
+  right: 18px;
+}
+
+.header .floating-options a{
+  display: inline-block;
+  width: 64px;
+  height: 64px;
+  border-radius: 64px;
+  background-color: #F9F9F9;
+  color: #BCBCBC;
+  font-size: 30px;
+  margin-right: 12px;
+  
+}
+
+.header .floating-options a div{
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media only screen and (max-width: 1280px) {
+  .header .floating-options{
+    transform: scale(0.7);
+    right: -18px;
+  }
 }
