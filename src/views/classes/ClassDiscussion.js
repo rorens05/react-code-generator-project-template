@@ -41,6 +41,12 @@ function ClassDiscussion({handleOpenModal}) {
       Lesson 1
     </Accordion.Body>
   </Accordion.Item>
+  <Accordion.Item eventKey="1">
+    <Accordion.Header>Unit 3</Accordion.Header>
+    <Accordion.Body>
+      Lesson 1
+    </Accordion.Body>
+  </Accordion.Item>
 </Accordion>
        </Col>
       </Row>
