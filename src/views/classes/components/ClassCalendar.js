@@ -5,7 +5,6 @@ function ClassCalendar() {
   return (
     <div>
     <Card className='calendar kb-0px'style={{backgroundColor:'white'}}>
-      
       <Card.Header className='calendar-header' style={{backgroundColor:'white'}}>
         <div className="row calendar-title">
           <div>
@@ -32,11 +31,8 @@ function ClassCalendar() {
         </Card.Text>
       </Card.Body>
       </div>
-     
     </Card>
-      
   </div> 
   )
 }
-
 export default ClassCalendar

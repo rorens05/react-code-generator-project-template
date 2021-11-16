@@ -1,38 +1,55 @@
 import React from 'react'
 import MainContainer from '../../components/layouts/MainContainer'
 import ClassSideNavigation from './components/ClassSideNavigation'
-import {Row, Col, Button, Form} from 'react-bootstrap'
+import {Row, Col, Button, Form, Card, Accordion, useAccordionButton, Nav} from 'react-bootstrap'
 import ClassHeader from './components/ClassHeader'
 import HeaderDiscussion from './components/HeaderDiscussion'
+import { Link } from 'react-router-dom'
 
+function CustomToggle({ children, eventKey }) {
+  const decoratedOnClick = useAccordionButton(eventKey, () =>
+    console.log('totally custom!'),
+  );
+  return (
+    <button
+      type="button"
+      onClick={decoratedOnClick}
+    >
+      {children}
+    </button>
+  );
+}
 function ClassDiscussion({handleOpenModal}) {
   return (
       <MainContainer>
-       <Row style={{flexWrap:'wrap'}}>
-         <Col Col md={4} className = "class-row">
-        <ClassSideNavigation/>
-        </Col>
-        <Col className = "class-padding">
-        <div className = "font-class">
-           <div className="col-md-10 pages-header"><h1>Discussion <Button variant="outline-warning" onClick={handleOpenModal}><i className="fa fa-plus"></i> Create Discussion</Button></h1></div>
-        <HeaderDiscussion/>
-        <Form.Group className="m-b-20">	
-					<Form.Select id="subjectAreaId" name="subjectAreaId" size="lg">
-												<option>
-												Unit 1
-												</option>
-						</Form.Select>
-			  </Form.Group>
-        <Form.Group className="m-b-20">	
-					<Form.Select id="subjectAreaId" name="subjectAreaId" size="lg">
-												<option>
-												Unit 2
-												</option>
-				  </Form.Select>
-				</Form.Group>
-			 </div>
-       </Col>
-      </Row>
+        <Row style={{flexWrap:'wrap'}}>
+          <Col Col md={4} className = "class-row">
+            <ClassSideNavigation/>
+          </Col>
+          <Col className = "class-padding">
+            <HeaderDiscussion/> 
+            <Accordion defaultActiveKey="0" flush>
+              <Accordion.Item eventKey="0">
+                <Accordion.Header>Unit 1</Accordion.Header>
+                <Accordion.Body>
+                Lesson 1
+                </Accordion.Body>
+              </Accordion.Item>
+              <Accordion.Item eventKey="1">
+                <Accordion.Header>Unit 2</Accordion.Header>
+                <Accordion.Body>
+                  Lesson 1
+                </Accordion.Body>
+              </Accordion.Item>
+              <Accordion.Item eventKey="1">
+                <Accordion.Header>Unit 3</Accordion.Header>
+                <Accordion.Body>
+                  Lesson 1
+                </Accordion.Body>
+              </Accordion.Item>
+            </Accordion>
+          </Col>
+        </Row>
       </MainContainer>
   )
 }

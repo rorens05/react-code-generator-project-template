@@ -1,33 +1,49 @@
-
 import React from 'react'
 import MainContainer from '../../components/layouts/MainContainer'
 import ClassSideNavigation from './components/ClassSideNavigation'
-import {Row, Col} from 'react-bootstrap'
+import {Row, Col, Button, Form, Card, Accordion, useAccordionButton, Nav} from 'react-bootstrap'
+import HeaderTask from './components/HeaderTask'
+import { Link } from 'react-router-dom'
 
-function ClassTask() {
+function Customtoggle({ children, eventKey }) {
+  const decoratedOnClick = useAccordionButton(eventKey, () =>
+    console.log('totally custom!'),
+  );
   return (
-
- 
+    <button
+      type="button"
+      onClick={decoratedOnClick}
+    >
+      {children}
+    </button>
+  );
+}
+function ClassTask({handleOpenModal}) {
+  return (
       <MainContainer>
-     
-       <Row style={{flexWrap:'wrap'}}>
-         <Col Col md={4} className = "class-row">
-        <ClassSideNavigation/>
-        </Col>
-				
-        <Col className = "class-padding">
-        <div className = "font-class">
-           Class Task
-			 </div>
-       </Col>
-			 
-      </Row>
-      
-    
-        
+        <Row style={{flexWrap:'wrap'}}>
+          <Col Col md={4} className = "class-row">
+            <ClassSideNavigation/>
+          </Col>
+          <Col className = "class-padding">
+            <HeaderTask/> 
+            <Accordion defaultActiveKey="0" flush>
+              <Accordion.Item eventKey="0">
+                <Accordion.Header>Unit 1</Accordion.Header>
+                <Accordion.Body>
+                  Lesson 1
+                </Accordion.Body>
+              </Accordion.Item>
+              <Accordion.Item eventKey="1">
+                <Accordion.Header>Unit 2</Accordion.Header>
+                <Accordion.Body>
+                  Lesson 1
+                </Accordion.Body>
+              </Accordion.Item>
+            </Accordion>
+          </Col>
+        </Row>
       </MainContainer>
-    
   )
 }
-
 export default ClassTask

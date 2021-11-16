@@ -16,6 +16,7 @@ import ClassDiscussion from "../views/classes/ClassDiscussion"
 import ClassTask from "../views/classes/ClassTask";
 import ClassLinks from "../views/classes/ClassLinks";
 import CourseContent from "../views/courses/CourseContent";
+import ArchiveClass from "../views/classes/ArchiveClass"
 import ClassesContent from "../views/classes/ClassesContent";
 
 export default function Routes() {
@@ -33,6 +34,7 @@ export default function Routes() {
           <Route path='/discussion' exact component={ClassDiscussion}/>
           <Route path='/task' exact component={ClassTask}/>
           <Route path='/links' exact component={ClassLinks}/>
+          <Route path='/archive' exact component={ArchiveClass}/>
           <Route path='/login' exact component={Login}/>
           <Route path='/forgot_password' exact component={ForgotPassword}/>
           <Route path='/' exact component={Home}/>

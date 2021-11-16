@@ -158,16 +158,26 @@ color:#BCBCBC !important;
 .search-discussion {
   font: 'normal normal normal 20px/27px Segoe UI' !important;
 }
+.discussion-unit{
+  background-color:#ffffff !important;
+  height: 50px;
+  border-radius: 10px 10px 0px 0px !important;
+  color: var(--bolder);
+  text-align: left;
+  font: normal normal normal 24px/32px Segoe UI;
+  letter-spacing: 0px;
+  color: #707070;
+  opacity: 1;
+}
 
 .col-md-4 { 
   background-color: '#FFFFFF';
-  margin-right:'30px' ;
+  margin-left:'30px'!important ;
   margin-top: '70px' ;
   padding: '20px' ;
   width:'300px' ;
   height: '567px' ;
 }
-
 
 .class-padding {
   background-color: #FFFFFF !important;
@@ -184,6 +194,14 @@ color:#BCBCBC !important;
   padding: 20px !important;
   width:  300px !important;
   height: 567px;
+}
+
+.class-archive {
+  color: #EE9337;
+  margin-bottom: 50px;
+  width:  50px !important;
+  height: 20px;
+  float: right;
 }
 
 .bread-margin {

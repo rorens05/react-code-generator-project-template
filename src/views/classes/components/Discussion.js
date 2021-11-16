@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import CreateDiscussion from "././CreateDiscussion"
 import { Button, InputGroup, FormControl, CardGroup } from 'react-bootstrap';
-import DiscussionItem from "./DiscussionItem";
-
 export default function Discussion() {
-  const [openModal, setOpenModal] = useState(false)
-  const handleOpenModal = e => {
+
+const [openModal, setOpenModal] = useState(false)
+const handleOpenModal = e => {
       e.preventDefault()
       setOpenModal(true)
   }

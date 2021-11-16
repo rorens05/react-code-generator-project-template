@@ -16,7 +16,6 @@ export default function Header() {
         <Link to="/exam">Exam</Link>
         <Link to="/files">Files</Link>
         <Link to="/reports">Reports</Link>
-        <Link to="/discussion">Discussion</Link>
       </div>
       <FloatingOptions/>
     </div>
