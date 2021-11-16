@@ -102,10 +102,6 @@ opacity: 1;
 margin-bottom: 10px;
 }
 
-.m-t-30 {
-  margin-top: 30px !important;
-  }
-
 .pages-header {
 color:#707070;
 }
@@ -143,16 +139,17 @@ background-color: #EE9337 !important;
 border:1px solid #EE9337 !important;
 }
 
-.card-header {
+/* .card-header {
 background-color:#EE9337 !important;
 height: 200px;
 border-radius: 10px 10px 0px 0px !important;
-}
+} */
 
 .search-button {
 background-color: transparent !important;
 border-left:0px !important;
 color:#BCBCBC !important;
+
 }
 
 .search-classes {
@@ -259,17 +256,7 @@ border-top-right-radius: 0px !important;
 .content-pane {
   background-color: white !important;
   border-radius: 10px;
-  padding:30px; 
-  color: #7D7D7D!important;
-}
-
-.content-pane .title {
-  text-align: left;
-  font: normal normal normal 36px/48px Segoe UI;
-  letter-spacing: 0px;
-  color: #707070;
-  opacity: 1;
-  margin-bottom: 30px !important;
+  padding:10px; 
 }
 
 /* Kent */
@@ -287,7 +274,7 @@ border-top-right-radius: 0px !important;
   border:0px !important;
 }
 .class-header-card{
-  background-color: #EE9337;
+  background-color: #EE9337!important;
   height: 125px;
   border-radius: 15px 15px 0px 0px;
   box-shadow:1px 2px 5px 1px #eeeeee ;
@@ -374,6 +361,75 @@ border-top-right-radius: 0px !important;
 
 .card-group2{
   justify-content: center;
+}
+.class-subtitle-code{
+  font-size: 16px!important;
+  color: #EE9337!important;
+}
+.class-subtitle-section{
+  font-size: 20px!important;
+  color: #707070 !important;
+}
+.class-subtitle-subject{
+  font-size: 16px!important;
+  color: #EE9337!important;
+}
+.class-subtitle-name{
+  font-size: 16px!important;
+  color: #BCBCBC!important;
+}
+.ellipsis-top-right{
+  text-align: right;
+  color: #EE9337;
+}
+.fa-user-top-right{
+  text-align: right;
+  color: #EE9337; 
+}
+.fa-user-size{
+  margin-top: 45px;
+  font-size: 16px;
+}
+.calendar{
+  border-radius: 0.9rem !important;
+  box-shadow: 1px 2px 5px 1px #eeeeee;
+}
+.calendar-header{
+  background-color: #FFFFFF!important;
+  height: 125px;
+  border-radius: 15px 15px 0px 0px;
+  box-shadow:1px 2px 5px 1px #eeeeee;
+}
+.calendar-title{
+  color: #707070!important;
+  background-color: #FFFFFF!important;
+  font-size: 24px;
+}
+.calendar-subtitle{
+  color: #707070!important;
+  background-color: #FFFFFF!important;
+  font-size: 24px;
+  padding-top: 25px;
+}
+.feed-button{
+  outline: none!important;
+  color:#BCBCBC !important;
+  font-size: 64px!important;
+}
+.calendar-card{
+  border-radius: 15px 15px 15px 15px!important;
+  font-size: 21px;
+  margin-bottom: 35px;
+}
+.post-date{
+  font-size: 27px;
+  color: #707070;
+}
+
+.post-card{
+  border-radius: 15px 15px 15px 15px!important;
+  box-shadow:1px 2px 5px 1px #707070;
+  margin-bottom: 10px;
 }
 
 .main-container{
@@ -514,6 +570,8 @@ border-top-right-radius: 0px !important;
     right: -18px;
   }
 }
+
+
 
 .course-unit-header {
   text-align: left !important;

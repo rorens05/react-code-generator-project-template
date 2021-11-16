@@ -25,11 +25,11 @@ function ClassCard() {
   return (
     <div>
       <Card className='class-card kb-0px'>
-        <Link to='#'>
+        <Link to='/classcontent'>
         <Card.Header className='class-header-card'>
           <div className="row class-card-font-color">
             <div className="col-md-6 pd-10px">
-             <i class="fas fa-qrcode"></i>
+             <i class="fas fa-expand"></i>
            {' '}  FXC57
             </div>
             <div className="col-md-6 ta-pt-10px">
