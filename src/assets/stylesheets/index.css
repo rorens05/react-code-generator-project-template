@@ -570,3 +570,46 @@ border-top-right-radius: 0px !important;
     right: -18px;
   }
 }
+
+
+
+.course-unit-header {
+  text-align: left !important;
+  font: normal normal normal 24px/32px Segoe UI !important;
+  letter-spacing: 0px !important;
+  color: #EE9337 !important;
+  opacity: 1 !important;
+}
+
+
+.accordion-button {
+  text-align: left !important;
+  font: normal normal normal 24px/32px Segoe UI !important;
+  letter-spacing: 0px !important;
+  color: #707070 !important;
+  opacity: 1  !important;
+}
+
+.m-r-10 {
+  margin-right: 10px;
+}
+
+.m-r-5{
+  margin-right: 5px;
+}
+
+.align-right-content {
+  text-align: right;
+}
+
+.lesson-header {
+  text-align: left !important;
+  font: normal normal normal 24px/32px Segoe UI !important;
+  letter-spacing: 0px !important;
+  color: #EE9337 !important;
+  opacity: 1 !important;
+}
+
+.color-white {
+  color:white !important;
+}
