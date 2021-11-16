@@ -1,5 +1,6 @@
 import React from 'react'
 import {ListGroup, Tab, Row, Col} from 'react-bootstrap'
+import ClassExam from '../ClassExam'
 import ClassFeed from '../ClassFeed'
 import ClassCalendar from './ClassCalendar'
 
@@ -70,6 +71,9 @@ function ClassSideNavigation() {
               </Tab.Pane>
               <Tab.Pane eventKey="#link2">
                 v
+              </Tab.Pane>
+              <Tab.Pane className='content-pane' eventKey="#link3">
+                <ClassExam />
               </Tab.Pane>
             </Tab.Content> 
           </Col> 
