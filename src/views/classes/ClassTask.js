@@ -21,28 +21,28 @@ function Customtoggle({ children, eventKey }) {
 function ClassTask({handleOpenModal}) {
   return (
       <MainContainer>
-       <Row style={{flexWrap:'wrap'}}>
-         <Col Col md={4} className = "class-row">
-        <ClassSideNavigation/>
-        </Col>
-        <Col className = "class-padding">
-        <HeaderTask/> 
-        <Accordion defaultActiveKey="0" flush>
-  <Accordion.Item eventKey="0">
-    <Accordion.Header>Unit 1</Accordion.Header>
-    <Accordion.Body>
-      Lesson 1
-    </Accordion.Body>
-  </Accordion.Item>
-  <Accordion.Item eventKey="1">
-    <Accordion.Header>Unit 2</Accordion.Header>
-    <Accordion.Body>
-      Lesson 1
-    </Accordion.Body>
-  </Accordion.Item>
-</Accordion>
-       </Col>
-      </Row>
+        <Row style={{flexWrap:'wrap'}}>
+          <Col Col md={4} className = "class-row">
+            <ClassSideNavigation/>
+          </Col>
+          <Col className = "class-padding">
+            <HeaderTask/> 
+            <Accordion defaultActiveKey="0" flush>
+              <Accordion.Item eventKey="0">
+                <Accordion.Header>Unit 1</Accordion.Header>
+                <Accordion.Body>
+                  Lesson 1
+                </Accordion.Body>
+              </Accordion.Item>
+              <Accordion.Item eventKey="1">
+                <Accordion.Header>Unit 2</Accordion.Header>
+                <Accordion.Body>
+                  Lesson 1
+                </Accordion.Body>
+              </Accordion.Item>
+            </Accordion>
+          </Col>
+        </Row>
       </MainContainer>
   )
 }
