@@ -1,5 +1,6 @@
 import React from "react";
-import { Tab, ListGroup, Row, Col } from 'react-bootstrap';
+import { Tab, ListGroup, Row, Col, Button, InputGroup, FormControl } from 'react-bootstrap';
+import CourseAccordion from "./CourseAccordion";
 
 export default function CourseWidget() {
   return (
@@ -18,7 +19,7 @@ export default function CourseWidget() {
                   </Col>
                 </Row>
               </ListGroup.Item> 
-            
+           
             <ListGroup>
               <ListGroup.Item className="list-group-item-o " action href="#link1">
                 Learn
@@ -42,8 +43,17 @@ export default function CourseWidget() {
           </div>
           <Col sm={9}>
             <Tab.Content className="content-pane">
+              <span className="title">Math <Button variant="outline-warning"><i className="fa fa-plus"></i> Add Unit</Button></span>
+              <div className="row m-b-20 m-t-30">
+                <div className="col-md-12">
+                  <InputGroup size="lg">
+                    <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Search..." type="search"/>
+                    <InputGroup.Text id="basic-addon2" className="search-button"><i className="fas fa-search fa-1x"></i></InputGroup.Text>
+                  </InputGroup>
+                </div>
+            </div>
               <Tab.Pane eventKey="#link1">
-                a
+                <CourseAccordion />
               </Tab.Pane>
               <Tab.Pane eventKey="#link2">
                 v
@@ -52,6 +62,6 @@ export default function CourseWidget() {
           </Col> 
         </div>
       </Tab.Container>
-      
+     
   )
 }

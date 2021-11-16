@@ -102,6 +102,10 @@ opacity: 1;
 margin-bottom: 10px;
 }
 
+.m-t-30 {
+  margin-top: 30px !important;
+  }
+
 .pages-header {
 color:#707070;
 }
@@ -255,7 +259,17 @@ border-top-right-radius: 0px !important;
 .content-pane {
   background-color: white !important;
   border-radius: 10px;
-  padding:10px; 
+  padding:30px; 
+  color: #7D7D7D!important;
+}
+
+.content-pane .title {
+  text-align: left;
+  font: normal normal normal 36px/48px Segoe UI;
+  letter-spacing: 0px;
+  color: #707070;
+  opacity: 1;
+  margin-bottom: 30px !important;
 }
 
 /* Kent */
@@ -499,4 +513,45 @@ border-top-right-radius: 0px !important;
     transform: scale(0.7);
     right: -18px;
   }
+}
+
+.course-unit-header {
+  text-align: left !important;
+  font: normal normal normal 24px/32px Segoe UI !important;
+  letter-spacing: 0px !important;
+  color: #EE9337 !important;
+  opacity: 1 !important;
+}
+
+
+.accordion-button {
+  text-align: left !important;
+  font: normal normal normal 24px/32px Segoe UI !important;
+  letter-spacing: 0px !important;
+  color: #707070 !important;
+  opacity: 1  !important;
+}
+
+.m-r-10 {
+  margin-right: 10px;
+}
+
+.m-r-5{
+  margin-right: 5px;
+}
+
+.align-right-content {
+  text-align: right;
+}
+
+.lesson-header {
+  text-align: left !important;
+  font: normal normal normal 24px/32px Segoe UI !important;
+  letter-spacing: 0px !important;
+  color: #EE9337 !important;
+  opacity: 1 !important;
+}
+
+.color-white {
+  color:white !important;
 }
