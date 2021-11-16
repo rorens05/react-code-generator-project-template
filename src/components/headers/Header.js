@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import FloatingOptions from './components/FloatingOptions'
 
 export default function Header() {
 
@@ -16,6 +17,7 @@ export default function Header() {
         <Link to="/files">Files</Link>
         <Link to="/reports">Reports</Link>
       </div>
+      <FloatingOptions/>
     </div>
   )
 }

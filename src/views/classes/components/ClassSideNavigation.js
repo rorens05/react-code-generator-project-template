@@ -1,46 +1,80 @@
 import React from 'react'
-import { ListGroupItem } from 'react-bootstrap'
-import ListGroup from 'react-bootstrap/ListGroup'
-import { Link } from 'react-router-dom'
+import {ListGroup, Tab, Row, Col} from 'react-bootstrap'
+import ClassFeed from '../ClassFeed'
+import ClassCalendar from './ClassCalendar'
 
 function ClassSideNavigation() {
   return (
-    <div>
-      <ListGroup >
-          <div className="class-bar">
-            <ListGroupItem style={{border:'none',color:'#EE9337'}}>FXC57 <br />
-              Grade 1 - Faith  <br />
-              Math 1 <br /> 
-              Carlos Inigo
-            </ListGroupItem>  
+    <Tab.Container className="course-widget-font" id="list-group-tabs-example " defaultActiveKey="#link1">
+        <div className="row">
+          <div className="row-course-bg course-widget-font col-md-3">
+              <ListGroup.Item className="list-group-item-o">
+                <Row>
+                  <Col className="" sm={9} >
+                    
+                    <div className="class-subtitle-code" > <i class="fas fa-expand"></i> {' '}FXC57</div>
+                    <div className="class-subtitle-section">Grade 1 - Faith</div>
+                    <div className="class-subtitle-subject">Math 1</div>
+                    <div className="class-subtitle-name">Carlos Inigo</div>
+                  </Col>
+                  <Col className="ellipsis-top-right" sm={3}>
+                    <i className="fa fa-ellipsis-v fa-1x cursor-pointer"></i>
+                    <div className='fa-user-size'>
+                    <i className="fas fa-user"></i> 30
+                    </div>
+                  </Col>
+                </Row>
+              </ListGroup.Item> 
+            
+            <ListGroup style={{paddingLeft:'15px'}}>
+              <ListGroup.Item className="list-group-item-o " action href="#link1">
+                Feed
+              </ListGroup.Item>
+              <ListGroup.Item className="list-group-item-o "action href="#link2">
+                Learn
+              </ListGroup.Item>
+              <ListGroup.Item  className="list-group-item-o "action href="#link3">
+                Exam
+              </ListGroup.Item>
+              <ListGroup.Item className="list-group-item-o " action href="#link4">
+               Discussion
+              </ListGroup.Item>
+              <ListGroup.Item className="list-group-item-o " action href="#link5">
+                Assignment
+              </ListGroup.Item>
+              <ListGroup.Item className="list-group-item-o " action href="#link6">
+                Task
+              </ListGroup.Item>
+              <ListGroup.Item className="list-group-item-o " action href="#link7">
+                Interactive Games
+              </ListGroup.Item>
+              <ListGroup.Item className="list-group-item-o " action href="#link8">
+                Links
+              </ListGroup.Item>
+              <ListGroup.Item className="list-group-item-o " action href="#link9">
+                Class List
+              </ListGroup.Item>
+            </ListGroup>
           </div>
-        </ListGroup>
-        <div className="class-bar">
-          <ListGroup className='class-side-bar' >
-            <ListGroup.Item  className="list-group-item-o">
-              <Link to="#">Learn</Link>
-          </ListGroup.Item>
-          <ListGroup.Item  style={{border:'none',}}>
-              <Link to="#">Exam</Link>
-          </ListGroup.Item>
-            <ListGroup.Item  style={{border:'none',}}>
-              <Link to="discussion">Discusssion</Link>
-          </ListGroup.Item>
-          <ListGroup.Item  style={{border:'none',}}>
-            <Link to="#">Assignment</Link>
-          </ListGroup.Item>
-          <ListGroup.Item  style={{border:'none',}}>
-            <Link to="task">Task</Link>
-          </ListGroup.Item>
-          <ListGroup.Item  style={{border:'none',}}>
-            <Link to="links"> Links</Link>
-          </ListGroup.Item>
-      </ListGroup>
-    </div>
-  </div>
-
-   
-    
+          <Col sm={9}>
+            <Tab.Content>
+              <Tab.Pane eventKey="#link1">
+              <Row>
+                <Col>
+               <ClassFeed />
+               </Col>
+               <Col md="auto">
+               <ClassCalendar />
+               </Col>
+             </Row>
+              </Tab.Pane>
+              <Tab.Pane eventKey="#link2">
+                v
+              </Tab.Pane>
+            </Tab.Content> 
+          </Col> 
+        </div>
+      </Tab.Container>
   )
 }
 
