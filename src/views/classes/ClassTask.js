@@ -5,7 +5,7 @@ import {Row, Col, Button, Form, Card, Accordion, useAccordionButton, Nav} from '
 import HeaderTask from './components/HeaderTask'
 import { Link } from 'react-router-dom'
 
-function Links({ children, eventKey }) {
+function Customtoggle({ children, eventKey }) {
   const decoratedOnClick = useAccordionButton(eventKey, () =>
     console.log('totally custom!'),
   );
@@ -27,24 +27,20 @@ function ClassTask({handleOpenModal}) {
         </Col>
         <Col className = "class-padding">
         <HeaderTask/> 
-        <Accordion defaultActiveKey="0">
-        <Card>
-      <Card.Header className="discussion-unit">
-        <Link eventKey="1">Unit 1</Link>
-      </Card.Header>
-      <Accordion.Collapse eventKey="1">
-        <Card.Body>Hello! I'm another body</Card.Body>
-      </Accordion.Collapse>
-    </Card>
-    <Card>
-      <Card.Header className="discussion-unit">
-        <Link eventKey="1">Unit 2</Link>
-      </Card.Header>
-      <Accordion.Collapse eventKey="1">
-        <Card.Body>Hello! I'm another body</Card.Body>
-      </Accordion.Collapse>
-    </Card>
-  </Accordion>
+        <Accordion defaultActiveKey="0" flush>
+  <Accordion.Item eventKey="0">
+    <Accordion.Header>Unit 1</Accordion.Header>
+    <Accordion.Body>
+      Lesson 1
+    </Accordion.Body>
+  </Accordion.Item>
+  <Accordion.Item eventKey="1">
+    <Accordion.Header>Unit 2</Accordion.Header>
+    <Accordion.Body>
+      Lesson 1
+    </Accordion.Body>
+  </Accordion.Item>
+</Accordion>
        </Col>
       </Row>
       </MainContainer>

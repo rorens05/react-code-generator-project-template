@@ -28,24 +28,20 @@ function ClassDiscussion({handleOpenModal}) {
         </Col>
         <Col className = "class-padding">
         <HeaderDiscussion/> 
-        <Accordion defaultActiveKey="0">
-      <Card>
-        <Card.Header className="discussion-unit">
-          <CustomToggle eventKey="0">Unit 1</CustomToggle>
-        </Card.Header>
-        <Accordion.Collapse eventKey="0">
-          <Card.Body className="discussion-unit" >Lesson 1</Card.Body>
-        </Accordion.Collapse>
-      </Card>
-      <Card>
-        <Card.Header className="discussion-unit">
-          <CustomToggle eventKey="1">Unit 2</CustomToggle>
-        </Card.Header>
-        <Accordion.Collapse eventKey="1">
-          <Card.Body className="discussion-unit">Lesson 1</Card.Body>
-        </Accordion.Collapse>
-      </Card>
-    </Accordion>
+        <Accordion defaultActiveKey="0" flush>
+  <Accordion.Item eventKey="0">
+    <Accordion.Header>Unit 1</Accordion.Header>
+    <Accordion.Body>
+      Lesson 1
+    </Accordion.Body>
+  </Accordion.Item>
+  <Accordion.Item eventKey="1">
+    <Accordion.Header>Unit 2</Accordion.Header>
+    <Accordion.Body>
+      Lesson 1
+    </Accordion.Body>
+  </Accordion.Item>
+</Accordion>
        </Col>
       </Row>
       </MainContainer>
