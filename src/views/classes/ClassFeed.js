@@ -7,8 +7,8 @@ function ClassFeed() {
     <Card className='calendar-card'>
       <Card.Body>
       <InputGroup  size="lg">
-      <InputGroup.Text id="basic-addon2" style={{outLine:'none', border:'none', background:'none'}}  className="feed-button"><i class="fas fa-user-circle fas-1x" ></i></InputGroup.Text>
-						<FormControl style={{outLine:'none', border:'none', background:'none'}}  aria-label="small" aria-describedby="inputGroup-sizing-sm" placeholder="Type Announcement for the class here" type="text"/>
+      <InputGroup.Text id="basic-addon2" className="feed-button"><i class="fas fa-user-circle fas-1x" ></i></InputGroup.Text>
+						<FormControl className='feed-box'  aria-label="small" aria-describedby="inputGroup-sizing-sm" placeholder="Type Announcement for the class here" type="text"/>
 			</InputGroup>
       </Card.Body>
     </Card>
