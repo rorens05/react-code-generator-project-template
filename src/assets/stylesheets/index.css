@@ -294,7 +294,7 @@ border-top-right-radius: 0px !important;
 .class-header-card{
   background-color: #EE9337!important;
   height: 125px;
-  border-radius: 15px 15px 0px 0px;
+  border-radius: 10px 10px 0px 0px!important;
   box-shadow:1px 2px 5px 1px #eeeeee ;
 }
 

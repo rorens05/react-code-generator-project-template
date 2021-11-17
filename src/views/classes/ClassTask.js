@@ -20,13 +20,10 @@ function Customtoggle({ children, eventKey }) {
 }
 function ClassTask({handleOpenModal}) {
   return (
-      <MainContainer>
+    <>
+     <HeaderTask/>
         <Row style={{flexWrap:'wrap'}}>
-          <Col Col md={4} className = "class-row">
-            <ClassSideNavigation/>
-          </Col>
-          <Col className = "class-padding">
-            <HeaderTask/> 
+          <Col>
             <Accordion defaultActiveKey="0" flush>
               <Accordion.Item eventKey="0">
                 <Accordion.Header>Unit 1</Accordion.Header>
@@ -43,7 +40,7 @@ function ClassTask({handleOpenModal}) {
             </Accordion>
           </Col>
         </Row>
-      </MainContainer>
+    </>
   )
 }
 export default ClassTask
