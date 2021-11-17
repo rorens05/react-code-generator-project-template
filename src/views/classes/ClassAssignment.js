@@ -1,11 +1,11 @@
 import React from 'react'
-import ClassExamHeader from './components/ClassExamHeader'
+import AssignmentHeader from './components/AssignmentHeader'
 import {Accordion, Row, Col} from 'react-bootstrap'
 
-function ClassExam() {
+function ClassAssignment() {
   return (
     <div>
-    <ClassExamHeader />
+      <AssignmentHeader />
       <Accordion>
         <Accordion.Item eventKey="0">
         <Accordion.Header>
@@ -16,10 +16,7 @@ function ClassExam() {
           <Row>
             <Col sm={8}>
               <div className='title-exam'>
-                Exam 1
-              </div>
-              <div className='code-exam'>
-                EQF1
+                Unit 1
               </div>
             </Col>
             <Col sm={9} className='instruction-exam' >
@@ -31,11 +28,18 @@ function ClassExam() {
                 <i class="fas fa-user-clock" style={{paddingRight:'10px'}}></i>
                 <i class="fas fa-trash-alt" style={{paddingRight:'10px'}}></i>
               </Col>
+              <Col sm={9} className='due-date-discusstion' >
+                <h5>Due Nov 9, 2021</h5>
+              </Col>
+              <Col sm={3} className='posted-date-discusstion'>
+                <h5>Posted Nov 5, 2021</h5>
+              </Col>
+              ____________________________________________________________________________________________________________________________________________
           </Row>
         </Accordion.Body>
-      </Accordion.Item>
-    </Accordion>
+        </Accordion.Item>
+      </Accordion>
     </div>
   )
 }
-export default ClassExam
+export default ClassAssignment

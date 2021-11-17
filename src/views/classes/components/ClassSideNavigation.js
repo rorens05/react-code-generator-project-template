@@ -1,5 +1,6 @@
 import React from 'react'
 import {ListGroup, Tab, Row, Col} from 'react-bootstrap'
+import ClassAssignment from '../ClassAssignment'
 import ClassDiscussion from '../ClassDiscussion'
 import ClassExam from '../ClassExam'
 import ClassFeed from '../ClassFeed'
@@ -78,6 +79,9 @@ function ClassSideNavigation() {
               </Tab.Pane>
               <Tab.Pane className='content-pane' eventKey="#link4">
                 <ClassDiscussion />
+              </Tab.Pane>
+              <Tab.Pane className='content-pane' eventKey="#link5">
+                <ClassAssignment />
               </Tab.Pane>
               <Tab.Pane className='content-pane' eventKey="#link6">
                 <ClassTask />
