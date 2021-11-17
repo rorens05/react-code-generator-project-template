@@ -26,7 +26,7 @@ function CreateTask({modal, toggle}) {
           		<Form.Label >Instructions</Form.Label>
                 <Form.Control type="text" placeholder='Enter instructions here'/>
             </Form.Group>  
-			<Form.Group className='right-btn'>
+			  <Form.Group className='right-btn'>
 							<Button className='bg-btn'  variant="warning" size="lg" >Save</Button>
             </Form.Group>
         </Modal.Body>

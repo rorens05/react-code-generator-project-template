@@ -1,10 +1,7 @@
 import React from 'react'
-import MainContainer from '../../components/layouts/MainContainer'
-import ClassSideNavigation from './components/ClassSideNavigation'
-import {Row, Col, Button, Form, Card, Accordion, useAccordionButton, Nav} from 'react-bootstrap'
-import ClassHeader from './components/ClassHeader'
+import {Row, Col, Accordion, useAccordionButton,} from 'react-bootstrap'
 import HeaderDiscussion from './components/HeaderDiscussion'
-import { Link } from 'react-router-dom'
+
 
 function CustomToggle({ children, eventKey }) {
   const decoratedOnClick = useAccordionButton(eventKey, () =>
@@ -21,13 +18,9 @@ function CustomToggle({ children, eventKey }) {
 }
 function ClassDiscussion({handleOpenModal}) {
   return (
-      <MainContainer>
         <Row style={{flexWrap:'wrap'}}>
-          <Col Col md={4} className = "class-row">
-            <ClassSideNavigation/>
-          </Col>
-          <Col className = "class-padding">
-            <HeaderDiscussion/> 
+           <HeaderDiscussion/>
+          <Col> 
             <Accordion defaultActiveKey="0" flush>
               <Accordion.Item eventKey="0">
                 <Accordion.Header>Unit 1</Accordion.Header>
@@ -41,7 +34,7 @@ function ClassDiscussion({handleOpenModal}) {
                   Lesson 1
                 </Accordion.Body>
               </Accordion.Item>
-              <Accordion.Item eventKey="1">
+              <Accordion.Item eventKey="2">
                 <Accordion.Header>Unit 3</Accordion.Header>
                 <Accordion.Body>
                   Lesson 1
@@ -50,7 +43,6 @@ function ClassDiscussion({handleOpenModal}) {
             </Accordion>
           </Col>
         </Row>
-      </MainContainer>
   )
 }
 export default ClassDiscussion

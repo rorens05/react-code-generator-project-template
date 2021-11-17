@@ -1,7 +1,10 @@
 import React from 'react'
 import {ListGroup, Tab, Row, Col} from 'react-bootstrap'
+import ClassDiscussion from '../ClassDiscussion'
 import ClassExam from '../ClassExam'
 import ClassFeed from '../ClassFeed'
+import ClassLinks from '../ClassLinks'
+import ClassTask from '../ClassTask'
 import ClassCalendar from './ClassCalendar'
 
 function ClassSideNavigation() {
@@ -12,7 +15,6 @@ function ClassSideNavigation() {
               <ListGroup.Item className="list-group-item-o">
                 <Row>
                   <Col className="" sm={9} >
-                    
                     <div className="class-subtitle-code" > <i class="fas fa-expand"></i> {' '}FXC57</div>
                     <div className="class-subtitle-section">Grade 1 - Faith</div>
                     <div className="class-subtitle-subject">Math 1</div>
@@ -25,8 +27,7 @@ function ClassSideNavigation() {
                     </div>
                   </Col>
                 </Row>
-              </ListGroup.Item> 
-            
+              </ListGroup.Item>
             <ListGroup style={{paddingLeft:'15px'}}>
               <ListGroup.Item className="list-group-item-o " action href="#link1">
                 Feed
@@ -75,11 +76,19 @@ function ClassSideNavigation() {
               <Tab.Pane className='content-pane' eventKey="#link3">
                 <ClassExam />
               </Tab.Pane>
+              <Tab.Pane className='content-pane' eventKey="#link4">
+                <ClassDiscussion />
+              </Tab.Pane>
+              <Tab.Pane className='content-pane' eventKey="#link6">
+                <ClassTask />
+              </Tab.Pane>
+              <Tab.Pane className='content-pane' eventKey="#link8">
+                <ClassLinks />
+              </Tab.Pane>
             </Tab.Content> 
           </Col> 
         </div>
       </Tab.Container>
   )
 }
-
 export default ClassSideNavigation
