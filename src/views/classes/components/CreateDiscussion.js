@@ -14,21 +14,21 @@ function CreateDiscussion({modal, toggle}) {
         <Modal.Body>
           <Form.Group className="mb-3">
             <Form.Label>Unit</Form.Label>
-              <Form.Select>
-                <option>-- Select Unit Here --</option>
-              </Form.Select>
-            </Form.Group>
-          	<Form.Group className="mb-4">
-            	<Form.Label>Discussion Name</Form.Label>
-				<Form.Control type="text" placeholder='Enter discussion name here'/>
-            </Form.Group>
+            <Form.Select>
+              <option>-- Select Unit Here --</option>
+            </Form.Select>
+          </Form.Group>
+          <Form.Group className="mb-4">
+            <Form.Label>Discussion Name</Form.Label>
+				    <Form.Control type="text" placeholder='Enter discussion name here'/>
+          </Form.Group>
             <Form.Group className="mb-4">
           		<Form.Label >Instructions</Form.Label>
                 <Form.Control type="text" placeholder='Enter instructions here'/>
-            </Form.Group>  
-			  <Form.Group className='right-btn'>
-							<Button className='bg-btn'  variant="warning" size="lg" >Save</Button>
             </Form.Group>
+			    <Form.Group className='right-btn'>
+							<Button className='bg-btn'  variant="warning" size="lg" >Save</Button>
+          </Form.Group>
         </Modal.Body>
       </Modal>
     </div>
