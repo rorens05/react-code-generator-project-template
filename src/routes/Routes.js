@@ -15,6 +15,7 @@ import Reports from "../views/reports/Reports";
 import CourseContent from "../views/courses/CourseContent";
 import ArchiveClass from "../views/classes/ArchiveClass"
 import ClassesContent from "../views/classes/ClassesContent";
+import AssignmentContent from "../views/reports/components/AssignmentContent";
 import ClassList from "../views/classes/ClassList";
 
 
@@ -32,6 +33,7 @@ export default function Routes() {
           <Route path='/classlist' exact component={ClassList}/>
           <Route path='/classescontent' exact component={ClassesContent}/>
           <Route path='/archive' exact component={ArchiveClass}/>
+          <Route path='/assigncontent' exact component={AssignmentContent}/>
           <Route path='/login' exact component={Login}/>
           <Route path='/forgot_password' exact component={ForgotPassword}/>
           <Route path='/' exact component={Home}/>

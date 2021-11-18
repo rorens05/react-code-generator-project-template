@@ -213,6 +213,28 @@ color:#BCBCBC !important;
   height: 20px;
   float: right;
 }
+.report-sidenav {
+  background-color: white !important;
+  border: 0px !important;
+  height: 308px;
+  width: 300px;
+  margin-top: 50px !important;
+  border-radius: 10px;
+  opacity: 1;
+  top: 178px;
+  left: 30px;
+}
+.report-content {
+  background-color: white !important;
+  border: 0px !important;
+  margin-top: 50px !important;
+  top: 178px;
+}
+.row-report {
+  background-color: white !important;
+  border: 0px !important;
+  height: 500px;
+}
 
 .bread-margin {
 margin-left: 400px;
