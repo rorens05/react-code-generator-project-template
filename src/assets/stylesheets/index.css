@@ -145,6 +145,12 @@ height: 200px;
 border-radius: 10px 10px 0px 0px !important;
 } */
 
+.card-header-courses {
+background-color:#EE9337 !important;
+height: 200px;
+border-radius: 10px 10px 0px 0px !important;
+}
+
 .search-button {
 background-color: transparent !important;
 border-left:0px !important;
@@ -177,6 +183,10 @@ color:#BCBCBC !important;
   padding: '20px' ;
   width:'300px' ;
   height: '567px' ;
+}
+
+.m-t-30 {
+  margin-top: 30px !important;
 }
 
 .class-padding {
@@ -297,6 +307,18 @@ border-top-right-radius: 0px !important;
   background-color: white !important;
   border-radius: 10px;
   padding:10px; 
+}
+
+.content-pane-title{
+  font-size: 36px;
+  font-family: "Segou UI" Regular;
+  color:#7D7D7D;
+}
+
+.unit-title{
+  font-size: 24px !important;
+  font-family: "Segou UI" Regular !important; 
+  color:#7D7D7D;
 }
 
 /* Kent */
@@ -455,6 +477,13 @@ border-top-right-radius: 0px !important;
   outline: none!important;
   color:#BCBCBC !important;
   font-size: 64px!important;
+  border: none!important;
+  background: none!important;
+}
+.feed-box{
+  border: none!important;
+  background: none!important;
+  outline: none!important;
 }
 .calendar-card{
   border-radius: 15px 15px 15px 15px!important;
@@ -468,7 +497,7 @@ border-top-right-radius: 0px !important;
 
 .post-card{
   border-radius: 15px 15px 15px 15px!important;
-  box-shadow:1px 2px 5px 1px #707070;
+  box-shadow:1px 3px 6px  #00000029;
   margin-bottom: 10px;
 }
 
@@ -624,7 +653,7 @@ border-top-right-radius: 0px !important;
 
 .accordion-button {
   text-align: left !important;
-  font: normal normal normal 24px/32px Segoe UI !important;
+  font-family: "Segou UI" Regular !important; 
   letter-spacing: 0px !important;
   color: #707070 !important;
   opacity: 1  !important;
@@ -644,7 +673,7 @@ border-top-right-radius: 0px !important;
 
 .lesson-header {
   text-align: left !important;
-  font: normal normal normal 24px/32px Segoe UI !important;
+  font-family: "Segou UI" Regular !important; 
   letter-spacing: 0px !important;
   color: #EE9337 !important;
   opacity: 1 !important;
@@ -669,4 +698,13 @@ border-top-right-radius: 0px !important;
   color: #EE9337;
   font-size: 25px;
   text-align: right;
+}
+.due-date-discusstion{
+  font-size: 27px;
+  color: #707070;
+}
+.posted-date-discusstion{
+  font-size: 27px;
+  text-align: right;
+  color: #BCBCBC;
 }

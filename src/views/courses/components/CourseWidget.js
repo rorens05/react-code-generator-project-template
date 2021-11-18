@@ -43,7 +43,7 @@ export default function CourseWidget() {
           </div>
           <Col sm={9}>
             <Tab.Content className="content-pane">
-              <span className="title">Math <Button variant="outline-warning"><i className="fa fa-plus"></i> Add Unit</Button></span>
+              <span className="content-pane-title">Math <Button variant="outline-warning"><i className="fa fa-plus"></i> Add Unit</Button></span>
               <div className="row m-b-20 m-t-30">
                 <div className="col-md-12">
                   <InputGroup size="lg">

@@ -1,7 +1,6 @@
 import React, {useState} from 'react'
 import { Button, InputGroup, FormControl, Card, Form } from 'react-bootstrap';
 import CreateClassModal from './CreateClassModal'
-import HeaderArchive from './HeaderArchive';
 import { Link } from 'react-router-dom'
 
 function ClassHeader() {

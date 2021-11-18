@@ -6,7 +6,7 @@ export default function CourseAccordion() {
   <div>
     <Accordion defaultActiveKey="0">
       <Accordion.Item eventKey="0">
-        <Accordion.Header>Unit 1</Accordion.Header>
+        <Accordion.Header ><span className="unit-title">Unit 1</span></Accordion.Header>
         <Accordion.Body>
           <Row>
             <Col className="lesson-header" md={9}>
@@ -20,7 +20,7 @@ export default function CourseAccordion() {
         </Accordion.Body>
       </Accordion.Item>
       <Accordion.Item eventKey="1">
-        <Accordion.Header>Unit 2</Accordion.Header>
+        <Accordion.Header><span className="unit-title">Unit 2</span></Accordion.Header>
         <Accordion.Body>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
           tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim

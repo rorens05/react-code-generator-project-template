@@ -1,26 +1,12 @@
 import React from 'react'
-import {Row, Col, Button, Form, Card, Accordion, useAccordionButton, Nav} from 'react-bootstrap'
-import HeaderTask from './components/HeaderTask'
+import AssignmentHeader from './components/AssignmentHeader'
+import {Accordion, Row, Col} from 'react-bootstrap'
 
-
-function Customtoggle({ children, eventKey }) {
-  const decoratedOnClick = useAccordionButton(eventKey, () =>
-    console.log('totally custom!'),
-  );
+function ClassAssignment() {
   return (
-    <button
-      type="button"
-      onClick={decoratedOnClick}
-    >
-      {children}
-    </button>
-  );
-}
-function ClassTask({handleOpenModal}) {
-  return (
-    <>
-     <HeaderTask/>
-     <Accordion>
+    <div>
+      <AssignmentHeader />
+      <Accordion>
         <Accordion.Item eventKey="0">
         <Accordion.Header>
           <div className='unit-exam'>Unit 1 
@@ -30,7 +16,7 @@ function ClassTask({handleOpenModal}) {
           <Row>
             <Col sm={8}>
               <div className='title-exam'>
-                Task
+                Assignment
               </div>
             </Col>
             <Col sm={9} className='instruction-exam' >
@@ -53,7 +39,7 @@ function ClassTask({handleOpenModal}) {
         </Accordion.Body>
         </Accordion.Item>
       </Accordion>
-    </>
+    </div>
   )
 }
-export default ClassTask
+export default ClassAssignment
