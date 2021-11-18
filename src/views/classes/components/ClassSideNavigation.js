@@ -4,9 +4,13 @@ import ClassAssignment from '../ClassAssignment'
 import ClassDiscussion from '../ClassDiscussion'
 import ClassExam from '../ClassExam'
 import ClassFeed from '../ClassFeed'
+import ClassLearn from '../ClassLearn'
 import ClassLinks from '../ClassLinks'
 import ClassTask from '../ClassTask'
 import ClassCalendar from './ClassCalendar'
+import ClassInteractive from '../ClassInteractive'
+import ClassList from '../ClassList'
+
 
 function ClassSideNavigation() {
   return (
@@ -71,8 +75,8 @@ function ClassSideNavigation() {
                </Col>
              </Row>
               </Tab.Pane>
-              <Tab.Pane eventKey="#link2">
-                v
+              <Tab.Pane className='content-pane' eventKey="#link2">
+                <ClassLearn />
               </Tab.Pane>
               <Tab.Pane className='content-pane' eventKey="#link3">
                 <ClassExam />
@@ -86,8 +90,14 @@ function ClassSideNavigation() {
               <Tab.Pane className='content-pane' eventKey="#link6">
                 <ClassTask />
               </Tab.Pane>
+              <Tab.Pane className='content-pane' eventKey="#link7">
+                <ClassInteractive />
+              </Tab.Pane>
               <Tab.Pane className='content-pane' eventKey="#link8">
                 <ClassLinks />
+              </Tab.Pane>
+              <Tab.Pane className='content-pane' eventKey="#link9">
+                <ClassList />
               </Tab.Pane>
             </Tab.Content> 
           </Col> 

@@ -16,7 +16,7 @@ function ClassAssignment() {
           <Row>
             <Col sm={8}>
               <div className='title-exam'>
-                Unit 1
+                Assignment
               </div>
             </Col>
             <Col sm={9} className='instruction-exam' >

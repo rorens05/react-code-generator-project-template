@@ -1,9 +1,7 @@
 import React from 'react'
-import MainContainer from '../../components/layouts/MainContainer'
-import ClassSideNavigation from './components/ClassSideNavigation'
 import {Row, Col, Button, Form, Card, Accordion, useAccordionButton, Nav} from 'react-bootstrap'
 import HeaderTask from './components/HeaderTask'
-import { Link } from 'react-router-dom'
+
 
 function Customtoggle({ children, eventKey }) {
   const decoratedOnClick = useAccordionButton(eventKey, () =>
@@ -22,24 +20,39 @@ function ClassTask({handleOpenModal}) {
   return (
     <>
      <HeaderTask/>
-        <Row style={{flexWrap:'wrap'}}>
-          <Col>
-            <Accordion defaultActiveKey="0" flush>
-              <Accordion.Item eventKey="0">
-                <Accordion.Header>Unit 1</Accordion.Header>
-                <Accordion.Body>
-                  Lesson 1
-                </Accordion.Body>
-              </Accordion.Item>
-              <Accordion.Item eventKey="1">
-                <Accordion.Header>Unit 2</Accordion.Header>
-                <Accordion.Body>
-                  Lesson 1
-                </Accordion.Body>
-              </Accordion.Item>
-            </Accordion>
-          </Col>
-        </Row>
+     <Accordion>
+        <Accordion.Item eventKey="0">
+        <Accordion.Header>
+          <div className='unit-exam'>Unit 1 
+          </div>
+        </Accordion.Header>
+        <Accordion.Body>
+          <Row>
+            <Col sm={8}>
+              <div className='title-exam'>
+                Task
+              </div>
+            </Col>
+            <Col sm={9} className='instruction-exam' >
+              <p>Instruction: Count the object. Type the number in the box</p>
+            </Col>
+              <Col sm={3} className='icon-exam'>
+                <i class="fas fa-eye" style={{paddingRight:'10px'}} ></i>{' '}
+                <i class="fas fa-edit"style={{paddingRight:'10px'}}></i>
+                <i class="fas fa-user-clock" style={{paddingRight:'10px'}}></i>
+                <i class="fas fa-trash-alt" style={{paddingRight:'10px'}}></i>
+              </Col>
+              <Col sm={9} className='due-date-discusstion' >
+                <h5>Due Nov 9, 2021</h5>
+              </Col>
+              <Col sm={3} className='posted-date-discusstion'>
+                <h5>Posted Nov 5, 2021</h5>
+              </Col>
+              ____________________________________________________________________________________________________________________________________________
+          </Row>
+        </Accordion.Body>
+        </Accordion.Item>
+      </Accordion>
     </>
   )
 }
