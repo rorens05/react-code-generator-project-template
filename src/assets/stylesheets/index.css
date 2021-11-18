@@ -185,6 +185,10 @@ color:#BCBCBC !important;
   height: '567px' ;
 }
 
+.m-t-30 {
+  margin-top: 30px !important;
+}
+
 .class-padding {
   background-color: #FFFFFF !important;
   margin-top: 70px !important;
@@ -281,6 +285,18 @@ border-top-right-radius: 0px !important;
   background-color: white !important;
   border-radius: 10px;
   padding:10px; 
+}
+
+.content-pane-title{
+  font-size: 36px;
+  font-family: "Segou UI" Regular;
+  color:#7D7D7D;
+}
+
+.unit-title{
+  font-size: 24px !important;
+  font-family: "Segou UI" Regular !important; 
+  color:#7D7D7D;
 }
 
 /* Kent */
@@ -608,7 +624,7 @@ border-top-right-radius: 0px !important;
 
 .accordion-button {
   text-align: left !important;
-  font: normal normal normal 24px/32px Segoe UI !important;
+  font-family: "Segou UI" Regular !important; 
   letter-spacing: 0px !important;
   color: #707070 !important;
   opacity: 1  !important;
@@ -628,7 +644,7 @@ border-top-right-radius: 0px !important;
 
 .lesson-header {
   text-align: left !important;
-  font: normal normal normal 24px/32px Segoe UI !important;
+  font-family: "Segou UI" Regular !important; 
   letter-spacing: 0px !important;
   color: #EE9337 !important;
   opacity: 1 !important;
