@@ -31,7 +31,7 @@ export default function CoursesItem() {
   return (
       <div className="col-md-3 card-group-tfi">
         <Card className="card-design b-0px">
-          <Card.Header className="card-header">
+          <Card.Header className="card-header-courses">
             <div className="row" style={{color:"white"}}>
               <div className="col-md-6">
                 <i className="fa fa-lock fa-2x"></i>
