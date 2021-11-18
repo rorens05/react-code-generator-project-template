@@ -15,6 +15,8 @@ import Reports from "../views/reports/Reports";
 import CourseContent from "../views/courses/CourseContent";
 import ArchiveClass from "../views/classes/ArchiveClass"
 import ClassesContent from "../views/classes/ClassesContent";
+import ClassList from "../views/classes/ClassList";
+
 
 export default function Routes() {
   return (
@@ -27,6 +29,7 @@ export default function Routes() {
           <Route path='/files' exact component={Files}/>
           <Route path='/reports' exact component={Reports}/>
           <Route path='/classes' exact component={Classes}/>
+          <Route path='/classlist' exact component={ClassList}/>
           <Route path='/classescontent' exact component={ClassesContent}/>
           <Route path='/archive' exact component={ArchiveClass}/>
           <Route path='/login' exact component={Login}/>
