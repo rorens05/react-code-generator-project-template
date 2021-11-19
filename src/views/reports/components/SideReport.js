@@ -1,6 +1,7 @@
 import React from 'react'
 import {ListGroup, Tab, Row, Col, Form} from 'react-bootstrap'
 import ReportHeader from './ReportHeader'
+import AssignmentReport from './AssignmentReport'
 import AssignmentHeader from './AssignmentHeader'
 
 function SideReport() {
@@ -38,7 +39,8 @@ function SideReport() {
                 <ReportHeader/>
               </Tab.Pane>
               <Tab.Pane className='content-pane report-content' eventKey="#link5">
-                <AssignmentHeader/>
+              <AssignmentHeader />
+                <AssignmentReport />
               </Tab.Pane>
             </Tab.Content> 
           </Col> 

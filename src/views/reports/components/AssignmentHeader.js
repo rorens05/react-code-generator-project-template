@@ -1,6 +1,6 @@
 import React from 'react'
 import {InputGroup, FormControl } from 'react-bootstrap';
-import AssignmentReport from './AssignmentReport';
+
 
 function AssignmentHeader() {
 	return (
@@ -16,7 +16,7 @@ function AssignmentHeader() {
 					</InputGroup>
 				</div>
 			</div>
-			<AssignmentReport/>
+			
 		</div>
 	)
 }
