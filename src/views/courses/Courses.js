@@ -30,8 +30,6 @@ export default function Courses() {
           </div>
           <div className="row m-b-20 justify-content-center">
               <CoursesItem />
-              <CoursesItem />
-              <CoursesItem />
               <CourseCreate openModal={openModal} setOpenModal={setOpenModal} /> 
               {/* <CourseEdit openEditModal={openEditModal} setOpenEditModal={setOpenEditModal} />  */}
           </div>
