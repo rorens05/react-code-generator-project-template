@@ -708,3 +708,26 @@ border-top-right-radius: 0px !important;
   text-align: right;
   color: #BCBCBC;
 }
+.class-waiting-header{
+  font-size: 24px;
+  color: #707070;
+}
+.class-waiting-list{
+  font-size: 24px;
+  color: #707070;
+}
+.class-waiting-icon{
+  text-align: right;
+}
+.class-enrolled-header{
+  font-size: 24px;
+  color: #707070;
+}
+.class-enrolled-list{
+  font-size: 24px;
+  color: #707070;
+}
+.btn-class-list{
+  text-align: center;
+  padding-bottom: 45px;
+}

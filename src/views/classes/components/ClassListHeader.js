@@ -1,13 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {Button, InputGroup, FormControl} from 'react-bootstrap'
 
-function ClassListHeader() {
+function ClassListHeader(handleOpenClassWaiting) {
+		
+	console.log(handleOpenClassWaiting)
+
   return (
     <div>
       <div className="row m-b-20">
 				<div className="col-md-10 pages-header"><h1>Class List</h1></div>
 			</div>
-      <Button variant="outline-warning">Enrolled</Button><Button variant="outline-warning">Waiting List</Button>
+			<div style={{textAlign:'center', paddingBottom:'45px'}}><Button size='lg' variant="outline-warning">Enrolled</Button><Button  onSubmit={handleOpenClassWaiting} size='lg' variant="outline-warning">Waiting List</Button></div>
+      
       <div className="row m-b-20">
 				<div className="col-md-12">
 					<InputGroup size="lg">
