@@ -1,6 +1,5 @@
 import React from 'react'
-import {InputGroup, FormControl, Table} from 'react-bootstrap'
-import AssignmentReport from './AssignmentReport'
+import { Table} from 'react-bootstrap'
 
 function AssignmentContent() {
   return (

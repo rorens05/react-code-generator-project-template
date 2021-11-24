@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import {Accordion, Row, Col, Button} from 'react-bootstrap'
 import AssignmentContent from './AssignmentContent'
-import AssignmentHeader from './AssignmentHeader'
 
 function AssignmentReport() {
 const [open, setOpen] = useState(false)
@@ -11,7 +10,7 @@ const handleOpen = e =>{
   }
     return (
       <div> 
-        {open == true?(<AssignmentContent />):<span>
+        {open === true?(<AssignmentContent />):<span>
         <Accordion>
           <Accordion.Item eventKey="0">
             <Accordion.Header><div className='unit-exam'>Unit 1 </div></Accordion.Header>
