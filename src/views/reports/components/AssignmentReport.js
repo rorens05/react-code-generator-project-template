@@ -10,7 +10,7 @@ const handleOpen = e =>{
   }
     return (
       <div> 
-        {open == true?(<AssignmentContent />):<span>
+        {open === true?(<AssignmentContent />):<span>
         <Accordion>
           <Accordion.Item eventKey="0">
             <Accordion.Header><div className='unit-exam'>Unit 1 </div></Accordion.Header>
