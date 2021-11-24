@@ -28,9 +28,8 @@ export default function CoursesItem() {
   ));
 
   const getCourses = async() => {
-    // let sessionToken = sessionStorage.getItem("session");
-    // let sessToken = sessionToken.replace(/\"/g, "");
-    let token = "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJMb2dnZWRVc2VyIjoie1wiVXNlcklkXCI6MixcIlJvbGVcIjp7XCJJRFwiOjMsXCJSb2xlTmFtZVwiOlwiVGVhY2hlclwiLFwiUm9sZURlc2NyaXB0aW9uXCI6XCJUZWFjaGVyXCIsXCJBY2Nlc3NMZXZlbFwiOm51bGwsXCJDcmVhdGVkQnlcIjpudWxsLFwiQ3JlYXRlZERhdGVcIjpudWxsLFwiVXBkYXRlZEJ5XCI6bnVsbCxcIlVwZGF0ZWREYXRlXCI6bnVsbCxcIkRlbGV0ZWRcIjpudWxsLFwiRGVsZXRlZEJ5XCI6bnVsbCxcIkRlbGV0ZWREYXRlXCI6bnVsbH0sXCJUZWFjaGVyXCI6e1wiSWRcIjoxLFwiRW1wbG95ZWVOb1wiOlwiMjAwNzEzOTM0XCIsXCJQcmVmaXhOYW1lXCI6XCJNclwiLFwiRm5hbWVcIjpcIk1pY2hhZWxzc3NcIixcIkxuYW1lXCI6XCJHYWJyaWVsc1wiLFwiTWlkZGxlSW5pdGlhbFwiOlwiQlNzcnJyXCIsXCJTZXhcIjpcIk1hbGVcIixcIkNpdGl6ZW5zaGlwXCI6bnVsbCxcIlN0YXR1c1wiOm51bGwsXCJQZXJtYW5lbnRBZGRyZXNzXCI6XCIzMDQgU2FtcGFsb2MgU3QuIENlbWJvXCIsXCJQcmVzZW50QWRkcmVzc1wiOm51bGwsXCJCZGF5XCI6XCIyMDIxLTA1LTAyVDAwOjAwOjAwXCIsXCJDb250YWN0Tm9cIjpcIis2MzkxNzg2ODQ5NTFcIixcIkVtYWlsQWRkXCI6XCJtaWNoYWVsYmVuZ2FicmllbEBsaXZlLmNvbVwiLFwiRW1lcmdlbmN5Q29udGFjdE5vXCI6bnVsbCxcIlBvc2l0aW9uSURcIjo3LFwiVXNlckFjY291bnRJRFwiOjIsXCJDcmVhdGVkQnlcIjpudWxsLFwiQ3JlYXRlZERhdGVcIjpudWxsLFwiVXBkYXRlZEJ5XCI6MixcIlVwZGF0ZWREYXRlXCI6XCIyMDIxLTA5LTAzVDAwOjAwOjAwXCIsXCJEZWxldGVkXCI6bnVsbCxcIkRlbGV0ZWRCeVwiOm51bGwsXCJEZWxldGVkRGF0ZVwiOm51bGx9LFwiU3R1ZGVudFwiOm51bGwsXCJQYXJlbnRcIjpudWxsfSIsImV4cCI6MTYzNzM4NjMyMSwiaXNzIjoic21lc2suaW4iLCJhdWQiOiJyZWFkZXJzIn0.X3-7zNe-bIj0Matu4WyzyVcDg1oVdva1y5nJO0QvgM4"
+    let sessionToken = sessionStorage.getItem("session");
+    let token = sessionToken.replace(/\"/g, "");
     let response = await fetch("https://tekteachlms-api.com/api/Course",{
       headers: {
           'Content-Type': 'application/json',
@@ -38,15 +37,45 @@ export default function CoursesItem() {
           'Authorization': 'Bearer' + " " + token,
           'X-LMS-Key':"Web|localhost:3001"
       },
+      
     })
-    const courseData = await response.json();
-    setCourse(courseData);
+    const cd = await response.json()
+    .then(cd => {
+      if(cd.status === 401){
+        alert("401")
+        refreshToken()
+      }else{
+        setCourse(cd)
+      }
+    })
+    .catch(
+      console.log("Error")
+    )
   }
+
+  const refreshToken = async() => {
+    let token = "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJMb2dnZWRVc2VyIjoie1wiVXNlcklkXCI6MixcIlJvbGVcIjp7XCJJRFwiOjMsXCJSb2xlTmFtZVwiOlwiVGVhY2hlclwiLFwiUm9sZURlc2NyaXB0aW9uXCI6XCJUZWFjaGVyXCIsXCJBY2Nlc3NMZXZlbFwiOm51bGwsXCJDcmVhdGVkQnlcIjpudWxsLFwiQ3JlYXRlZERhdGVcIjpudWxsLFwiVXBkYXRlZEJ5XCI6bnVsbCxcIlVwZGF0ZWREYXRlXCI6bnVsbCxcIkRlbGV0ZWRcIjpudWxsLFwiRGVsZXRlZEJ5XCI6bnVsbCxcIkRlbGV0ZWREYXRlXCI6bnVsbH0sXCJUZWFjaGVyXCI6e1wiSWRcIjoxLFwiRW1wbG95ZWVOb1wiOlwiMjAwNzEzOTM0XCIsXCJQcmVmaXhOYW1lXCI6XCJNclwiLFwiRm5hbWVcIjpcIk1pY2hhZWxzc3NcIixcIkxuYW1lXCI6XCJHYWJyaWVsc1wiLFwiTWlkZGxlSW5pdGlhbFwiOlwiQlNzcnJyXCIsXCJTZXhcIjpcIk1hbGVcIixcIkNpdGl6ZW5zaGlwXCI6bnVsbCxcIlN0YXR1c1wiOm51bGwsXCJQZXJtYW5lbnRBZGRyZXNzXCI6XCIzMDQgU2FtcGFsb2MgU3QuIENlbWJvXCIsXCJQcmVzZW50QWRkcmVzc1wiOm51bGwsXCJCZGF5XCI6XCIyMDIxLTA1LTAyVDAwOjAwOjAwXCIsXCJDb250YWN0Tm9cIjpcIis2MzkxNzg2ODQ5NTFcIixcIkVtYWlsQWRkXCI6XCJtaWNoYWVsYmVuZ2FicmllbEBsaXZlLmNvbVwiLFwiRW1lcmdlbmN5Q29udGFjdE5vXCI6bnVsbCxcIlBvc2l0aW9uSURcIjo3LFwiVXNlckFjY291bnRJRFwiOjIsXCJDcmVhdGVkQnlcIjpudWxsLFwiQ3JlYXRlZERhdGVcIjpudWxsLFwiVXBkYXRlZEJ5XCI6MixcIlVwZGF0ZWREYXRlXCI6XCIyMDIxLTA5LTAzVDAwOjAwOjAwXCIsXCJEZWxldGVkXCI6bnVsbCxcIkRlbGV0ZWRCeVwiOm51bGwsXCJEZWxldGVkRGF0ZVwiOm51bGx9LFwiU3R1ZGVudFwiOm51bGwsXCJQYXJlbnRcIjpudWxsfSIsImV4cCI6MTYzNzcyMTk5MiwiaXNzIjoic21lc2suaW4iLCJhdWQiOiJyZWFkZXJzIn0.YeB_EtAzu6o4D1rlknybttIgZ-GKmcWF1uLX17LdNLQ"
+    let response = await fetch("https://tekteachlms-api.com/api/Login/token/refresh",{
+      headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer' + " " + token,
+          'X-LMS-Key':"Web|localhost:3001"
+      },
+    })
+    let newToken = await response.json();
+    console.log(newToken)
+    console.log(newToken.result)
+
+    //set new token in session storage
+    sessionStorage.setItem('session', newToken);
+    window.location.reload()
+    
+}
 
   useEffect(() => {
     getCourses()
   }, [ ])
-    
   return (
     <React.Fragment>
       {
@@ -85,7 +114,7 @@ export default function CoursesItem() {
                 </Card.Header>
                 <Card.Body>
                     <Card.Title tag="h5">
-                      <Link to="/coursecontent" className="active">{item.id}</Link>
+                      <Link to="/coursecontent" className="active">{item.courseName}</Link>
                     </Card.Title>
                     <Card.Subtitle
                         className="mb-2 text-muted"
