@@ -8,9 +8,9 @@ function ExamHeaders() {
   <div>
 		<div className="row m-b-20">
 			<div className="col-md-10 pages-header"><h1 className='exam-title'>Exam </h1>
-			<Button style={{color:'#EE9337', fontSize:'18px', textDecoration:'none'}} Button variant="link" > <i className="fa fa-plus"></i>  Create Exam  </Button>
+			<Button className='btn-create-exam' Button variant="link" > <i className="fa fa-plus"></i>  Create Exam  </Button>
 			<h4 className='exam-or'>OR</h4>
-			<Button style={{color:'#EE9337', fontSize:'18px', textDecoration:'none'}} Button variant="link" > <i className="fa fa-plus"></i>  Import Exam  </Button>
+			<Button className='btn-create-exam' Button variant="link" > <i className="fa fa-plus"></i>  Import Exam  </Button>
     </div>
 		</div>
 		<div className="row m-b-20">

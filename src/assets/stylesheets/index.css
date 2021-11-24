@@ -757,3 +757,33 @@ border-top-right-radius: 0px !important;
   padding-left: 5px;
   padding-right: 5px;
 }
+.btn-create-exam{
+  color: #EE9337!important;
+  font-size: 18px!important;
+  text-decoration: none!important;
+}
+.btn-create-class{
+  color: #EE9337!important;
+  font-size: 18px!important;
+  text-decoration: none!important
+}
+.btn-create-discussion{
+  color: #EE9337!important;
+  font-size: 18px!important;
+  text-decoration: none!important
+}
+.btn-create-assignment{
+  color: #EE9337!important;
+  font-size: 18px!important;
+  text-decoration: none!important
+}
+.btn-create-task{
+  color: #EE9337!important;
+  font-size: 18px!important;
+  text-decoration: none!important
+}
+.btn-create-link{
+  color: #EE9337!important;
+  font-size: 18px!important;
+  text-decoration: none!important
+}

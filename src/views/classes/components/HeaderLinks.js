@@ -10,7 +10,7 @@ const toggle = () =>{
 	return (
 		<div>
 			<div className="row m-b-20">
-				<div className="col-md-10 pages-header"><h1>Links <Button Button variant="outline-warning" onClick={() => setModal(true) }> <i className="fa fa-plus"></i>  Create Links  </Button></h1></div>
+				<div className="col-md-10 pages-header"><h1>Links <Button className='btn-create-link' variant="link" onClick={() => setModal(true) }> <i className="fa fa-plus"></i>  Create Links  </Button></h1></div>
 			</div>
 			<div className="row m-b-20">
 				<div className="col-md-12"></div>
