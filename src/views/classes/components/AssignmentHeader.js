@@ -5,7 +5,7 @@ function AssignmentHeader() {
   return (
     <div>
       <div className="row m-b-20">
-				<div className="col-md-10 pages-header"><h1>Assignment <Button Button variant="outline-warning"> <i className="fa fa-plus"></i>  Create Assignment  </Button></h1>
+				<div className="col-md-10 pages-header"><h1>Assignment <Button className='btn-create-assignment' variant="link"> <i className="fa fa-plus"></i>  Create Assignment  </Button></h1>
 				</div>
 			</div>
 			<div className="row m-b-20">

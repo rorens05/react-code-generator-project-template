@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import {Accordion, Row, Col, Button} from 'react-bootstrap'
 import AssignmentContent from './AssignmentContent'
-import AssignmentHeader from './AssignmentHeader'
 
 function AssignmentReport() {
 const [open, setOpen] = useState(false)

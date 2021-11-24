@@ -1,21 +1,8 @@
 import React from 'react'
-import {Row, Col, Button, Form, Card, Accordion, useAccordionButton, Nav} from 'react-bootstrap'
+import {Row, Col, Accordion} from 'react-bootstrap'
 import HeaderTask from './components/HeaderTask'
 
 
-function Customtoggle({ children, eventKey }) {
-  const decoratedOnClick = useAccordionButton(eventKey, () =>
-    console.log('totally custom!'),
-  );
-  return (
-    <button
-      type="button"
-      onClick={decoratedOnClick}
-    >
-      {children}
-    </button>
-  );
-}
 function ClassTask({handleOpenModal}) {
   return (
     <>

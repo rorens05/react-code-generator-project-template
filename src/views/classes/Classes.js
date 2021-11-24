@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, CardGroup } from 'react-bootstrap'
+import { CardGroup } from 'react-bootstrap'
 import MainContainer from '../../components/layouts/MainContainer'
 import ClassCard from './components/ClassCard'
 import ClassHeader from './components/ClassHeader'
