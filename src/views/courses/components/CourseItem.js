@@ -29,6 +29,9 @@ export default function CoursesItem() {
 
   const getCourses = async() => {
     let sessionToken = sessionStorage.getItem("session");
+    if(sessionToken === null){
+      refreshToken()
+    }
     let token = sessionToken.replace(/\"/g, "");
     let response = await fetch("https://tekteachlms-api.com/api/Course",{
       headers: {
