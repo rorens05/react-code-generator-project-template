@@ -1,7 +1,6 @@
 import React, {useState} from 'react'
-import { Button, InputGroup, FormControl } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import CreateLinks from './CreateLinks';
-import CreateTask from './CreateTask';
 
 function HeaderLinks() {
 const [modal, setModal] = useState(false)

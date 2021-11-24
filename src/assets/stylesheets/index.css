@@ -104,6 +104,7 @@ margin-bottom: 10px;
 
 .pages-header {
 color:#707070;
+display:inline-flex;
 }
 
 .modal-header {
@@ -731,4 +732,28 @@ border-top-right-radius: 0px !important;
 .btn-class-list{
   text-align: center;
   padding-bottom: 45px;
+}
+.tr-exam-list{
+  text-align: center;
+  justify-content: center;
+}
+.td-number-exam{
+  font-size: 18px;
+  color: #707070;
+}
+.td-icon-plus{
+  color: #EE9337;
+  font-size: 28px;
+}
+.td-title-exam{
+  font-size: 18px;
+  color: #EE9337;
+}
+.exam-title{
+  padding-right: 5px;
+}
+.exam-or{
+  padding-top: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
 }

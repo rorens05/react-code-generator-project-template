@@ -4,9 +4,12 @@ import { InputGroup, FormControl, Button } from 'react-bootstrap'
 function ClassExamHeader() {
   return (
   	<div>	
-			<div className="row m-b-20">
-				<div className="col-md-10 pages-header"><h1>Exam <Button Button variant="outline-warning"> <i className="fa fa-plus"></i>  Create Exam  </Button></h1>
-				</div>
+		<div className="row m-b-20">
+			<div className="col-md-10 pages-header"><h1 className='exam-title'>Exam </h1>
+				<Button Button variant="outline-warning" > <i className="fa fa-plus"></i>  Create Exam  </Button>
+					<h4 className='exam-or'>OR</h4>
+				<Button Button variant="outline-warning" > <i className="fa fa-plus"></i>  Import Exam  </Button>
+    </div>
 			</div>
 			<div className="row m-b-20">
 				<div className="col-md-12">
