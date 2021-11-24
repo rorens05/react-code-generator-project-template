@@ -1,7 +1,5 @@
 import React from 'react'
 import MainContainer from '../../components/layouts/MainContainer'
-import ClassCard from './components/ClassCard'
-import ClassHeader from './components/ClassHeader'
 import HeaderArchive from './components/HeaderArchive'
 
 export default function Classes() {

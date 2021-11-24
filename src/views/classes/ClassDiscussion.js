@@ -1,21 +1,8 @@
 import React from 'react'
-import {Row, Col, Accordion, useAccordionButton,} from 'react-bootstrap'
+import {Row, Col, Accordion} from 'react-bootstrap'
 import HeaderDiscussion from './components/HeaderDiscussion'
 
 
-function CustomToggle({ children, eventKey }) {
-  const decoratedOnClick = useAccordionButton(eventKey, () =>
-    console.log('totally custom!'),
-  );
-  return (
-    <button
-      type="button"
-      onClick={decoratedOnClick}
-    >
-      {children}
-    </button>
-  );
-}
 function ClassDiscussion({handleOpenModal}) {
   return (
         <Row style={{flexWrap:'wrap'}}>

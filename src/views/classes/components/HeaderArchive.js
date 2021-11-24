@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import { Card, Dropdown,Button, InputGroup, FormControl } from 'react-bootstrap';
+import { Card, Dropdown, InputGroup, FormControl } from 'react-bootstrap';
 import "../../../../node_modules/@fortawesome/fontawesome-free/css/all.css"
 import { Link } from 'react-router-dom'
 
 export default function HeaderArchive() {
 const [openDropdown, setOpenDropdown] = useState(false)
 const [openEditModal, setOpenEditModal] = useState(false)
-const [modal, setModal] = useState(false)
 const handleOpeEditModal = e => {
         e.preventDefault()
         setOpenEditModal(true)

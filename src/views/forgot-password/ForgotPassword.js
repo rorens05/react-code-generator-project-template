@@ -1,7 +1,6 @@
 import React from 'react'
 import Button from '@restart/ui/esm/Button'
 import { Col, Form, Row } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
 import MainContainer from '../../components/layouts/MainContainer'
 
 export default function ForgotPassword() {

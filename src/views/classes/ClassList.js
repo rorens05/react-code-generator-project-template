@@ -36,7 +36,7 @@ function ClassList() {
           </InputGroup>
         </div>
       </div>
-        {openClass == false?(<ClassEnrolled />):<ClassWaiting />}
+        {openClass === false?(<ClassEnrolled />):<ClassWaiting />}
     </div>
   )
 }
