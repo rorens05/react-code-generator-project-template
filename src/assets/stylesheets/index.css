@@ -539,20 +539,83 @@ border-top-right-radius: 0px !important;
   margin-bottom: 10px;
 }
 
+.full-screen-loader{
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.432);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .main-container{
   width: 100vw;
   height: 100vh;
   overflow: auto;
 }
 
+.main-container .content{
+  height: calc(100vh - 104px);
+  overflow: auto !important;
+  position: relative;
+}
+
+.main-container .no-header{
+  height: 100vh !important;
+}
+
+.main-container .content .footer{
+  margin: 40px;
+  text-align: right;
+  
+}
+
+.header .floating-options{
+  position: absolute;
+  top: 18px;
+  right: 18px;
+}
+
+.header .floating-options a{
+  display: inline-block;
+  width: 64px;
+  height: 64px;
+  border-radius: 64px;
+  background-color: #F9F9F9;
+  color: #BCBCBC;
+  font-size: 30px;
+  margin-right: 12px;
+  
+}
+
+.header .floating-options a div{
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media only screen and (max-width: 1280px) {
+  .header .floating-options{
+    transform: scale(0.7);
+    right: -18px;
+  }
+}
+
+
 .auth-container{
   width: 100%;
-  padding: 86px 20px
+  max-width: 1186px;
+  padding: 86px 20px 60px 20px;
+  margin: 0 auto;
 }
 
 .login-container{
   background-color: white;
-  max-width: 1186px;
   padding: 50px;
   box-shadow: 0px 3px 6px #00000029;
   border-radius: 10px;
@@ -640,43 +703,6 @@ border-top-right-radius: 0px !important;
   letter-spacing: 0px;
 }
 
-.main-container .content{
-  height: calc(100vh - 104px) !important;
-  overflow: auto !important;
-}
-
-.header .floating-options{
-  position: absolute;
-  top: 18px;
-  right: 18px;
-}
-
-.header .floating-options a{
-  display: inline-block;
-  width: 64px;
-  height: 64px;
-  border-radius: 64px;
-  background-color: #F9F9F9;
-  color: #BCBCBC;
-  font-size: 30px;
-  margin-right: 12px;
-  
-}
-
-.header .floating-options a div{
-  width: 64px;
-  height: 64px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-@media only screen and (max-width: 1280px) {
-  .header .floating-options{
-    transform: scale(0.7);
-    right: -18px;
-  }
-}
 
 
 
