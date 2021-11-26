@@ -3,6 +3,8 @@ import {ListGroup, Tab, Row, Col, Form} from 'react-bootstrap'
 import ReportHeader from './ReportHeader'
 import AssignmentReport from './AssignmentReport'
 import AssignmentHeader from './AssignmentHeader'
+import ReportTask from './ReportTask'
+import ReportInteractives from '../ReportInteractives'
 
 function SideReport() {
   return (
@@ -41,6 +43,12 @@ function SideReport() {
               <Tab.Pane className='content-pane report-content' eventKey="#link5">
               <AssignmentHeader />
                 <AssignmentReport />
+              </Tab.Pane>
+              <Tab.Pane className='content-pane report-content' eventKey="#link6">
+              <ReportTask />
+              </Tab.Pane>
+              <Tab.Pane className='content-pane report-content' eventKey="#link7">
+              <ReportInteractives />
               </Tab.Pane>
             </Tab.Content> 
           </Col> 
