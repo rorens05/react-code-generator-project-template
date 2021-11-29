@@ -2,17 +2,15 @@ import React, { useState, useEffect } from "react";
 import { Card, Dropdown } from 'react-bootstrap';
 import "../../../../node_modules/@fortawesome/fontawesome-free/css/all.css"
 import { Link } from 'react-router-dom'
-import Courses from "../Courses";
+import CoursesAPI from "../../../api/CoursesAPI";
 
-export default function CoursesItem() {
+export default function CoursesItem({setLoading, setOpenEditModal, setSelectedCourse}) {
     const [course, setCourse] = useState([])
-    const [openModal, setOpenModal] = useState(false)
     const [openDropdown, setOpenDropdown] = useState(false)
-    const [openEditModal, setOpenEditModal] = useState(false)
-    const [haru] = useState("haru")
   
-  const handleOpeEditModal = e => {
+  const handleOpeEditModal = (e, item) => {
     e.preventDefault()
+    setSelectedCourse(item)
     setOpenEditModal(true)
   }
 
@@ -28,57 +26,20 @@ export default function CoursesItem() {
   ));
 
   const getCourses = async() => {
-    let sessionToken = sessionStorage.getItem("session");
-    if(sessionToken === null){
-      refreshToken()
+    setLoading(true)
+    let response = await new CoursesAPI().getCourses()
+    setLoading(false)
+    if(response.ok){
+      setCourse(response.data)
+    }else{
+      alert("Something went wrong while fetching all courses")
     }
-    let token = sessionToken.replace(/\"/g, "");
-    let response = await fetch("https://tekteachlms-api.com/api/Course",{
-      headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'Authorization': 'Bearer' + " " + token,
-          'X-LMS-Key':"Web|localhost:3001"
-      },
-      
-    })
-    const cd = await response.json()
-    .then(cd => {
-      if(cd.status === 401){
-        alert("401")
-        refreshToken()
-      }else{
-        setCourse(cd)
-      }
-    })
-    .catch(
-      console.log("Error")
-    )
   }
-
-  const refreshToken = async() => {
-    let token = "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJMb2dnZWRVc2VyIjoie1wiVXNlcklkXCI6MixcIlJvbGVcIjp7XCJJRFwiOjMsXCJSb2xlTmFtZVwiOlwiVGVhY2hlclwiLFwiUm9sZURlc2NyaXB0aW9uXCI6XCJUZWFjaGVyXCIsXCJBY2Nlc3NMZXZlbFwiOm51bGwsXCJDcmVhdGVkQnlcIjpudWxsLFwiQ3JlYXRlZERhdGVcIjpudWxsLFwiVXBkYXRlZEJ5XCI6bnVsbCxcIlVwZGF0ZWREYXRlXCI6bnVsbCxcIkRlbGV0ZWRcIjpudWxsLFwiRGVsZXRlZEJ5XCI6bnVsbCxcIkRlbGV0ZWREYXRlXCI6bnVsbH0sXCJUZWFjaGVyXCI6e1wiSWRcIjoxLFwiRW1wbG95ZWVOb1wiOlwiMjAwNzEzOTM0XCIsXCJQcmVmaXhOYW1lXCI6XCJNclwiLFwiRm5hbWVcIjpcIk1pY2hhZWxzc3NcIixcIkxuYW1lXCI6XCJHYWJyaWVsc1wiLFwiTWlkZGxlSW5pdGlhbFwiOlwiQlNzcnJyXCIsXCJTZXhcIjpcIk1hbGVcIixcIkNpdGl6ZW5zaGlwXCI6bnVsbCxcIlN0YXR1c1wiOm51bGwsXCJQZXJtYW5lbnRBZGRyZXNzXCI6XCIzMDQgU2FtcGFsb2MgU3QuIENlbWJvXCIsXCJQcmVzZW50QWRkcmVzc1wiOm51bGwsXCJCZGF5XCI6XCIyMDIxLTA1LTAyVDAwOjAwOjAwXCIsXCJDb250YWN0Tm9cIjpcIis2MzkxNzg2ODQ5NTFcIixcIkVtYWlsQWRkXCI6XCJtaWNoYWVsYmVuZ2FicmllbEBsaXZlLmNvbVwiLFwiRW1lcmdlbmN5Q29udGFjdE5vXCI6bnVsbCxcIlBvc2l0aW9uSURcIjo3LFwiVXNlckFjY291bnRJRFwiOjIsXCJDcmVhdGVkQnlcIjpudWxsLFwiQ3JlYXRlZERhdGVcIjpudWxsLFwiVXBkYXRlZEJ5XCI6MixcIlVwZGF0ZWREYXRlXCI6XCIyMDIxLTA5LTAzVDAwOjAwOjAwXCIsXCJEZWxldGVkXCI6bnVsbCxcIkRlbGV0ZWRCeVwiOm51bGwsXCJEZWxldGVkRGF0ZVwiOm51bGx9LFwiU3R1ZGVudFwiOm51bGwsXCJQYXJlbnRcIjpudWxsfSIsImV4cCI6MTYzNzcyMTk5MiwiaXNzIjoic21lc2suaW4iLCJhdWQiOiJyZWFkZXJzIn0.YeB_EtAzu6o4D1rlknybttIgZ-GKmcWF1uLX17LdNLQ"
-    let response = await fetch("https://tekteachlms-api.com/api/Login/token/refresh",{
-      headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'Authorization': 'Bearer' + " " + token,
-          'X-LMS-Key':"Web|localhost:3001"
-      },
-    })
-    let newToken = await response.json();
-    console.log(newToken)
-    console.log(newToken.result)
-
-    //set new token in session storage
-    sessionStorage.setItem('session', newToken);
-    window.location.reload()
-    
-}
 
   useEffect(() => {
     getCourses()
-  }, [ ])
+  }, [])
+  
   return (
     <React.Fragment>
       {
@@ -97,7 +58,7 @@ export default function CoursesItem() {
                               <i className="fa fa-ellipsis-v fa-2x"></i>
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
-                            <Dropdown.Item onClick={handleOpeEditModal}>
+                            <Dropdown.Item onClick={(e) => handleOpeEditModal(e, item)}>
                             Edit 
                             </Dropdown.Item>
                             <Dropdown.Item>
