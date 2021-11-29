@@ -1,7 +1,8 @@
 import React from "react";
 import { Button, Form, FormControl, Modal, FloatingLabel } from 'react-bootstrap';
 
-export default function EditCourse({openEditModal, setOpenEditModal}){
+export default function CourseEdit({openEditModal, setOpenEditModal, selectedCourse}){
+	
 	return (
 		<div>
 			<Modal size="lg" className="modal-all" show={openEditModal} onHide={()=> setOpenEditModal(!openEditModal)} >
@@ -14,9 +15,9 @@ export default function EditCourse({openEditModal, setOpenEditModal}){
 								<Form.Label for="courseName">
 									Course Name
 								</Form.Label>
-								<FloatingLabel label="Course Name">
-									<FormControl id="courseName" name="courseName" placeholder="Course Name" type="text"/>
-								</FloatingLabel>
+								{/* <FloatingLabel label="Course Name"> */}
+									<FormControl defaultValue={selectedCourse?.authorName} id="courseName" name="courseName" placeholder="Course Name" type="text"/>
+								{/* </FloatingLabel> */}
 							</Form.Group>
 							{' '}
 
@@ -25,7 +26,7 @@ export default function EditCourse({openEditModal, setOpenEditModal}){
 									Description
 								</Form.Label>
 								<FloatingLabel label="Description">
-									<FormControl id="description" name="description" placeholder="Description" type="text"/>
+									<FormControl defaultValue={selectedCourse?.description} id="description" name="description" placeholder="Description" type="text"/>
 								</FloatingLabel>
 							</Form.Group>
 							{' '}
