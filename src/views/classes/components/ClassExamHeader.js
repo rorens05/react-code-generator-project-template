@@ -9,7 +9,7 @@ function ClassExamHeader() {
 				<Button className='btn-create-exam' Button variant="link" > <i className="fa fa-plus"></i>  Create Exam  </Button>
 					<h4 className='exam-or'>OR</h4>
 				<Button className='btn-create-exam' Button variant="link" > <i className="fa fa-plus"></i>  Import Exam  </Button>
-    </div>
+    	</div>
 			</div>
 			<div className="row m-b-20">
 				<div className="col-md-12">

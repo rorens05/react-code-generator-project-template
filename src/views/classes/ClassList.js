@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import ClassEnrolled from './components/ClassEnrolled'
 import ClassWaiting from './components/ClassWaiting'
-import {Button, InputGroup, FormControl} from 'react-bootstrap'
+import {Button, InputGroup, FormControl, Row, Col} from 'react-bootstrap'
 
 function ClassList() {
   const [openClass, setOpenClass] = useState(false)
@@ -19,15 +19,19 @@ function ClassList() {
 
   return (
     <div>
-      <div className="row m-b-20">
-        <div className="col-md-10 pages-header"><h1>Class List</h1>
-        </div>
-      </div>
-      <div className='btn-class-list'>
+    <Row>
+      <Col style={{color:'#707070'}}>
+       <h1> Class List </h1>
+      </Col>
+      <Col style={{textAlign:'right'}}>
         <Button onClick={handleOpenClassEnrolled} size='lg' variant="outline-warning">Enrolled</Button>
         <Button  onClick={handleOpenClassWaiting} size='lg' variant="outline-warning">Waiting List</Button>
-      </div>
-      <div className="row m-b-20">
+      </Col>
+    </Row>
+      
+ 
+      
+      <div className="row m-b-20" style={{marginTop:'50px'}}>
         <div className="col-md-12">
           <InputGroup size="lg">
             <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Search..." type="search"/>
