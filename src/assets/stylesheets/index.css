@@ -751,11 +751,10 @@ border-top-right-radius: 0px !important;
   font-size: 24px;
 }
 .code-exam{
-  color: #707070;
+  color: #BCBCBC;
   font-size: 20px;
 }
 .instruction-exam{
-  color: #707070;
   font-size: 20px;
 }
 .icon-exam{
@@ -764,13 +763,12 @@ border-top-right-radius: 0px !important;
   text-align: right;
 }
 .due-date-discusstion{
-  font-size: 27px;
+  font-size: 20px;
   color: #707070;
 }
 .posted-date-discusstion{
-  font-size: 27px;
+  font-size: 20px;
   text-align: right;
-  color: #BCBCBC;
 }
 .class-waiting-header{
   font-size: 24px;
@@ -848,4 +846,20 @@ border-top-right-radius: 0px !important;
   color: #EE9337!important;
   font-size: 18px!important;
   text-decoration: none!important
+}
+.inline-flex{
+  display: inline-flex;
+}
+.text-color-bcbcbc{
+  color: #BCBCBC;
+}
+.text-color-707070{
+  color: #707070;
+}
+.text-align-right{
+  font-size: 20px;
+  text-align: right;
+}
+.icon-padding-right{
+  padding-right: 10px;
 }

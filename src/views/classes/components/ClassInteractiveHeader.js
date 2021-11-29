@@ -5,7 +5,7 @@ function ClassInteractiveHeader() {
   return (
 		<div>
 			<div className="row m-b-20">
-				<div className="col-md-10 pages-header"><h1>Interactive Games</h1></div>
+				<div className="col-md-10 pages-header"><h1>Interactive Exercises</h1></div>
 			</div>
 			<div className="row m-b-20">
 				<div className="col-md-12">

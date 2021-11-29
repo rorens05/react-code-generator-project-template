@@ -22,15 +22,45 @@ function ClassExam() {
                 EQF1
               </div>
             </Col>
-            <Col sm={9} className='instruction-exam' >
-              <p>Instruction: Count the object. Type the number in the box</p>
+            <Col sm={9} className='instruction-exam'>
+              <div className='inline-flex'>
+                <div className='text-color-bcbcbc' >
+                  Instruction:&nbsp;
+                </div>
+                <div className='text-color-707070' >
+                  Count the object. Type the number in the box
+                </div>
+              </div>
             </Col>
-              <Col sm={3} className='icon-exam'>
-                <i class="fas fa-eye" style={{paddingRight:'10px'}} ></i>{' '}
-                <i class="fas fa-edit"style={{paddingRight:'10px'}}></i>
-                <i class="fas fa-user-clock" style={{paddingRight:'10px'}}></i>
-                <i class="fas fa-trash-alt" style={{paddingRight:'10px'}}></i>
-              </Col>
+            <Col sm={3} className='icon-exam'>
+              <i class="fas fa-eye icon-padding-right" ></i>{' '}
+              <i class="fas fa-edit icon-padding-right"></i>
+              <i class="fas fa-user-clock icon-padding-right"></i>
+              <i class="fas fa-trash-alt icon-padding-right"></i>
+            </Col>
+            <Col className='instruction-exam' sm={7}>
+              <div className='inline-flex'>
+                <div className='text-color-bcbcbc'>
+                  Start Date:&nbsp;
+                </div>
+                <div className='text-color-707070'>
+                  November 11/10:30AM
+                </div>
+              </div>
+            </Col>
+            <Col className='text-align-right'>
+              <div className='inline-flex'>
+                <div className='text-color-bcbcbc'>
+                  End Date:&nbsp;
+                </div>
+                <div className='text-color-707070'>
+                  November 12/10:30AM
+                </div>
+              </div>
+            </Col>
+            <div className='text-color-bcbcbc' >
+            ________________________________________________________________________________________________________________________________________
+            </div>
           </Row>
         </Accordion.Body>
       </Accordion.Item>

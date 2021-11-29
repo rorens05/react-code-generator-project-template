@@ -21,21 +21,44 @@ function ClassTask({handleOpenModal}) {
               </div>
             </Col>
             <Col sm={9} className='instruction-exam' >
-              <p>Instruction: Count the object. Type the number in the box</p>
+              <div className='inline-flex'>
+                <div className='text-color-bcbcbc' >
+                  Instruction:&nbsp;
+                </div>
+                <div className='text-color-707070' >
+                  Count the object. Type the number in the box
+                </div>
+              </div>
             </Col>
               <Col sm={3} className='icon-exam'>
-                <i class="fas fa-eye" style={{paddingRight:'10px'}} ></i>{' '}
-                <i class="fas fa-edit"style={{paddingRight:'10px'}}></i>
-                <i class="fas fa-user-clock" style={{paddingRight:'10px'}}></i>
-                <i class="fas fa-trash-alt" style={{paddingRight:'10px'}}></i>
+                <i class="fas fa-eye icon-padding-right" ></i>{' '}
+                <i class="fas fa-edit icon-padding-right"></i>
+                <i class="fas fa-user-clock icon-padding-right"></i>
+                <i class="fas fa-trash-alt icon-padding-right"></i>
               </Col>
-              <Col sm={9} className='due-date-discusstion' >
-                <h5>Due Nov 9, 2021</h5>
+              <Col sm={7} className='due-date-discusstion' >
+                <div className='inline-flex'>
+                  <div className='text-color-bcbcbc'>
+                    Start Date:&nbsp;
+                  </div>
+                  <div className='text-color-707070'>
+                    November 11/10:30AM
+                  </div>
+                </div>
               </Col>
-              <Col sm={3} className='posted-date-discusstion'>
-                <h5>Posted Nov 5, 2021</h5>
+              <Col className='posted-date-discusstion'>
+                <div className='inline-flex'>
+                  <div className='text-color-bcbcbc'>
+                    End Date:&nbsp;
+                  </div>
+                  <div className='text-color-707070'>
+                    November 12/10:30AM
+                  </div>
+                </div>
               </Col>
-              ____________________________________________________________________________________________________________________________________________
+              <div className='text-color-bcbcbc' >
+                ________________________________________________________________________________________________________________________________________
+              </div>
           </Row>
         </Accordion.Body>
         </Accordion.Item>
