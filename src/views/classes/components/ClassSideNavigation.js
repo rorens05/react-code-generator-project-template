@@ -53,7 +53,7 @@ function ClassSideNavigation() {
                 Task
               </ListGroup.Item>
               <ListGroup.Item className="list-group-item-o " action href="#link7">
-                Interactive Games
+                Interactive Exercises
               </ListGroup.Item>
               <ListGroup.Item className="list-group-item-o " action href="#link8">
                 Links
