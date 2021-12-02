@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import {ListGroup, Tab, Row, Col} from 'react-bootstrap'
 import ClassAssignment from '../ClassAssignment'
 import ClassDiscussion from '../ClassDiscussion'
@@ -10,9 +10,28 @@ import ClassTask from '../ClassTask'
 import ClassCalendar from './ClassCalendar'
 import ClassInteractive from '../ClassInteractive'
 import ClassList from '../ClassList'
+import DiscussionAPI from '../../../api/DiscussionAPI'
 
 
-function ClassSideNavigation() {
+export default function ClassSideNavigation({setLoading}) {
+  const [classInfo, setClassInfo] = useState(null)
+  const getClassInfo = async() => {
+    setLoading(true)
+    let response = await new DiscussionAPI().getClassInfo()
+    if(response.ok){
+      setClassInfo(response.data)
+      console.log(response.data)
+    }else{
+      alert("Something went wrong while fetching all courses")
+    }
+    setLoading(false)
+
+  }
+
+  useEffect(() => {
+    getClassInfo()
+  }, [])
+
   return (
     <Tab.Container className="course-widget-font" id="list-group-tabs-example " defaultActiveKey="#link1">
         <div className="row">
@@ -21,14 +40,14 @@ function ClassSideNavigation() {
                 <Row>
                   <Col className="" sm={9} >
                     <div className="class-subtitle-code" > <i class="fas fa-expand"></i> {' '}FXC57</div>
-                    <div className="class-subtitle-section">Grade 1 - Faith</div>
-                    <div className="class-subtitle-subject">Math 1</div>
-                    <div className="class-subtitle-name">Carlos Inigo</div>
+                    <div className="class-subtitle-section">{classInfo?.classInformation?.className}</div>
+                    <div className="class-subtitle-subject">{classInfo?.classInformation?.gradeName}</div>
+                    <div className="class-subtitle-name">{classInfo?.classInformation?.teacherName}</div>
                   </Col>
                   <Col className="ellipsis-top-right" sm={3}>
                     <i className="fa fa-ellipsis-v fa-1x cursor-pointer"></i>
                     <div className='fa-user-size'>
-                    <i className="fas fa-user"></i> 30
+                    <i className="fas fa-user"></i> {classInfo?.students?.length}
                     </div>
                   </Col>
                 </Row>
@@ -105,4 +124,3 @@ function ClassSideNavigation() {
       </Tab.Container>
   )
 }
-export default ClassSideNavigation

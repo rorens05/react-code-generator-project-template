@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 function ClassCard({item, setOpenEditModal, setSeletedClass}) {
   
   const [openDropdown, setOpenDropdown] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const handleOpeEditModal = (e, item) => {
     e.preventDefault()
@@ -26,7 +27,7 @@ function ClassCard({item, setOpenEditModal, setSeletedClass}) {
   return (
     <div>
       <Card className='class-card kb-0px'>
-        <Link to={`/classescontent/${item.classId}`}> 
+        <Link to={`/classescontent/${item.classId}`}>
         <Card.Header className='class-header-card'>
           <div className="row class-card-font-color">
             <div className="col-md-6 pd-10px">
