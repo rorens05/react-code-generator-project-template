@@ -4,10 +4,9 @@ import "../../../../node_modules/@fortawesome/fontawesome-free/css/all.css"
 import { Link } from 'react-router-dom'
 import CoursesAPI from "../../../api/CoursesAPI";
 
-export default function CoursesItem({setLoading, setOpenEditModal, setSelectedCourse}) {
-  
-  const [course, setCourse] = useState([])
-  const [openDropdown, setOpenDropdown] = useState(false)
+export default function CoursesUnit({setLoading, setOpenEditModal, setSelectedCourse}) {
+    const [course, setCourse] = useState([])
+    const [openDropdown, setOpenDropdown] = useState(false)
   
   const handleOpeEditModal = (e, item) => {
     e.preventDefault()
@@ -15,10 +14,6 @@ export default function CoursesItem({setLoading, setOpenEditModal, setSelectedCo
     setSelectedCourse(item)
     setOpenEditModal(true)
   }
-
-  const setCourseId = (item) => {
-    sessionStorage.setItem('courseid', item)
-  } 
 
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <span 
@@ -78,7 +73,7 @@ export default function CoursesItem({setLoading, setOpenEditModal, setSelectedCo
               </Card.Header>
                 <Card.Body>
                     <Card.Title tag="h5">
-                      <Link to={"coursecontent/" + item.id} onClick={() => setCourseId(item.id)} setLoading={setLoading} className="active card-title">{item.courseName}</Link>
+                      <Link to="/coursecontent" className="active card-title">{item.courseName}</Link>
                     </Card.Title>
                     <Card.Subtitle
                         className="mb-2 text-muted"

@@ -24,13 +24,13 @@ export default function Routes() {
       <Router>
         <Switch>
           <Route path='/courses' exact component={Courses}/>
-          <Route path='/coursecontent' exact component={CourseContent}/>
+          <Route path='/coursecontent/:id' exact component={CourseContent}/>
           <Route path='/exam' exact component={Exam}/>
           <Route path='/files' exact component={Files}/>
           <Route path='/reports' exact component={Reports}/>
           <Route path='/classes' exact component={Classes}/>
           <Route path='/classlist' exact component={ClassList}/>
-          <Route path='/classescontent' exact component={ClassesContent}/>
+          <Route path='/classescontent/' exact component={ClassesContent}/>
           <Route path='/archive' exact component={ArchiveClass}/>
           <Route path='/login' exact component={Login}/>
           <Route path='/forgot_password' exact component={ForgotPassword}/>

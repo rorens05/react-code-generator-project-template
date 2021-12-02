@@ -8,7 +8,6 @@ import CourseEdit from "./components/CourseEdit";
 export default function Courses() {
   const [openModal, setOpenModal] = useState(false)
   const [loading, setLoading] = useState(false)
-
   const [selectedCourse, setSelectedCourse] = useState(null)
   const [openEditModal, setOpenEditModal] = useState(false)
 
@@ -17,6 +16,7 @@ export default function Courses() {
       setOpenModal(true)
   }
 
+  
   return (
     <MainContainer loading={loading}>
       <div className="page-container">
