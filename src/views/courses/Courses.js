@@ -1,21 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CoursesItem from "../../views/courses/components/CourseItem";
 import CourseCreate from "../../views/courses/components/CourseCreate";
 import MainContainer from '../../components/layouts/MainContainer'
 import { Button, InputGroup, FormControl, CardGroup } from 'react-bootstrap';
 import CourseEdit from "./components/CourseEdit";
+import CoursesAPI from "../../api/CoursesAPI";
 
 export default function Courses() {
   const [openModal, setOpenModal] = useState(false)
   const [loading, setLoading] = useState(false)
   const [selectedCourse, setSelectedCourse] = useState(null)
   const [openEditModal, setOpenEditModal] = useState(false)
+  const [course, setCourse] = useState([])
 
   const handleOpenModal = e => {
       e.preventDefault()
       setOpenModal(true)
   }
 
+  const getCourses = async() => {
+    setLoading(true)
+    let response = await new CoursesAPI().getCourses()
+    setLoading(false)
+    if(response.ok){
+      setCourse(response.data)
+    }else{
+      alert("Something went wrong while fetching all courses")
+    }
+  }
+
+  useEffect(() => {
+    getCourses()
+  }, [])
   
   return (
     <MainContainer loading={loading}>
@@ -35,9 +51,9 @@ export default function Courses() {
             </div>
           </div>
           <div className="row m-b-20 justify-content-center">
-            <CoursesItem setLoading={setLoading} setOpenEditModal={setOpenEditModal} setSelectedCourse={setSelectedCourse}/>
-            <CourseCreate openModal={openModal} setOpenModal={setOpenModal} /> 
-            <CourseEdit openEditModal={openEditModal} setOpenEditModal={setOpenEditModal} selectedCourse={selectedCourse} /> 
+            <CoursesItem course={course} setLoading={setLoading} setOpenEditModal={setOpenEditModal} setSelectedCourse={setSelectedCourse}/>
+            <CourseCreate setCourse={setCourse} openModal={openModal} setOpenModal={setOpenModal} /> 
+            <CourseEdit setCourse={setCourse} openEditModal={openEditModal} setOpenEditModal={setOpenEditModal} selectedCourse={selectedCourse} /> 
           </div>
         </div>
       </div>

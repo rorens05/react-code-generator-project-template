@@ -3,16 +3,20 @@ import { Button, Form, FormControl, Modal, FloatingLabel } from 'react-bootstrap
 import CoursesAPI from "../../../api/CoursesAPI";
 import SubjectAreaAPI from "../../../api/SubjectAreaAPI";
 
-export default function CourseCreate({openModal, setOpenModal}){
+export default function CourseCreate({setCourse, openModal, setOpenModal}){
 
 	const [loading, setLoading] = useState(false)
-	const [course, setCourse] = useState([])
 	const [courseName, setCourseName] = useState('')
 	const [description, setDescription] = useState('')
 	const [subjectAreaId, setSubjectArea] = useState('')
 	const [sarea, setSarea] = useState([])
 	const [status, setStatus] = useState('')
 	const [locked, setLockStatus]= useState('')
+
+	const handleCloseModal = e => {
+    e.preventDefault()
+    setOpenModal(false)
+  }
 
 	const viewSubjectArea = async() => {
     setLoading(true)
@@ -21,6 +25,17 @@ export default function CourseCreate({openModal, setOpenModal}){
     if(response.ok){
       setSarea(response.data)
 			console.log(response.data)
+    }else{
+      alert("Something went wrong while fetching all courses")
+    }
+  }
+
+	const getCourses = async() => {
+    setLoading(true)
+    let response = await new CoursesAPI().getCourses()
+    setLoading(false)
+    if(response.ok){
+      setCourse(response.data)
     }else{
       alert("Something went wrong while fetching all courses")
     }
@@ -35,6 +50,8 @@ export default function CourseCreate({openModal, setOpenModal}){
     )
     if(response.ok){
       alert("Saved")
+			getCourses()
+			handleCloseModal(e)
     }else{
       alert(response.data.errorMessage)
     }

@@ -3,10 +3,9 @@ import { Button, Form, FormControl, Modal, FloatingLabel } from 'react-bootstrap
 import SubjectAreaAPI from "../../../api/SubjectAreaAPI";
 import CoursesAPI from "../../../api/CoursesAPI";
 
-export default function CourseEdit({openEditModal, setOpenEditModal, selectedCourse}){
+export default function CourseEdit({setCourse, openEditModal, setOpenEditModal, selectedCourse}){
 
 	const [loading, setLoading] = useState(false)
-	const [course, setCourse] = useState([])
 	const [courseName, setCourseName] = useState('')
 	const [description, setDescription] = useState('')
 	const [subjectAreaId, setSubjectArea] = useState('')
@@ -66,6 +65,13 @@ export default function CourseEdit({openEditModal, setOpenEditModal, selectedCou
     viewSubjectArea()
 		getCourses()
   }, [])
+
+	useEffect(() => {
+    if(selectedCourse !== null) {
+			setCourseName(selectedCourse?.courseName)
+			setDescription(selectedCourse?.description)
+		}
+  }, [selectedCourse])
 	
 	return (
 		<div>
