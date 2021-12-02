@@ -3,6 +3,7 @@ import Modal from 'react-bootstrap/Modal'
 import { Form, Button, } from 'react-bootstrap'
 
 function CreateClassModal({modal, toggle}) {
+  
 	return (
     <div>
     	<Modal size="lg" show={modal} onHide={toggle} aria-labelledby="example-modal-sizes-title-lg">
