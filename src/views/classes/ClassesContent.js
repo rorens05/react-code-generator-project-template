@@ -10,7 +10,7 @@ function ClassesContent(props) {
     <div>
       
       <MainContainer>
-        <p>id: {props.match.params.id}</p>
+          {/* <p>id: {props.match.params.id}</p> */}
         <ClassBreedCrumbs />
         <ClassSideNavigation />
       </MainContainer>

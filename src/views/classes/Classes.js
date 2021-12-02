@@ -31,15 +31,12 @@ export default function Classes() {
       <div className='page-container'>
         <div className='containerpages'>
         <ClassHeader />
-        
           <CardGroup className='card-group2'>
             {classes.length?
               classes.map(item => {
                 return(<ClassCard  item={item} setOpenEditModal={setOpenEditModal} setSeletedClass={setSeletedClass} />)
-                
-              }):<span></span>
-          
-            }
+                  }):<span></span>
+                }
           </CardGroup>
         </div>
       </div>

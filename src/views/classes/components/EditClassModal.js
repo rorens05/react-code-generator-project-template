@@ -34,6 +34,7 @@ function EditClassModal({seletedClass, openEditModal, setOpenEditModal }) {
   useEffect(() => {
     getGrade()
   }, [])
+  
   return (
 		<div>
 			<Modal size="lg" show={openEditModal} onHide={()=> setOpenEditModal(!setOpenEditModal)} aria-labelledby="example-modal-sizes-title-lg">
@@ -47,18 +48,20 @@ function EditClassModal({seletedClass, openEditModal, setOpenEditModal }) {
             <Form.Label>Grade Level</Form.Label>
             	<Form.Select>
                 <option value={seletedClass?.gradeLevelId}>{seletedClass?.gradeName}</option>
-                {grade.map(item =>{
-                  return(<option value={item.id}>{item.gradeName}</option>)
-                })}
+                  {grade.map(item =>{
+                    return(<option value={item.id}>{item.gradeName}</option>)
+                    })
+                  }
             	</Form.Select>
             </Form.Group>
             <Form.Group className="mb-4">
               <Form.Label>Course</Form.Label>
               	<Form.Select >
-                <option value={seletedClass?.courseId}>{seletedClass?.courseName}</option>
-                {course.map(item =>{
-                  return(<option value={item.id}>{item.courseName}</option>)
-                })}
+                  <option value={seletedClass?.courseId}>{seletedClass?.courseName}</option>
+                     {course.map(item =>{
+                      return(<option value={item.id}>{item.courseName}</option>)
+                      })
+                    }
                 </Form.Select>
             </Form.Group>
             <Form.Group className="mb-4">
