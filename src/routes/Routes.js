@@ -24,7 +24,7 @@ export default function Routes() {
       <Router>
         <Switch>
           <Route path='/courses' exact component={Courses}/>
-          <Route path='/coursecontent' exact component={CourseContent}/>
+          <Route path='/coursecontent/:id' exact component={CourseContent}/>
           <Route path='/exam' exact component={Exam}/>
           <Route path='/files' exact component={Files}/>
           <Route path='/reports' exact component={Reports}/>

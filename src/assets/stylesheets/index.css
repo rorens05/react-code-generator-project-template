@@ -229,6 +229,14 @@ color:#BCBCBC !important;
 .m-t-30 {
   margin-top: 30px !important;
 }
+
+.m-t-20 {
+  margin-top: 20px !important;
+}
+
+.m-t-10 {
+  margin-top: 10px !important;
+}
 .class-padding {
   background-color: #FFFFFF !important;
   margin-top: 70px !important;
@@ -306,6 +314,10 @@ font-size: 17px;
 
 .t-a-r {
 text-align: right;
+}
+
+.t-a-c {
+  text-align: center;
 }
 
 .card-design {
@@ -395,13 +407,14 @@ border-top-right-radius: 0px !important;
   float: right;
 }
 .card-title{
-  color: #7D7D7D!important;
+  color: #EE9337!important;
+  text-decoration: none !important;
 }
 .card-subtitle{
   color: #BCBCBC;
 }
 .card-text{
-  color: #EE9337;
+  color: #7D7D7D;
 }
 .card-main-container{
   padding-left: 16px!important;
@@ -862,4 +875,12 @@ border-top-right-radius: 0px !important;
 }
 .icon-padding-right{
   padding-right: 10px;
+}
+
+.float-right {
+  float: right;
+}
+
+.tficolorbgbutton {
+  background-color:#EE9337 !important;
 }

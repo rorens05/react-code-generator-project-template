@@ -22,4 +22,13 @@ export default class CoursesAPI extends Base {
       method: 'GET'
     });
   }
+
+  createCourse = async data => {
+    return this.sendRequest({
+      path: `/api/Course`,
+      method: 'POST',
+      data
+    });
+  };
+
 }
