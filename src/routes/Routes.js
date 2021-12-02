@@ -30,7 +30,7 @@ export default function Routes() {
           <Route path='/reports' exact component={Reports}/>
           <Route path='/classes' exact component={Classes}/>
           <Route path='/classlist' exact component={ClassList}/>
-          <Route path='/classescontent' exact component={ClassesContent}/>
+          <Route path='/classescontent/:id' exact component={ClassesContent}/>
           <Route path='/archive' exact component={ArchiveClass}/>
           <Route path='/login' exact component={Login}/>
           <Route path='/forgot_password' exact component={ForgotPassword}/>
