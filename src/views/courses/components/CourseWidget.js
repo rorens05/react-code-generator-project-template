@@ -2,14 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Tab, ListGroup, Row, Col, Button, InputGroup, FormControl } from 'react-bootstrap';
 import CourseAccordion from "./CourseAccordion";
 import CoursesAPI from "../../../api/CoursesAPI";
-import MainContainer from '../../../components/layouts/MainContainer'
 
 export default function CourseWidget() {
 
   const [courseInfo, setCourseInfo] = useState('')
   const [loading, setLoading] = useState(false)
   const courseid = sessionStorage.getItem('courseid')
-  const [cid, setCid] = useState(courseid)
 
   const getCoursesInfo = async(e) => {
     setLoading(true)
@@ -35,8 +33,8 @@ export default function CourseWidget() {
               <Row>
                 <Col className="" sm={9} >
                   {courseInfo.courseName}
-                  <div className="course-subtitle">{courseInfo.subjectAreaName}</div>
-                  <div className="course-subtitle">Carlos Inigo</div>
+                  <div className="course-subtitle">{courseInfo.subjectAreaId}</div>
+                  <div className="course-subtitle">{courseInfo.createdBy}</div>
                 </Col>
                 <Col className="t-a-r" sm={3}>
                   <i className="fa fa-ellipsis-v s"></i>

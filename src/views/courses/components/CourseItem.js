@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Card, Dropdown, Row, Col } from 'react-bootstrap';
 import "../../../../node_modules/@fortawesome/fontawesome-free/css/all.css"
 import { Link } from 'react-router-dom'
-import CoursesAPI from "../../../api/CoursesAPI";
 
 export default function CoursesItem({course, setLoading, setOpenEditModal, setSelectedCourse}) {
   
