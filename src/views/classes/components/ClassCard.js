@@ -8,6 +8,7 @@ function ClassCard() {
 
   const [modal, setModal] = useState(false)
   const [openDropdown, setOpenDropdown] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const toggle = () =>{
     setModal(!modal)
@@ -25,7 +26,7 @@ function ClassCard() {
   return (
     <div>
       <Card className='class-card kb-0px'>
-        <Link to='/classescontent'>
+        <Link to={{pathname:'/classescontent/' + '1'}} setLoading= {setLoading}>
         <Card.Header className='class-header-card'>
           <div className="row class-card-font-color">
             <div className="col-md-6 pd-10px">

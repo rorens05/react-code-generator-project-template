@@ -55,7 +55,6 @@ function ClassDiscussion({handleOpenModal}) {
                   </div>
                 </Col>
                 <div className='text-color-bcbcbc' >
-                  ________________________________________________________________________________________________________________________________________
                 </div>  
                   <Col sm={8}>
                       <div className='title-exam'>
