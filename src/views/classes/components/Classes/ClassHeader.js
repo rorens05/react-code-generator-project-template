@@ -10,10 +10,16 @@ function ClassHeader() {
   }
 	return (
 		<div>
-			<div className="row m-b-20">
-				<div className="col-md-10 pages-header"><h1>Classes <Button className='btn-create-class' Button variant="link" onClick={() => setModal(true) }> <i className="fa fa-plus"></i>  Create Class  </Button></h1></div>
-				<Link to="/archive" className="class-archive"><h1><i class="fas fa-th"></i></h1></Link>
-				<Link to="/classes" className="class-archive"><h1><i class="fas fa-th-list"></i></h1></Link>
+			<div className="row m-b-20" >
+				<div style={{display:'inline-flex'}}>
+				<div className="col-md-10 pages-header">
+					<h1>Classes <Button className='btn-create-class' Button variant="link" onClick={() => setModal(true) }> <i className="fa fa-plus"></i>  Create Class  </Button></h1>
+				</div>
+				<div style={{textAlign:'right', marginLeft:'auto'}}>				
+					<Link to="/archive" className="class-archive"><h1><i class="fas fa-archive"></i></h1></Link>
+					<Link to="/classes" className="class-archive"><h1><i class="fas fa-th-list"></i></h1></Link>
+				</div>
+				</div>
 			</div>
 			<div className="row m-b-20">
 				<div className="col-md-12">

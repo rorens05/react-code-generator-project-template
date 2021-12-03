@@ -1,6 +1,6 @@
 import React from 'react'
 import {Row, Col, Accordion} from 'react-bootstrap'
-import HeaderDiscussion from './components/HeaderDiscussion'
+import HeaderDiscussion from './components/Discussion/HeaderDiscussion'
 
 
 function ClassDiscussion({handleOpenModal}) {

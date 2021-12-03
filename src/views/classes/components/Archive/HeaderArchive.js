@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Card, Dropdown, InputGroup, FormControl } from 'react-bootstrap';
-import "../../../../node_modules/@fortawesome/fontawesome-free/css/all.css"
 import { Link } from 'react-router-dom'
 
 export default function HeaderArchive() {

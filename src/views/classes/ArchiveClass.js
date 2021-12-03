@@ -1,6 +1,6 @@
 import React from 'react'
 import MainContainer from '../../components/layouts/MainContainer'
-import HeaderArchive from './components/HeaderArchive'
+import HeaderArchive from './components/Archive/HeaderArchive'
 
 export default function Classes() {
   return (

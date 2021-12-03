@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import Modal from 'react-bootstrap/Modal'
 import { Form, Button, } from 'react-bootstrap'
-import CoursesAPI from "../../../api/CoursesAPI";
-import GradeAPI from '../../../api/GradeAPI';
+import CoursesAPI from '../../../../api/CoursesAPI'
+import GradeAPI from '../../../../api/GradeAPI';
 
 function EditClassModal({seletedClass, openEditModal, setOpenEditModal }) {
 

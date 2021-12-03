@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react'
-import { CardGroup } from 'react-bootstrap'
+import { CardGroup, Col } from 'react-bootstrap'
 import ClassesAPI from '../../api/ClassesAPI'
 import MainContainer from '../../components/layouts/MainContainer'
-import ClassCard from './components/ClassCard'
-import ClassHeader from './components/ClassHeader'
-import EditClassModal from './components/EditClassModal'
+import ClassCard from './components/Classes/ClassCard'
+import ClassHeader from './components/Classes/ClassHeader'
+import EditClassModal from './components/Classes/EditClassModal'
 
 
 export default function Classes() {

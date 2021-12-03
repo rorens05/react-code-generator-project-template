@@ -1,9 +1,9 @@
 import React from 'react'
 import {Row, Col} from 'react-bootstrap'
-import AccordionConference from './components/AccordionConference'
-import AccordionLinks from './components/AccordionLinks'
-import AccordionVideos from './components/AccordionVideos'
-import HeaderLinks from './components/HeaderLinks'
+import AccordionConference from './components/Links/AccordionConference'
+import AccordionLinks from './components/Links/AccordionLinks'
+import AccordionVideos from './components/Links/AccordionVideos'
+import HeaderLinks from './components/Links/HeaderLinks'
 
 function ClassLinks() {
   return (

@@ -1,5 +1,5 @@
 import React from 'react'
-import AssignmentHeader from './components/AssignmentHeader'
+import AssignmentHeader from './components/Assignment/AssignmentHeader'
 import {Accordion, Row, Col} from 'react-bootstrap'
 
 function ClassAssignment() {

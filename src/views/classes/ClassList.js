@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import ClassEnrolled from './components/ClassEnrolled'
-import ClassWaiting from './components/ClassWaiting'
+import ClassEnrolled from './components/ClassList/ClassEnrolled'
+import ClassWaiting from './components/ClassList/ClassWaiting'
 import {Button, InputGroup, FormControl, Row, Col} from 'react-bootstrap'
 
 function ClassList() {

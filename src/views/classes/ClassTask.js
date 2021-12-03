@@ -1,6 +1,6 @@
 import React from 'react'
 import {Row, Col, Accordion} from 'react-bootstrap'
-import HeaderTask from './components/HeaderTask'
+import HeaderTask from './components/Task/HeaderTask'
 
 
 function ClassTask({handleOpenModal}) {
