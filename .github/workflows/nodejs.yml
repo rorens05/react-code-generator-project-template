@@ -18,5 +18,5 @@ jobs:
         with:
           node-version: 12
       - run: npm install
-      - run: npm install --global yarn
+      - run: npm install yarn --global
       - run: yarn run build
