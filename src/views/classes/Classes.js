@@ -27,7 +27,7 @@ export default function Classes() {
   }, [])
   
   return (
-    <MainContainer>
+    <MainContainer activeHeader={'classes'}>
       <div className='page-container'>
         <div className='containerpages'>
         <ClassHeader />

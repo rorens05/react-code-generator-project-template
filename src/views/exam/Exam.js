@@ -5,7 +5,7 @@ import ExamList from './components/ExamList'
 
 export default function Exam() {
   return (
-    <MainContainer>
+    <MainContainer activeHeader={'exam'}>
       <div className='containerpages'>
         <ExamHeaders />
         <ExamList />

@@ -5,7 +5,7 @@ import SideReport from './components/SideReport'
 
 export default function Reports() {
   return (
-    <MainContainer> 
+    <MainContainer activeHeader={'reports'}> 
       <SideReport/>
     </MainContainer>
   )

@@ -13,7 +13,20 @@ export class UserContextProvider extends Component {
 
     let response = await new Auth().profile()
     if(response.ok) {
-      await this.setState({loading: false, user: response.data})
+      let user = response.data
+      user.role = user.role.roleName
+      switch (user.role) {
+        case "Student":
+          user.name = `${user.student?.fname} ${user.student?.lname}`
+          break;
+        case "Teacher":
+          user.name = `${user.teacher?.fname} ${user.teacher?.lname}`
+          break;
+        default:
+          break;
+      }
+       
+      await this.setState({loading: false, user })
     } else {
       await this.setState({loading: false, user: null})
     }    
