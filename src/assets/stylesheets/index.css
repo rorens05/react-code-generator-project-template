@@ -552,7 +552,7 @@ border-top-right-radius: 0px !important;
   margin-bottom: 10px;
 }
 
-.full-screen-loader{
+.full-screen-loader, .page-loader{
   position: absolute;
   background-color: rgba(255, 255, 255, 0.432);
   top: 0;
