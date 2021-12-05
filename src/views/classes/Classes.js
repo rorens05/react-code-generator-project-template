@@ -10,7 +10,6 @@ import EditClassModal from './components/Classes/EditClassModal'
 export default function Classes() {
   const [classes, setClasses] = useState([])
   const [seletedClass, setSeletedClass] = useState(null)
-  const [openModal, setOpenModal] = useState(false)
   const [openEditModal, setOpenEditModal] = useState(false)
 
   const getClasses = async() => {
@@ -30,17 +29,17 @@ export default function Classes() {
     <MainContainer>
       <div className='page-container'>
         <div className='containerpages'>
-        <ClassHeader />
+        <ClassHeader getClasses={getClasses} />
           <CardGroup className='card-group2'>
             {classes.length?
               classes.map(item => {
-                return(<ClassCard  item={item} setOpenEditModal={setOpenEditModal} setSeletedClass={setSeletedClass} />)
+                return(<ClassCard getClasses={getClasses}  item={item} setOpenEditModal={setOpenEditModal} setSeletedClass={setSeletedClass} />)
                   }):<span></span>
                 }
           </CardGroup>
         </div>
       </div>
-      <EditClassModal seletedClass={seletedClass} openEditModal={openEditModal} setOpenEditModal={setOpenEditModal} />
+      <EditClassModal getClasses={getClasses} seletedClass={seletedClass} openEditModal={openEditModal} setOpenEditModal={setOpenEditModal} />
     </MainContainer>
   )
 }

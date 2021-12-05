@@ -3,7 +3,7 @@ import { Button, InputGroup, FormControl,} from 'react-bootstrap';
 import CreateClassModal from './CreateClassModal'
 import { Link } from 'react-router-dom'
 
-function ClassHeader() {
+function ClassHeader({getClasses}) {
   const [modal, setModal] = useState(false)
   const toggle = () =>{
     setModal(!modal)
@@ -29,7 +29,7 @@ function ClassHeader() {
 					</InputGroup>
 					</div>
 				</div>
-				<CreateClassModal toggle={toggle} modal={modal} />
+				<CreateClassModal toggle={toggle} modal={modal} getClasses={getClasses}  />
 		</div>
 	)
 }

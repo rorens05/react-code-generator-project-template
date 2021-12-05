@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { Card, Dropdown, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import ClassesAPI from '../../../../api/ClassesAPI';
 
 
-function ClassCard({item, setOpenEditModal, setSeletedClass}) {
+function ClassCard({item, setOpenEditModal, setSeletedClass, getClasses}) {
   
   const [openDropdown, setOpenDropdown] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -12,6 +13,17 @@ function ClassCard({item, setOpenEditModal, setSeletedClass}) {
     e.preventDefault()
     setSeletedClass(item)
     setOpenEditModal(true)
+  }
+
+  const deleteClasses = async (e, item) =>{
+    e.preventDefault()
+    let response = await new ClassesAPI().deleteClasses(item)
+      if(response.ok){
+          alert('Class Deleted')
+          getClasses()
+      }else{
+        alert(response.data.errorMessage)
+      }
   }
   
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (  
@@ -42,7 +54,7 @@ function ClassCard({item, setOpenEditModal, setSeletedClass}) {
                     <Dropdown.Item onClick={(e) => handleOpeEditModal(e, item)}>
                       Edit 
                     </Dropdown.Item>
-                    <Dropdown.Item>
+                    <Dropdown.Item onClick={(e) => deleteClasses(e,item.classId)}>
                       Delete
                     </Dropdown.Item>
                   </Dropdown.Menu>
