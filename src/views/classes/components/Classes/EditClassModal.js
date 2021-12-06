@@ -42,6 +42,7 @@ function EditClassModal({seletedClass, openEditModal, setOpenEditModal, getClass
 
   useEffect(() => {
     getGrade()
+    getCourses()
   }, [])
 
   const saveEditClasses = async (e) =>{
@@ -62,6 +63,14 @@ function EditClassModal({seletedClass, openEditModal, setOpenEditModal, getClass
       alert(response.data.errorMessage)
     }
   }
+
+  useEffect(() => {
+    if(seletedClass !== null){
+      setGradeLevelId(seletedClass?.gradeLevelId)
+      setClassName(seletedClass?.className)
+      setCourseId(seletedClass?.courseId) 
+    }
+  }, [seletedClass])
   
   return (
 		<div>
@@ -76,9 +85,9 @@ function EditClassModal({seletedClass, openEditModal, setOpenEditModal, getClass
           <Form.Group className="mb-3">
             <Form.Label>Grade Level</Form.Label>
             	<Form.Select onChange={(e) => setGradeLevelId(e.target.value)}>
-                <option value={seletedClass?.gradeLevelId}>{seletedClass?.gradeName} {seletedClass?.classId}</option>
+                <option value={seletedClass?.gradeLevelId}>{seletedClass?.gradeName}</option>
                   {grade.map(item =>{
-                    return(<option value={item.id}>{item.gradeName}</option>)
+                    return (<option value={item.id}>{item.gradeName}</option>) 
                     })
                   }
             	</Form.Select>
@@ -88,7 +97,7 @@ function EditClassModal({seletedClass, openEditModal, setOpenEditModal, getClass
               	<Form.Select onChange={(e) => setCourseId(e.target.value)} >
                   <option value={seletedClass?.courseId}>{seletedClass?.courseName}</option>
                      {course.map(item =>{
-                      return(<option value={item.id}>{item.courseName}</option>)
+                      return (<option value={item.id}>{item.courseName}</option>)
                       })
                     }
                 </Form.Select>
