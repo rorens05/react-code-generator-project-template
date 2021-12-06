@@ -102,6 +102,10 @@ opacity: 1;
 margin-bottom: 10px;
 }
 
+.m-l-10 {
+  margin-left: 10px;
+}
+
 .pages-header {
 color:#707070;
 display:inline-flex;
@@ -325,6 +329,8 @@ text-align: right;
   border-radius: 10px !important ;
   box-shadow: 1px 2px 5px 1px #eeeeee;
   margin-bottom: 20px;
+  width:300px;
+  justify-content: center !important;
 }
 
 .course-widget-font {
@@ -754,6 +760,7 @@ border-top-right-radius: 0px !important;
   letter-spacing: 0px !important;
   color: #EE9337 !important;
   opacity: 1 !important;
+  font-size: 24px;
 }
 
 .color-white {

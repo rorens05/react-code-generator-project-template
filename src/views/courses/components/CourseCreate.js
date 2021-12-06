@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Form, FormControl, Modal, FloatingLabel } from 'react-bootstrap';
+import { Button, Form, Modal } from 'react-bootstrap';
 import CoursesAPI from "../../../api/CoursesAPI";
 import SubjectAreaAPI from "../../../api/SubjectAreaAPI";
 
@@ -65,7 +65,7 @@ export default function CourseCreate({setCourse, openModal, setOpenModal}){
 	return (
 		<div>
 			<Modal size="lg" className="modal-all" show={openModal} onHide={()=> setOpenModal(!openModal)} >
-				<Modal.Header className="modal-header">
+				<Modal.Header className="modal-header" closeButton>
 				Create Course
 				</Modal.Header>
 				<Modal.Body className="modal-label b-0px">
