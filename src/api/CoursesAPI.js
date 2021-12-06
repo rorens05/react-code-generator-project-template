@@ -76,4 +76,11 @@ export default class CoursesAPI extends Base {
     });
   };
 
+  getExamInformation = async (id) => {
+    return this.sendRequest({
+      path: `/api/Test/module/${id}`,
+      method: 'GET',
+    });
+  };
+
 }

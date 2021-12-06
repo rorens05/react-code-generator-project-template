@@ -3,7 +3,7 @@ import { Button, Form, Modal } from 'react-bootstrap';
 import CoursesAPI from "../../../api/CoursesAPI";
 import SubjectAreaAPI from "../../../api/SubjectAreaAPI";
 
-export default function EditLesson({openEditLessonModal, setEditLessonModal, selectedPage}){
+export default function EditLesson({openEditLessonModal, setEditLessonModal, modulePagesContent}){
 
 	const [loading, setLoading] = useState(false)
   const [modulePages, setModulePages] = useState([])
@@ -50,16 +50,16 @@ export default function EditLesson({openEditLessonModal, setEditLessonModal, sel
   }
 
 	useEffect(() => {
-    if(selectedPage !== null) {
-			setPageName(selectedPage?.pageName)
-			setSequenceNo(selectedPage?.sequenceNo)
-      setContent(selectedPage?.content)
+    if(modulePagesContent !== null) {
+			setPageName(modulePagesContent?.pageName)
+			setSequenceNo(modulePagesContent?.sequenceNo)
+      setContent(modulePagesContent?.content)
 		}
-  }, [selectedPage])
+  }, [modulePagesContent])
 
 	return (
 		<div>
-			<Modal size="lg" className="modal-all" show={openEditLessonModal} onHide={()=> setEditLessonModal(!openEditLessonModal)} >
+			<Modal size="xl" className="modal-all" show={openEditLessonModal} onHide={()=> setEditLessonModal(!openEditLessonModal)} >
 				<Modal.Header className="modal-header" closeButton>
 				Edit Lesson / Page
 				</Modal.Header>
@@ -70,7 +70,7 @@ export default function EditLesson({openEditLessonModal, setEditLessonModal, sel
 												Page Name
 										</Form.Label>
 										<Form.Control 
-											defaultValue={selectedPage?.pageName}
+											defaultValue={modulePagesContent?.pageName}
                       className="custom-input" 
                       size="lg" 
                       type="text" 
@@ -84,7 +84,7 @@ export default function EditLesson({openEditLessonModal, setEditLessonModal, sel
 												Sequence Number
 										</Form.Label>
 										<Form.Control 
-                      defaultValue={selectedPage?.sequenceNo}
+                      defaultValue={modulePagesContent?.sequenceNo}
                       className="custom-input" 
                       size="lg" 
                       type="text" 
@@ -98,7 +98,7 @@ export default function EditLesson({openEditLessonModal, setEditLessonModal, sel
 												Content
 										</Form.Label>
 										<Form.Control 
-                      defaultValue={selectedPage?.content}
+                      defaultValue={modulePagesContent?.content}
                       className="custom-input" 
                       size="lg" 
                       as="textarea"

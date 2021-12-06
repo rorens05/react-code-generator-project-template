@@ -3,10 +3,11 @@ import { Tab, ListGroup, Row, Col, Button, InputGroup, FormControl, Accordion } 
 import CoursesAPI from "../../../api/CoursesAPI";
 import CourseCreateUnit from "./CourseCreateUnit";
 import CoursePages from "./../pages/CoursePages";
+import CourseExams from "./../pages/CourseExams";
 import CreateLesson from "./../pages/CreateLesson";
 import EditLesson from "./../pages/EditLesson";
 
-export default function CourseWidget({display, setDisplay, moduleInfo, setModuleInfo}) {
+export default function CourseWidget({display, setDisplay, setExamDisplay, examDisplay, moduleInfo, setModuleInfo, examInfo, setExamInfo}) {
 
   const [selectedPage, setSelectedPage] = useState(null)
   const [courseInfo, setCourseInfo] = useState('')
@@ -16,9 +17,13 @@ export default function CourseWidget({display, setDisplay, moduleInfo, setModule
   const [openCreateUnitModal, setopenCreateUnitModal] = useState(false)
   const [openCreateLessonModal, setCreateLessonModal] = useState(false)
   const [addLessonButton, setAddLessonButton] = useState(false)
+  const [learnHeader, setLearnHeader] = useState(false)
+  const [examHeader, setExamHeader] = useState(false)
+
   const courseid = sessionStorage.getItem('courseid')
-  const moduleid = sessionStorage.getItem('moduleid')
   const pagename = sessionStorage.getItem('pagename')
+  const moduleid = sessionStorage.getItem('moduleid')
+  
 
   const handleOpenCreateUnitModal = e => {
     e.preventDefault()
@@ -30,25 +35,21 @@ export default function CourseWidget({display, setDisplay, moduleInfo, setModule
     setCreateLessonModal(true)
   }
 
-
   const unitDisplay = e => {
     e.preventDefault()
+    setExamHeader(false)
     sessionStorage.removeItem("pagename");
+    setLearnHeader(true)
+    sessionStorage.setItem("widget", "Learn")
     setDisplay(false)
   }
 
-  const getCourseUnitPagesContent = async(e, data, pagesid) => {
-    setLoading(true)
-    setDisplay(true)
-    let response = await new CoursesAPI().getCourseUnitPagesContent(courseid, data, pagesid)
-    setLoading(false)
-    if(response.ok){
-      setModulePagesContent(response.data)
-      console.log(response.data)
-      console.log(display)
-    }else{
-      alert("Something went wrong while fetching all courses")
-    }
+  const examsDisplay = e => {
+    e.preventDefault()
+    setLearnHeader(false)
+    setExamHeader(true)
+    sessionStorage.setItem("widget", "Exam")
+    setDisplay(false)
   }
 
   const getCoursesInfo = async(e) => {
@@ -78,9 +79,24 @@ export default function CourseWidget({display, setDisplay, moduleInfo, setModule
     }
   }
 
+  const getExamInfo = async(e, data) => {
+    setLoading(true)
+    sessionStorage.setItem('moduleid', data)
+    let response = await new CoursesAPI().getExamInformation(moduleid)
+    setLoading(false)
+    if(response.ok){
+      setExamInfo(response.data)
+      console.log(response.data)
+    }else{
+      alert("Something went wrong while fetching all a")
+    }
+  }
+
   useEffect(() => {
     getCoursesInfo()
   }, [])
+
+  let widget = sessionStorage.getItem('widget')
 
   return (
       <Tab.Container loading={loading} className="course-widget-font" id="list-group-tabs-example " defaultActiveKey="#link1">
@@ -102,7 +118,7 @@ export default function CourseWidget({display, setDisplay, moduleInfo, setModule
               <ListGroup.Item className="list-group-item-o " action href="#link1" onClick={unitDisplay}>
                 Learn
               </ListGroup.Item>
-              <ListGroup.Item className="list-group-item-o "action href="#link2">
+              <ListGroup.Item className="list-group-item-o "action href="#link2" onClick={examsDisplay}>
                 Exam
               </ListGroup.Item>
               <ListGroup.Item  className="list-group-item-o "action href="#link3">
@@ -122,7 +138,24 @@ export default function CourseWidget({display, setDisplay, moduleInfo, setModule
           <Col sm={9}>
             {display === false ?
             <Tab.Content className="content-pane">
-              <span className="content-pane-title">{pagename === null ? "Learn" : modulePagesContent.pageName}   <Button variant="outline-warning" onClick={handleOpenCreateUnitModal}><i className="fa fa-plus"></i> Add Unit</Button></span>
+              {learnHeader === true &&
+              <span className="content-pane-title">
+                {pagename === "Learn" ? "Learn" : modulePagesContent.pageName}
+                <Button variant="outline-warning" onClick={handleOpenCreateUnitModal}><i className="fa fa-plus"></i> 
+                  Add Unit
+                </Button>
+              </span>
+              }
+
+              {examHeader === true &&
+              <span className="content-pane-title">
+                Exam
+                <Button variant="outline-warning" onClick={handleOpenCreateUnitModal}><i className="fa fa-plus"></i> 
+                  Add Exam
+                </Button>
+              </span>
+              }
+
               <CourseCreateUnit moduleInfo={moduleInfo} setModuleInfo={setModuleInfo} openCreateUnitModal={openCreateUnitModal} setopenCreateUnitModal={setopenCreateUnitModal}/>
               <div className="row m-b-20 m-t-30">
                 <div className="col-md-12">
@@ -133,12 +166,11 @@ export default function CourseWidget({display, setDisplay, moduleInfo, setModule
                 </div>
               </div>
               <Tab.Pane eventKey="#link1">
-                {/* <CourseAccordion setModuleInfo={setModuleInfo}/> */}
                 <Accordion defaultActiveKey="0">
                   {moduleInfo.map((item, index) => {
                     return(
                       <Accordion.Item eventKey={item.id}> 
-                        <Accordion.Header onClick={(e) => getCourseUnitPages(e, item.id, modulePagesContent.pageName)}>
+                        <Accordion.Header onClick={(e) => getCourseUnitPages(e, item.id)}>
                           <span className="unit-title">{item.moduleName}
                             {addLessonButton === false ? "" : <Button className="m-l-10" variant="outline-warning" onClick={handleOpenCreateLessonModal}><i className="fa fa-plus"></i> Add Lesson</Button>}
                           </span>
@@ -159,7 +191,29 @@ export default function CourseWidget({display, setDisplay, moduleInfo, setModule
                 </Accordion>
               </Tab.Pane>
               <Tab.Pane eventKey="#link2">
-                v
+                <Accordion defaultActiveKey="0">
+                  {moduleInfo.map((item, index) => {
+                    return(
+                      <Accordion.Item eventKey={item.id}> 
+                        <Accordion.Header onClick={(e) => getExamInfo(e, item.id)}>
+                          <span className="unit-title">{item.moduleName}
+                            {addLessonButton === false ? "" : <Button className="m-l-10" variant="outline-warning" onClick={handleOpenCreateLessonModal}><i className="fa fa-plus"></i> Add Lesson</Button>}
+                          </span>
+                        </Accordion.Header>
+                        <CreateLesson moduleInfo={moduleInfo} setModuleInfo={setModuleInfo} openCreateLessonModal={openCreateLessonModal} setCreateLessonModal={setCreateLessonModal}/>
+                        <Accordion.Body>
+                          <CourseExams
+                            examInfo={examInfo}
+                            setExamInfo={setExamInfo}
+                            display={display} setDisplay={setDisplay} 
+                            modulePages={modulePages} setModulePages={setModulePages}
+                          />
+                        </Accordion.Body>
+                      </Accordion.Item>
+                      )
+                    })
+                  }
+                </Accordion>
               </Tab.Pane>
             </Tab.Content> 
             :
