@@ -12,7 +12,8 @@ export default function PrivateRoute(props) {
     }
   }, [user])
 
-  return (
+  if(user != null) return (
     <Route {...props}/>
   )
+  return <div/>
 }
