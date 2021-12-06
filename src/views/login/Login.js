@@ -1,14 +1,19 @@
 import Button from '@restart/ui/esm/Button'
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Col, Form, Row } from 'react-bootstrap'
 import { Link, useHistory } from 'react-router-dom'
 import Auth from '../../api/Auth'
 import MainContainer from '../../components/layouts/MainContainer'
+import { UserContext } from '../../context/UserContext'
 
 export default function Login() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
+  const userContext = useContext(UserContext)
+  const {refreshUser, user} = userContext.data
+  const urlParams = new URLSearchParams(window.location.search);
+  const message = urlParams.get('message');
 
   let history = useHistory()
 
@@ -20,19 +25,21 @@ export default function Login() {
     )
     if(response.ok){
       await window.localStorage.setItem('token', response.data.token)
+      refreshUser()
       history.replace("/classes")
     }else{
       alert(response.data.errorMessage)
     }
     setLoading(false)
   }
-
+  
   return (
     <MainContainer headerVisible={false} loading={loading}>
       <div className="auth-container">
         <div className="login-container">
           <h1 className="title"><span className="color-blue-green">Tek</span>Teach Account Login</h1>
           <p className="subtitle">Welcome back to TekTeach! Making learning, a great experience!</p>
+          <p className="subtitle text-danger">{message}</p>
           <div className="mt-5">
             <Row>
               <Col size="md" >

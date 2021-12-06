@@ -34,7 +34,7 @@ export default function Courses() {
   }, [])
   
   return (
-    <MainContainer loading={loading}>
+    <MainContainer loading={loading} activeHeader={'courses'}>
       <div className="page-container">
         <div className="containerpages">
           <div className="row m-b-20">

@@ -1,43 +1,4 @@
-body {
-  margin: 0;
-  background-color: #F5F5F5;
-}
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
-.content{
-  height: 100vh;
-  background-color: #F5F5F5;
-}
-
-.header-links{
-  display: flex;
-  justify-content: center;
-  width: 100vw
-}
-
-.header-links a{
-  width: 150px !important;
-  text-align: center;
-  text-decoration: none !important;
-  color: #7D7D7D;
-  font-size: 24px;
-  padding-top: 34px;
-  padding-bottom: 34px;
-  margin: 0 !important
-}
-
-.header-links a.active{
-  color: #EE9337;
-  background-color: #F5F5F5;
-}
-
-.header-links a:hover{
-  color: #EE9337 !important;
-}
 
 .class-side-bar a{
   text-align: center;
@@ -552,72 +513,6 @@ border-top-right-radius: 0px !important;
   margin-bottom: 10px;
 }
 
-.full-screen-loader{
-  position: absolute;
-  background-color: rgba(255, 255, 255, 0.432);
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.main-container{
-  width: 100vw;
-  height: 100vh;
-  overflow: auto;
-}
-
-.main-container .content{
-  height: calc(100vh - 104px);
-  overflow: auto !important;
-  position: relative;
-}
-
-.main-container .no-header{
-  height: 100vh !important;
-}
-
-.main-container .content .footer{
-  margin: 40px;
-  text-align: right;
-  
-}
-
-.header .floating-options{
-  position: absolute;
-  top: 18px;
-  right: 18px;
-}
-
-.header .floating-options a{
-  display: inline-block;
-  width: 64px;
-  height: 64px;
-  border-radius: 64px;
-  background-color: #F9F9F9;
-  color: #BCBCBC;
-  font-size: 30px;
-  margin-right: 12px;
-  
-}
-
-.header .floating-options a div{
-  width: 64px;
-  height: 64px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-@media only screen and (max-width: 1280px) {
-  .header .floating-options{
-    transform: scale(0.7);
-    right: -18px;
-  }
-}
 
 
 .auth-container{

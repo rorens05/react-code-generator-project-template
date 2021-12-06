@@ -4,12 +4,13 @@ import logo from '../../assets/images/long-logo.png'
 import { VERSION_NAME, ENV, ENV_LIST } from '../../config/env'
 import FullScreenLoader from '../loaders/FullScreenLoader'
 
-export default function MainContainer({children, headerVisible = true, fluid, loading = false}) {
+export default function MainContainer({children, headerVisible = true, fluid, loading = false, activeHeader}) {
   const containerClass = fluid ? "container-fluid" : "container "
   const header = headerVisible ? '' : 'no-header'
   return (
     <div className="main-container">
-      {headerVisible && <Header/>}
+      {headerVisible && <Header activeHeader={activeHeader}/>}
+
       <div className={`content ${header}`}>
         <div className={containerClass}>
           {children}

@@ -1,0 +1,252 @@
+body {
+  margin: 0;
+  background-color: #F5F5F5;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.content{
+  height: 100vh;
+  background-color: #F5F5F5;
+}
+
+.header-links{
+  display: flex;
+  justify-content: center;
+  width: 100vw
+}
+
+.header-links a{
+  width: 150px !important;
+  text-align: center;
+  text-decoration: none !important;
+  color: #7D7D7D;
+  font-size: 24px;
+  padding-top: 34px;
+  padding-bottom: 34px;
+  margin: 0 !important
+}
+
+.header-links a.active{
+  color: #EE9337;
+  background-color: #F5F5F5;
+}
+
+.header-links a:hover{
+  color: #EE9337 !important;
+}
+
+.full-screen-loader, .page-loader{
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.432);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-container{
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
+}
+
+.main-container .content{
+  height: calc(100vh - 104px);
+  overflow: auto !important;
+  position: relative;
+}
+
+.main-container .no-header{
+  height: 100vh !important;
+}
+
+.main-container .content .footer{
+  margin: 40px;
+  text-align: right;
+}
+
+.header .home-links{
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex
+}
+
+.header .home-links .home-link{
+  padding: 18px;
+  display: inline-block;
+  color: #BCBCBC;
+  font-size: 50px;
+  text-decoration: none !important;
+  margin-right: 12px;
+}
+
+.header .home-links .home-link.active {
+  color: #EE9337;
+  background-color: #F5F5F5
+}
+
+.header .home-links .home-link div{
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header .school-year-container{
+  padding: 18px 0
+}
+
+.header .school-year-container span{
+  color: var(--bolder);
+  text-align: left;
+  font: normal normal normal 20px/27px Segoe UI;
+  letter-spacing: 0px;
+  color: #707070;
+}
+
+.header .school-year-container .school-year-dropdown{
+  color: #EE9337;
+  font-size: 20px;
+  padding: 4px 0;
+}
+
+.header .school-year-dropdown:hover{
+  color: #EE9337 !important
+}
+
+.header .floating-options{
+  position: absolute;
+  top: 18px;
+  right: 18px;
+}
+
+.header .floating-options .floating-option{
+  display: inline-block;
+  text-decoration: none !important;
+  width: 64px;
+  height: 64px;
+  border-radius: 64px;
+  background-color: #F9F9F9;
+  color: #BCBCBC;
+  font-size: 30px;
+  margin-right: 12px;
+}
+
+.header .floating-options .floating-option.active{
+  background-color: #EE9337;
+  color: #FFF;
+}
+
+.header .floating-options .floating-option div{
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-dropdown-container{
+  width: 350px !important;
+  z-index: 1000px;
+  position: fixed;
+  top: 105px;
+  right: 32px;
+  border: none !important;
+  border-radius: 10px !important;
+}
+
+.profile-dropdown-container .user-header{
+  padding: 20px;
+  display: flex;
+}
+
+.profile-dropdown-container .user-header .user-image-container{
+  background-color: #F9F9F9;
+  color: #BCBCBC;
+  font-size: 27px;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 32px;
+  margin-right: 20px;
+}
+
+.profile-dropdown-container .user-header .user-name-container .user-name{
+  margin: 0;
+  color: #707070;
+  font: normal normal normal 24px/32px Segoe UI;
+}
+
+.profile-dropdown-container .user-header .user-name-container a{
+  font: normal normal normal 16px/21px Segoe UI;
+  letter-spacing: 0px;
+  color: #EE9337;
+  text-decoration: none !important;
+}
+
+.profile-dropdown-container .profile-dropdown-links{
+}
+
+.profile-dropdown-container .profile-dropdown-links .profile-dropdown-link{
+  display: block;
+  padding: 10px 32px;
+  display: flex;
+  text-decoration: none !important;
+  align-items: center;
+  color: #707070;
+  font: normal normal normal 20px/27px Segoe UI;
+  letter-spacing: 0px;
+  color: #707070;
+}
+
+.profile-dropdown-container .profile-dropdown-links .profile-dropdown-link-icon{
+  background-color: #EE9337;
+  width: 36px;
+  height: 36px;
+  font-size: 18px;
+  color: white;
+  border-radius: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20px;
+}
+
+
+.profile-dropdown-container .profile-dropdown-links .feedback-link{
+  border-top: 1px solid #E9E9E9;
+  border-bottom: 1px solid #E9E9E9
+}
+
+.profile-dropdown-container .profile-dropdown-links .feedback-link .feedback-texts .title{
+  margin: 0;
+  font: normal normal bold 12px/16px Segoe UI;
+  letter-spacing: 0px;
+  color: #707070;
+}
+
+.profile-dropdown-container .profile-dropdown-links .feedback-link .feedback-texts .sub-title{
+  margin: 0;
+  font: normal normal normal 12px/16px Segoe UI;
+  letter-spacing: 0px;
+  color: #707070;
+}
+
+
+@media only screen and (max-width: 1280px) {
+  .header .floating-options{
+    transform: scale(0.7);
+    right: -18px;
+  }
+}
