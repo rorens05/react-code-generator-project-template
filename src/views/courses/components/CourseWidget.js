@@ -140,7 +140,7 @@ export default function CourseWidget({display, setDisplay, setExamDisplay, examD
             <Tab.Content className="content-pane">
               {learnHeader === true &&
               <span className="content-pane-title">
-                {pagename === "Learn" ? "Learn" : modulePagesContent.pageName}
+                {pagename === null ? "Learn" : modulePagesContent.pageName}
                 <Button variant="outline-warning" onClick={handleOpenCreateUnitModal}><i className="fa fa-plus"></i> 
                   Add Unit
                 </Button>
