@@ -5,6 +5,7 @@ import CourseCreateUnit from "./CourseCreateUnit";
 import CoursePages from "./../pages/CoursePages";
 import CourseExams from "./../pages/CourseExams";
 import CreateLesson from "./../pages/CreateLesson";
+import CreateExam from "./../pages/CreateExam";
 import EditLesson from "./../pages/EditLesson";
 
 export default function CourseWidget({display, setDisplay, setExamDisplay, examDisplay, moduleInfo, setModuleInfo, examInfo, setExamInfo}) {
@@ -16,6 +17,7 @@ export default function CourseWidget({display, setDisplay, setExamDisplay, examD
   const [loading, setLoading] = useState(false)
   const [openCreateUnitModal, setopenCreateUnitModal] = useState(false)
   const [openCreateLessonModal, setCreateLessonModal] = useState(false)
+  const [openCreateExamModal, setOpenCreateExamModal] = useState(false)
   const [addLessonButton, setAddLessonButton] = useState(false)
   const [learnHeader, setLearnHeader] = useState(false)
   const [examHeader, setExamHeader] = useState(false)
@@ -33,6 +35,11 @@ export default function CourseWidget({display, setDisplay, setExamDisplay, examD
   const handleOpenCreateLessonModal = e => {
     e.preventDefault()
     setCreateLessonModal(true)
+  }
+
+  const handleOpenCreateExamModal = e => {
+    e.preventDefault()
+    setOpenCreateExamModal(true)
   }
 
   const unitDisplay = e => {
@@ -197,10 +204,10 @@ export default function CourseWidget({display, setDisplay, setExamDisplay, examD
                       <Accordion.Item eventKey={item.id}> 
                         <Accordion.Header onClick={(e) => getExamInfo(e, item.id)}>
                           <span className="unit-title">{item.moduleName}
-                            {addLessonButton === false ? "" : <Button className="m-l-10" variant="outline-warning" onClick={handleOpenCreateLessonModal}><i className="fa fa-plus"></i> Add Lesson</Button>}
+                            {addLessonButton === false ? "" : <Button className="m-l-10" variant="outline-warning" onClick={handleOpenCreateExamModal}><i className="fa fa-plus"></i> Add Lesson</Button>}
                           </span>
                         </Accordion.Header>
-                        <CreateLesson moduleInfo={moduleInfo} setModuleInfo={setModuleInfo} openCreateLessonModal={openCreateLessonModal} setCreateLessonModal={setCreateLessonModal}/>
+                        <CreateExam examInfo={examInfo} setExamInfo={setExamInfo} openCreateExamModal={openCreateExamModal} setOpenCreateExamModal={setOpenCreateExamModal}/>
                         <Accordion.Body>
                           <CourseExams
                             examInfo={examInfo}

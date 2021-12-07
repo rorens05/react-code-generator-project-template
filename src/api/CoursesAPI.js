@@ -82,5 +82,14 @@ export default class CoursesAPI extends Base {
       method: 'GET',
     });
   };
+  
+  
+  createExam = async (moduleid, data) => {
+    return this.sendRequest({
+      path: `/api/Test/module/${moduleid}`,
+      method: 'POST',
+      data
+    });
+  };
 
 }
