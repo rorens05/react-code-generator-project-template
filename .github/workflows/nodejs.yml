@@ -20,5 +20,5 @@ jobs:
       - run: npm install
       - run: npm ci
       - run: yarn install
-      - run: yarn test
+      - run: yarn run test
       - run: yarn run build 
