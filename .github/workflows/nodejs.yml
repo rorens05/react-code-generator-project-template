@@ -20,5 +20,4 @@ jobs:
       - run: npm install
       - run: npm ci
       - run: npm install --global yarn
-      - run: npm i --save-dev eslint-plugin-jest
       - run: yarn run build 
