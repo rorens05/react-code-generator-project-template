@@ -1,9 +1,11 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import Modal from 'react-bootstrap/Modal'
 import { Form, Button, } from 'react-bootstrap'
 import GradeAPI from '../../../../api/GradeAPI';
 import CoursesAPI from '../../../../api/CoursesAPI'
 import ClassesAPI from '../../../../api/ClassesAPI';
+import { UserContext } from '../../../../context/UserContext'
+import AcademicTermAPI from '../../../../api/AcademicTermAPI';
 
 function CreateClassModal({modal, toggle,getClasses}) {
   
@@ -13,12 +15,18 @@ function CreateClassModal({modal, toggle,getClasses}) {
   const [gradeLevelId, setGetGradeLevel] = useState('')
   const [courseId, setGetCourseId] = useState('')
   const [className, setClassName] = useState('')
+  const [academicTerm, setAcademicTerm] = useState([])
+  const [academicTermId, setAcademicTermId] = useState('')
+  const userContext = useContext(UserContext)
+  const {user} = userContext.data
 
   const getClassCode = e =>{
     e.preventDefault()
     setGetCode(createRandomCode(4))
     
   }
+
+  console.log(classCode)
 
   const getGrade = async() =>{
     let response = await new GradeAPI().getGrade()
@@ -31,6 +39,19 @@ function CreateClassModal({modal, toggle,getClasses}) {
 
   useEffect(() => {
     getGrade()
+  }, [])
+
+  const getAcademicTerm = async () =>{
+    let response = await new AcademicTermAPI().fetchAcademicTerm()
+    if(response.ok){
+      setAcademicTerm(response.data)
+    }else{
+      alert("Something went wrong while fetching all Academic Term")
+    }
+  }
+
+  useEffect(() => {
+    getAcademicTerm()
   }, [])
 
   const getCourses = async() => {
@@ -48,8 +69,7 @@ function CreateClassModal({modal, toggle,getClasses}) {
 
   const addClass = async(e) => {
     e.preventDefault()
-    let teacherId = '1'
-    let academicTermId = '1'
+    let teacherId = user.teacher.id
     let response = await new ClassesAPI().createClasses(
       {classCode, gradeLevelId, className, courseId, teacherId, academicTermId}
     )
@@ -63,6 +83,7 @@ function CreateClassModal({modal, toggle,getClasses}) {
     }
   }
 
+
   const createRandomCode = (string_length) => {
     var randomString = '';
     var characters = 'ABCDEFGHIJKLMNOPQRSTWXYZ1234567890'
@@ -71,6 +92,7 @@ function CreateClassModal({modal, toggle,getClasses}) {
     }
       return randomString
   }
+
 
 	return (
     <div>
@@ -101,6 +123,18 @@ function CreateClassModal({modal, toggle,getClasses}) {
                       })
                     }
                 </Form.Select>
+                
+            </Form.Group>
+            <Form.Group className="mb-4">
+            	<Form.Label>Academic Term</Form.Label>
+                <Form.Select onChange={(e) => setAcademicTermId(e.target.value)}>
+                  <option>-- Select Academic Term HERE --</option>
+                  {academicTerm.map(item =>{
+                      return(<option value={item.id}>{item.academicTermName}</option>)
+                      })
+                    }
+                </Form.Select>
+                
             </Form.Group>
             <Form.Group className="mb-4">
           		<Form.Label >Class Name</Form.Label>
@@ -117,7 +151,7 @@ function CreateClassModal({modal, toggle,getClasses}) {
                 	</Button>
               </Form.Group>
               <Form.Group className="mb-4">
-                <Form.Control onChange={(e) => setGetCode(e.target.value)} defaultValue={classCode} type="text" placeholder='Enter class Code here'/>
+                <Form.Control value={classCode} type="text" placeholder='Enter class Code here'/>
             </Form.Group>
             <Form.Group className='right-btn'>
 							<Button className='tficolorbg-button' type='submit'>Save</Button>

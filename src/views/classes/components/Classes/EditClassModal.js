@@ -1,9 +1,11 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import Modal from 'react-bootstrap/Modal'
 import { Form, Button, } from 'react-bootstrap'
 import CoursesAPI from '../../../../api/CoursesAPI'
 import GradeAPI from '../../../../api/GradeAPI';
 import ClassesAPI from '../../../../api/ClassesAPI';
+import AcademicTermAPI from '../../../../api/AcademicTermAPI';
+import { UserContext } from '../../../../context/UserContext'
 
 function EditClassModal({seletedClass, openEditModal, setOpenEditModal, getClasses }) {
 
@@ -12,11 +14,28 @@ function EditClassModal({seletedClass, openEditModal, setOpenEditModal, getClass
   const [className, setClassName] = useState('')
   const [courseId, setCourseId] = useState('')
   const [gradeLevelId, setGradeLevelId] = useState('')
+  const [academicTerm, setAcademicTerm] = useState([])
+  const [academicTermId, setAcademicTermId] = useState('')
+  const userContext = useContext(UserContext)
+  const {user} = userContext.data
 
   const handleCloseModal = (e) =>{
     e.preventDefault()
     setOpenEditModal(false)
   }
+
+  const getAcademicTerm = async () =>{
+    let response = await new AcademicTermAPI().fetchAcademicTerm()
+    if(response.ok){
+      setAcademicTerm(response.data)
+    }else{
+      alert("Something went wrong while fetching all Academic Term")
+    }
+  }
+
+  useEffect(() => {
+    getAcademicTerm()
+  }, [])
 
   const getCourses = async() => {
     let response = await new CoursesAPI().getCourses()
@@ -47,9 +66,8 @@ function EditClassModal({seletedClass, openEditModal, setOpenEditModal, getClass
 
   const saveEditClasses = async (e) =>{
     e.preventDefault()
-    let teacherId = '1'
+    let teacherId = user.teacher.id
     let classId = seletedClass.classId
-    let academicTermId = '1'
     let classCode = seletedClass.classCode
     let response = await new ClassesAPI().editClasses(
       classId,
@@ -102,6 +120,19 @@ function EditClassModal({seletedClass, openEditModal, setOpenEditModal, getClass
                     }
                 </Form.Select>
             </Form.Group>
+
+            <Form.Group className="mb-4">
+            	<Form.Label>Academic Term</Form.Label>
+                <Form.Select onChange={(e) => setAcademicTermId(e.target.value)}>
+                <option value={seletedClass?.academicTermId}>{seletedClass?.termName}</option>
+                  {academicTerm.map(item =>{
+                      return(<option value={item.id}>{item.academicTermName}</option>)
+                      })
+                    }
+                </Form.Select>       
+
+                </Form.Group>
+
             <Form.Group className="mb-4">
             	<Form.Label >Class Name</Form.Label>
                 <Form.Control defaultValue={seletedClass?.className} onChange={(e) => setClassName(e.target.value)} type="text" placeholder='Enter class name here'/>

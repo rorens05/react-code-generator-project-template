@@ -1,9 +1,9 @@
 import Base from './Base';
 
 export default class ClassesAPI extends Base {
-  getClasses = async () => {
+  getClasses = async (id) => {
     return this.sendRequest({
-      path: `/api/Class`,
+      path: `/api/Teacher/${id}/classes`,
       method: 'GET'
     });
   };
