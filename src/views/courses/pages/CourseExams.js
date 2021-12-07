@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col, Button } from 'react-bootstrap';
 import CoursesAPI from "../../../api/CoursesAPI";
-import EditLesson from "./EditLesson";
+import EditTest from "./EditTest";
 
-export default function CourseExams({examInfo, setExamInfo, display, setDisplay, modulePages}) {
+export default function CourseExams({examInfo, setExamInfo, display, setDisplay, modulePages, selectedTest, setSelectedTest}) {
 
   const [loading, setLoading] = useState(false)
-  const [openEditLessonModal, setEditLessonModal] = useState(false)
-  const [selectedPage, setSelectedPage] = useState(null)
+  const [openEditTestModal, setOpenEditTestModal] = useState(false)
+  
  
   const courseid = sessionStorage.getItem('courseid')
   const moduleid = sessionStorage.getItem('moduleid')
 
   
-  const handleOpenEditLessonModal = (e, item) => {
+  const handleOpenEditTestModal = (e, item) => {
     e.preventDefault()
-    setSelectedPage(item)
+    setSelectedTest(item)
     console.log(item)
-    setEditLessonModal(true)
+    setOpenEditTestModal(true)
   }
 
   const getExamInfo = async(e) => {
@@ -46,16 +46,10 @@ export default function CourseExams({examInfo, setExamInfo, display, setDisplay,
                   
                 </Col>
                 <Col className="align-right-content" md={3}>
-                  <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={(e) => handleOpenEditLessonModal(e, examInfo)}><i className="fa fa-edit"></i></Button>
+                  <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={(e) => handleOpenEditTestModal(e, item)}><i className="fa fa-edit"></i></Button>
                   <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i className="fa fa-trash"></i></Button>
                 </Col>
-                <EditLesson 
-                  examInfo={examInfo} 
-                  setExamInfo={setExamInfo}   
-                  openEditLessonModal={openEditLessonModal} 
-                  setEditLessonModal={setEditLessonModal} 
-                  selectedPage={selectedPage}
-                />
+                
               </Row>
               
             )

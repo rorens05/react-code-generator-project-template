@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
+import { Tab, ListGroup, Row, Col, Button, InputGroup, FormControl, Accordion } from 'react-bootstrap';
 import MainContainer from '../../components/layouts/MainContainer'
 import CourseWidget from "./components/CourseWidget";
 import CourseBreadcrumbs from "./components/CourseBreadcrumbs";
+import ClassSideNavigation from "./components/CourseSideNavigation";
 import CoursesAPI from "../../api/CoursesAPI";
+import CoursesLearn from "./pages/Learn/CoursesLearn";
 
 export default function CourseContent() {
 
   const [loading, setLoading] = useState(false)
-  const [moduleInfo, setModuleInfo] = useState([])
-  const [examInfo, setExamInfo] = useState([])
-  const [display, setDisplay] = useState(false)
-  const [examDisplay, setExamDisplay] = useState(false)
+  const [moduleInfo, setModuleInfo] = useState(false)
 
   const moduleid = sessionStorage.getItem('moduleid')
   const sessionCourse = sessionStorage.getItem('courseid') 
@@ -27,36 +27,19 @@ export default function CourseContent() {
     }
   }
 
-  const getExamInfo = async(e) => {
-    setLoading(true)
-    let response = await new CoursesAPI().getExamInformation(moduleid)
-    setLoading(false)
-    if(response.ok){
-      setExamInfo(response.data)
-      console.log(response.data)
-    }else{
-      alert("Something went wrong while fetching all a")
-    }
-  }
-
   useEffect(() => {
     getCourseUnitInformation()
-    getExamInfo()
   }, [])
 
   return (
     <MainContainer>
       <CourseBreadcrumbs />
-      <CourseWidget 
-        display={display} 
-        setDisplay={setDisplay} 
-        examDisplay={examDisplay} 
-        setExamDisplay={setExamDisplay} 
-        setModuleInfo={setModuleInfo} 
-        moduleInfo={moduleInfo}
-        examInfo={examInfo}
-        setExamInfo={setExamInfo}
-      />
+      <Tab.Container loading={loading} className="course-widget-font" id="list-group-tabs-example " defaultActiveKey="#link1">
+        <Row>
+          <ClassSideNavigation />
+          <CoursesLearn />
+        </Row>
+      </Tab.Container>
     </MainContainer>
   )
 }

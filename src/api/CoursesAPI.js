@@ -71,7 +71,7 @@ export default class CoursesAPI extends Base {
   editLesson = async (courseid, moduleid, data) => {
     return this.sendRequest({
       path: `/api/Content/course/${courseid}/module/${moduleid}`,
-      method: 'POST',
+      method: 'PUT',
       data
     });
   };

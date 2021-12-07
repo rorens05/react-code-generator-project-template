@@ -7,8 +7,10 @@ import CourseExams from "./../pages/CourseExams";
 import CreateLesson from "./../pages/CreateLesson";
 import CreateExam from "./../pages/CreateExam";
 import EditLesson from "./../pages/EditLesson";
+import EditTest from "./../pages/EditTest";
 
-export default function CourseWidget({display, setDisplay, setExamDisplay, examDisplay, moduleInfo, setModuleInfo, examInfo, setExamInfo}) {
+
+export default function CourseWidget({display, setDisplay, setExamDisplay, examDisplay, moduleInfo, setModuleInfo}) {
 
   const [selectedPage, setSelectedPage] = useState(null)
   const [courseInfo, setCourseInfo] = useState('')
@@ -21,11 +23,19 @@ export default function CourseWidget({display, setDisplay, setExamDisplay, examD
   const [addLessonButton, setAddLessonButton] = useState(false)
   const [learnHeader, setLearnHeader] = useState(false)
   const [examHeader, setExamHeader] = useState(false)
+  const [examInfo, setExamInfo] = useState([])
+  const [selectedTest, setSelectedTest] = useState(null)
+  const [openEditTestModal, setOpenEditTestModal] = useState(false)
 
   const courseid = sessionStorage.getItem('courseid')
   const pagename = sessionStorage.getItem('pagename')
-  const moduleid = sessionStorage.getItem('moduleid')
   
+  const handleOpenEditTestModal = (e, item) => {
+    e.preventDefault()
+    setSelectedTest(item)
+    console.log(item)
+    setOpenEditTestModal(true)
+  }
 
   const handleOpenCreateUnitModal = e => {
     e.preventDefault()
@@ -89,7 +99,7 @@ export default function CourseWidget({display, setDisplay, setExamDisplay, examD
   const getExamInfo = async(e, data) => {
     setLoading(true)
     sessionStorage.setItem('moduleid', data)
-    let response = await new CoursesAPI().getExamInformation(moduleid)
+    let response = await new CoursesAPI().getExamInformation(data)
     setLoading(false)
     if(response.ok){
       setExamInfo(response.data)
@@ -214,6 +224,15 @@ export default function CourseWidget({display, setDisplay, setExamDisplay, examD
                             setExamInfo={setExamInfo}
                             display={display} setDisplay={setDisplay} 
                             modulePages={modulePages} setModulePages={setModulePages}
+                            selectedTest={selectedTest}
+                            setSelectedTest={setSelectedTest}
+                          />
+                          <EditTest
+                            examInfo={examInfo} 
+                            setExamInfo={setExamInfo}   
+                            openEditTestModal={openEditTestModal} 
+                            setOpenEditTestModal={setOpenEditTestModal} 
+                            selectedTest={selectedTest}
                           />
                         </Accordion.Body>
                       </Accordion.Item>
