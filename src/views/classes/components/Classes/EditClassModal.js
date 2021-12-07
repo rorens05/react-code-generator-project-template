@@ -1,13 +1,22 @@
 import React, {useState, useEffect} from 'react'
 import Modal from 'react-bootstrap/Modal'
 import { Form, Button, } from 'react-bootstrap'
-import CoursesAPI from "../../../api/CoursesAPI";
-import GradeAPI from '../../../api/GradeAPI';
+import CoursesAPI from '../../../../api/CoursesAPI'
+import GradeAPI from '../../../../api/GradeAPI';
+import ClassesAPI from '../../../../api/ClassesAPI';
 
-function EditClassModal({seletedClass, openEditModal, setOpenEditModal }) {
+function EditClassModal({seletedClass, openEditModal, setOpenEditModal, getClasses }) {
 
   const [course, setCourse] = useState([])
   const [grade, setGreade] = useState([])
+  const [className, setClassName] = useState('')
+  const [courseId, setCourseId] = useState('')
+  const [gradeLevelId, setGradeLevelId] = useState('')
+
+  const handleCloseModal = (e) =>{
+    e.preventDefault()
+    setOpenEditModal(false)
+  }
 
   const getCourses = async() => {
     let response = await new CoursesAPI().getCourses()
@@ -33,7 +42,35 @@ function EditClassModal({seletedClass, openEditModal, setOpenEditModal }) {
 
   useEffect(() => {
     getGrade()
+    getCourses()
   }, [])
+
+  const saveEditClasses = async (e) =>{
+    e.preventDefault()
+    let teacherId = '1'
+    let classId = seletedClass.classId
+    let academicTermId = '1'
+    let classCode = seletedClass.classCode
+    let response = await new ClassesAPI().editClasses(
+      classId,
+      {classCode, className, courseId, gradeLevelId, academicTermId, teacherId }
+    )
+    if(response.ok){
+      alert('Done Edit')
+      getClasses()
+      handleCloseModal(e)
+    }else{
+      alert(response.data.errorMessage)
+    }
+  }
+
+  useEffect(() => {
+    if(seletedClass !== null){
+      setGradeLevelId(seletedClass?.gradeLevelId)
+      setClassName(seletedClass?.className)
+      setCourseId(seletedClass?.courseId) 
+    }
+  }, [seletedClass])
   
   return (
 		<div>
@@ -44,29 +81,30 @@ function EditClassModal({seletedClass, openEditModal, setOpenEditModal }) {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
+        <Form onSubmit={saveEditClasses}>
           <Form.Group className="mb-3">
             <Form.Label>Grade Level</Form.Label>
-            	<Form.Select>
+            	<Form.Select onChange={(e) => setGradeLevelId(e.target.value)}>
                 <option value={seletedClass?.gradeLevelId}>{seletedClass?.gradeName}</option>
                   {grade.map(item =>{
-                    return(<option value={item.id}>{item.gradeName}</option>)
+                    return (<option value={item.id}>{item.gradeName}</option>) 
                     })
                   }
             	</Form.Select>
             </Form.Group>
             <Form.Group className="mb-4">
               <Form.Label>Course</Form.Label>
-              	<Form.Select >
+              	<Form.Select onChange={(e) => setCourseId(e.target.value)} >
                   <option value={seletedClass?.courseId}>{seletedClass?.courseName}</option>
                      {course.map(item =>{
-                      return(<option value={item.id}>{item.courseName}</option>)
+                      return (<option value={item.id}>{item.courseName}</option>)
                       })
                     }
                 </Form.Select>
             </Form.Group>
             <Form.Group className="mb-4">
             	<Form.Label >Class Name</Form.Label>
-                <Form.Control defaultValue={seletedClass?.className} type="text" placeholder='Enter class name here'/>
+                <Form.Control defaultValue={seletedClass?.className} onChange={(e) => setClassName(e.target.value)} type="text" placeholder='Enter class name here'/>
             </Form.Group>
             <Form.Group className="mb-4">
             	<Form.Label >Class Discription</Form.Label>
@@ -74,16 +112,17 @@ function EditClassModal({seletedClass, openEditModal, setOpenEditModal }) {
             </Form.Group>
               <Form.Group className='mb-4'>
               	<Form.Label >Class Code</Form.Label>{' '}
-                	<Button className='bg-btn' variant="warning" size="lg" disabled>
+                	<Button className='tficolorbg-button' disabled>
                     Get class code
                 	</Button>
               </Form.Group>
                 <Form.Group className="mb-4">
-                  <Form.Control defaultValue={seletedClass?.classCode} type="text" placeholder='Enter class Code here' disabled/>
+                  <Form.Control defaultValue={seletedClass?.classCode}  type="text" placeholder='Enter class Code here' disabled/>
             	</Form.Group>
             <Form.Group className='right-btn'> 
-            	<Button className='bg-btn'  variant="warning" size="lg" >Save</Button>
+            	<Button className='tficolorbg-button' type='submit'>Save</Button>
             </Form.Group>
+         </Form>
 				</Modal.Body>
       </Modal>
     </div>

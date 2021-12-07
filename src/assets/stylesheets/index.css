@@ -343,8 +343,11 @@ border-top-right-radius: 0px !important;
   border-radius: 0.9rem !important;
   box-shadow: 1px 2px 5px 1px #eeeeee;
   margin-bottom: 30px;
-  margin-right: 35px;
-  margin-left: 35px;
+  /* margin-right: 20px; */
+  margin-left: 20px;
+  width: 18rem!important;
+  justify-content: center;
+  
 }
 .class-card a{
   text-decoration: none!important;
@@ -354,9 +357,11 @@ border-top-right-radius: 0px !important;
 }
 .class-header-card{
   background-color: #EE9337!important;
-  height: 125px;
   border-radius: 10px 10px 0px 0px!important;
   box-shadow:1px 2px 5px 1px #eeeeee ;
+  color: #E9E9E9;
+  height: 7.5rem;
+  
 }
 
 .class-card-font-color{

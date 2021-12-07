@@ -1,5 +1,5 @@
 import React from 'react'
-import ClassInteractiveHeader from './components/ClassInteractiveHeader'
+import ClassInteractiveHeader from './components/Interactive/ClassInteractiveHeader'
 import { Row, Col, Accordion} from 'react-bootstrap'
 
 function ClassInteractive() {

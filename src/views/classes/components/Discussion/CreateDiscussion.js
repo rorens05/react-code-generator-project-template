@@ -1,7 +1,7 @@
 import React, { useState} from "react";
 import Modal from 'react-bootstrap/Modal'
 import { Form, Button, } from 'react-bootstrap'
-import DiscussionAPI from "../../../api/DiscussionAPI";
+import DiscussionAPI from "../../../../api/DiscussionAPI";
 
 function CreateDiscussion({modal, toggle, setPostDiscussion}) {
   const [course, setCourse] = useState([])

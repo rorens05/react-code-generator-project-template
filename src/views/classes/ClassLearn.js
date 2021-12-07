@@ -1,5 +1,5 @@
 import React from 'react'
-import ClassLearnHeader from './components/ClassLearnHeader'
+import ClassLearnHeader from './components/Learn/ClassLearnHeader'
 
 
 

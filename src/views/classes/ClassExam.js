@@ -1,5 +1,5 @@
 import React from 'react'
-import ClassExamHeader from './components/ClassExamHeader'
+import ClassExamHeader from './components/Exam/ClassExamHeader'
 import {Accordion, Row, Col} from 'react-bootstrap'
 
 function ClassExam() {
