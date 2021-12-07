@@ -11,13 +11,15 @@ import ClassCalendar from './ClassCalendar'
 import ClassInteractive from '../ClassInteractive'
 import ClassList from '../ClassList'
 import DiscussionAPI from '../../../api/DiscussionAPI'
+import { useParams } from 'react-router'
 
 
 export default function ClassSideNavigation({setLoading}) {
   const [classInfo, setClassInfo] = useState(null)
+  const {id} = useParams()
   const getClassInfo = async() => {
     setLoading(true)
-    let response = await new DiscussionAPI().getClassInfo()
+    let response = await new DiscussionAPI().getClassInfo(id)
     if(response.ok){
       setClassInfo(response.data)
       console.log(response.data)
@@ -39,7 +41,7 @@ export default function ClassSideNavigation({setLoading}) {
               <ListGroup.Item className="list-group-item-o">
                 <Row>
                   <Col className="" sm={9} >
-                    <div className="class-subtitle-code" > <i class="fas fa-expand"></i> {' '}FXC57</div>
+                    <div className="class-subtitle-code" > <i class="fas fa-expand"></i> {classInfo?.classInformation?.classCode}</div>
                     <div className="class-subtitle-section">{classInfo?.classInformation?.className}</div>
                     <div className="class-subtitle-subject">{classInfo?.classInformation?.gradeName}</div>
                     <div className="class-subtitle-name">{classInfo?.classInformation?.teacherName}</div>
@@ -95,7 +97,7 @@ export default function ClassSideNavigation({setLoading}) {
              </Row>
               </Tab.Pane>
               <Tab.Pane className='content-pane' eventKey="#link2">
-                <ClassLearn />
+                <ClassLearn classInfo={classInfo} />
               </Tab.Pane>
               <Tab.Pane className='content-pane' eventKey="#link3">
                 <ClassExam />
