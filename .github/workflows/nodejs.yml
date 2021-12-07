@@ -19,4 +19,5 @@ jobs:
           node-version: 12
       - run: npm install
       - run: yarn install
+      - run: npm i --save-dev eslint-plugin-jest
       - run: yarn run build
