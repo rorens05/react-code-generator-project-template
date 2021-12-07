@@ -34,7 +34,7 @@ export default function CoursesItem({course, setLoading, setOpenEditModal, setSe
       {
       course.map(item => { 
         return(
-          <div className="col-md-3 card-group-tfi">
+          <Col md={3}>
             <Card className="card-design b-0px">
               <Card.Header className="card-header-courses">
                 <Row style={{color:"white"}}>
@@ -74,7 +74,7 @@ export default function CoursesItem({course, setLoading, setOpenEditModal, setSe
                     </Card.Text>
                 </Card.Body>
             </Card>
-          </div>
+          </Col>
         )
         })
       

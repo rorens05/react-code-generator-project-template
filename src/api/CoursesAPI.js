@@ -31,4 +31,56 @@ export default class CoursesAPI extends Base {
     });
   };
 
+  createCourseUnit = async (id, data) => {
+    return this.sendRequest({
+      path: `/api/Module/course/${id}/item/1`,
+      method: 'POST',
+      data
+    });
+  };
+
+  getCourseUnit = async (id, data) => {
+    return this.sendRequest({
+      path: `/api/Module/course/${id}/item/1`,
+      method: 'GET',
+    });
+  };
+
+  getCourseUnitPages = async (courseid, moduleid) => {
+    return this.sendRequest({
+      path: `/api/Content/course/${courseid}/module/${moduleid}/pages`,
+      method: 'GET',
+    });
+  };
+
+  getCourseUnitPagesContent = async (courseid, moduleid, pagesid) => {
+    return this.sendRequest({
+      path: `/api/Content/course/${courseid}/module/${moduleid}/pages/${pagesid}`,
+      method: 'GET',
+    });
+  };
+
+  createLesson = async (courseid, moduleid, data) => {
+    return this.sendRequest({
+      path: `/api/Content/course/${courseid}/module/${moduleid}`,
+      method: 'POST',
+      data
+    });
+  };
+
+  editLesson = async (courseid, moduleid, data) => {
+    return this.sendRequest({
+      path: `/api/Content/course/${courseid}/module/${moduleid}`,
+      method: 'POST',
+      data
+    });
+  };
+
+  getExamInformation = async (id) => {
+    return this.sendRequest({
+      path: `/api/Test/module/${id}`,
+      method: 'GET',
+    });
+  };
+
 }

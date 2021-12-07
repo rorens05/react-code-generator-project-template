@@ -70,6 +70,10 @@ export default function CourseEdit({setCourse, openEditModal, setOpenEditModal, 
     if(selectedCourse !== null) {
 			setCourseName(selectedCourse?.courseName)
 			setDescription(selectedCourse?.description)
+			// setSarea(selectedCourse?.subjectAreaName)
+			setSubjectArea(selectedCourse?.subjectAreaId)
+			setLockStatus(selectedCourse?.locked)
+			setStatus(selectedCourse?.status)
 		}
   }, [selectedCourse])
 	
@@ -112,18 +116,18 @@ export default function CourseEdit({setCourse, openEditModal, setOpenEditModal, 
 												Subject Area
 										</Form.Label>
 										<Form.Select size="lg" onChange={(e) => setSubjectArea(e.target.value)}>
-											<option value="">
-												{selectedCourse?.subjectArea.subjectAreaName}
+											<option value={selectedCourse?.subjectAreaId}>
+												{selectedCourse?.subjectAreaId}
 											</option>
-										{
-											sarea.map(item => {
-												return(
-													<option value={item.id}>
-														{item.subjectAreaName}
-													</option>
-												)
-											})
-										}
+											{
+												sarea.map(item => {
+													return(
+														<option value={item.id}>
+															{item.subjectAreaName}
+														</option>
+													)
+												})
+											}
 										</Form.Select>
 								</Form.Group>
 								{' '}
