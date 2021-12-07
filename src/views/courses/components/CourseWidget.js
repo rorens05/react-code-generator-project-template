@@ -204,7 +204,7 @@ export default function CourseWidget({display, setDisplay, setExamDisplay, examD
                       <Accordion.Item eventKey={item.id}> 
                         <Accordion.Header onClick={(e) => getExamInfo(e, item.id)}>
                           <span className="unit-title">{item.moduleName}
-                            {addLessonButton === false ? "" : <Button className="m-l-10" variant="outline-warning" onClick={handleOpenCreateExamModal}><i className="fa fa-plus"></i> Add Lesson</Button>}
+                            {addLessonButton === false ? "" : <Button className="m-l-10" variant="outline-warning" onClick={handleOpenCreateExamModal}><i className="fa fa-plus"></i> Add Exam</Button>}
                           </span>
                         </Accordion.Header>
                         <CreateExam examInfo={examInfo} setExamInfo={setExamInfo} openCreateExamModal={openCreateExamModal} setOpenCreateExamModal={setOpenCreateExamModal}/>

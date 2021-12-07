@@ -3,33 +3,30 @@ import { Button, Form, Modal } from 'react-bootstrap';
 import CoursesAPI from "../../../api/CoursesAPI";
 import SubjectAreaAPI from "../../../api/SubjectAreaAPI";
 
-export default function CreateExam({setCourse, openCreateLessonModal, setCreateLessonModal}){
+export default function CreateExam({setCourse, openCreateExamModal, setOpenCreateExamModal}){
 
 	const [loading, setLoading] = useState(false)
   const [modulePages, setModulePages] = useState([])
-	const [pageName, setPageName] = useState('')
-	const [sequenceNo, setSequenceNo] = useState('')
-	const [content, setContent] = useState('')
+	const [testName, setTestName] = useState('')
+	const [testInstructions, setTestInstructions] = useState('')
   let sessionCourse = sessionStorage.getItem('courseid')
   let sessionModule = sessionStorage.getItem('moduleid')
 
 
 	const handleCloseModal = e => {
     e.preventDefault()
-    setCreateLessonModal(false)
+    setOpenCreateExamModal(false)
   }
 
-	const saveLesson = async(e) => {
+	const saveExam = async(e) => {
     e.preventDefault()
     setLoading(true)
-    let response = await new CoursesAPI().createLesson(
-      sessionCourse,
+    let response = await new CoursesAPI().createExam(
       sessionModule,
-      {pageName, sequenceNo, content}
+      {testName, testInstructions}
     )
     if(response.ok){
       alert("Saved")
-      getCourseUnitPages()
 			handleCloseModal(e)
     }else{
       alert(response.data.errorMessage)
@@ -54,12 +51,12 @@ export default function CreateExam({setCourse, openCreateLessonModal, setCreateL
 
 	return (
 		<div>
-			<Modal size="lg" className="modal-all" show={openCreateLessonModal} onHide={()=> setCreateLessonModal(!openCreateLessonModal)} >
+			<Modal size="lg" className="modal-all" show={openCreateExamModal} onHide={()=> setOpenCreateExamModal(!openCreateExamModal)} >
 				<Modal.Header className="modal-header" closeButton>
 				Create Exam
 				</Modal.Header>
 				<Modal.Body className="modal-label b-0px">
-						<Form onSubmit={saveLesson}>
+						<Form onSubmit={saveExam}>
 								<Form.Group className="m-b-20">
 										<Form.Label for="courseName">
 												Test Name
@@ -68,8 +65,8 @@ export default function CreateExam({setCourse, openCreateLessonModal, setCreateL
                       className="custom-input" 
                       size="lg" 
                       type="text" 
-                      placeholder="Enter lesson name"
-                      onChange={(e) => setPageName(e.target.value)}
+                      placeholder="Enter test name"
+                      onChange={(e) => setTestName(e.target.value)}
                     />
 								</Form.Group>
 
@@ -81,8 +78,8 @@ export default function CreateExam({setCourse, openCreateLessonModal, setCreateL
                       className="custom-input" 
                       size="lg" 
                       type="text" 
-                      placeholder="Enter sequence number"
-                      onChange={(e) => setSequenceNo(e.target.value)}
+                      placeholder="Enter test instructions"
+                      onChange={(e) => setTestInstructions(e.target.value)}
                     />
 								</Form.Group>
 
