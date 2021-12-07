@@ -21,4 +21,4 @@ jobs:
       - run: npm ci
       - run: yarn cache clean
       - run: yarn install
-      - run: yarn run build 
+      - run: npm run build 
