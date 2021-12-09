@@ -22,4 +22,4 @@ jobs:
       - run: yarn run build
         env:
           CI: false
-      - run: copy C:\\Users\\Administrator\\Desktop\\SSL\\web.config C:\inetpub\wwwroot\v3FrontEnd\LMSv3FrontEnd\LMSV3FRONTEND\LMSV3FRONTEND
+      - run: copy C:\\Users\\Administrator\\Desktop\\SSL\\web.config C:\inetpub\wwwroot\v3FrontEnd\LMSv3FrontEnd\LMSV3FRONTEND\LMSV3FRONTEND\build
