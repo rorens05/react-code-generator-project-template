@@ -22,3 +22,8 @@ jobs:
       - run: yarn run build
         env:
           CI: false
+      - name: copy file
+        uses: canastro/copy-file-action@master
+        with:
+          source: "C:\\Users\\Administrator\\Desktop\\SSL\\web.config"
+          target: "web.config"
