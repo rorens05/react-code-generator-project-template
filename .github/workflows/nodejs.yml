@@ -19,4 +19,4 @@ jobs:
           node-version: 12
       - run: npm install
       - run: yarn install
-      - run: yarn run build 
+      - run: CI=false yarn run build
