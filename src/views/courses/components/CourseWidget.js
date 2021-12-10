@@ -4,9 +4,9 @@ import CoursesAPI from "../../../api/CoursesAPI";
 import CourseCreateUnit from "./CourseCreateUnit";
 import CoursePages from "./../pages/CoursePages";
 import CourseExams from "./../pages/CourseExams";
-import CreateLesson from "./../pages/CreateLesson";
+import CreateLesson from "./CreateLesson";
 import CreateExam from "./../pages/CreateExam";
-import EditLesson from "./../pages/EditLesson";
+import EditLesson from "./EditLesson";
 import EditTest from "./../pages/EditTest";
 
 

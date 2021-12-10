@@ -3,33 +3,30 @@ import { Button, Form, Modal } from 'react-bootstrap';
 import CoursesAPI from "../../../api/CoursesAPI";
 import SubjectAreaAPI from "../../../api/SubjectAreaAPI";
 
-export default function CreateLesson({setCourse, openCreateLessonModal, setCreateLessonModal}){
+export default function CreateTask({openCreateTaskModal, setCreateTaskModal}){
 
 	const [loading, setLoading] = useState(false)
   const [modulePages, setModulePages] = useState([])
-	const [pageName, setPageName] = useState('')
-	const [sequenceNo, setSequenceNo] = useState('')
-	const [content, setContent] = useState('')
+	const [taskName, setTaskName] = useState('')
+	const [instructions, setInstructions] = useState('')
   let sessionCourse = sessionStorage.getItem('courseid')
   let sessionModule = sessionStorage.getItem('moduleid')
 
 
 	const handleCloseModal = e => {
     e.preventDefault()
-    setCreateLessonModal(false)
+    setCreateTaskModal(false)
   }
 
-	const saveLesson = async(e) => {
+	const saveTask = async(e) => {
     e.preventDefault()
     setLoading(true)
-    let response = await new CoursesAPI().createLesson(
-      sessionCourse,
+    let response = await new CoursesAPI().createTask(
       sessionModule,
-      {pageName, sequenceNo, content}
+      {taskName, instructions}
     )
     if(response.ok){
       alert("Saved")
-      getCourseUnitPages()
 			handleCloseModal(e)
     }else{
       alert(response.data.errorMessage)
@@ -54,51 +51,38 @@ export default function CreateLesson({setCourse, openCreateLessonModal, setCreat
 
 	return (
 		<div>
-			<Modal size="lg" className="modal-all" show={openCreateLessonModal} onHide={()=> setCreateLessonModal(!openCreateLessonModal)} >
+			<Modal size="lg" className="modal-all" show={openCreateTaskModal} onHide={()=> setCreateTaskModal(!openCreateTaskModal)} >
 				<Modal.Header className="modal-header" closeButton>
-				Create Lesson / Page
+				Create Task
 				</Modal.Header>
 				<Modal.Body className="modal-label b-0px">
-						<Form onSubmit={saveLesson}>
+						<Form onSubmit={saveTask}>
 								<Form.Group className="m-b-20">
 										<Form.Label for="courseName">
-												Page Name
+												Task Name
 										</Form.Label>
 										<Form.Control 
                       className="custom-input" 
                       size="lg" 
                       type="text" 
-                      placeholder="Enter lesson name"
-                      onChange={(e) => setPageName(e.target.value)}
+                      placeholder="Enter Task name"
+                      onChange={(e) => setTaskName(e.target.value)}
                     />
 								</Form.Group>
 
 								<Form.Group className="m-b-20">
 										<Form.Label for="description">
-												Sequence Number
+												Instructions
 										</Form.Label>
 										<Form.Control 
                       className="custom-input" 
                       size="lg" 
                       type="text" 
-                      placeholder="Enter sequence number"
-                      onChange={(e) => setSequenceNo(e.target.value)}
+                      placeholder="Enter Task instructions"
+                      onChange={(e) => setInstructions(e.target.value)}
                     />
 								</Form.Group>
 
-                <Form.Group className="m-b-20">
-										<Form.Label for="description">
-												Content
-										</Form.Label>
-										<Form.Control 
-                      className="custom-input" 
-                      size="lg" 
-                      type="text" 
-                      placeholder="Enter lesson content"
-                      onChange={(e) => setContent(e.target.value)}
-                    />
-								</Form.Group>
-						
 								<span style={{float:"right"}}>
 										<Button className="tficolorbg-button" type="submit">
 												Save

@@ -61,7 +61,7 @@ export default function CoursesItem({course, setLoading, setOpenEditModal, setSe
               </Card.Header>
                 <Card.Body>
                     <Card.Title tag="h5">
-                      <Link to={"coursecontent/"+item.id} onClick={() => setCourseId(item.id)} setLoading={setLoading} className="active card-title">{item.courseName}</Link>
+                      <Link to={"coursecontent/"+item.id} onClick={() => setCourseId(item.id)} course={course} setLoading={setLoading} className="active card-title">{item.courseName}</Link>
                     </Card.Title>
                     <Card.Subtitle
                         className="mb-2 text-muted"
