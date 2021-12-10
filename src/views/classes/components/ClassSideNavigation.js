@@ -34,6 +34,10 @@ export default function ClassSideNavigation({setLoading}) {
     getClassInfo()
   }, [])
 
+  if(classInfo == null){
+    return (<div/>)
+  }
+
   return (
     <Tab.Container className="course-widget-font" id="list-group-tabs-example " defaultActiveKey="#link1">
         <div className="row">
@@ -106,16 +110,16 @@ export default function ClassSideNavigation({setLoading}) {
                 <ClassDiscussion />
               </Tab.Pane>
               <Tab.Pane className='content-pane' eventKey="#link5">
-                <ClassAssignment />
+                <ClassAssignment classInfo={classInfo} />
               </Tab.Pane>
               <Tab.Pane className='content-pane' eventKey="#link6">
-                <ClassTask />
+                <ClassTask classInfo={classInfo} />
               </Tab.Pane>
               <Tab.Pane className='content-pane' eventKey="#link7">
-                <ClassInteractive />
+                <ClassInteractive classInfo={classInfo} />
               </Tab.Pane>
               <Tab.Pane className='content-pane' eventKey="#link8">
-                <ClassLinks />
+                <ClassLinks classInfo={classInfo}  />
               </Tab.Pane>
               <Tab.Pane className='content-pane' eventKey="#link9">
                 <ClassList />

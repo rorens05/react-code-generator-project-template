@@ -1,22 +1,57 @@
-import React from 'react'
+import React, { useState, useEffect} from 'react'
 import AssignmentHeader from './components/Assignment/AssignmentHeader'
-import {Accordion, Row, Col} from 'react-bootstrap'
+import {Accordion, Row, Col, Button} from 'react-bootstrap'
+import ClassesAPI from '../../api/ClassesAPI'
+import { useParams } from 'react-router'
+import { Link } from 'react-router-dom'
 
-function ClassAssignment() {
+function ClassAssignment({classInfo}) {
+  const [module, setModule] = useState([])
+  const [assignment, setAssignment] = useState([])
+  const courseId = classInfo?.classInformation?.courseId
+  const {id} = useParams()
+
+  const getModule = async () =>{
+    let response = await new ClassesAPI().getLearn(courseId)
+    if(response.ok){
+        setModule(response.data)
+    }else{
+      alert("Something went wrong while fetching all Module")
+    }
+  }
+
+  useEffect(() => {
+    getModule() 
+  }, [])
+
+  const getAssignmentList = async (e, item) => {
+    let response = await new ClassesAPI().getAssignment(id, item)
+      if(response.ok){
+        setAssignment(response.data)
+    }else{
+      alert("Something went wrong while fetching all Assignment")
+    }
+  }
+
+  console.log('this is Module List:', module)
+  console.log('this is Module assignment:', assignment)
+
   return (
     <div>
       <AssignmentHeader />
       <Accordion>
-        <Accordion.Item eventKey="0">
+      {module.map((item, index) => {
+        return(<Accordion.Item eventKey={index} onClick={(e) => getAssignmentList(e, item?.id)} >
         <Accordion.Header>
-          <div className='unit-exam'>Unit 1 
+          <div className='unit-exam'>{item?.moduleName}
           </div>
         </Accordion.Header>
         <Accordion.Body>
-          <Row>
+        {assignment.map(assigItem => {
+          return( <Row>
             <Col sm={8}>
               <div className='title-exam'>
-                Assignment
+                {assigItem?.assignment?.assignmentName}
               </div>
             </Col>
             <Col sm={9} className='instruction-exam' >
@@ -25,16 +60,23 @@ function ClassAssignment() {
                   Instruction:&nbsp;
                 </div>
                 <div className='text-color-707070' >
-                  Count the object. Type the number in the box
+                <span style={{marginTop:"300px !important"}} dangerouslySetInnerHTML={{__html:assigItem?.assignment?.instructions }} /> 
                 </div>
               </div>
             </Col>
-              <Col sm={3} className='icon-exam'>
-                <i class="fas fa-eye icon-padding-right" ></i>{' '}
-                <i class="fas fa-edit icon-padding-right"></i>
-                <i class="fas fa-user-clock icon-padding-right"></i>
-                <i class="fas fa-trash-alt icon-padding-right"></i>
-              </Col>
+            {assigItem.assignment.classId?( 
+                    <Col sm={3} className='icon-exam'>
+                        <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button>
+                        <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-edit"></i></Button>
+                        <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-user-clock"></i></Button>
+                        <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-trash-alt"></i></Button>
+                      </Col>
+                      ):
+                      <Col sm={3} className='icon-exam'>
+                        <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button>
+                        <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-user-clock"></i></Button>
+                      </Col>
+                   }
               <Col sm={7} className='due-date-discusstion' >
                 <div className='inline-flex'>
                   <div className='text-color-bcbcbc'>
@@ -58,11 +100,15 @@ function ClassAssignment() {
             <div className='text-color-bcbcbc' >
               ________________________________________________________________________________________________________________________________________
             </div>
-          </Row>
+          </Row>)
+        })}
+         
         </Accordion.Body>
-        </Accordion.Item>
+        </Accordion.Item>)
+      })}
       </Accordion>
     </div>
+
   )
 }
 export default ClassAssignment
