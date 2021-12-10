@@ -4,44 +4,84 @@ import ClassesAPI from '../../../../api/ClassesAPI'
 import { useParams } from 'react-router'
 
 export default function ClassLearnHeader({classInfo}) {
-  console.log(classInfo?.classInformation?.courseId)
-  const [Learn, setlearn] = useState([])
-  const [moduleId, setModuleId] = useState('')
+  const courseId = classInfo?.classInformation?.courseId
+  const [selectedModuleId, setSelectedModuleId] = useState(null)
+  const [modules, setModules] = useState([])
+  const [pageId, setPageId] = useState([])
   const {id} = useParams()
 
-  const getLearn = async() => {
-    let response = await new ClassesAPI().getLearn(classInfo?.classInformation?.courseId)
+  const [Pages, setPages] = useState([])
+  const [content, setContent] = useState([])
+  const [selectedUnit, setSelectedUnit] = useState([])
+  
+  const getModules = async() => {
+    let response = await new ClassesAPI().getModule(courseId)
     if(response.ok){
-      setlearn(response.data)
+      setModules(response.data)
     }else{
-      alert("Something went wrong while fetching all courses")
+      alert("Something went wrong while fetching all modules")
     }
   }
 
   useEffect(() => {
-    getLearn()
+    getModules()
   }, [])
 
-  const [Pages, setPages] = useState([])
-  const [selectedUnit, setSelectedUnit] = useState([])
   const handleSelectedUnit = (e, item) => {
       e.preventDefault()
       setSelectedUnit(item)
   }
 
-  const getPages = async(e) => {
-    let response = await new ClassesAPI().getPages(id,Learn.id)
+  const getPages = async(moduleId) => {
+    let response = await new ClassesAPI().getPages(id, moduleId)
     if(response.ok){
       setPages(response.data)
+      console.log(response.data)
     }else{
-      alert("Something went wrong while fetching all courses")
+      alert("Something went wrong while fetching all pages")
+    }
+  }
+
+
+  const onModuleChange = (e) => {
+    setSelectedModuleId(e.target.value)
+    if(e.target.value == null || e.target.value == ""){
+      setPages([])
+    }else{
+      getPages(e.target.value)
+      
+    }
+  }
+
+  const onShowPage = (e) => {
+    setPageId(e.target.value)
+    if(e.target.value == null || e.target.value == ""){
+      setPageId([])
+    }else{
+     
+      getContent(e.target.value)
+      
+    }
+  }
+
+  console.log('moduleId:',selectedModuleId)
+
+  const getContent = async(pageId) => {
+    let mId = selectedModuleId
+    console.log('pageId:',pageId)
+    let response = await new ClassesAPI().getContent(id, mId, pageId)
+    if(response.ok){
+      setContent(response.data)
+      console.log(response.data)
+    }else{
+      
     }
   }
 
   useEffect(() => {
-    getPages()
+    getContent()
   }, [])
-
+console.log('this is Content:', content)
   return (
     <div>
       <div className="row m-b-20">
@@ -53,10 +93,10 @@ export default function ClassLearnHeader({classInfo}) {
         <Form.Label>Unit 1</Form.Label>
         </Col>
         <Col>
-        <Form.Select  aria-label="Default select example">
-        <option>--SELECT UNIT--</option>
-          {Learn.map(item =>{
-            return (<option value={item?.id}> {item?.moduleName}</option>)
+        <Form.Select onChange={onModuleChange} aria-label="Default select example">
+        <option value="">--SELECT UNIT--</option>
+          {modules.map(item =>{
+            return (<option value={item?.id} > {item?.moduleName}</option>)
           })}
         </Form.Select>
         </Col>
@@ -64,14 +104,19 @@ export default function ClassLearnHeader({classInfo}) {
         <Form.Label>Pages</Form.Label>
         </Col>
         <Col>
-        <Form.Select aria-label="Default select example">
-          <option></option>
+        <Form.Select onChange={onShowPage} aria-label="Default select example">
+        <option value=""></option>
           {Pages.map(item =>{
-            return (<option value={item?.courseId}> {item?.id}</option>)
+            return (<option value={item?.id}> {item?.pageName}</option>)
           })}
         </Form.Select>
         </Col>
-      </Row>
+      </Row>{content.content?(
+        
+        <span style={{marginTop:"300px !important"}} dangerouslySetInnerHTML={{__html:content.content + '<br>' }} />
+      ):<span></span>
+      }
+      
     </div>
   )
 }
