@@ -43,12 +43,20 @@ export default class ClassesAPI extends Base {
     });
   };
 
-  creatTask = async (mId, cId, [{data},{data1}]) => {
+creatTask = async (mId, cId,  data) => {
     return this.sendRequest({
       path: `/api/Task/module/${mId}/class/${cId}`,
       method: 'POST',
       data,
-      data1
+      
+    })
+  }
+
+  createAssignment = async (mId, cId, data) =>{
+    return this.sendRequest({
+      path: `/api/Assignment/module/${mId}/class/${cId}`,
+      method: 'POST',
+      data
     })
   }
 

@@ -13,9 +13,10 @@ function CreateTask({modal, toggle, module}) {
 
   const saveTask = async (e) =>{
     e.preventDefault()
-    let response = await new ClassesAPI().creatTask(moduleId, id, [{taskName,instructions}, {allowLate}] )
+    let response = await new ClassesAPI().creatTask(moduleId, id, {task:{taskName, instructions,}, taskAssignment:{allowLate}} )
     if(response.ok){
       alert('Save Task')
+      toggle(e)
     }else{
       alert(response.data.errorMessage)
     }
@@ -35,7 +36,7 @@ function CreateTask({modal, toggle, module}) {
           <Form.Group className="mb-3">
           <Form.Label>Unit</Form.Label>
             <Form.Select onChange={(e) => setModuleId(e.target.value)}>
-              <option>-- Select Unit Here --</option>
+              <option>-- Select Unit Here -- </option>
                 {module.map(item => {
                   return(<option value={item.id}>{item.moduleName} {item.id}</option>)
                 })}
