@@ -18,5 +18,8 @@ jobs:
         with:
           node-version: 12
       - run: npm install
-      - run: yarn install --frozen-lockfile
-      - run: yarn run build 
+      - run: yarn install
+      - run: yarn run build
+        env:
+          CI: false
+      - run: copy C:\\Users\\Administrator\\Desktop\\SSL\\web.config C:\inetpub\wwwroot\v3FrontEnd\LMSv3FrontEnd\LMSV3FRONTEND\LMSV3FRONTEND\build

@@ -75,6 +75,13 @@ creatTask = async (mId, cId,  data) => {
     });
   };
 
+  getContent = async (cId, mId, pId) => {
+    return this.sendRequest({
+    path: `/api/Content/class/${cId}/module/${mId}/pages/${pId}`,
+    method: 'GET',
+    });
+  }
+
   createDiscussion = async (id, cId, data) => {
     return this.sendRequest({
       path: `/api/Discussion/module/${id}/class/${cId}`,

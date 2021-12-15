@@ -37,6 +37,7 @@ export default function ClassSideNavigation({setLoading}) {
   if(classInfo == null){
     return (<div/>)
   }
+  if(classInfo == null) return <div/>
 
   return (
     <Tab.Container className="course-widget-font" id="list-group-tabs-example " defaultActiveKey="#link1">
