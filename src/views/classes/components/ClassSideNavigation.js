@@ -34,6 +34,9 @@ export default function ClassSideNavigation({setLoading}) {
     getClassInfo()
   }, [])
 
+  if(classInfo == null){
+    return (<div/>)
+  }
   if(classInfo == null) return <div/>
 
   return (
@@ -108,16 +111,16 @@ export default function ClassSideNavigation({setLoading}) {
                 <ClassDiscussion />
               </Tab.Pane>
               <Tab.Pane className='content-pane' eventKey="#link5">
-                <ClassAssignment />
+                <ClassAssignment classInfo={classInfo} />
               </Tab.Pane>
               <Tab.Pane className='content-pane' eventKey="#link6">
-                <ClassTask />
+                <ClassTask classInfo={classInfo} />
               </Tab.Pane>
               <Tab.Pane className='content-pane' eventKey="#link7">
-                <ClassInteractive />
+                <ClassInteractive classInfo={classInfo} />
               </Tab.Pane>
               <Tab.Pane className='content-pane' eventKey="#link8">
-                <ClassLinks />
+                <ClassLinks classInfo={classInfo}  />
               </Tab.Pane>
               <Tab.Pane className='content-pane' eventKey="#link9">
                 <ClassList />

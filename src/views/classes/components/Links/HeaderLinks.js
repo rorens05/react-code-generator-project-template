@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import { Button, InputGroup, FormControl } from 'react-bootstrap';
 import CreateLinks from './CreateLinks';
 
-function HeaderLinks() {
+function HeaderLinks({getConfe, getVideos, getLinks}) {
 const [modal, setModal] = useState(false)
 const toggle = () =>{
     setModal(!modal)
@@ -20,7 +20,7 @@ const toggle = () =>{
 					</InputGroup>
 				</div>
 			</div>
-			<CreateLinks toggle={toggle} modal={modal} />
+			<CreateLinks getConfe={getConfe} getVideos={getVideos} getLinks={getLinks} toggle={toggle} modal={modal} />
 		</div>
 	)
 }

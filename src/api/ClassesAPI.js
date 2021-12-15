@@ -1,9 +1,9 @@
 import Base from './Base';
 
 export default class ClassesAPI extends Base {
-  getClasses = async () => {
+  getClasses = async (id) => {
     return this.sendRequest({
-      path: `/api/Class`,
+      path: `/api/Teacher/${id}/classes`,
       method: 'GET'
     });
   };
@@ -29,19 +29,36 @@ export default class ClassesAPI extends Base {
     })
   }
 
-  getClasses = async () => {
-    return this.sendRequest({
-      path: `/api/Class`,
-      method: 'GET'
-    });
-  };
-
   getModule = async (id) => {
     return this.sendRequest({
       path: `/api/Module/course/${id}/item/1`,
       method: 'GET'
     });
   };
+
+  getTaskModule = async (id, moduleId ) => {
+    return this.sendRequest({
+      path: `/api/Class/${id}/module/${moduleId}/task`,
+      method: 'GET'
+    });
+  };
+
+creatTask = async (mId, cId,  data) => {
+    return this.sendRequest({
+      path: `/api/Task/module/${mId}/class/${cId}`,
+      method: 'POST',
+      data,
+      
+    })
+  }
+
+  createAssignment = async (mId, cId, data) =>{
+    return this.sendRequest({
+      path: `/api/Assignment/module/${mId}/class/${cId}`,
+      method: 'POST',
+      data
+    })
+  }
 
 //get pages
   getPages = async (cId, mId) => {
@@ -72,4 +89,82 @@ export default class ClassesAPI extends Base {
       data
     });
   };
+
+  getLink = async (id, typeId) => {
+    return this.sendRequest({
+      path: `/api/Class/${id}/link/type/${typeId}`,
+      method: 'GET',
+    });
+  }
+
+  createLinks = async (id, typeId, data) =>{
+    return this.sendRequest({
+      path: `/api/Class/${id}/link/type/${typeId}`,
+      method: 'POST',
+      data
+    })
+  }
+
+  deleteLinks = async (id, linkId) =>{
+    return this.sendRequest({
+      path: `/api/Class/${id}/link/${linkId}`,
+      method: 'DELETE'
+    })
+  }
+  
+  getStudentList = async (id, isAccepted) =>{
+    return this.sendRequest({
+      path: `/api/Class/${id}/student/status/${isAccepted}`,
+      method: 'GET'
+    })
+  }
+  getStudentEnrolledList = async (id, isAccepted) =>{
+    return this.sendRequest({
+      path: `/api/Class/${id}/student/status/${isAccepted}`,
+      method: 'GET'
+    })
+  }
+
+  acceptStudent = async (id, isAccepted, data) =>{
+    return this.sendRequest({
+      path: `/api/Class/${id}/student/status/${isAccepted}`,
+      method: 'PUT',
+      data
+    })
+  }
+  removeStudentWaitingList = async (id, data) =>{
+    return this.sendRequest({
+      path: `/api/Class/${id}/student/status`,
+      method: 'PUT',
+      data
+    })
+  }
+  removeStudentClassList = async (id, studentId) =>{
+    return this.sendRequest({
+      path: `/api/Class/${id}/student/${studentId}/status`,
+      method: 'DELETE',
+    })
+  }
+  editClassLinks = async (id, linkId, data) => {
+    return this.sendRequest({
+      path: `/api/Class/${id}/link/${linkId}`,
+      method: 'PUT',
+      data
+    })
+  }
+
+  getInteractive = async (id, moduleId) =>{
+    return this.sendRequest({
+      path: `/api/Class/${id}/module/${moduleId}/interactive`,
+      method: 'GET'
+    })
+  }
+
+  getAssignment = async (id, moduleId) =>{
+    return this.sendRequest({
+      path: `/api/Class/${id}/module/${moduleId}/assignment`,
+      method: 'GET'
+    })
+  }
+
 }
