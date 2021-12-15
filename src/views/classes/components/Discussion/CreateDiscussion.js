@@ -7,12 +7,11 @@ import { useParams } from 'react-router'
 export default function CreateDiscussion({modal, toggle}) {
   const [disc, setdisc] = useState([])
   const {id} = useParams()
+  
   const getDiscussionUnit = async() => {
     let response = await new ClassesAPI().getDiscussionUnit(id)
     if(response.ok){
       setdisc(response.data)
-    }else{
-      alert("Something went wrong while fetching all courses")
     }
   }
   useEffect(() => {
@@ -35,7 +34,7 @@ export default function CreateDiscussion({modal, toggle}) {
           <Form.Group className="mb-3">
             <Form.Label>Unit</Form.Label>
             <Form.Select >
-            <option>--Select Unit--</option>
+            <option value="">--Select Unit--</option>
           {disc.map(item =>{
             return (<option value={item?.id}> {item?.moduleName}</option>)
           })}

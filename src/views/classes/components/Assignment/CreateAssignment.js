@@ -2,13 +2,13 @@ import React from 'react'
 import Modal from 'react-bootstrap/Modal'
 import { Form, Button, } from 'react-bootstrap'
 
-function CreateTask({modal, toggle}) {
+function CreateAssignment({modal, toggle}) {
 	return (
     <div>
     	<Modal size="lg" show={modal} onHide={toggle} aria-labelledby="example-modal-sizes-title-lg">
         <Modal.Header className='class-modal-header' closeButton>
           <Modal.Title id="example-modal-sizes-title-lg" >
-            Create Task
+            Create Assignment
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -19,7 +19,7 @@ function CreateTask({modal, toggle}) {
               </Form.Select>
             </Form.Group>
           	<Form.Group className="mb-4">
-            	<Form.Label>Task Name</Form.Label>
+            	<Form.Label>Assignment Name</Form.Label>
 				<Form.Control type="text" placeholder='Enter discussion name here'/>
             </Form.Group>
             <Form.Group className="mb-4">
@@ -34,5 +34,5 @@ function CreateTask({modal, toggle}) {
     </div>
     )
 }
-export default CreateTask
+export default CreateAssignment
 

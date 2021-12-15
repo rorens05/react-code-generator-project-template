@@ -36,7 +36,7 @@ export default class ClassesAPI extends Base {
     });
   };
 
-  getLearn = async (id) => {
+  getModule = async (id) => {
     return this.sendRequest({
       path: `/api/Module/course/${id}/item/1`,
       method: 'GET'
@@ -57,6 +57,13 @@ export default class ClassesAPI extends Base {
     method: 'GET',
     });
   };
+
+  getContent = async (cId, mId, pId) => {
+    return this.sendRequest({
+    path: `/api/Content/class/${cId}/module/${mId}/pages/${pId}`,
+    method: 'GET',
+    });
+  }
 
   createDiscussion = async (id, cId, data) => {
     return this.sendRequest({

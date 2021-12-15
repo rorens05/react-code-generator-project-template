@@ -15,7 +15,7 @@ function AccordionVideos() {
           <Row>
             <Col sm={9}>
               <div className='title-exam'>
-                Vidoes Links
+                Videos Links
               </div>
             </Col>
             <Col sm={3} className='icon-exam'>

@@ -1,12 +1,16 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { InputGroup, FormControl, Button } from 'react-bootstrap'
+import CreateAssignment from './CreateAssignment'
 
 function AssignmentHeader() {
+	const [modal, setModal] = useState(false)
+const toggle = () =>{
+    setModal(!modal)
+  }
   return (
     <div>
       <div className="row m-b-20">
-				<div className="col-md-10 pages-header"><h1>Assignment <Button className='btn-create-assignment' variant="link"> <i className="fa fa-plus"></i>  Create Assignment  </Button></h1>
-				</div>
+			<div className="col-md-10 pages-header"><h1>Assignment <Button className='btn-create-task' Button variant="link" onClick={() => setModal(true) }> <i className="fa fa-plus"></i>  Create Assignment  </Button></h1></div>
 			</div>
 			<div className="row m-b-20">
 				<div className="col-md-12">
@@ -16,8 +20,8 @@ function AssignmentHeader() {
 					</InputGroup>
 				</div>
 			</div>
+			<CreateAssignment toggle={toggle} modal={modal} />
     </div>
   )
 }
-
 export default AssignmentHeader
