@@ -12,7 +12,7 @@ function ClassAssignment({classInfo}) {
   const {id} = useParams()
 
   const getModule = async () =>{
-    let response = await new ClassesAPI().getLearn(courseId)
+    let response = await new ClassesAPI().getModule(courseId)
     if(response.ok){
         setModule(response.data)
     }else{
