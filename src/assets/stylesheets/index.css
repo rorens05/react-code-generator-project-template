@@ -784,6 +784,16 @@ border-top-right-radius: 0px !important;
 }
 .icon-padding-right{
   padding-right: 10px;
+  color: #EE9337!important;
+  font-size: 20px!important;
+}
+
+.icon-padding-right:focus{
+  outline: none!important;
+}
+
+.icon-padding-right:active{
+  outline: none!important;
 }
 
 .float-right {

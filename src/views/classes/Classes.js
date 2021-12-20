@@ -1,25 +1,30 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import { CardGroup, Col } from 'react-bootstrap'
 import ClassesAPI from '../../api/ClassesAPI'
 import MainContainer from '../../components/layouts/MainContainer'
 import ClassCard from './components/Classes/ClassCard'
 import ClassHeader from './components/Classes/ClassHeader'
 import EditClassModal from './components/Classes/EditClassModal'
+import { UserContext } from '../../context/UserContext'
 
 
 export default function Classes() {
   const [classes, setClasses] = useState([])
   const [seletedClass, setSeletedClass] = useState(null)
   const [openEditModal, setOpenEditModal] = useState(false)
+  const userContext = useContext(UserContext)
+  const {user} = userContext.data
 
   const getClasses = async() => {
-    let response = await new ClassesAPI().getClasses()
+    let response = await new ClassesAPI().getClasses(user.teacher.id)
     if(response.ok){
       setClasses(response.data)
     }else{
       alert("Something went wrong while fetching all courses")
     }
   }
+
+  console.log('TEST', user.teacher.id)
 
   useEffect(() => {
     getClasses()

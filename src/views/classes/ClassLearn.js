@@ -3,10 +3,11 @@ import ClassLearnHeader from './components/Learn/ClassLearnHeader'
 
 
 
-function ClassLearn() {
+function ClassLearn({classInfo}) {
+  
   return (
     <div>
-      <ClassLearnHeader />
+      <ClassLearnHeader classInfo={classInfo}/>
     </div>
   )
 }
