@@ -3,13 +3,20 @@ import AssignmentHeader from './components/Assignment/AssignmentHeader'
 import {Accordion, Row, Col, Button} from 'react-bootstrap'
 import ClassesAPI from '../../api/ClassesAPI'
 import { useParams } from 'react-router'
-import { Link } from 'react-router-dom'
+import EditAssignment from './components/Assignment/EditAssignment'
 
 function ClassAssignment({classInfo}) {
+  const [modal, setModal] = useState(false)
   const [module, setModule] = useState([])
   const [assignment, setAssignment] = useState([])
+  const [editAssignment, setEditAssignment] = useState()
   const courseId = classInfo?.classInformation?.courseId
   const {id} = useParams()
+
+  const toggle = (e, item) =>{
+    setEditAssignment(item)
+    setModal(!modal)
+  }
 
   const getModule = async () =>{
     let response = await new ClassesAPI().getModule(courseId)
@@ -33,12 +40,19 @@ function ClassAssignment({classInfo}) {
     }
   }
 
-  console.log('this is Module List:', module)
-  console.log('this is Module assignment:', assignment)
+  const removeAssignment = async (e, item) => {
+    let response = await new ClassesAPI().delateAssignment(item)
+    if(response.ok){
+      alert('Assingment Deleted')
+  
+    }else{
+      alert("Something went wrong while Deleting a task")
+    }
+  }
 
   return (
     <div>
-      <AssignmentHeader />
+      <AssignmentHeader module={module} />
       <Accordion>
       {module.map((item, index) => {
         return(<Accordion.Item eventKey={index} onClick={(e) => getAssignmentList(e, item?.id)} >
@@ -67,9 +81,9 @@ function ClassAssignment({classInfo}) {
             {assigItem.assignment.classId?( 
                     <Col sm={3} className='icon-exam'>
                         <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button>
-                        <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-edit"></i></Button>
+                        <Button onClick={(e) => toggle(e, assigItem)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-edit"></i></Button>
                         <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-user-clock"></i></Button>
-                        <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-trash-alt"></i></Button>
+                        <Button onClick={(e) => removeAssignment(e, assigItem?.assignment?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-trash-alt"></i></Button>
                       </Col>
                       ):
                       <Col sm={3} className='icon-exam'>
@@ -98,7 +112,7 @@ function ClassAssignment({classInfo}) {
                 </div>
               </Col>
             <div className='text-color-bcbcbc' >
-              ________________________________________________________________________________________________________________________________________
+              ___________________________________________________________________________________________________________________________________________________________________________________________________________
             </div>
           </Row>)
         })}
@@ -107,8 +121,8 @@ function ClassAssignment({classInfo}) {
         </Accordion.Item>)
       })}
       </Accordion>
+      <EditAssignment toggle={toggle} modal={modal} editAssignment={editAssignment} />
     </div>
-
   )
 }
 export default ClassAssignment

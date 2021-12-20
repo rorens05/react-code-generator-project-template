@@ -52,10 +52,40 @@ creatTask = async (mId, cId,  data) => {
     })
   }
 
+  deleteTasks = async (tId) =>{
+    return this.sendRequest({
+      path: `/api/Task/${tId}`,
+      method: 'DELETE'
+    })
+  }
+
+  updateTask = async (tId, data) =>{
+    return this.sendRequest({
+      path:`/api/Task/${tId}`,
+      method: 'PUT',
+      data
+    })
+  }
+
   createAssignment = async (mId, cId, data) =>{
     return this.sendRequest({
       path: `/api/Assignment/module/${mId}/class/${cId}`,
       method: 'POST',
+      data
+    })
+  }
+
+  delateAssignment = async (aId) => {
+    return this.sendRequest({
+      path: `/api/Assignment/${aId}`,
+      method: 'DELETE'
+    })
+  }
+
+  updateAssignment = async (aId, data) => {
+    return this.sendRequest({
+      path: `/api/Assignment/${aId}`,
+      method: 'PUT',
       data
     })
   }
