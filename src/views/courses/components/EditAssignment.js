@@ -1,29 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form, Modal } from 'react-bootstrap';
 import CoursesAPI from "../../../api/CoursesAPI";
-import SubjectAreaAPI from "../../../api/SubjectAreaAPI";
 
-export default function CreateExam({setCourse, openCreateExamModal, setOpenCreateExamModal}){
+export default function EditAssignment({openEditAssignmentModal, setOpenEditAssignmentModal, selectedAssignment}){
 
 	const [loading, setLoading] = useState(false)
   const [modulePages, setModulePages] = useState([])
-	const [testName, setTestName] = useState('')
-	const [testInstructions, setTestInstructions] = useState('')
+	const [assignmentName, setAssignmentName] = useState('')
+	const [instructions, setInstructions] = useState('')
+  
   let sessionCourse = sessionStorage.getItem('courseid')
   let sessionModule = sessionStorage.getItem('moduleid')
 
 
 	const handleCloseModal = e => {
     e.preventDefault()
-    setOpenCreateExamModal(false)
+    setOpenEditAssignmentModal(false)
   }
 
-	const saveExam = async(e) => {
+	const saveEditAssignment = async(e) => {
     e.preventDefault()
     setLoading(true)
-    let response = await new CoursesAPI().createExam(
+    let response = await new CoursesAPI().editAssignment(
       sessionModule,
-      {testName, testInstructions}
+      {assignmentName, instructions}
     )
     if(response.ok){
       alert("Saved")
@@ -49,37 +49,46 @@ export default function CreateExam({setCourse, openCreateExamModal, setOpenCreat
 	useEffect(() => {
   }, [])
 
+  useEffect(() => {
+    if(selectedAssignment !== null) {
+			setAssignmentName(selectedAssignment?.assignmentName)
+			setInstructions(selectedAssignment?.instructions)
+		}
+  }, [selectedAssignment])
+
 	return (
 		<div>
-			<Modal size="lg" className="modal-all" show={openCreateExamModal} onHide={()=> setOpenCreateExamModal(!openCreateExamModal)} >
+			<Modal size="lg" className="modal-all" show={openEditAssignmentModal} onHide={()=> setOpenEditAssignmentModal(!openEditAssignmentModal)} >
 				<Modal.Header className="modal-header" closeButton>
-				Create Exam
+				Edit Assignment
 				</Modal.Header>
 				<Modal.Body className="modal-label b-0px">
-						<Form onSubmit={saveExam}>
+						<Form onSubmit={saveEditAssignment}>
 								<Form.Group className="m-b-20">
 										<Form.Label for="courseName">
-												Test Name
+												Assignment Name
 										</Form.Label>
 										<Form.Control 
+                      defaultValue={selectedAssignment?.assignmentName}
                       className="custom-input" 
                       size="lg" 
                       type="text" 
                       placeholder="Enter test name"
-                      onChange={(e) => setTestName(e.target.value)}
+                      onChange={(e) => setAssignmentName(e.target.value)}
                     />
 								</Form.Group>
 
 								<Form.Group className="m-b-20">
 										<Form.Label for="description">
-												Test Instructions
+												Instructions
 										</Form.Label>
 										<Form.Control 
+                      defaultValue={selectedAssignment?.instructions}
                       className="custom-input" 
                       size="lg" 
                       type="text" 
                       placeholder="Enter test instructions"
-                      onChange={(e) => setTestInstructions(e.target.value)}
+                      onChange={(e) => setInstructions(e.target.value)}
                     />
 								</Form.Group>
 

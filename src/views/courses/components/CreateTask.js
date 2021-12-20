@@ -3,27 +3,27 @@ import { Button, Form, Modal } from 'react-bootstrap';
 import CoursesAPI from "../../../api/CoursesAPI";
 import SubjectAreaAPI from "../../../api/SubjectAreaAPI";
 
-export default function CreateExam({setCourse, openCreateExamModal, setOpenCreateExamModal}){
+export default function CreateTask({openCreateTaskModal, setCreateTaskModal}){
 
 	const [loading, setLoading] = useState(false)
   const [modulePages, setModulePages] = useState([])
-	const [testName, setTestName] = useState('')
-	const [testInstructions, setTestInstructions] = useState('')
+	const [taskName, setTaskName] = useState('')
+	const [instructions, setInstructions] = useState('')
   let sessionCourse = sessionStorage.getItem('courseid')
   let sessionModule = sessionStorage.getItem('moduleid')
 
 
 	const handleCloseModal = e => {
     e.preventDefault()
-    setOpenCreateExamModal(false)
+    setCreateTaskModal(false)
   }
 
-	const saveExam = async(e) => {
+	const saveTask = async(e) => {
     e.preventDefault()
     setLoading(true)
-    let response = await new CoursesAPI().createExam(
+    let response = await new CoursesAPI().createTask(
       sessionModule,
-      {testName, testInstructions}
+      {taskName, instructions}
     )
     if(response.ok){
       alert("Saved")
@@ -51,35 +51,35 @@ export default function CreateExam({setCourse, openCreateExamModal, setOpenCreat
 
 	return (
 		<div>
-			<Modal size="lg" className="modal-all" show={openCreateExamModal} onHide={()=> setOpenCreateExamModal(!openCreateExamModal)} >
+			<Modal size="lg" className="modal-all" show={openCreateTaskModal} onHide={()=> setCreateTaskModal(!openCreateTaskModal)} >
 				<Modal.Header className="modal-header" closeButton>
-				Create Exam
+				Create Task
 				</Modal.Header>
 				<Modal.Body className="modal-label b-0px">
-						<Form onSubmit={saveExam}>
+						<Form onSubmit={saveTask}>
 								<Form.Group className="m-b-20">
 										<Form.Label for="courseName">
-												Test Name
+												Task Name
 										</Form.Label>
 										<Form.Control 
                       className="custom-input" 
                       size="lg" 
                       type="text" 
-                      placeholder="Enter test name"
-                      onChange={(e) => setTestName(e.target.value)}
+                      placeholder="Enter Task name"
+                      onChange={(e) => setTaskName(e.target.value)}
                     />
 								</Form.Group>
 
 								<Form.Group className="m-b-20">
 										<Form.Label for="description">
-												Test Instructions
+												Instructions
 										</Form.Label>
 										<Form.Control 
                       className="custom-input" 
                       size="lg" 
                       type="text" 
-                      placeholder="Enter test instructions"
-                      onChange={(e) => setTestInstructions(e.target.value)}
+                      placeholder="Enter Task instructions"
+                      onChange={(e) => setInstructions(e.target.value)}
                     />
 								</Form.Group>
 

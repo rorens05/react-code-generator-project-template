@@ -68,10 +68,10 @@ export default class CoursesAPI extends Base {
     });
   };
 
-  editLesson = async (courseid, moduleid, data) => {
+  editLesson = async (id, data) => {
     return this.sendRequest({
-      path: `/api/Content/course/${courseid}/module/${moduleid}`,
-      method: 'POST',
+      path: `/api/Content/${id}`,
+      method: 'PUT',
       data
     });
   };
@@ -91,5 +91,108 @@ export default class CoursesAPI extends Base {
       data
     });
   };
+
+  createAssignment = async (moduleid, data) => {
+    return this.sendRequest({
+      path: `/api/Assignment/module/${moduleid}`,
+      method: 'POST',
+      data
+    });
+  };
+
+  createTask = async (moduleid, data) => {
+    return this.sendRequest({
+      path: `/api/Task/module/${moduleid}`,
+      method: 'POST',
+      data
+    });
+  };
+
+  createDiscussion = async (moduleid, data) => {
+    return this.sendRequest({
+      path: `/api/Discussion/module/${moduleid}`,
+      method: 'POST',
+      data
+    });
+  };
+
+
+  editExam = async (moduleid, data) => {
+    return this.sendRequest({
+      path: `/api/Test/module/${moduleid}`,
+      method: 'PUT',
+      data
+    });
+  };
+
+  editTask = async (moduleid, data) => {
+    return this.sendRequest({
+      path: `/api/Task/module/${moduleid}`,
+      method: 'PUT',
+      data
+    });
+  };
+
+  editDiscussion = async (moduleid, data) => {
+    return this.sendRequest({
+      path: `/api/Discussion/module/${moduleid}`,
+      method: 'PUT',
+      data
+    });
+  };
+
+  editAssignment = async (moduleid, data) => {
+    return this.sendRequest({
+      path: `/api/Assignment/module/${moduleid}`,
+      method: 'PUT',
+      data
+    });
+  };
+
+  getDiscussionInformation = async (id) => {
+    return this.sendRequest({
+      path: `/api/Discussion/module/${id}`,
+      method: 'GET',
+    });
+  };
+
+  getAssignmentInformation = async (id) => {
+    return this.sendRequest({
+      path: `/api/Assignment/module/${id}`,
+      method: 'GET',
+    });
+  };
+
+  getTaskInformation = async (id) => {
+    return this.sendRequest({
+      path: `/api/Task/module/${id}`,
+      method: 'GET',
+    });
+  };
+
+  getVideosLinks = async (id) => {
+    return this.sendRequest({
+      path: `/api/Course/${id}/link/type/2`,
+      method: 'GET',
+    });
+  };
+
+  getConferencesLinks = async (id) => {
+    return this.sendRequest({
+      path: `/api/Course/${id}/link/type/1`,
+      method: 'GET',
+    });
+  };
+
+  getLinks = async (id) => {
+    return this.sendRequest({
+      path: `/api/Course/${id}/link/type/3`,
+      method: 'GET',
+    });
+  };
+
+  
+
+
 
 }

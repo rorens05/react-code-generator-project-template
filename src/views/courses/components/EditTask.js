@@ -1,29 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form, Modal } from 'react-bootstrap';
 import CoursesAPI from "../../../api/CoursesAPI";
-import SubjectAreaAPI from "../../../api/SubjectAreaAPI";
 
-export default function CreateExam({setCourse, openCreateExamModal, setOpenCreateExamModal}){
+export default function EditTask({openEditTaskModal, setOpenEditTaskModal, selectedTask}){
 
 	const [loading, setLoading] = useState(false)
   const [modulePages, setModulePages] = useState([])
-	const [testName, setTestName] = useState('')
-	const [testInstructions, setTestInstructions] = useState('')
+	const [taskName, setTaskName] = useState('')
+	const [instructions, setInstructions] = useState('')
+  
   let sessionCourse = sessionStorage.getItem('courseid')
   let sessionModule = sessionStorage.getItem('moduleid')
 
 
 	const handleCloseModal = e => {
     e.preventDefault()
-    setOpenCreateExamModal(false)
+    setOpenEditTaskModal(false)
   }
 
-	const saveExam = async(e) => {
+	const saveEditTask = async(e) => {
     e.preventDefault()
     setLoading(true)
-    let response = await new CoursesAPI().createExam(
+    let response = await new CoursesAPI().editTask(
       sessionModule,
-      {testName, testInstructions}
+      {taskName, instructions}
     )
     if(response.ok){
       alert("Saved")
@@ -49,37 +49,46 @@ export default function CreateExam({setCourse, openCreateExamModal, setOpenCreat
 	useEffect(() => {
   }, [])
 
+  useEffect(() => {
+    if(selectedTask !== null) {
+			setTaskName(selectedTask?.taskName)
+			setInstructions(selectedTask?.instructions)
+		}
+  }, [selectedTask])
+
 	return (
 		<div>
-			<Modal size="lg" className="modal-all" show={openCreateExamModal} onHide={()=> setOpenCreateExamModal(!openCreateExamModal)} >
+			<Modal size="lg" className="modal-all" show={openEditTaskModal} onHide={()=> setOpenEditTaskModal(!openEditTaskModal)} >
 				<Modal.Header className="modal-header" closeButton>
-				Create Exam
+				Edit Task
 				</Modal.Header>
 				<Modal.Body className="modal-label b-0px">
-						<Form onSubmit={saveExam}>
+						<Form onSubmit={saveEditTask}>
 								<Form.Group className="m-b-20">
 										<Form.Label for="courseName">
-												Test Name
+												Task Name
 										</Form.Label>
 										<Form.Control 
+                      defaultValue={selectedTask?.taskName}
                       className="custom-input" 
                       size="lg" 
                       type="text" 
                       placeholder="Enter test name"
-                      onChange={(e) => setTestName(e.target.value)}
+                      onChange={(e) => setTaskName(e.target.value)}
                     />
 								</Form.Group>
 
 								<Form.Group className="m-b-20">
 										<Form.Label for="description">
-												Test Instructions
+												Instructions
 										</Form.Label>
 										<Form.Control 
+                      defaultValue={selectedTask?.instructions}
                       className="custom-input" 
                       size="lg" 
                       type="text" 
                       placeholder="Enter test instructions"
-                      onChange={(e) => setTestInstructions(e.target.value)}
+                      onChange={(e) => setInstructions(e.target.value)}
                     />
 								</Form.Group>
 

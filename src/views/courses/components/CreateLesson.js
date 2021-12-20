@@ -1,35 +1,34 @@
 import React, { useState, useEffect } from "react";
-import { Button, Form, Modal } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
+import Modal from 'react-bootstrap/Modal'
 import CoursesAPI from "../../../api/CoursesAPI";
-import SubjectAreaAPI from "../../../api/SubjectAreaAPI";
 
-export default function EditLesson({openEditLessonModal, setEditLessonModal, modulePagesContent}){
+export default function CreateLesson({openCreateLessonModal, setCreateLessonModal}){
 
 	const [loading, setLoading] = useState(false)
-  const [modulePages, setModulePages] = useState([])
 	const [pageName, setPageName] = useState('')
 	const [sequenceNo, setSequenceNo] = useState('')
 	const [content, setContent] = useState('')
+
   let sessionCourse = sessionStorage.getItem('courseid')
   let sessionModule = sessionStorage.getItem('moduleid')
 
 
 	const handleCloseModal = e => {
     e.preventDefault()
-    setEditLessonModal(false)
+    setCreateLessonModal(false)
   }
 
-	const saveEditLesson = async(e) => {
+	const saveLesson = async(e) => {
     e.preventDefault()
     setLoading(true)
-    let response = await new CoursesAPI().editLesson(
+    let response = await new CoursesAPI().createLesson(
       sessionCourse,
-      sessionModule,
+      sessionStorage.getItem('moduleid'),
       {pageName, sequenceNo, content}
     )
     if(response.ok){
       alert("Saved")
-      getCourseUnitPages()
 			handleCloseModal(e)
     }else{
       alert(response.data.errorMessage)
@@ -37,40 +36,19 @@ export default function EditLesson({openEditLessonModal, setEditLessonModal, mod
     setLoading(false)
   }
 
-  const getCourseUnitPages = async(e, data, data1) => {
-    setLoading(true)
-    let response = await new CoursesAPI().getCourseUnitPages(sessionCourse, sessionModule)
-    setLoading(false)
-    if(response.ok){
-      setModulePages(response.data)
-      console.log(response.data)
-    }else{
-      alert("Something went wrong while fetching all pages")
-    }
-  }
-
-	useEffect(() => {
-    if(modulePagesContent !== null) {
-			setPageName(modulePagesContent?.pageName)
-			setSequenceNo(modulePagesContent?.sequenceNo)
-      setContent(modulePagesContent?.content)
-		}
-  }, [modulePagesContent])
-
-	return (
+  return (
 		<div>
-			<Modal size="xl" className="modal-all" show={openEditLessonModal} onHide={()=> setEditLessonModal(!openEditLessonModal)} >
+			<Modal size="lg" className="modal-all" show={openCreateLessonModal} onHide={()=> setCreateLessonModal(!openCreateLessonModal)} >
 				<Modal.Header className="modal-header" closeButton>
-				Edit Lesson / Page
+				Create Lesson / Page
 				</Modal.Header>
 				<Modal.Body className="modal-label b-0px">
-						<Form onSubmit={saveEditLesson}>
+						<Form onSubmit={saveLesson}>
 								<Form.Group className="m-b-20">
 										<Form.Label for="courseName">
 												Page Name
 										</Form.Label>
 										<Form.Control 
-											defaultValue={modulePagesContent?.pageName}
                       className="custom-input" 
                       size="lg" 
                       type="text" 
@@ -78,13 +56,13 @@ export default function EditLesson({openEditLessonModal, setEditLessonModal, mod
                       onChange={(e) => setPageName(e.target.value)}
                     />
 								</Form.Group>
+                {' '}
 
 								<Form.Group className="m-b-20">
 										<Form.Label for="description">
 												Sequence Number
 										</Form.Label>
 										<Form.Control 
-                      defaultValue={modulePagesContent?.sequenceNo}
                       className="custom-input" 
                       size="lg" 
                       type="text" 
@@ -92,22 +70,22 @@ export default function EditLesson({openEditLessonModal, setEditLessonModal, mod
                       onChange={(e) => setSequenceNo(e.target.value)}
                     />
 								</Form.Group>
+                {' '}
 
                 <Form.Group className="m-b-20">
 										<Form.Label for="description">
 												Content
 										</Form.Label>
 										<Form.Control 
-                      defaultValue={modulePagesContent?.content}
                       className="custom-input" 
                       size="lg" 
-                      as="textarea"
+                      type="text" 
                       placeholder="Enter lesson content"
-                      rows={5}
                       onChange={(e) => setContent(e.target.value)}
                     />
-								  </Form.Group>
-						
+								</Form.Group>
+                {' '}
+    
 								<span style={{float:"right"}}>
 										<Button className="tficolorbg-button" type="submit">
 												Save

@@ -1,29 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form, Modal } from 'react-bootstrap';
 import CoursesAPI from "../../../api/CoursesAPI";
-import SubjectAreaAPI from "../../../api/SubjectAreaAPI";
 
-export default function CreateExam({setCourse, openCreateExamModal, setOpenCreateExamModal}){
+export default function EditDiscussion({openEditDiscussionModal, setOpenEditDiscussionModal, selectedDiscussion}){
 
 	const [loading, setLoading] = useState(false)
   const [modulePages, setModulePages] = useState([])
-	const [testName, setTestName] = useState('')
-	const [testInstructions, setTestInstructions] = useState('')
+	const [discussionName, setDiscussionName] = useState('')
+	const [instructions, setInstructions] = useState('')
+  
   let sessionCourse = sessionStorage.getItem('courseid')
   let sessionModule = sessionStorage.getItem('moduleid')
 
 
 	const handleCloseModal = e => {
     e.preventDefault()
-    setOpenCreateExamModal(false)
+    setOpenEditDiscussionModal(false)
   }
 
-	const saveExam = async(e) => {
+	const saveEditDiscussion = async(e) => {
     e.preventDefault()
     setLoading(true)
-    let response = await new CoursesAPI().createExam(
+    let response = await new CoursesAPI().EditDiscussion(
       sessionModule,
-      {testName, testInstructions}
+      {discussionName, instructions}
     )
     if(response.ok){
       alert("Saved")
@@ -49,37 +49,46 @@ export default function CreateExam({setCourse, openCreateExamModal, setOpenCreat
 	useEffect(() => {
   }, [])
 
+  useEffect(() => {
+    if(selectedDiscussion !== null) {
+			setDiscussionName(selectedDiscussion?.discussionName)
+			setInstructions(selectedDiscussion?.instructions)
+		}
+  }, [selectedDiscussion])
+
 	return (
 		<div>
-			<Modal size="lg" className="modal-all" show={openCreateExamModal} onHide={()=> setOpenCreateExamModal(!openCreateExamModal)} >
+			<Modal size="lg" className="modal-all" show={openEditDiscussionModal} onHide={()=> setOpenEditDiscussionModal(!openEditDiscussionModal)} >
 				<Modal.Header className="modal-header" closeButton>
-				Create Exam
+				Edit Discussion
 				</Modal.Header>
 				<Modal.Body className="modal-label b-0px">
-						<Form onSubmit={saveExam}>
+						<Form onSubmit={saveEditDiscussion}>
 								<Form.Group className="m-b-20">
 										<Form.Label for="courseName">
-												Test Name
+												Discussion Name
 										</Form.Label>
 										<Form.Control 
+                      defaultValue={selectedDiscussion?.discussion.discussionName}
                       className="custom-input" 
                       size="lg" 
                       type="text" 
                       placeholder="Enter test name"
-                      onChange={(e) => setTestName(e.target.value)}
+                      onChange={(e) => setDiscussionName(e.target.value)}
                     />
 								</Form.Group>
 
 								<Form.Group className="m-b-20">
 										<Form.Label for="description">
-												Test Instructions
+												Instructions
 										</Form.Label>
 										<Form.Control 
+                      defaultValue={selectedDiscussion?.discussion.instructions}
                       className="custom-input" 
                       size="lg" 
                       type="text" 
                       placeholder="Enter test instructions"
-                      onChange={(e) => setTestInstructions(e.target.value)}
+                      onChange={(e) => setInstructions(e.target.value)}
                     />
 								</Form.Group>
 

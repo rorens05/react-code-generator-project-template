@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Button, Form, Modal  } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
+import Modal from 'react-bootstrap/Modal'
 import CoursesAPI from "../../../api/CoursesAPI";
 
-export default function CourseCreateUnit({moduleInfo, setModuleInfo, openCreateUnitModal, setopenCreateUnitModal}){
+export default function CourseCreateUnit({moduleInfo, setModuleInfo, openCreateUnitModal, setOpenCreateUnitModal}){
 
 	const [loading, setLoading] = useState(false)
 	const [moduleName, setModuleName] = useState('')
@@ -12,7 +13,7 @@ export default function CourseCreateUnit({moduleInfo, setModuleInfo, openCreateU
 
 	const handleCloseModal = e => {
     e.preventDefault()
-    setopenCreateUnitModal(false)
+    setOpenCreateUnitModal(false)
   }
 
 	const getCourseUnitInformation = async(e) => {
@@ -57,7 +58,7 @@ export default function CourseCreateUnit({moduleInfo, setModuleInfo, openCreateU
 	
 	return (
 		<div>
-			<Modal size="lg" className="modal-all" show={openCreateUnitModal} onHide={()=> setopenCreateUnitModal(!setopenCreateUnitModal)} >
+			<Modal size="lg" className="modal-all" show={openCreateUnitModal} onHide={()=> setOpenCreateUnitModal(!setOpenCreateUnitModal)} >
 				<Modal.Header className="modal-header" closeButton>
 				Create Module
 				</Modal.Header>
