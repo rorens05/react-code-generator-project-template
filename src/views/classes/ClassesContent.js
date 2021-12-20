@@ -8,7 +8,7 @@ function ClassesContent() {
   const [loading, setLoading] = useState(true)
   return (
     <div>
-      <MainContainer loading={loading}>
+      <MainContainer loading={loading} fluid>
         <ClassBreedCrumbs />
         <ClassSideNavigation setLoading={setLoading}/>
       </MainContainer>

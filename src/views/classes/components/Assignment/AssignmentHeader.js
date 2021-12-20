@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import { InputGroup, FormControl, Button } from 'react-bootstrap'
 import CreateAssignment from './CreateAssignment'
 
-function AssignmentHeader() {
+function AssignmentHeader({module}) {
 	const [modal, setModal] = useState(false)
 const toggle = () =>{
     setModal(!modal)
@@ -20,7 +20,7 @@ const toggle = () =>{
 					</InputGroup>
 				</div>
 			</div>
-			<CreateAssignment toggle={toggle} modal={modal} />
+			<CreateAssignment toggle={toggle} modal={modal} module={module} />
     </div>
   )
 }

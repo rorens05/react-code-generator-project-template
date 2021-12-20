@@ -4,7 +4,7 @@ import { Form, Button, } from 'react-bootstrap'
 import ClassesAPI from '../../../../api/ClassesAPI'
 import { useParams } from 'react-router'
 
-function CreateTask({modal, toggle, module}) {
+function CreateTask({modal, toggle, module, getTaskModule}) {
   const [moduleId, setModuleId] = useState('')
   const [taskName, setTaskName] = useState('')
   const [instructions, setInstructions] = useState('')
@@ -17,6 +17,7 @@ function CreateTask({modal, toggle, module}) {
     if(response.ok){
       alert('Save Task')
       toggle(e)
+      getTaskModule()
     }else{
       alert(response.data.errorMessage)
     }

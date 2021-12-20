@@ -3,14 +3,21 @@ import {Row, Col, Accordion, Button} from 'react-bootstrap'
 import ClassesAPI from '../../api/ClassesAPI'
 import HeaderTask from './components/Task/HeaderTask'
 import { useParams } from 'react-router'
+import EditTask from './components/Task/EditTask'
 
 
 function ClassTask({classInfo}) {
+  const [modal, setModal] = useState(false)
   const [module, setModule] = useState([])
-  const [moduleId, setmoduleId] = useState('')
   const [taskModule, setTaskModule] = useState([])
+  const [editTask, setEditTask] = useState()
   const {id} = useParams()
   const courseId = classInfo?.classInformation?.courseId
+
+  const toggle = (e, item) =>{
+    setEditTask(item)
+    setModal(!modal)
+  }
   
   const getModule = async() =>{
     let response = await new ClassesAPI().getModule(courseId)
@@ -23,7 +30,6 @@ function ClassTask({classInfo}) {
 
   useEffect(() => {
     getModule()
-    
   }, [])
 
   const getTaskModule = async(e, item) =>{
@@ -31,17 +37,30 @@ function ClassTask({classInfo}) {
     if(response.ok){
       setTaskModule(response.data)
     }else{
-      
+    
     }
   }
 
   useEffect(() => {
     getTaskModule()
   }, [])
+
+  const removeTask = async (e, item) => {
+    let response = await new ClassesAPI().deleteTasks(item)
+    if(response.ok){
+      alert('Task Deleted')
+      getModule()
+      getTaskModule()
+    }else{
+      alert("Something went wrong while Deleting a task")
+    }
+  }
   
+  
+
   return (
     <>
-      <HeaderTask module={module} />
+      <HeaderTask module={module} getTaskModule={getTaskModule} />
         <Accordion>
         {module.map((item, index) =>{
           return ( 
@@ -69,9 +88,9 @@ function ClassTask({classInfo}) {
                     {moduleitem.task.classId?( 
                     <Col sm={3} className='icon-exam'>
                         <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button>
-                        <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-edit"></i></Button>
+                        <Button onClick={(e) => toggle(e, moduleitem)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-edit"></i></Button>
                         <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-user-clock"></i></Button>
-                        <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-trash-alt"></i></Button>
+                        <Button onClick={(e) => removeTask(e, moduleitem?.task?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-trash-alt"></i></Button>
                       </Col>
                       ):
                       <Col sm={3} className='icon-exam'>
@@ -100,7 +119,7 @@ function ClassTask({classInfo}) {
                         </div>
                       </Col>
                     <div className='text-color-bcbcbc' >
-                      ________________________________________________________________________________________________________________________________________
+                    ___________________________________________________________________________________________________________________________________________________________________________________________________________
                     </div>
                   </Row>  
                     )})}
@@ -109,6 +128,7 @@ function ClassTask({classInfo}) {
             )
           })}
           </Accordion>
+          <EditTask editTask={editTask} toggle={toggle} modal={modal} module={module} getTaskModule={getTaskModule} />
        </>
     )
   }
