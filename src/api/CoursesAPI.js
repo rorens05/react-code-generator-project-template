@@ -170,6 +170,28 @@ export default class CoursesAPI extends Base {
     });
   };
 
+  getVideosLinks = async (id) => {
+    return this.sendRequest({
+      path: `/api/Course/${id}/link/type/2`,
+      method: 'GET',
+    });
+  };
+
+  getConferencesLinks = async (id) => {
+    return this.sendRequest({
+      path: `/api/Course/${id}/link/type/1`,
+      method: 'GET',
+    });
+  };
+
+  getLinks = async (id) => {
+    return this.sendRequest({
+      path: `/api/Course/${id}/link/type/3`,
+      method: 'GET',
+    });
+  };
+
+  
 
 
 

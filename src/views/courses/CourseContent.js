@@ -8,6 +8,7 @@ import CoursesExam from "./pages/Exam/CoursesExam";
 import CoursesDiscussion from "./pages/Discussion/CoursesDiscussion";
 import CoursesAssignment from "./pages/Assignment/CoursesAssignment";
 import CoursesTask from "./pages/Task/CoursesTask";
+import CourseLinks from "./pages/Links/CourseLinks";
 
 export default function CourseContent(course) {
 
@@ -54,7 +55,13 @@ export default function CourseContent(course) {
 
   return (
     <MainContainer loading={loading} fluid>
-      <CourseBreadcrumbs />
+      <Row>
+        <Col sm={3}>
+        </Col>
+        <Col sm={9}>
+          <CourseBreadcrumbs />
+        </Col>
+      </Row>
       <Tab.Container className="course-widget-font" id="list-group-tabs-example " defaultActiveKey="#link1">
         <Row>
           <Col className="row-course-bg course-widget-font" sm={3}>
@@ -86,9 +93,9 @@ export default function CourseContent(course) {
               <ListGroup.Item className="list-group-item-o " action href="#link5">
               Task
               </ListGroup.Item>
-              <ListGroup.Item className="list-group-item-o " action href="#link6">
+              {/* <ListGroup.Item className="list-group-item-o " action href="#link6">
               Links
-              </ListGroup.Item>
+              </ListGroup.Item> */}
             </ListGroup>
           </Col>
           <Col sm={9}>
@@ -108,8 +115,9 @@ export default function CourseContent(course) {
               <Tab.Pane eventKey="#link5">
                 <CoursesTask moduleInfo={moduleInfo} setModuleInfo={setModuleInfo} />
               </Tab.Pane>
-              <Tab.Pane eventKey="#link6">
-              </Tab.Pane>
+              {/* <Tab.Pane eventKey="#link6">
+                <CourseLinks moduleInfo={moduleInfo} setModuleInfo={setModuleInfo} />
+              </Tab.Pane> */}
             </Tab.Content> 
           </Col> 
         </Row>

@@ -16,6 +16,7 @@ export default function CoursesItem({course, setLoading, setOpenEditModal, setSe
 
   const setCourseId = (item) => {
     sessionStorage.setItem('courseid', item)
+    sessionStorage.setItem('breadname', "Learn")
   } 
 
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
