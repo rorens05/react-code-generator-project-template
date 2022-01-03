@@ -5,6 +5,8 @@ import CourseCreateUnit from "./../../components/CourseCreateUnit";
 import CreateLesson from "./../../components/CreateLesson";
 import EditLesson from "../../components/EditLesson";
 import CoursesLearnContent from "./CoursesLearnContent";
+import SweetAlert from 'react-bootstrap-sweetalert';
+
 
 export default function CourseLearn({viewLesson, setViewLesson, moduleInfo, setModuleInfo}) {
 
@@ -16,6 +18,7 @@ export default function CourseLearn({viewLesson, setViewLesson, moduleInfo, setM
   const [selectedLesson, setSelectedLesson] = useState(null)
   const [lessonInfo, setLessonInfo] = useState([])
   const [lessonContent, setLessonContent] = useState([])
+  const [sweetError, setSweetError] = useState(false)
 
   const courseid = sessionStorage.getItem('courseid')
   const moduleid = sessionStorage.getItem('courseid')
@@ -33,6 +36,14 @@ export default function CourseLearn({viewLesson, setViewLesson, moduleInfo, setM
     setSelectedLesson(item)
     setOpenEditLessonModal(!openEditLessonModal)
   }
+
+  const cancelSweetError = () => {
+    setSweetError(false)
+  }
+
+  const confirmSweetError = () => {
+    alert("Saved")  
+  } 
 
 
   const getCourseLessons = async(e, data, modulename) => {
@@ -98,8 +109,22 @@ export default function CourseLearn({viewLesson, setViewLesson, moduleInfo, setM
                           </Col>
                           <Col className="align-right-content" md={3}>
                             <Button key={item.id} className="m-r-5 color-white tficolorbg-button" size="sm" onClick={(e) => handleOpenEditLessonModal(e, item)}><i className="fa fa-edit"></i></Button>
-                            <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i className="fa fa-trash"></i></Button>
+                            <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={() => setSweetError(true)}><i className="fa fa-trash"></i></Button>
+                            <SweetAlert
+                              warning
+                              showCancel
+                              show={sweetError}
+                              confirmBtnText="Yes, delete it!"
+                              confirmBtnBsStyle="danger"
+                              title="Are you sure?"
+                              onConfirm={confirmSweetError}
+                              onCancel={cancelSweetError}
+                              focusCancelBtn
+                            >
+                              You will not be able to recover this imaginary file!
+                            </SweetAlert>
                           </Col>
+                          
                           <EditLesson key={index} selectedLesson={selectedLesson} openEditLessonModal={openEditLessonModal} setOpenEditLessonModal={setOpenEditLessonModal}/>
                         </Row>
                       )
@@ -117,6 +142,7 @@ export default function CourseLearn({viewLesson, setViewLesson, moduleInfo, setM
             })
           }
         </Accordion>
+        
       </React.Fragment>
     )
   }else{
