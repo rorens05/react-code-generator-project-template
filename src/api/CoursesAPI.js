@@ -141,9 +141,9 @@ export default class CoursesAPI extends Base {
     });
   };
 
-  editAssignment = async (moduleid, data) => {
+  editAssignment = async (assignmentid, data) => {
     return this.sendRequest({
-      path: `/api/Assignment/module/${moduleid}`,
+      path: `/api/Assignment/${assignmentid}`,
       method: 'PUT',
       data
     });

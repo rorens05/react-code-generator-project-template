@@ -22,7 +22,7 @@ export default function EditAssignment({openEditAssignmentModal, setOpenEditAssi
     e.preventDefault()
     setLoading(true)
     let response = await new CoursesAPI().editAssignment(
-      sessionModule,
+      selectedAssignment?.id,
       {assignmentName, instructions}
     )
     if(response.ok){
