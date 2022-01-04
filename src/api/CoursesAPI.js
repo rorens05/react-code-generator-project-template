@@ -48,7 +48,7 @@ export default class CoursesAPI extends Base {
 
   getCourseUnitPages = async (courseid, moduleid) => {
     return this.sendRequest({
-      path: `/api/Content/course/${courseid}/module/${moduleid}/pages`,
+      path: `/api/Content/course/${courseid}/module/${moduleid}`,
       method: 'GET',
     });
   };
@@ -188,6 +188,14 @@ export default class CoursesAPI extends Base {
     return this.sendRequest({
       path: `/api/Course/${id}/link/type/3`,
       method: 'GET',
+    });
+  };
+
+  deleteLesson = async (id, data) => {
+    return this.sendRequest({
+      path: `/api/Content/${id}`,
+      method: 'DELETE',
+      data
     });
   };
 

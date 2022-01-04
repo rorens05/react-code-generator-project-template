@@ -34,6 +34,7 @@ export default function CourseLearn({viewLesson, setViewLesson, moduleInfo, setM
   const handleOpenEditLessonModal = (e, item) =>{
     e.preventDefault()
     setSelectedLesson(item)
+    console.log(item)
     setOpenEditLessonModal(!openEditLessonModal)
   }
 
@@ -41,10 +42,12 @@ export default function CourseLearn({viewLesson, setViewLesson, moduleInfo, setM
     setSweetError(false)
   }
 
-  const confirmSweetError = () => {
-    alert("Saved")  
-  } 
+  const confirmSweetError = (id) => {
+    alert('Deleted')
+    deleteCourseLesson(id)
+    setSweetError(false)
 
+  } 
 
   const getCourseLessons = async(e, data, modulename) => {
     setLoading(true)
@@ -54,6 +57,18 @@ export default function CourseLearn({viewLesson, setViewLesson, moduleInfo, setM
     setLoading(false)
     if(response.ok){
       setLessonInfo(response.data)
+      console.log(response.data)
+    }else{
+      alert("Something went wrong while fetching all pages")
+    }
+  }
+
+  const deleteCourseLesson = async(data) => {
+    setLoading(true)
+    let response = await new CoursesAPI().deleteLesson(data)
+    setLoading(false)
+    if(response.ok){
+      // setLessonInfo(response.data)
       console.log(response.data)
     }else{
       alert("Something went wrong while fetching all pages")
@@ -91,6 +106,13 @@ export default function CourseLearn({viewLesson, setViewLesson, moduleInfo, setM
             </InputGroup>
           </div>
         </div>
+        <EditLesson selectedLesson={selectedLesson} openEditLessonModal={openEditLessonModal} setOpenEditLessonModal={setOpenEditLessonModal}/>
+        <CreateLesson 
+          openCreateLessonModal={openCreateLessonModal} 
+          setCreateLessonModal={setCreateLessonModal} 
+          selectedLesson={selectedLesson} 
+          setSelectedLesson={setSelectedLesson}
+        />
         <Accordion defaultActiveKey="0">
           {moduleInfo.map((item, index) => {
             return(
@@ -100,7 +122,7 @@ export default function CourseLearn({viewLesson, setViewLesson, moduleInfo, setM
                     <span className="unit-title">{item.moduleName} <Button className="m-l-10" variant="outline-warning" onClick={handleOpenCreateLessonModal}><i className="fa fa-plus"></i> Add Lesson</Button>
                     </span>
                   </Accordion.Header>
-                  <Accordion.Body>
+                  <Accordion.Body>                         
                     {lessonInfo.map((item, index) => {
                       return(
                         <Row>
@@ -117,7 +139,7 @@ export default function CourseLearn({viewLesson, setViewLesson, moduleInfo, setM
                               confirmBtnText="Yes, delete it!"
                               confirmBtnBsStyle="danger"
                               title="Are you sure?"
-                              onConfirm={confirmSweetError}
+                              onConfirm={() => confirmSweetError(item.id)}
                               onCancel={cancelSweetError}
                               focusCancelBtn
                             >
@@ -125,18 +147,13 @@ export default function CourseLearn({viewLesson, setViewLesson, moduleInfo, setM
                             </SweetAlert>
                           </Col>
                           
-                          <EditLesson key={index} selectedLesson={selectedLesson} openEditLessonModal={openEditLessonModal} setOpenEditLessonModal={setOpenEditLessonModal}/>
+
                         </Row>
                       )
                     })}
                   </Accordion.Body>
                 </Accordion.Item>
-                <CreateLesson 
-                  openCreateLessonModal={openCreateLessonModal} 
-                  setCreateLessonModal={setCreateLessonModal} 
-                  selectedLesson={selectedLesson} 
-                  setSelectedLesson={setSelectedLesson}
-                />
+                
               </>
               )
             })

@@ -62,6 +62,8 @@ export default function CoursesAssignment({moduleInfo, setModuleInfo}) {
           </InputGroup>
         </div>
       </div>
+      <CreateAssignment openCreateAssignmentModal={openCreateAssignmentModal} setOpenCreateAssignmentModal={setOpenCreateAssignmentModal}/>
+
       <Accordion defaultActiveKey="0">
         {moduleInfo.map((item, index) => {
           return(
@@ -88,7 +90,6 @@ export default function CoursesAssignment({moduleInfo, setModuleInfo}) {
                   })}
                 </Accordion.Body>
               </Accordion.Item>
-              <CreateAssignment openCreateAssignmentModal={openCreateAssignmentModal} setOpenCreateAssignmentModal={setOpenCreateAssignmentModal}/>
             </>
             )
           })

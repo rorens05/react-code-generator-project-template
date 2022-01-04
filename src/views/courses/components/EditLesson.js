@@ -21,11 +21,11 @@ export default function EditLesson({openEditLessonModal, setOpenEditLessonModal,
     setOpenEditLessonModal(false)
   }
 
-	const saveEditLesson = async(e, id) => {
+	const saveEditLesson = async(e, id ) => {
     e.preventDefault()
     setLoading(true)
     let response = await new CoursesAPI().editLesson(
-      id,
+      selectedLesson?.id,
       {pageName, sequenceNo, content}
     )
     if(response.ok){
@@ -100,6 +100,7 @@ export default function EditLesson({openEditLessonModal, setOpenEditLessonModal,
                   </Form.Label>
                   <Form.Control 
                     defaultValue={selectedLesson?.content}
+                    // value={selectedLesson?.content}
                     className="custom-input" 
                     size="lg" 
                     as="textarea"
