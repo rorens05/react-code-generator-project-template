@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import { Button, InputGroup, FormControl } from 'react-bootstrap';
 import CreateDiscussion from './CreateDiscussion';
 
-function HeaderDiscussion({module}) {
+function HeaderDiscussion({module, getDiscussionUnit}) {
 const [modal, setModal] = useState(false)
 const toggle = () =>{
     setModal(!modal)
@@ -20,7 +20,7 @@ const toggle = () =>{
 					</InputGroup>
 				</div>
 			</div>
-				<CreateDiscussion module={module} toggle={toggle} modal={modal} />
+				<CreateDiscussion getDiscussionUnit={getDiscussionUnit} module={module} toggle={toggle} modal={modal} />
 		</div>
 	)
 }
