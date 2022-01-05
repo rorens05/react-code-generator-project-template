@@ -6,7 +6,7 @@ import ClassCard from './components/Classes/ClassCard'
 import ClassHeader from './components/Classes/ClassHeader'
 import EditClassModal from './components/Classes/EditClassModal'
 import { UserContext } from '../../context/UserContext'
-
+import moment from 'moment'
 
 export default function Classes() {
   const [classes, setClasses] = useState([])
@@ -27,6 +27,7 @@ export default function Classes() {
   console.log('TEST', user?.teacher?.id)
 
   useEffect(() => {
+    // console.log('moment data', moment("2021-07-01T00:00:00").format('dddd'))
     getClasses()
   }, [])
   
