@@ -106,12 +106,13 @@ export default function CourseLearn({viewLesson, setViewLesson, moduleInfo, setM
             </InputGroup>
           </div>
         </div>
-        <EditLesson selectedLesson={selectedLesson} openEditLessonModal={openEditLessonModal} setOpenEditLessonModal={setOpenEditLessonModal}/>
+        <EditLesson selectedLesson={selectedLesson} setLessonInfo={setLessonInfo} openEditLessonModal={openEditLessonModal} setOpenEditLessonModal={setOpenEditLessonModal}/>
         <CreateLesson 
           openCreateLessonModal={openCreateLessonModal} 
           setCreateLessonModal={setCreateLessonModal} 
           selectedLesson={selectedLesson} 
           setSelectedLesson={setSelectedLesson}
+          setLessonInfo={setLessonInfo}
         />
         <Accordion defaultActiveKey="0">
           {moduleInfo.map((item, index) => {

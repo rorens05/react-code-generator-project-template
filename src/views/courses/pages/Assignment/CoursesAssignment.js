@@ -63,6 +63,7 @@ export default function CoursesAssignment({moduleInfo, setModuleInfo}) {
         </div>
       </div>
       <CreateAssignment openCreateAssignmentModal={openCreateAssignmentModal} setOpenCreateAssignmentModal={setOpenCreateAssignmentModal}/>
+      <EditAssignment setAssignmentInfo={setAssignmentInfo} selectedAssignment={selectedAssignment} openEditAssignmentModal={openEditAssignmentModal} setOpenEditAssignmentModal={setOpenEditAssignmentModal}/>
 
       <Accordion defaultActiveKey="0">
         {moduleInfo.map((item, index) => {
@@ -84,7 +85,6 @@ export default function CoursesAssignment({moduleInfo, setModuleInfo}) {
                           <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={(e) => handleOpenEditAssignmentModal(e, item)}><i className="fa fa-edit"></i></Button>
                           <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i className="fa fa-trash"></i></Button>
                         </Col>
-                        <EditAssignment selectedAssignment={selectedAssignment} openEditAssignmentModal={openEditAssignmentModal} setOpenEditAssignmentModal={setOpenEditAssignmentModal}/>
                       </Row>
                     )
                   })}

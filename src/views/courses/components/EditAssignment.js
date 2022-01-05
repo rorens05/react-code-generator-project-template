@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button, Form, Modal } from 'react-bootstrap';
 import CoursesAPI from "../../../api/CoursesAPI";
 
-export default function EditAssignment({openEditAssignmentModal, setOpenEditAssignmentModal, selectedAssignment}){
+export default function EditAssignment({openEditAssignmentModal, setOpenEditAssignmentModal, selectedAssignment, setAssignmentInfo}){
 
 	const [loading, setLoading] = useState(false)
   const [modulePages, setModulePages] = useState([])
@@ -22,16 +22,30 @@ export default function EditAssignment({openEditAssignmentModal, setOpenEditAssi
     e.preventDefault()
     setLoading(true)
     let response = await new CoursesAPI().editAssignment(
-      sessionModule,
+      selectedAssignment?.id,
       {assignmentName, instructions}
     )
     if(response.ok){
       alert("Saved")
 			handleCloseModal(e)
+      getAssignmentInfo(sessionModule)
     }else{
       alert(response.data.errorMessage)
     }
     setLoading(false)
+  }
+
+  const getAssignmentInfo = async(e, data) => {
+    setLoading(true)
+    sessionStorage.setItem('moduleid', data)
+    let response = await new CoursesAPI().getAssignmentInformation(sessionModule)
+    setLoading(false)
+    if(response.ok){
+      setAssignmentInfo(response.data)
+      console.log(response.data)
+    }else{
+      alert("Something went wrong while fetching all assignment")
+    }
   }
 
   const getCourseUnitPages = async(e, data, data1) => {

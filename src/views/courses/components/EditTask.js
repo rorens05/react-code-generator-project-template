@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button, Form, Modal } from 'react-bootstrap';
 import CoursesAPI from "../../../api/CoursesAPI";
 
-export default function EditTask({openEditTaskModal, setOpenEditTaskModal, selectedTask}){
+export default function EditTask({openEditTaskModal, setOpenEditTaskModal, selectedTask, setTaskInfo}){
 
 	const [loading, setLoading] = useState(false)
   const [modulePages, setModulePages] = useState([])
@@ -22,12 +22,13 @@ export default function EditTask({openEditTaskModal, setOpenEditTaskModal, selec
     e.preventDefault()
     setLoading(true)
     let response = await new CoursesAPI().editTask(
-      sessionModule,
+      selectedTask?.id,
       {taskName, instructions}
     )
     if(response.ok){
       alert("Saved")
 			handleCloseModal(e)
+      getTaskInfo(sessionModule)
     }else{
       alert(response.data.errorMessage)
     }
@@ -43,6 +44,18 @@ export default function EditTask({openEditTaskModal, setOpenEditTaskModal, selec
       console.log(response.data)
     }else{
       alert("Something went wrong while fetching all pages")
+    }
+  }
+
+  const getTaskInfo = async(e, data) => {
+    setLoading(true)
+    let response = await new CoursesAPI().getTaskInformation(sessionModule)
+    setLoading(false)
+    if(response.ok){
+      setTaskInfo(response.data)
+      console.log(response.data)
+    }else{
+      alert("Something went wrong while fetching all task")
     }
   }
 

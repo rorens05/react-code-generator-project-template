@@ -125,9 +125,9 @@ export default class CoursesAPI extends Base {
     });
   };
 
-  editTask = async (moduleid, data) => {
+  editTask = async (taskid, data) => {
     return this.sendRequest({
-      path: `/api/Task/module/${moduleid}`,
+      path: `/api/Task/${taskid}`,
       method: 'PUT',
       data
     });
@@ -141,9 +141,9 @@ export default class CoursesAPI extends Base {
     });
   };
 
-  editAssignment = async (moduleid, data) => {
+  editAssignment = async (assignmentid, data) => {
     return this.sendRequest({
-      path: `/api/Assignment/module/${moduleid}`,
+      path: `/api/Assignment/${assignmentid}`,
       method: 'PUT',
       data
     });

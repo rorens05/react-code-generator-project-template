@@ -4,6 +4,9 @@ import SideReport from './components/SideReport'
 
 
 export default function Reports() {
+
+  // const {id} = useParams()
+
   return (
     <MainContainer activeHeader={'reports'}> 
       <SideReport/>
