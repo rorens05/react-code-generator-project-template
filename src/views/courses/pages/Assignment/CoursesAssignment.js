@@ -63,12 +63,8 @@ export default function CoursesAssignment({moduleInfo, setModuleInfo}) {
         </div>
       </div>
       <CreateAssignment openCreateAssignmentModal={openCreateAssignmentModal} setOpenCreateAssignmentModal={setOpenCreateAssignmentModal}/>
-<<<<<<< HEAD
       <EditAssignment setAssignmentInfo={setAssignmentInfo} selectedAssignment={selectedAssignment} openEditAssignmentModal={openEditAssignmentModal} setOpenEditAssignmentModal={setOpenEditAssignmentModal}/>
 
-=======
-      <EditAssignment selectedAssignment={selectedAssignment} openEditAssignmentModal={openEditAssignmentModal} setOpenEditAssignmentModal={setOpenEditAssignmentModal}/>
->>>>>>> c972844fbc01239140fdf6687b9e180c9e0c3a65
       <Accordion defaultActiveKey="0">
         {moduleInfo.map((item, index) => {
           return(
