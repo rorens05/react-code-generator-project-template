@@ -1,12 +1,25 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Accordion, Row, Col, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router'
 import ClassesAPI from '../../../../api/ClassesAPI'
+import SweetAlert from 'react-bootstrap-sweetalert';
+
 
 function AccordionConference({conference, getConfe, setOpenEditModal, setEditLinks}) {
+  const [deleteNotify, setDeleteNotify] = useState(false)
+  const [itemId, setItemId] = useState('')
   const {id} = useParams()
-  console.log(conference)
+
+  const cancelSweetAlert = () => {
+    setDeleteNotify(false)
+  }
+
+  const handleDeleteNotify = (item) =>{
+    setDeleteNotify(true)
+    setItemId(item)
+  }
+ 
 
   const handleOpeEditModal = (e, item) => {
     e.preventDefault()
@@ -15,10 +28,10 @@ function AccordionConference({conference, getConfe, setOpenEditModal, setEditLin
     
   }
 
-  const deleteConference = async(e, item) => {
+  const deleteConference = async(item) => {
     let response = await new ClassesAPI().deleteLinks(id, item)
     if(response.ok){
-      alert('Conference Deleted')
+      setDeleteNotify(false)
       getConfe()
     }else{
       alert("Something went wrong while fetching all Conference")
@@ -29,9 +42,22 @@ function AccordionConference({conference, getConfe, setOpenEditModal, setEditLin
   return (
     <div>
       <Accordion>
+        <SweetAlert
+          warning
+          showCancel
+          show={deleteNotify}
+          confirmBtnText="Yes, delete it!"
+          confirmBtnBsStyle="danger"
+          title="Are you sure?"
+          onConfirm={() => deleteConference(itemId)}
+          onCancel={cancelSweetAlert}
+          focusCancelBtn
+        >
+            You will not be able to recover this imaginary file!
+          </SweetAlert>
         <Accordion.Item eventKey="0">
         <Accordion.Header>
-          <div className='unit-exam'>
+          <div className='unit-exam' style={{fontSize:'25px'}}>
             Conference 
           </div>
         </Accordion.Header>
@@ -46,7 +72,7 @@ function AccordionConference({conference, getConfe, setOpenEditModal, setEditLin
               </Col>
               <Col sm={3} className='icon-exam'>
                   <Button onClick={(e) => handleOpeEditModal(e, item)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i className="fa fa-edit"></i></Button>
-                  <Button onClick={(e) => deleteConference(e, item?.classLink.id)} className="m-r-5 color-white tficolorbg-button" size="sm"> <i class="fas fa-trash-alt"></i> </Button>
+                  <Button onClick={() => handleDeleteNotify(item?.classLink.id)} className="m-r-5 color-white tficolorbg-button" size="sm"> <i class="fas fa-trash-alt"></i> </Button>
               </Col>
               <Col sm={9}>
               </Col>

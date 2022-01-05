@@ -2,20 +2,36 @@ import React, { useState } from 'react'
 import { Table, Button } from 'react-bootstrap'
 import ClassesAPI from '../../../../api/ClassesAPI'
 import { useParams} from 'react-router'
+import SweetAlert from 'react-bootstrap-sweetalert';
 
 
 function ClassWaiting({waitingStudent, getStudentEnrolled, getStudentWaiting}) {
-  console.log('this is waiting Student', waitingStudent)
+  const [addNotify, setAddNotify] = useState(false)
+  const [deleteNotify, setDeleteNotify] = useState(false)
+  const [itemId, setItemId] = useState('')
   const {id} = useParams()
+
+  const cancelSweetAlert = () => {
+    setDeleteNotify(false)
+  }
+
+  const handleDeleteNotify = (item) =>{
+    setDeleteNotify(true)
+    setItemId(item)
+  }
+
+  const closeAddNotify = () =>{
+    setAddNotify(false)
+  }
 
   const addStudent = async(e, item) =>{
     console.log('this studentId', item)
     let studentId = item
     let isAccepted = true
-    let response = await new ClassesAPI().acceptStudent(id, isAccepted, [studentId])
-      
+    let response = await new ClassesAPI().acceptStudent(id, isAccepted, [studentId]) 
     if(response.ok){
-      alert('Add Student')
+      // alert('Add Student')
+      setAddNotify(true)
       getStudentEnrolled()
       getStudentWaiting()
     }else{
@@ -26,7 +42,8 @@ function ClassWaiting({waitingStudent, getStudentEnrolled, getStudentWaiting}) {
   const removeStudent = async (e, item) =>{
     let response = await new ClassesAPI().removeStudentWaitingList(id, [item])
     if(response.ok){
-      alert('Remove Student from ClassList')
+      // alert('Remove Student from ClassList')
+      setDeleteNotify(false)
       getStudentEnrolled()
       getStudentWaiting()
     }else{
@@ -54,12 +71,31 @@ function ClassWaiting({waitingStudent, getStudentEnrolled, getStudentWaiting}) {
               </td>
               <td className='class-waiting-icon'> 
                <Button onClick={(e) => addStudent(e, item.id)} className="m-r-5 color-white tficolorbg-button" size="sm"> <i class="fas fa-user-plus"></i> </Button>
-               <Button onClick={(e) => removeStudent(e, item.id)} className="m-r-5 color-white tficolorbg-button" size="sm"> <i class="fas fa-trash-alt"></i></Button>
+               <Button onClick={() => handleDeleteNotify(item.id)} className="m-r-5 color-white tficolorbg-button" size="sm"> <i class="fas fa-trash-alt"></i></Button>
               </td>
             </tr>)
             })}
         </tbody>
       </Table>
+        <SweetAlert 
+          success
+          show={addNotify} 
+          title="Done!" 
+          onConfirm={closeAddNotify}>
+        </SweetAlert>
+        <SweetAlert
+          warning
+          showCancel
+          show={deleteNotify}
+          confirmBtnText="Yes, delete it!"
+          confirmBtnBsStyle="danger"
+          title="Are you sure?"
+          onConfirm={() => removeStudent(itemId)}
+          onCancel={cancelSweetAlert}
+          focusCancelBtn
+        >
+            You will not be able to recover this imaginary file!
+          </SweetAlert>
     </div>
   )
 }

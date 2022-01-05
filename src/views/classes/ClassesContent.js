@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import ClassSideNavigation from './components/ClassSideNavigation'
 import MainContainer from '../../components/layouts/MainContainer'
 import ClassBreedCrumbs from './components/ClassBreedCrumbs'
+import {  Col, Row } from 'react-bootstrap';
 
 
 function ClassesContent() {
@@ -9,7 +10,12 @@ function ClassesContent() {
   return (
     <div>
       <MainContainer loading={loading} fluid>
-        <ClassBreedCrumbs />
+        <Row>
+          <Col style={{ textAlign:'right'}} sm={15}>
+            <ClassBreedCrumbs />
+          </Col>
+        </Row>
+      
         <ClassSideNavigation setLoading={setLoading}/>
       </MainContainer>
     </div>

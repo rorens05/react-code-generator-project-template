@@ -16,7 +16,7 @@ export default function Classes() {
   const {user} = userContext.data
 
   const getClasses = async() => {
-    let response = await new ClassesAPI().getClasses(user.teacher.id)
+    let response = await new ClassesAPI().getClasses(user?.teacher?.id)
     if(response.ok){
       setClasses(response.data)
     }else{
@@ -24,7 +24,7 @@ export default function Classes() {
     }
   }
 
-  console.log('TEST', user.teacher.id)
+  console.log('TEST', user?.teacher?.id)
 
   useEffect(() => {
     getClasses()

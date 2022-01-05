@@ -21,7 +21,7 @@ export default function ProfileDropdown({visible}) {
           <i class="fas fa-user"></i>
         </div>
         <div className="user-name-container">
-          <p className="user-name">{user?.teacher.id}</p>
+          <p className="user-name">{user?.teacher?.id}</p>
           <Link to="#">See your profile</Link>
         </div>
       </div>

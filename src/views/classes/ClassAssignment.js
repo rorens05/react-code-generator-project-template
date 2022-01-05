@@ -4,6 +4,7 @@ import {Accordion, Row, Col, Button} from 'react-bootstrap'
 import ClassesAPI from '../../api/ClassesAPI'
 import { useParams } from 'react-router'
 import EditAssignment from './components/Assignment/EditAssignment'
+import SweetAlert from 'react-bootstrap-sweetalert';
 
 function ClassAssignment({classInfo}) {
   const [modal, setModal] = useState(false)
@@ -12,10 +13,23 @@ function ClassAssignment({classInfo}) {
   const [editAssignment, setEditAssignment] = useState()
   const courseId = classInfo?.classInformation?.courseId
   const {id} = useParams()
+  const [deleteNotify, setDeleteNotify] = useState(false)
+  const [itemId, setItemId] = useState('')
+  const [moduleId, setModuleId] = useState()
 
   const toggle = (e, item) =>{
     setEditAssignment(item)
     setModal(!modal)
+  }
+
+  const cancelSweetAlert = () => {
+    setDeleteNotify(false)
+  }
+
+  const handleDeleteNotify = (item, item1) =>{
+    setDeleteNotify(true)
+    setItemId(item)
+    setModuleId(item1)
   }
 
   const getModule = async () =>{
@@ -40,11 +54,12 @@ function ClassAssignment({classInfo}) {
     }
   }
 
-  const removeAssignment = async (e, item) => {
+  const removeAssignment = async (e, item, item1) => {
     let response = await new ClassesAPI().delateAssignment(item)
     if(response.ok){
-      alert('Assingment Deleted')
-  
+      getAssignmentList(null, item1)
+      // alert('Assingment Deleted')
+      setDeleteNotify(false)
     }else{
       alert("Something went wrong while Deleting a task")
     }
@@ -52,12 +67,25 @@ function ClassAssignment({classInfo}) {
 
   return (
     <div>
-      <AssignmentHeader module={module} />
+      <AssignmentHeader module={module} getAssignmentList={getAssignmentList} refmoduleId={moduleId} />
       <Accordion>
+        <SweetAlert
+          warning
+          showCancel
+          show={deleteNotify}
+          confirmBtnText="Yes, delete it!"
+          confirmBtnBsStyle="danger"
+          title="Are you sure?"
+          onConfirm={(e) => removeAssignment(e, itemId, moduleId)}
+          onCancel={cancelSweetAlert}
+          focusCancelBtn
+            >
+              You will not be able to recover this imaginary file!
+        </SweetAlert>
       {module.map((item, index) => {
         return(<Accordion.Item eventKey={index} onClick={(e) => getAssignmentList(e, item?.id)} >
         <Accordion.Header>
-          <div className='unit-exam'>{item?.moduleName}
+          <div className='unit-exam'style={{fontSize:'20px'}} >{item?.moduleName}
           </div>
         </Accordion.Header>
         <Accordion.Body>
@@ -83,7 +111,7 @@ function ClassAssignment({classInfo}) {
                         <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button>
                         <Button onClick={(e) => toggle(e, assigItem)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-edit"></i></Button>
                         <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-user-clock"></i></Button>
-                        <Button onClick={(e) => removeAssignment(e, assigItem?.assignment?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-trash-alt"></i></Button>
+                        <Button onClick={() => handleDeleteNotify(assigItem?.assignment?.id, item?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-trash-alt"></i></Button>
                       </Col>
                       ):
                       <Col sm={3} className='icon-exam'>
@@ -121,7 +149,7 @@ function ClassAssignment({classInfo}) {
         </Accordion.Item>)
       })}
       </Accordion>
-      <EditAssignment toggle={toggle} modal={modal} editAssignment={editAssignment} />
+      <EditAssignment toggle={toggle} modal={modal} editAssignment={editAssignment} getAssignmentList={getAssignmentList} moduleId={moduleId} />
     </div>
   )
 }

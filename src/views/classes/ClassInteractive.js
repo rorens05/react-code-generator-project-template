@@ -45,7 +45,7 @@ function ClassInteractive({classInfo}) {
         {module.map((item, index) => {
           return ( <Accordion.Item eventKey={index} onClick={(e) => getIndteractive(e, item?.id)} >
           <Accordion.Header>
-            <div className='unit-exam'>{item.moduleName}
+            <div className='unit-exam' style={{fontSize:'20px'}} >{item.moduleName}
             </div>
           </Accordion.Header>
           <Accordion.Body>
