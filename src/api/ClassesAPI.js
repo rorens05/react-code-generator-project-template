@@ -52,9 +52,16 @@ creatTask = async (mId, cId,  data) => {
     })
   }
 
-  deleteTasks = async (tId) =>{
+  deleteTasks = async (tId) => {
     return this.sendRequest({
       path: `/api/Task/${tId}`,
+      method: 'DELETE'
+    })
+  }
+
+  deleteDiscussion = async (id) => {
+    return this.sendRequest({
+      path: `/api/Discussion/${id}`,
       method: 'DELETE'
     })
   }
@@ -66,6 +73,14 @@ creatTask = async (mId, cId,  data) => {
       data
     })
   }
+
+  updateDiscussion = async (id, data) =>{
+    return this.sendRequest({
+      path: `/api/Discussion/${id}`,
+      method: 'PUT',
+      data
+    })
+  } 
 
   createAssignment = async (mId, cId, data) =>{
     return this.sendRequest({

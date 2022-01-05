@@ -3,20 +3,31 @@ import Modal from 'react-bootstrap/Modal'
 import { Form, Button, } from 'react-bootstrap'
 import ClassesAPI from '../../../../api/ClassesAPI'
 import { useParams } from 'react-router'
+import SweetAlert from 'react-bootstrap-sweetalert';
 
-function CreateDiscussion({modal, toggle, classInfo, module}) {
+function CreateDiscussion({modal, toggle, classInfo, module, getDiscussionUnit}) {
   const [moduleId, setModuleId] = useState('')
   const [discussionName, setDiscussionName] = useState('')
   const [instructions, setInstructions] = useState('')
+  const [addNotify, setAddNotity] = useState(false)
   const courseId = classInfo?.classInformation?.courseId
   const allowLate = true
   const {id} = useParams()
+
+  const closeNotify = () =>{
+    setAddNotity(false)
+  }
 
   const saveDiscussion = async (e) =>{
     e.preventDefault()
     let response = await new ClassesAPI().createDiscussionModule(moduleId, id, {discussion:{discussionName, instructions,}, discussionAssignment:{allowLate}} )
     if(response.ok){
-      alert('Save Discussion')
+      // alert('Save Discussion')
+      setAddNotity(true)
+      setDiscussionName('')
+      setInstructions('')
+      setModuleId('')
+      getDiscussionUnit(null, moduleId)
       toggle(e)
     }else{
       alert(response.data.errorMessage)
@@ -56,6 +67,12 @@ function CreateDiscussion({modal, toggle, classInfo, module}) {
         </Form> 
         </Modal.Body>
       </Modal>
+      <SweetAlert 
+          success
+          show={addNotify} 
+          title="Done!" 
+          onConfirm={closeNotify}>
+        </SweetAlert>
     </div>
     )
 }
