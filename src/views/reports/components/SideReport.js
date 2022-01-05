@@ -13,6 +13,9 @@ function SideReport() {
   const userContext = useContext(UserContext)
   const {user} = userContext.data
   const [classes, setClasses] = useState([])
+  const [classesModules, setClassesModules] = useState([])
+  const [classId, setClassId] = useState([])
+  const [selectedClassId, setSelectedClassId] = useState(null)
 
   const getClasses = async() => {
     let response = await new ClassesAPI().getClasses(user.teacher.id)
@@ -23,8 +26,31 @@ function SideReport() {
     }
   }
 
+  const getClassModules = async(selectedClassId) => {
+    console.log(selectedClassId)
+    let response = await new ClassesAPI().getClassModules(selectedClassId)
+    if(response.ok){
+      setClassesModules(response.data)
+      console.log(response.data)
+    }else{
+      alert("Something went wrong while fetching all courses")
+    }
+  }
+
+  
+  const onShowClassModules = (e) => {
+    setSelectedClassId(e.target.value)
+    
+    if(e.target.value == null || e.target.value == ""){
+      setClassesModules([])
+    }else{
+      getClassModules(e.target.value)
+    }
+  }
+
   useEffect(() => {
     getClasses()
+    getClassModules()
   }, [])
 
   return (
@@ -33,10 +59,10 @@ function SideReport() {
           <div className="report-sidenav col-md-3">
               <ListGroup.Item className="list-group-item-o">
                 <Row>
-								<Form.Select>
-                <option>-- Select Class Here --</option>
+								<Form.Select onChange={onShowClassModules}>
+                <option value="">-- Select Class Here --</option>
                 {classes.map(item =>{
-                  return (<option value={item?.id} > {item?.className}</option>)
+                  return (<option value={item?.classId} > {item?.className}</option>)
                 })}
               </Form.Select>
                 </Row>
@@ -61,7 +87,7 @@ function SideReport() {
               <Tab.Pane eventKey="#link1">
               </Tab.Pane>
               <Tab.Pane className='content-pane report-content'  eventKey="#link3">
-                <ReportHeader/>
+                <ReportHeader classesModules={classesModules} setClassesModules={setClassesModules} selectedClassId={selectedClassId}/>
               </Tab.Pane>
               <Tab.Pane className='content-pane report-content' eventKey="#link5">
               <AssignmentHeader />

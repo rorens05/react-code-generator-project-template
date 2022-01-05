@@ -197,4 +197,18 @@ creatTask = async (mId, cId,  data) => {
     })
   }
 
+  getClassModules = async (id) =>{
+    return this.sendRequest({
+      path: `/api/Module/class/${id}/item/1`,
+      method: 'GET'
+    })
+  }
+
+  getClassTestModules = async (classid, moduleid) =>{
+    return this.sendRequest({
+      path: `/api/Class/${classid}/module/${moduleid}/test`,
+      method: 'GET'
+    })
+  }
+
 }

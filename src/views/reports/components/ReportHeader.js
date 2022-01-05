@@ -2,7 +2,7 @@ import React from 'react'
 import {InputGroup, FormControl } from 'react-bootstrap';
 import ExamReport from './ExamReport';
 
-function ReportHeader() {
+function ReportHeader({classesModules, setClassesModules, selectedClassId}) {
 	return (
 		<div>
 			<div className="row m-b-20">
@@ -16,7 +16,7 @@ function ReportHeader() {
 					</InputGroup>
 				</div>
 			</div>
-			<ExamReport/>
+			<ExamReport classesModules={classesModules} setClassesModules={setClassesModules} selectedClassId={selectedClassId}/>
 		</div>
 	)
 }
