@@ -3,7 +3,7 @@ import { Button, Form, Modal } from 'react-bootstrap';
 import CoursesAPI from "../../../api/CoursesAPI";
 import SubjectAreaAPI from "../../../api/SubjectAreaAPI";
 
-export default function CreateAssignment({openCreateAssignmentModal, setOpenCreateAssignmentModal}){
+export default function CreateAssignment({openCreateAssignmentModal, setOpenCreateAssignmentModal, setAssignmentInfo}){
 
 	const [loading, setLoading] = useState(false)
   const [modulePages, setModulePages] = useState([])
@@ -18,8 +18,22 @@ export default function CreateAssignment({openCreateAssignmentModal, setOpenCrea
     setOpenCreateAssignmentModal(false)
   }
 
+  const getAssignmentInfo = async(e, data) => {
+    setLoading(true)
+    sessionStorage.setItem('moduleid', data)
+    let response = await new CoursesAPI().getAssignmentInformation(sessionModule)
+    setLoading(false)
+    if(response.ok){
+      setAssignmentInfo(response.data)
+      console.log(response.data)
+    }else{
+      alert("Something went wrong while fetching all assignment")
+    }
+  }
+
 	const saveAssignmennt = async(e) => {
     e.preventDefault()
+    
     setLoading(true)
     let response = await new CoursesAPI().createAssignment(
       sessionModule,
@@ -28,6 +42,7 @@ export default function CreateAssignment({openCreateAssignmentModal, setOpenCrea
     if(response.ok){
       alert("Saved")
 			handleCloseModal(e)
+      getAssignmentInfo(sessionModule)
     }else{
       alert(response.data.errorMessage)
     }

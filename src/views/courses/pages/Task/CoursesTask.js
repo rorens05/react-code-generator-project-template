@@ -15,7 +15,6 @@ export default function CoursesTask({moduleInfo, setModuleInfo}) {
   const [taskInfo, setTaskInfo] = useState([])
 
   const sessionCourse = sessionStorage.getItem('courseid')
-  const sessionModule = sessionStorage.getItem('moduleid')
 
   const handleOpenCreateTaskModal = () =>{
     setCreateTaskModal(!openCreateTaskModal)
@@ -30,6 +29,7 @@ export default function CoursesTask({moduleInfo, setModuleInfo}) {
   const getTaskInfo = async(e, data) => {
     setLoading(true)
     sessionStorage.setItem('moduleid', data)
+    const sessionModule = sessionStorage.getItem('moduleid')
     let response = await new CoursesAPI().getTaskInformation(sessionModule)
     setLoading(false)
     if(response.ok){
@@ -57,7 +57,7 @@ export default function CoursesTask({moduleInfo, setModuleInfo}) {
         </div>
       </div>
       <EditTask setTaskInfo={setTaskInfo} selectedTask={selectedTask} openEditTaskModal={openEditTaskModal} setOpenEditTaskModal={setOpenEditTaskModal}/>
-      <CreateTask openCreateTaskModal={openCreateTaskModal} setCreateTaskModal={setCreateTaskModal}/>
+      <CreateTask setTaskInfo={setTaskInfo} openCreateTaskModal={openCreateTaskModal} setCreateTaskModal={setCreateTaskModal}/>
       <Accordion defaultActiveKey="0">
         {moduleInfo.map((item, index) => {
           return(

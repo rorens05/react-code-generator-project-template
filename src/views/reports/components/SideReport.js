@@ -1,12 +1,32 @@
-import React from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import {ListGroup, Tab, Row, Col, Form} from 'react-bootstrap'
 import ReportHeader from './ReportHeader'
 import AssignmentReport from './AssignmentReport'
 import AssignmentHeader from './AssignmentHeader'
 import ReportTask from './ReportTask'
 import ReportInteractives from '../ReportInteractives'
+import { UserContext } from './../../../context/UserContext'
+import ClassesAPI from './../../../api/ClassesAPI'
 
 function SideReport() {
+
+  const userContext = useContext(UserContext)
+  const {user} = userContext.data
+  const [classes, setClasses] = useState([])
+
+  const getClasses = async() => {
+    let response = await new ClassesAPI().getClasses(user.teacher.id)
+    if(response.ok){
+      setClasses(response.data)
+    }else{
+      alert("Something went wrong while fetching all courses")
+    }
+  }
+
+  useEffect(() => {
+    getClasses()
+  }, [])
+
   return (
     <Tab.Container className="course-widget-font" id="list-group-tabs-example " defaultActiveKey="#link1">
         <div className="row">
@@ -15,6 +35,9 @@ function SideReport() {
                 <Row>
 								<Form.Select>
                 <option>-- Select Class Here --</option>
+                {classes.map(item =>{
+                  return (<option value={item?.id} > {item?.className}</option>)
+                })}
               </Form.Select>
                 </Row>
               </ListGroup.Item>
@@ -54,6 +77,8 @@ function SideReport() {
           </Col> 
         </div>
       </Tab.Container>
+
+      
   )
 }
 export default SideReport
