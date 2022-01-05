@@ -1,11 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Accordion, Row, Col, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router'
 import ClassesAPI from '../../../../api/ClassesAPI'
+import SweetAlert from 'react-bootstrap-sweetalert';
 
 function AccordionVideos({videos, getVideos, setOpenEditModal, setEditLinks}) {
+  const [deleteNotify, setDeleteNotify] = useState(false)
+  const [itemId, setItemId] = useState('')
   const {id} = useParams()
+
+  const cancelSweetAlert = () => {
+    setDeleteNotify(false)
+  }
+
+  const handleDeleteNotify = (item) =>{
+    setDeleteNotify(true)
+    setItemId(item)
+  }
 
   const handleOpeEditModal = (e, item) => {
     e.preventDefault()
@@ -14,12 +26,12 @@ function AccordionVideos({videos, getVideos, setOpenEditModal, setEditLinks}) {
     setOpenEditModal(true)
     
   }
-  console.log(videos)
 
-  const deleteVidoes = async(e, item) => {
+  const deleteVidoes = async(item) => {
     let response = await new ClassesAPI().deleteLinks(id, item)
     if(response.ok){
-      alert('Vidoe Deleted')
+      // alert('Vidoe Deleted')
+      setDeleteNotify(false)
       getVideos()
     }else{
       alert("Something went wrong while fetching all Conference")
@@ -30,9 +42,22 @@ function AccordionVideos({videos, getVideos, setOpenEditModal, setEditLinks}) {
   return (
     <div>
        <Accordion>
+       <SweetAlert
+          warning
+          showCancel
+          show={deleteNotify}
+          confirmBtnText="Yes, delete it!"
+          confirmBtnBsStyle="danger"
+          title="Are you sure?"
+          onConfirm={() => deleteVidoes(itemId)}
+          onCancel={cancelSweetAlert}
+          focusCancelBtn
+        >
+            You will not be able to recover this imaginary file!
+        </SweetAlert>
         <Accordion.Item eventKey="0">
         <Accordion.Header>
-          <div className='unit-exam'>
+          <div className='unit-exam' style={{fontSize:'25px'}}>
             Vidoes 
           </div>
         </Accordion.Header>
@@ -47,14 +72,14 @@ function AccordionVideos({videos, getVideos, setOpenEditModal, setEditLinks}) {
               </Col>
               <Col sm={3} className='icon-exam'>
                 <Button onClick={(e) => handleOpeEditModal(e, item)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i className="fa fa-edit"></i></Button>
-                <Button onClick={(e) => deleteVidoes(e, item?.classLink.id)} className="m-r-5 color-white tficolorbg-button" size="sm"> <i class="fas fa-trash-alt"></i> </Button>
+                <Button onClick={() => handleDeleteNotify(item?.classLink.id)} className="m-r-5 color-white tficolorbg-button" size="sm"> <i class="fas fa-trash-alt"></i> </Button>
               </Col>
               <Col sm={9}>
               </Col>
                 <Col sm={3} style={{textAlign:'right'}} className='due-date-discusstion' >
                   <div className='inline-flex'>
                     <div className='text-color-bcbcbc'>
-                      {item.classLink.createdDate}
+                      Post Date: {item.classLink.createdDate}
                     </div>
                   </div>
                 </Col>

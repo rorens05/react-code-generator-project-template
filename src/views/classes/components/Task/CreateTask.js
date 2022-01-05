@@ -1,27 +1,43 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Modal from 'react-bootstrap/Modal'
 import { Form, Button, } from 'react-bootstrap'
 import ClassesAPI from '../../../../api/ClassesAPI'
 import { useParams } from 'react-router'
+import SweetAlert from 'react-bootstrap-sweetalert';
 
-function CreateTask({modal, toggle, module, getTaskModule}) {
+function CreateTask({modal, toggle, module, getTaskModule, refModuleId}) {
   const [moduleId, setModuleId] = useState('')
   const [taskName, setTaskName] = useState('')
   const [instructions, setInstructions] = useState('')
+  const [addNotify, setAddNotity] = useState(false)
   const allowLate = true
   const {id} = useParams()
+
+  const closeNotify = () =>{
+    setAddNotity(false)
+  }
 
   const saveTask = async (e) =>{
     e.preventDefault()
     let response = await new ClassesAPI().creatTask(moduleId, id, {task:{taskName, instructions,}, taskAssignment:{allowLate}} )
     if(response.ok){
-      alert('Save Task')
+      // alert('Save Task')
+      setAddNotity(true)
+      setModuleId("")
+      setTaskName("")
+      setInstructions("")
+      getTaskModule(null, refModuleId)
       toggle(e)
-      getTaskModule()
     }else{
       alert(response.data.errorMessage)
     }
   }
+
+  console.log('ModuleId:', refModuleId)
+
+  useEffect(() => {
+    getTaskModule(null, refModuleId)
+  }, [])
 
   console.log('this is modules:', module)
 	return (
@@ -57,6 +73,12 @@ function CreateTask({modal, toggle, module, getTaskModule}) {
         </Form> 
         </Modal.Body>
       </Modal>
+      <SweetAlert 
+          success
+          show={addNotify} 
+          title="Done!" 
+          onConfirm={closeNotify}>
+        </SweetAlert>
     </div>
     )
 }

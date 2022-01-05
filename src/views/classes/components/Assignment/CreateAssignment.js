@@ -3,18 +3,29 @@ import Modal from 'react-bootstrap/Modal'
 import { Form, Button, } from 'react-bootstrap'
 import { useParams } from 'react-router'
 import ClassesAPI from '../../../../api/ClassesAPI'
+import SweetAlert from 'react-bootstrap-sweetalert';
 
-function CreateAssignment({modal, toggle, module}) {
+function CreateAssignment({modal, toggle, module, getAssignmentList, refmoduleId}) {
   const [moduleId, setModuleId] = useState('')
   const [assignmentName, setAssignmentName] = useState('')
   const [instructions, setInstructions] = useState('')
+  const [addNotify, setAddNotity] = useState(false)
   const {id} = useParams()
+
+  const closeNotify = () =>{
+    setAddNotity(false)
+  }
  
   const createAssignment = async (e) =>{
     e.preventDefault()
     let response = await new ClassesAPI().createAssignment(moduleId, id, {assignment:{assignmentName, instructions,}, classAssignment:{}} )
     if(response.ok){
-      alert('Save Assingment')
+      setModuleId('')
+      setAssignmentName('')
+      setInstructions('')
+      // alert('Save Assingment')
+      setAddNotity(true)
+      getAssignmentList(null, refmoduleId)
       toggle(e)
     }else{
       alert(response.data.errorMessage)
@@ -54,6 +65,12 @@ function CreateAssignment({modal, toggle, module}) {
           </Form> 
         </Modal.Body>
       </Modal>
+      <SweetAlert 
+          success
+          show={addNotify} 
+          title="Done!" 
+          onConfirm={closeNotify}>
+        </SweetAlert>
     </div>
     )
 }

@@ -2,13 +2,13 @@ import React, {useState} from 'react'
 import { Button, InputGroup, FormControl } from 'react-bootstrap';
 import CreateTask from './CreateTask';
 
-function HeaderTask({module, getTaskModule}) {
+function HeaderTask({module, getTaskModule, refModuleId}) {
 const [modal, setModal] = useState(false)
 const toggle = () =>{
     setModal(!modal)
   }
 
-	
+	console.log('ModuleId:', refModuleId)
 
 	return (
 		<div>
@@ -23,7 +23,7 @@ const toggle = () =>{
 					</InputGroup>
 				</div>
 			</div>
-				<CreateTask module={module} toggle={toggle} modal={modal} getTaskModule={getTaskModule} />
+				<CreateTask refModuleId={refModuleId} module={module} toggle={toggle} modal={modal} getTaskModule={getTaskModule} />
 		</div>
 	)
 }

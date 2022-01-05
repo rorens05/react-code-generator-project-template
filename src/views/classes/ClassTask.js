@@ -4,21 +4,35 @@ import ClassesAPI from '../../api/ClassesAPI'
 import HeaderTask from './components/Task/HeaderTask'
 import { useParams } from 'react-router'
 import EditTask from './components/Task/EditTask'
+import SweetAlert from 'react-bootstrap-sweetalert';
 
 
 function ClassTask({classInfo}) {
   const [modal, setModal] = useState(false)
+  const [moduleId, setModuleId] = useState()
   const [module, setModule] = useState([])
   const [taskModule, setTaskModule] = useState([])
   const [editTask, setEditTask] = useState()
   const {id} = useParams()
   const courseId = classInfo?.classInformation?.courseId
+  const [deleteNotify, setDeleteNotify] = useState(false)
+  const [itemId, setItemId] = useState('')
 
   const toggle = (e, item) =>{
     setEditTask(item)
     setModal(!modal)
   }
   
+  const cancelSweetAlert = () => {
+    setDeleteNotify(false)
+  }
+
+  const handleDeleteNotify = (item, item1) =>{
+    setDeleteNotify(true)
+    setItemId(item)
+    setModuleId(item1)
+  }
+
   const getModule = async() =>{
     let response = await new ClassesAPI().getModule(courseId)
     if(response.ok){
@@ -36,42 +50,56 @@ function ClassTask({classInfo}) {
     let response = await new ClassesAPI().getTaskModule(id, item)
     if(response.ok){
       setTaskModule(response.data)
+      setModuleId(item)
     }else{
     
     }
   }
 
+  console.log('moduleId:', moduleId)
+
   useEffect(() => {
-    getTaskModule()
+    getTaskModule(null, moduleId)
   }, [])
 
-  const removeTask = async (e, item) => {
+  const removeTask = async (e, item, item1) => {
     let response = await new ClassesAPI().deleteTasks(item)
     if(response.ok){
-      alert('Task Deleted')
-      getModule()
-      getTaskModule()
+      getTaskModule(null, item1)
+      setDeleteNotify(false)
+      // alert('Task Deleted')
     }else{
       alert("Something went wrong while Deleting a task")
     }
   }
-  
-  
 
   return (
     <>
-      <HeaderTask module={module} getTaskModule={getTaskModule} />
+      <HeaderTask module={module} getTaskModule={getTaskModule} refModuleId={moduleId} />
         <Accordion>
+          <SweetAlert
+            warning
+            showCancel
+            show={deleteNotify}
+            confirmBtnText="Yes, delete it!"
+            confirmBtnBsStyle="danger"
+            title="Are you sure?"
+            onConfirm={(e) => removeTask(e, itemId, moduleId)}
+            onCancel={cancelSweetAlert}
+            focusCancelBtn
+            >
+              You will not be able to recover this imaginary file!
+          </SweetAlert>
         {module.map((item, index) =>{
           return ( 
             <Accordion.Item eventKey={index} onClick={(e) => getTaskModule(e, item?.id)}>
-            <Accordion.Header>{item.moduleName}</Accordion.Header>
+            <Accordion.Header ><div style={{fontSize:'20px'}}>{item.moduleName}</div></Accordion.Header>
             <Accordion.Body>
               {taskModule?.map(moduleitem => {
                 return (
                   <Row>
                     <Col sm={8}>
-                      <div className='title-exam'>
+                      <div className='title-exam' >
                         {moduleitem?.task?.taskName}
                       </div>
                     </Col>
@@ -90,7 +118,7 @@ function ClassTask({classInfo}) {
                         <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button>
                         <Button onClick={(e) => toggle(e, moduleitem)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-edit"></i></Button>
                         <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-user-clock"></i></Button>
-                        <Button onClick={(e) => removeTask(e, moduleitem?.task?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-trash-alt"></i></Button>
+                        <Button onClick={() => handleDeleteNotify(moduleitem?.task?.id, item?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-trash-alt"></i></Button>
                       </Col>
                       ):
                       <Col sm={3} className='icon-exam'>
@@ -128,7 +156,7 @@ function ClassTask({classInfo}) {
             )
           })}
           </Accordion>
-          <EditTask editTask={editTask} toggle={toggle} modal={modal} module={module} getTaskModule={getTaskModule} />
+          <EditTask moduleId={moduleId} editTask={editTask} toggle={toggle} modal={modal} module={module} getTaskModule={getTaskModule} />
        </>
     )
   }

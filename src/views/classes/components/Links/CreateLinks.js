@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Modal from 'react-bootstrap/Modal'
+import SweetAlert from 'react-bootstrap-sweetalert';
 import ClassesAPI from '../../../../api/ClassesAPI'
 import { Form, Button, } from 'react-bootstrap'
 import { useParams } from 'react-router'
@@ -9,18 +10,25 @@ function CreateLinks({modal, toggle, getConfe, getVideos, getLinks}) {
   const [typeId, setTypeId] = useState('')
   const [description, setDescription] = useState('')
   const [url, setUrl] = useState('')
+  const [createNotify, setCreateNotify] = useState(false)
+
+  const closeNotify = () => {
+    setCreateNotify(false)
+  }
   
   const addLinks = async (e) => {
     e.preventDefault()
     let response = await new ClassesAPI().createLinks(id, typeId, {typeId, description, url})
       if(response.ok){
-        alert('Add')
+        // alert('Add')
+        setCreateNotify(true)
         toggle(e)
         getConfe()
         getVideos()
         getLinks()
       }else{
-        alert(response.data.errorMessage)
+        alert(response.data.errorMessage);
+   
       }
   }
 
@@ -63,6 +71,12 @@ function CreateLinks({modal, toggle, getConfe, getVideos, getLinks}) {
           </Form>
         </Modal.Body>
       </Modal>
+        <SweetAlert 
+          success
+          show={createNotify} 
+          title="Link Created!" 
+          onConfirm={closeNotify}>
+        </SweetAlert>
     </div>
     )
 }

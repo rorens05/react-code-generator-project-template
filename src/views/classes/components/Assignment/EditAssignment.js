@@ -2,18 +2,27 @@ import React, { useState, useEffect} from 'react'
 import Modal from 'react-bootstrap/Modal'
 import { Form, Button, } from 'react-bootstrap'
 import ClassesAPI from '../../../../api/ClassesAPI'
+import SweetAlert from 'react-bootstrap-sweetalert';
 
-function EditAssignment({modal, toggle, editAssignment}) {
+function EditAssignment({modal, toggle, editAssignment, getAssignmentList, moduleId}) {
   const [assignmentName, setAssignmentName] = useState('')
   const [instructions, setInstructions] = useState('')
+  const [editNotufy, setEditNotify] = useState(false)
   const isShared = null
+
+  const closeNotify = () =>{
+    setEditNotify(false)
+  }
 
   const updateTask = async (e) =>{
     e.preventDefault()
     let id = editAssignment?.assignment?.id
+    let mId = moduleId
     let response = await new ClassesAPI().updateAssignment(id, {assignmentName, instructions, isShared})
       if(response.ok){
-        alert('Assingment Updated')
+        // alert('Assingment Updated')
+        setEditNotify(true)
+        getAssignmentList(null, mId)
         toggle(e)
       }else{
         alert(response.data.errorMessage)
@@ -51,6 +60,12 @@ function EditAssignment({modal, toggle, editAssignment}) {
           </Form> 
           </Modal.Body>
         </Modal>
+        <SweetAlert 
+            success
+            show={editNotufy} 
+            title="Done!" 
+            onConfirm={closeNotify}>
+          </SweetAlert>
     </div>
   )
 }

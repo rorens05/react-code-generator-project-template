@@ -3,17 +3,21 @@ import Modal from 'react-bootstrap/Modal'
 import { Form, Button, } from 'react-bootstrap'
 import ClassesAPI from '../../../../api/ClassesAPI'
 import { useParams } from 'react-router'
+import SweetAlert from 'react-bootstrap-sweetalert';
 
 function AccordionEdit({openEditModal, setOpenEditModal, editLinks, getConfe, getVideos, getLinks}) {
   const [description, setEditDescription] = useState('')
+  const [editNotufy, setEditNotify] = useState(false)
   const [url, setEditUrl] = useState('')
   const {id} = useParams()
-
-  console.log('this is LinksId:',editLinks?.classLink?.id)
 
   const handleCloseModal = (e) =>{
     e.preventDefault()
     setOpenEditModal(false)
+  }
+
+  const closeNotify = () =>{
+    setEditNotify(false)
   }
   
   const saveEditClassLinks = async (e) =>{
@@ -21,7 +25,8 @@ function AccordionEdit({openEditModal, setOpenEditModal, editLinks, getConfe, ge
     let linkId = editLinks?.classLink?.id
     let response = await new ClassesAPI().editClassLinks(id, linkId, {description, url})
     if(response.ok){
-      alert('Link Updated')
+      // alert('Link Updated')
+      setEditNotify(true)
       handleCloseModal(e)
       getConfe()
       getVideos()
@@ -65,6 +70,12 @@ function AccordionEdit({openEditModal, setOpenEditModal, editLinks, getConfe, ge
           </Form>
         </Modal.Body>
       </Modal>
+      <SweetAlert 
+          success
+          show={editNotufy} 
+          title="Done!" 
+          onConfirm={closeNotify}>
+        </SweetAlert>
     </div>
   )
 }
