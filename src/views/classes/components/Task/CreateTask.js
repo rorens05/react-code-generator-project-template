@@ -61,4 +61,3 @@ function CreateTask({modal, toggle, module, getTaskModule}) {
     )
 }
 export default CreateTask
-

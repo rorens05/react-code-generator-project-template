@@ -98,12 +98,20 @@ creatTask = async (mId, cId,  data) => {
     });
   };
 
-  getDiscussionUnit = async (mId) => {
+  getDiscussionUnit = async (classId,moduleId) => {
     return this.sendRequest({
-    path: `/api/Discussion/module/${mId}`,
-    method: 'GET',
+      path: `/api/Class/${classId}/module/${moduleId}/discussionwithresponse`,
+      method: 'GET'
     });
   };
+
+  createDiscussionModule = async (moduleId, classId, data) =>{
+    return this.sendRequest({
+      path: `/api/Discussion/module/${moduleId}/class/${classId}`,
+      method: 'POST',
+      data
+    })
+  }
 
   getContent = async (cId, mId, pId) => {
     return this.sendRequest({
@@ -111,14 +119,6 @@ creatTask = async (mId, cId,  data) => {
     method: 'GET',
     });
   }
-
-  createDiscussion = async (id, cId, data) => {
-    return this.sendRequest({
-      path: `/api/Discussion/module/${id}/class/${cId}`,
-      method: 'POST',
-      data
-    });
-  };
 
   getLink = async (id, typeId) => {
     return this.sendRequest({

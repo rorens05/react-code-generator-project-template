@@ -108,7 +108,7 @@ export default function ClassSideNavigation({setLoading}) {
                 <ClassExam />
               </Tab.Pane>
               <Tab.Pane className='content-pane' eventKey="#link4">
-                <ClassDiscussion />
+                <ClassDiscussion classInfo={classInfo} />
               </Tab.Pane>
               <Tab.Pane className='content-pane' eventKey="#link5">
                 <ClassAssignment classInfo={classInfo} />
