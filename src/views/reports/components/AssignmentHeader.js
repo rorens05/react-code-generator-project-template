@@ -4,10 +4,14 @@ import AssignmentReport from './AssignmentReport';
 
 
 function AssignmentHeader({classesModules, setClassesModules, selectedClassId, viewAssignmentReport, setViewAssignmentReport}) {
+	
+	let assignmentname = sessionStorage.getItem("assignmentName")
+	
 	return (
 		<div>
 			<div className="row m-b-20">
 				<div className="col-md-10 pages-header"><h1>Grade Report - Assignment</h1></div>
+				<div className="col-md-4 pages-header" style={{float:"right"}}><h1>{assignmentname}</h1></div>
 			</div>
 			<div className="row m-b-20">
 				<div className="col-md-12">

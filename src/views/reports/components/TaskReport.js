@@ -22,10 +22,11 @@ function TaskReport({classesModules, setClassesModules, selectedClassId, viewTas
     }
   }
 
-  const getTaskReport = async(e, testid) => {
+  const getTaskReport = async(e, taskid, taskname) => {
     setLoading(true)
     setViewTaskReport(false)
-    let response = await new ClassesAPI().getTaskReport(selectedClassId, testid)
+    sessionStorage.setItem('taskName',taskname)
+    let response = await new ClassesAPI().getTaskReport(selectedClassId, taskid, taskname)
     setLoading(false)
     if(response.ok){
       setTaskReport(response.data)
@@ -56,7 +57,7 @@ function TaskReport({classesModules, setClassesModules, selectedClassId, viewTas
                 item.classTest !== null &&
                 <Row>
                   <Col sm={8}>
-                    <div className='title-exam' onClick={(e) => getTaskReport(e, item.task.id)}>
+                    <div className='title-exam' onClick={(e) => getTaskReport(e, item.task.id, item.task.taskName)}>
                       {item.task.taskName}
                     </div>
                     <div className='code-exam'>

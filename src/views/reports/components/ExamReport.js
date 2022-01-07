@@ -22,8 +22,9 @@ function ExamReport({classesModules, setClassesModules, selectedClassId, viewTes
     }
   }
 
-  const getTestReport = async(e, testid) => {
+  const getTestReport = async(e, testid, testname) => {
     setLoading(true)
+    sessionStorage.setItem('testName',testname)
     setViewTestReport(false)
     console.log(viewTestReport)
     let response = await new ClassesAPI().getTestReport(selectedClassId, testid)
@@ -50,7 +51,7 @@ function ExamReport({classesModules, setClassesModules, selectedClassId, viewTes
                 item.classTest !== null &&
                 <Row>
                   <Col sm={8}>
-                    <div className='title-exam' onClick={(e) => getTestReport(e, item.test.id)}>
+                    <div className='title-exam' onClick={(e) => getTestReport(e, item.test.id, item.test.testName)}>
                       {item.test.testName}
                     </div>
                     <div className='code-exam'>

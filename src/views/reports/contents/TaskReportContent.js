@@ -18,11 +18,12 @@ function TaskReportContent({classesModules, setClassesModules, selectedClassId, 
               })
             )
           })} */}
-          {taskColumns.map((item, index) => {
+          {/* {taskColumns.map((item, index) => {
             return (
               <th key={index}>{item}</th>
             )
-          })}
+          })} */}
+          <th>Grade </th>
         </tr>
       </thead>
       <tbody>

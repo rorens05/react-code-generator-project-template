@@ -4,10 +4,14 @@ import TaskReport from './TaskReport';
 
 
 function TaskHeader({classesModules, setClassesModules, selectedClassId, viewTaskReport, setViewTaskReport}) {
+
+	let taskname = sessionStorage.getItem("taskName")
+
 	return (
 		<div>
 			<div className="row m-b-20">
-				<div className="col-md-10 pages-header"><h1>Grade Report - Task</h1></div>
+				<div className="col-md-8 pages-header"><h1>Grade Report - Task</h1></div>
+				<div className="col-md-4 pages-header" style={{float:"right"}}><h1>{taskname}</h1></div>
 			</div>
 			<div className="row m-b-20">
 				<div className="col-md-12">

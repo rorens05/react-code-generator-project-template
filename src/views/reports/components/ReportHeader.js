@@ -3,10 +3,14 @@ import {InputGroup, FormControl } from 'react-bootstrap';
 import ExamReport from './ExamReport';
 
 function ReportHeader({classesModules, setClassesModules, selectedClassId, viewTestReport, setViewTestReport, viewAssignmentReport, setViewAssignmentReport}) {
+	
+	let testname = sessionStorage.getItem("testName")
+
 	return (
 		<div>
 			<div className="row m-b-20">
 				<div className="col-md-10 pages-header"><h1>Grade Report - Exam</h1></div>
+				<div className="col-md-4 pages-header" style={{float:"right"}}><h1>{testname}</h1></div>
 			</div>
 			<div className="row m-b-20">
 				<div className="col-md-12">

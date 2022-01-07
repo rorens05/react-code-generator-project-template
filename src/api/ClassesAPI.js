@@ -228,7 +228,8 @@ creatTask = async (mId, cId,  data) => {
 
   getAssignmentReport = async (classid, assignmentid) =>{
     return this.sendRequest({
-      path: `/api/Class/${classid}/assignment/report`,
+      // path: `/api/Class/${classid}/assignment/report`,
+      path: `/api/Class/${classid}/assignment/${assignmentid}/report`,
       method: 'GET'
     })
   }
@@ -242,7 +243,15 @@ creatTask = async (mId, cId,  data) => {
 
   getTaskReport = async (classid, taskid) =>{
     return this.sendRequest({
-      path: `/api/Class/${classid}/task/report`,
+      // path: `/api/Class/${classid}/task/report`,
+      path: `/api/Class/${classid}/task/${taskid}/report`,
+      method: 'GET'
+    })
+  }
+
+  getExamAnalysis = async (studentid, classid, testid) =>{
+    return this.sendRequest({
+      path: `/api/Student/${studentid}/class/${classid}/test/${testid}/score/analysis`,
       method: 'GET'
     })
   }

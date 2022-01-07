@@ -1,9 +1,33 @@
 import React, {useState, useEffect, useContext} from 'react'
-import {Accordion, Row, Col, Table} from 'react-bootstrap'
+import {Accordion, Row, Col, Table, Button} from 'react-bootstrap'
 import ClassesAPI from '../../../api/ClassesAPI'
+import ExamAnalysis from './ExamAnalysis'
+
 
 function ExamReportContent({classesModules, setClassesModules, selectedClassId, viewTestReport, setViewTestReport, testReport, setTestReport}) {
+  
+  const [examAnalysis, setExamAnalysis] = useState([])
+  const [showExamAnalysis, setShowExamAnalysis] = useState(false)
+  const [loading, setLoading] = useState(false)
+
+  const getExamAnalysis = async(e, studentid, classid, testid) => {
+    console.log(selectedClassId)
+    setShowExamAnalysis(true)
+    console.log(showExamAnalysis)
+    let response = await new ClassesAPI().getExamAnalysis(studentid, classid, testid)
+    if(response.ok){
+      setExamAnalysis(response.data)
+      console.log(response.data)
+      
+    }else{
+      alert("Something went wrong while fetching all courses")
+    }
+  }
+
+  
+  if(showExamAnalysis === false){
   return(
+    <>
     <Table striped bordered hover size="sm">
       <thead>
         <tr>
@@ -18,11 +42,10 @@ function ExamReportContent({classesModules, setClassesModules, selectedClassId, 
         item.studentTests.map(st =>{
           return (
             <tr>
-              <td><i class="fas fa-user-circle td-icon-report-person"></i> {item.student.lname}, {item.student.fname}</td>
+              <td ><i class="fas fa-user-circle td-icon-report-person"></i><span onClick={(e) => getExamAnalysis(e, item.student.id, st.test.classId, st.test.id)}>{item.student.lname}, {item.student.fname}</span> </td>
               <td>{st.score}</td>
               <td>
-                <i class="fas fa-eye"style={{paddingRight:'10px'}}></i>
-                <i class="fas fa-edit" style={{paddingRight:'10px'}}></i>
+                <Button variant="outline-warning" size="sm"><i class="fas fa-redo"style={{paddingRight:'10px'}}></i>Retake</Button>
               </td>
             </tr>
           )
@@ -31,6 +54,12 @@ function ExamReportContent({classesModules, setClassesModules, selectedClassId, 
       })}
       </tbody>
     </Table>
-  )
+    
+    </>
+  )}else{
+    return(
+    <ExamAnalysis examAnalysis={examAnalysis} setExamAnalysis={setExamAnalysis}/>
+    )
+  }
 }
 export default ExamReportContent

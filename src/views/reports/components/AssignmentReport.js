@@ -36,9 +36,9 @@ const assignmentColumns = () => {
   return []
 }
 
-const getAssignmentReport = async(e, assignmentid) => {
+const getAssignmentReport = async(e, assignmentid, assignmentname) => {
   setLoading(true)
-  console.log('A')
+  sessionStorage.setItem('assignmentName',assignmentname)
   setViewAssignmentReport(false)
   console.log(viewAssignmentReport)
   let response = await new ClassesAPI().getAssignmentReport(selectedClassId, assignmentid)
@@ -64,7 +64,7 @@ if(viewAssignmentReport === true){
                   item.classAssignment !== null &&
                   <Row>
                     <Col sm={8}>
-                      <div className='title-exam' onClick={(e) => getAssignmentReport(e, item.assignment.id)}>
+                      <div className='title-exam' onClick={(e) => getAssignmentReport(e, item.assignment.id, item.assignment.assignmentName)}>
                         {item.assignment.assignmentName}
                       </div>
                       <div className='code-exam'>

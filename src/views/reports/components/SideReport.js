@@ -43,13 +43,21 @@ function SideReport() {
 
   
   const onShowClassModules = (e) => {
+    sessionStorage.removeItem("taskName")
+    sessionStorage.removeItem("assignmentName")
     setSelectedClassId(e.target.value)
     setViewTestReport(true)
+    setViewTaskReport(true)
+    setViewAssignmentReport(true)
     if(e.target.value == null || e.target.value == ""){
       setViewTestReport(true)
+      setViewTaskReport(true)
+      setViewAssignmentReport(true)
       setClassesModules([])
     }else{
       setViewTestReport(true)
+      setViewTaskReport(true)
+      setViewAssignmentReport(true)
       getClassModules(e.target.value)
     }
   }
@@ -58,18 +66,21 @@ function SideReport() {
     setViewTestReport(true)
     setViewAssignmentReport(false)
     setViewTaskReport(false)
+    sessionStorage.removeItem("testName")
   }
 
   const showAssignment = (e) => {
     setViewAssignmentReport(true)
     setViewTestReport(false)
     setViewTaskReport(false)
+    sessionStorage.removeItem("assignmentName")
   }
 
   const showTask = (e) => {
     setViewTaskReport(true)
     setViewAssignmentReport(false)
     setViewTestReport(false)
+    sessionStorage.removeItem("taskName")
   }
 
   useEffect(() => {
