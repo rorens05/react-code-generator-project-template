@@ -7,6 +7,7 @@ import ReportTask from './ReportTask'
 import ReportInteractives from '../ReportInteractives'
 import { UserContext } from './../../../context/UserContext'
 import ClassesAPI from './../../../api/ClassesAPI'
+import TaskHeader from './TaskHeader'
 
 function SideReport() {
 
@@ -16,6 +17,9 @@ function SideReport() {
   const [classesModules, setClassesModules] = useState([])
   const [classId, setClassId] = useState([])
   const [selectedClassId, setSelectedClassId] = useState(null)
+  const [viewTestReport, setViewTestReport] = useState(false)
+  const [viewAssignmentReport, setViewAssignmentReport] = useState(false)
+  const [viewTaskReport, setViewTaskReport] = useState(false)
 
   const getClasses = async() => {
     let response = await new ClassesAPI().getClasses(user.teacher.id)
@@ -40,17 +44,37 @@ function SideReport() {
   
   const onShowClassModules = (e) => {
     setSelectedClassId(e.target.value)
-    
+    setViewTestReport(true)
     if(e.target.value == null || e.target.value == ""){
+      setViewTestReport(true)
       setClassesModules([])
     }else{
+      setViewTestReport(true)
       getClassModules(e.target.value)
     }
   }
 
+  const showTest = (e) => {
+    setViewTestReport(true)
+    setViewAssignmentReport(false)
+    setViewTaskReport(false)
+  }
+
+  const showAssignment = (e) => {
+    setViewAssignmentReport(true)
+    setViewTestReport(false)
+    setViewTaskReport(false)
+  }
+
+  const showTask = (e) => {
+    setViewTaskReport(true)
+    setViewAssignmentReport(false)
+    setViewTestReport(false)
+  }
+
   useEffect(() => {
     getClasses()
-    getClassModules()
+    //getClassModules()
   }, [])
 
   return (
@@ -68,16 +92,16 @@ function SideReport() {
                 </Row>
               </ListGroup.Item>
             <ListGroup style={{paddingLeft:'15px'}}>
-              <ListGroup.Item  className="list-group-item-o "action href="#link3">
+              <ListGroup.Item  className="list-group-item-o "action href="#link3" onClick={showTest}>
                 Exam
               </ListGroup.Item>
-              <ListGroup.Item className="list-group-item-o " action href="#link5">
+              <ListGroup.Item className="list-group-item-o " action href="#link5" onClick={showAssignment}>
                 Assignment
               </ListGroup.Item>
-              <ListGroup.Item className="list-group-item-o " action href="#link6">
+              <ListGroup.Item className="list-group-item-o " action href="#link6" onClick={showTask}>
                 Task
               </ListGroup.Item>
-              <ListGroup.Item className="list-group-item-o " action href="#link7">
+              <ListGroup.Item className="list-group-item-o " action href="#link7" >
                 Interactive
               </ListGroup.Item>
             </ListGroup>
@@ -87,14 +111,13 @@ function SideReport() {
               <Tab.Pane eventKey="#link1">
               </Tab.Pane>
               <Tab.Pane className='content-pane report-content'  eventKey="#link3">
-                <ReportHeader classesModules={classesModules} setClassesModules={setClassesModules} selectedClassId={selectedClassId}/>
+                <ReportHeader viewTestReport={viewTestReport} setViewTestReport={setViewTestReport} classesModules={classesModules} setClassesModules={setClassesModules} selectedClassId={selectedClassId}/>
               </Tab.Pane>
               <Tab.Pane className='content-pane report-content' eventKey="#link5">
-              <AssignmentHeader />
-                <AssignmentReport />
+                <AssignmentHeader viewAssignmentReport={viewAssignmentReport} setViewAssignmentReport={setViewAssignmentReport} classesModules={classesModules} setClassesModules={setClassesModules} selectedClassId={selectedClassId}/>
               </Tab.Pane>
               <Tab.Pane className='content-pane report-content' eventKey="#link6">
-              <ReportTask />
+                <TaskHeader viewTaskReport={viewTaskReport} setViewTaskReport={setViewTaskReport} classesModules={classesModules} setClassesModules={setClassesModules} selectedClassId={selectedClassId}/>
               </Tab.Pane>
               <Tab.Pane className='content-pane report-content' eventKey="#link7">
               <ReportInteractives />

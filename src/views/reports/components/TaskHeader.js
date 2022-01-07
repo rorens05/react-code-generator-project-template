@@ -1,12 +1,13 @@
 import React from 'react'
 import {InputGroup, FormControl } from 'react-bootstrap';
-import ExamReport from './ExamReport';
+import TaskReport from './TaskReport';
 
-function ReportHeader({classesModules, setClassesModules, selectedClassId, viewTestReport, setViewTestReport, viewAssignmentReport, setViewAssignmentReport}) {
+
+function TaskHeader({classesModules, setClassesModules, selectedClassId, viewTaskReport, setViewTaskReport}) {
 	return (
 		<div>
 			<div className="row m-b-20">
-				<div className="col-md-10 pages-header"><h1>Grade Report - Exam</h1></div>
+				<div className="col-md-10 pages-header"><h1>Grade Report - Task</h1></div>
 			</div>
 			<div className="row m-b-20">
 				<div className="col-md-12">
@@ -16,10 +17,9 @@ function ReportHeader({classesModules, setClassesModules, selectedClassId, viewT
 					</InputGroup>
 				</div>
 			</div>
-			<ExamReport classesModules={classesModules} setClassesModules={setClassesModules} selectedClassId={selectedClassId} viewTestReport={viewTestReport} setViewTestReport={setViewTestReport}/>
-			
+			<TaskReport classesModules={classesModules} setClassesModules={setClassesModules} selectedClassId={selectedClassId} viewTaskReport={viewTaskReport} setViewTaskReport={setViewTaskReport}/>
 		</div>
 	)
 }
-export default ReportHeader
+export default TaskHeader
 

@@ -1,8 +1,9 @@
 import React from 'react'
 import {InputGroup, FormControl } from 'react-bootstrap';
+import AssignmentReport from './AssignmentReport';
 
 
-function AssignmentHeader() {
+function AssignmentHeader({classesModules, setClassesModules, selectedClassId, viewAssignmentReport, setViewAssignmentReport}) {
 	return (
 		<div>
 			<div className="row m-b-20">
@@ -16,7 +17,7 @@ function AssignmentHeader() {
 					</InputGroup>
 				</div>
 			</div>
-			
+			<AssignmentReport classesModules={classesModules} setClassesModules={setClassesModules} selectedClassId={selectedClassId} viewAssignmentReport={viewAssignmentReport} setViewAssignmentReport={setViewAssignmentReport}/>
 		</div>
 	)
 }

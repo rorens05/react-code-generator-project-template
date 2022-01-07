@@ -207,6 +207,42 @@ creatTask = async (mId, cId,  data) => {
   getClassTestModules = async (classid, moduleid) =>{
     return this.sendRequest({
       path: `/api/Class/${classid}/module/${moduleid}/test`,
+      // path: `/api/Class/${classid}/test/info?moduleId=${moduleid}`,
+      method: 'GET'
+    })
+  }
+
+  getTestReport = async (classid, testid) =>{
+    return this.sendRequest({
+      path: `/api/Class/${classid}/test/${testid}/report`,
+      method: 'GET'
+    })
+  }
+
+  getClassAssignmentModules = async (classid, moduleid) =>{
+    return this.sendRequest({
+      path: `/api/Class/${classid}/module/${moduleid}/assignment`,
+      method: 'GET'
+    })
+  }
+
+  getAssignmentReport = async (classid, assignmentid) =>{
+    return this.sendRequest({
+      path: `/api/Class/${classid}/assignment/report`,
+      method: 'GET'
+    })
+  }
+
+  getClassTaskModules = async (classid, moduleid) =>{
+    return this.sendRequest({
+      path: `/api/Class/${classid}/module/${moduleid}/task`,
+      method: 'GET'
+    })
+  }
+
+  getTaskReport = async (classid, taskid) =>{
+    return this.sendRequest({
+      path: `/api/Class/${classid}/task/report`,
       method: 'GET'
     })
   }
