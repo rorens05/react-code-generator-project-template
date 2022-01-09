@@ -1,6 +1,7 @@
 import React from 'react'
 import {Table, Button} from 'react-bootstrap'
 import FileHeader from './FileHeader'
+import CoursesAPI from "../../api/CoursesAPI";
 
 function FilesContent() {
   return (
@@ -16,7 +17,10 @@ function FilesContent() {
         			<th>Actions</th>
       			</tr>
     			</thead>
-    			<tbody>
+          <td colSpan={4} className='text-center p-3'>
+            No items to display
+          </td>
+    			{/* <tbody>
       			<tr>
         			<td>Exam1_Delacruz.docx</td>
         			<td>317.56 KB</td>
@@ -33,15 +37,7 @@ function FilesContent() {
 							<i class="fas fa-arrow-down td-file-page"></i>
 							<i class="fas fa-trash-alt td-file-page"></i></td>
      			 	</tr>
-      			<tr>
-							<td> <i class="fas fa-folder td-file-page"></i> Folder</td>
-							<td>317.56 KB</td>
-							<td>11/8/2021</td>
-							<td><i class="fas fa-edit td-file-page"></i>
-							<i class="fas fa-arrow-down td-file-page"></i>
-							<i class="fas fa-trash-alt td-file-page"></i></td>
-      			</tr>
-    			</tbody>
+    			</tbody> */}
   			</Table>
 			</div>
 		</div>
