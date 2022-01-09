@@ -33,6 +33,12 @@ function FileHeader() {
     });
   }
 
+  const handelRemoveSelectedFiles = (index) => {
+    let temp = files
+    temp.splice(index, 1)
+    setFiles([...temp])
+  }
+
   return (
     <div>
       <div className="row m-b-20">
@@ -64,12 +70,12 @@ function FileHeader() {
               </tr>
             </thead>
             <tbody>
-             {files?.map(item => {
+             {files?.map((item, index) => {
               return(
                 <tr>
                   <td>{item.fileName}</td>
                   <td><ProgressBar variant="warning" now={50} /></td>
-                  <td>{item.size} KB <i class="fas fa-times td-file-page"></i></td>
+                  <td>{item.size} KB <i class="fas fa-times td-file-page" onClick={()=> handelRemoveSelectedFiles(index)}></i></td>
                 </tr>
               );
              })}
