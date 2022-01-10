@@ -1,10 +1,12 @@
 import React, {useState, useEffect, useRef} from 'react'
 import {InputGroup, FormControl, Button, Modal,Table, ProgressBar, Form } from 'react-bootstrap';
+import FilesAPI from '../../api/FilesApi';
 
-function FileHeader() {
+function FileHeader(props) {
   const [smShow, setSmShow] = useState(false);
   const [lgShow, setLgShow] = useState(false);
-  const [files, setFiles] = useState([])
+  const [files, setFiles] = useState([]);
+  const [singleUpload, setSingleUpload] = useState({})//just for single file upload
   const filesRef = useRef(files);
   filesRef.current = files;
 
@@ -17,8 +19,12 @@ function FileHeader() {
             fileName: file.name,
             base64String: data,
             size: file.size
+          },
+          singelData ={ //just for single file upload
+            fileName: file.name,
+            base64String: data,
           }
-          // temp.push(toAdd);
+          setSingleUpload(singelData);  //just for single file upload
           setFiles([...files, toAdd]);
       }
       );
@@ -31,6 +37,31 @@ function FileHeader() {
       reader.onload = () => resolve(reader.result);
       reader.onerror = error => reject(error);
     });
+  }
+
+  const handleUploadSingleFile = async() => { //just for single file upload
+    let save = {
+      data: singleUpload,
+      id: props.id
+    }
+    if(props.type == 'Course'){
+      let response = await new FilesAPI().newCourseFile(save)
+      if(response.ok){
+        console.log(response.data)
+        alert('File already uploaded.')
+      }else{
+        alert("Something went wrong while creating new file")
+      }
+    }
+    if(props.type == 'Class'){
+      let response = await new FilesAPI().newClassFile(save)
+      if(response.ok){
+        console.log(response.data)
+        alert('File already uploaded.')
+      }else{
+        alert("Something went wrong while creating new file")
+      }
+    }
   }
 
   const handelRemoveSelectedFiles = (index) => {
@@ -81,7 +112,7 @@ function FileHeader() {
              })}
             </tbody>
           </Table>
-          <Button size="lg" variant="outline-warning" disabled={files.length == 0 ? true : false} className="file-library file-button-upload">Upload</Button>
+          <Button size="lg" variant="outline-warning" disabled={files.length == 0 ? true : false} className="file-library file-button-upload" onClick={()=> handleUploadSingleFile()}>Upload</Button>
         </Modal.Body>
       </Modal>
     </div>

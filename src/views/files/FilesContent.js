@@ -1,12 +1,12 @@
 import React from 'react'
 import {Table, Button} from 'react-bootstrap'
 import FileHeader from './FileHeader'
-import CoursesAPI from "../../api/CoursesAPI";
 
-function FilesContent() {
+function FilesContent(props) {
+  console.log(props.data)
   return (
-    <div className="row m-b-20 col-md-8 file-content">
-			<FileHeader />
+    <div className="row m-b-20 file-content">
+			<FileHeader type={props.type} id={props.id}/>
 			<div className="row m-b-20">
 				<Table responsive="sm">
     			<thead>
@@ -17,27 +17,29 @@ function FilesContent() {
         			<th>Actions</th>
       			</tr>
     			</thead>
-          <td colSpan={4} className='text-center p-3'>
+          <td colSpan={4} className={props.data.length == 0 ? 'text-center p-3' : 'd-none'}>
             No items to display
           </td>
-    			{/* <tbody>
-      			<tr>
-        			<td>Exam1_Delacruz.docx</td>
-        			<td>317.56 KB</td>
-							<td>11/8/2021</td>
-							<td><i class="fas fa-edit td-file-page"></i>
-        				<i class="fas fa-arrow-down td-file-page"></i>
-								<i class="fas fa-trash-alt td-file-page"></i></td>
-      			</tr>
-      			<tr>
-							<td>Exam1_Delacruz.docx</td>
-							<td>317.56 KB</td>
-							<td>11/8/2021</td>
-							<td><i class="fas fa-edit td-file-page"></i>
-							<i class="fas fa-arrow-down td-file-page"></i>
-							<i class="fas fa-trash-alt td-file-page"></i></td>
-     			 	</tr>
-    			</tbody> */}
+    			<tbody>
+            {
+              props.data?.map((item, index) => {
+                return(
+                  <tr>
+                    <td className='ellipsis'>{item.fileName}</td>
+                    <td>317.56 KB</td>
+                    {
+                      props.type == 'Class' ? <td>{item.classFiles ? item.classFiles?.createdDate : item.courseFiles?.createdDate}</td> 
+                        :
+                      <td>{item.createdDate}</td>
+                    }
+                    <td><i class="fas fa-edit td-file-page"></i>
+                      <i class="fas fa-arrow-down td-file-page"></i>
+                      <i class="fas fa-trash-alt td-file-page"></i></td>
+                  </tr>
+                )
+              })
+            }
+    			</tbody>
   			</Table>
 			</div>
 		</div>

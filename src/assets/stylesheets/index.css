@@ -804,3 +804,11 @@ border-top-right-radius: 0px !important;
 .tficolorbgbutton {
   background-color:#EE9337 !important;
 }
+
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 300px;
+  max-width: 310px !important;
+}
