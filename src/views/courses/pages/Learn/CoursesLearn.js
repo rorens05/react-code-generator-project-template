@@ -137,13 +137,14 @@ export default function CourseLearn({viewLesson, setViewLesson, moduleInfo, setM
                               warning
                               showCancel
                               show={sweetError}
-                              confirmBtnText="Yes, delete it!"
+                              confirmBtnText="Yes, delete it!"  
                               confirmBtnBsStyle="danger"
                               title="Are you sure?"
                               onConfirm={() => confirmSweetError(item.id)}
                               onCancel={cancelSweetError}
                               focusCancelBtn
                             >
+                              {item.id}
                               You will not be able to recover this imaginary file!
                             </SweetAlert>
                           </Col>

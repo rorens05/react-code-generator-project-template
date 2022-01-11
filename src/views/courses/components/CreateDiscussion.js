@@ -49,7 +49,7 @@ export default function CreateDiscussion({openCreateDiscussionModal, setOpenCrea
 
   const getDiscussionInfo = async(e, data) => {
     setLoading(true)
-    sessionStorage.setItem('moduleid', data)
+    // sessionStorage.setItem('moduleid', data)
     let response = await new CoursesAPI().getDiscussionInformation(sessionModule)
     setLoading(false)
     if(response.ok){

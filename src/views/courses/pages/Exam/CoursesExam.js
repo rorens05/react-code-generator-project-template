@@ -5,6 +5,7 @@ import CourseCreateUnit from "./../../components/CourseCreateUnit";
 import CreateLesson from "./../../components/CreateLesson";
 import EditExam from "./../../components/EditExam";
 import CreateExam from "../CreateExam";
+import SweetAlert from 'react-bootstrap-sweetalert';
 
 export default function CoursesExam() {
 
@@ -15,7 +16,7 @@ export default function CoursesExam() {
   const [moduleInfo, setModuleInfo] = useState([])
   const [examInfo, setExamInfo] = useState([])
   const [selectedExam, setSelectedExam] = useState(null)
-
+  const [sweetError, setSweetError] = useState(false)
 
   const courseid = sessionStorage.getItem('courseid')
   const moduleid = sessionStorage.getItem('moduleid')
@@ -55,6 +56,28 @@ export default function CoursesExam() {
     }
   }
 
+  const cancelSweetError = () => {
+    setSweetError(false)
+  }
+
+  const confirmSweetError = (id) => {
+    alert('Deleted')
+    deleteCourseExam(id)
+    setSweetError(false)
+  } 
+
+  const deleteCourseExam = async(data) => {
+    setLoading(true)
+    let response = await new CoursesAPI().deleteExam(data)
+    setLoading(false)
+    if(response.ok){
+      // setLessonInfo(response.data)
+      console.log(response.data)
+    }else{
+      alert("Something went wrong while fetching all pages")
+    }
+  }
+
   useEffect(() => {
     getCourseUnitInformation()
   }, [])
@@ -89,7 +112,21 @@ export default function CoursesExam() {
                       </Col>
                       <Col className="align-right-content" md={3}>
                         <Button className="m-r-5 color-white tficolorbg-button" size="sm"   onClick={(e) => handleOpenEditExamModal(e, item)}><i className="fa fa-edit"></i></Button>
-                        <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i className="fa fa-trash"></i></Button>
+                        <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i className="fa fa-trash" onClick={() => setSweetError(true)}></i></Button>
+                        <SweetAlert
+                              warning
+                              showCancel
+                              show={sweetError}
+                              confirmBtnText="Yes, delete it!"
+                              confirmBtnBsStyle="danger"
+                              title="Are you sure?"
+                              onConfirm={() => confirmSweetError(item.id)}
+                              onCancel={cancelSweetError}
+                              focusCancelBtn
+                            >
+                              You will not be able to recover this imaginary file!
+                            </SweetAlert>
+                      
                       </Col>
                       <EditExam selectedExam={selectedExam} openEditExamModal={openEditExamModal} setOpenEditExamModal={setOpenEditExamModal}/>
                     </Row>

@@ -395,4 +395,19 @@ creatTask = async (mId, cId,  data) => {
     });
   };
 
+  updateExamPoints = async (studentid, classid, testid, answerid, data) =>{
+    return this.sendRequest({
+      path:`/api/Student/${studentid}/class/${classid}/test/${testid}/answer/${answerid}`,
+      method: 'PUT',
+      data
+    });
+  };
+
+  retakeExam = async (studentid, classid, testid, answerid, data) =>{
+    return this.sendRequest({
+      path:`/api/Student/${studentid}/class/${classid}/test/${testid}/answer/${answerid}`,
+      method: 'PUT',
+      data
+    });
+  };
 }
