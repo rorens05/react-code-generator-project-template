@@ -17,7 +17,7 @@ function EditAssignment({modal, toggle, editAssignment, getAssignmentList, modul
   const updateTask = async (e) =>{
     e.preventDefault()
     let id = editAssignment?.assignment?.id
-    let mId = moduleId
+    let mId = editAssignment?.module?.id
     let response = await new ClassesAPI().updateAssignment(id, {assignmentName, instructions, isShared})
       if(response.ok){
         // alert('Assingment Updated')
@@ -28,6 +28,13 @@ function EditAssignment({modal, toggle, editAssignment, getAssignmentList, modul
         alert(response.data.errorMessage)
       }
   }
+
+  useEffect(() => {
+    if(editAssignment !== null) {
+      setAssignmentName(editAssignment?.assignment?.assignmentName)
+      setInstructions(editAssignment?.assignment?.instructions)
+		}
+  }, [editAssignment])
 
   return (
     <div>
@@ -43,7 +50,6 @@ function EditAssignment({modal, toggle, editAssignment, getAssignmentList, modul
             <Form.Label>Unit</Form.Label>
               <Form.Select disabled>
                 <option>{editAssignment?.module?.moduleName}</option>
-   
               </Form.Select>
                 </Form.Group>
                 <Form.Group className="mb-4">

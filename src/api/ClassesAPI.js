@@ -80,7 +80,23 @@ creatTask = async (mId, cId,  data) => {
       method: 'PUT',
       data
     })
-  } 
+  }
+  
+  assignDiscussion = async(id, discussionId, data) =>{
+    return this.sendRequest({
+      path:`/api/Class/${id}/discussion/${discussionId}/assign`,
+      method: 'POST',
+      data
+    })
+  }
+
+  updateAssignDiscusion = async(id, discussionId, data) =>{
+    return this.sendRequest({
+      path: `/api/Class/${id}/discussion/${discussionId}/assign`,
+      method: 'PUT',
+      data
+    })
+  }
 
   createAssignment = async (mId, cId, data) =>{
     return this.sendRequest({
@@ -102,6 +118,91 @@ creatTask = async (mId, cId,  data) => {
       path: `/api/Assignment/${aId}`,
       method: 'PUT',
       data
+    })
+  }
+
+  assignAssignment = async (id, assignmentId, data) => {
+    return this.sendRequest({
+      path: `/api/Class/${id}/assignment/${assignmentId}/assign`,
+      method: 'POST',
+      data
+    })
+  }
+
+  updateAssignAssignment = async (id, assignmentId, data) => {
+    return this.sendRequest({
+      path: `/api/Class/${id}/assignment/${assignmentId}/assign`,
+      method: 'PUT',
+      data
+    })
+  }
+
+  assignTask = async (id, taskId, data) => {
+    return this.sendRequest({
+      path: `/api/Class/${id}/task/${taskId}/assign`,
+      method: 'POST',
+      data
+    })
+  }
+
+  updateAssignTask = async (id, taskId, data) => {
+    return this.sendRequest({
+      path: `/api/Class/${id}/task/${taskId}/assign`,
+      method: 'PUT',
+      data
+    })
+  } 
+
+  assignInteractive = async (id, interactiveId, data) => {
+    return this.sendRequest({
+      path:`/api/Class/${id}/interactive/${interactiveId}/assign`,
+      method: 'POST',
+      data
+    })
+  }
+
+  updateAssignInteractive = async (id, interactiveId, data) => {
+    return this.sendRequest({
+      path:`/api/Class/${id}/interactive/${interactiveId}/assign`,
+      method: 'PUT',
+      data
+    })
+  }
+
+  createAnnouncementClass = async (typeId, data) => {
+    return this.sendRequest({
+      path:`/api/Announcement/type/${typeId}/reference`,
+      method: 'POST',
+      data
+    })
+  }
+
+  getAnnouncementClass = async(classId) => {
+    return this.sendRequest({
+      path: `/api/Announcement/class/${classId}`,
+      method: 'GET'
+    })
+  }
+
+  deleteAnnouncement = async(id) => {
+    return this.sendRequest({
+      path: `/api/Announcement/${id}`,
+      method: 'DELETE'
+    })
+  }
+
+  updateAnnouncement = async (id, data) => {
+    return this.sendRequest({
+      path: `/api/Announcement/${id}`,
+      method: 'PUT',
+      data
+    })
+  }
+
+  getFeedClass = async (id) => {
+    return this.sendRequest({
+      path: `/api/Class/${id}/feed`,
+      method: 'GET'
     })
   }
 
