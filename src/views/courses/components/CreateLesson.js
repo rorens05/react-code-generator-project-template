@@ -3,7 +3,7 @@ import { Button, Form } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal'
 import CoursesAPI from "../../../api/CoursesAPI";
 
-export default function CreateLesson({openCreateLessonModal, setCreateLessonModal}){
+export default function CreateLesson({openCreateLessonModal, setCreateLessonModal, setLessonInfo}){
 
 	const [loading, setLoading] = useState(false)
 	const [pageName, setPageName] = useState('')
@@ -19,6 +19,18 @@ export default function CreateLesson({openCreateLessonModal, setCreateLessonModa
     setCreateLessonModal(false)
   }
 
+  const getCourseLessons = async(e, data, modulename) => {
+    setLoading(true)
+    let response = await new CoursesAPI().getCourseUnitPages(sessionCourse, sessionModule)
+    setLoading(false)
+    if(response.ok){
+      setLessonInfo(response.data)
+      console.log(response.data)
+    }else{
+      alert("Something went wrong while fetching all pages")
+    }
+  }
+
 	const saveLesson = async(e) => {
     e.preventDefault()
     setLoading(true)
@@ -30,6 +42,7 @@ export default function CreateLesson({openCreateLessonModal, setCreateLessonModa
     if(response.ok){
       alert("Saved")
 			handleCloseModal(e)
+      getCourseLessons(sessionCourse, sessionModule)
     }else{
       alert(response.data.errorMessage)
     }

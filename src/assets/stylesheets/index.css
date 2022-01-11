@@ -728,6 +728,14 @@ border-top-right-radius: 0px !important;
   color: #EE9337;
   font-size: 28px;
 }
+.td-icon-report-person{
+  color: #EE9337;
+  font-size: 28px;
+}
+.td-icon-report-redo{
+  color: #EE9337;
+  font-size: 28px;
+}
 .td-title-exam{
   font-size: 18px;
   color: #EE9337;
@@ -803,4 +811,26 @@ border-top-right-radius: 0px !important;
 
 .tficolorbgbutton {
   background-color:#EE9337 !important;
+}
+
+.tfi-font-color {
+  color:#EE9337 !important;
+}
+
+.font-exam-analysis-header {
+  /* color: #EE9337!important; */
+  color: #707070;
+  font-size: 36px!important;
+}
+
+.font-exam-analysis-content-24 {
+  /* color: #EE9337!important; */
+  color: #707070;
+  font-size: 24px!important;
+}
+
+.font-exam-analysis-content-24-tfi {
+  /* color: #EE9337!important; */
+  color:#EE9337;
+  font-size: 24px!important;
 }

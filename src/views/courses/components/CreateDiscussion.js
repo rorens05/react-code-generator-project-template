@@ -3,7 +3,7 @@ import { Button, Form, Modal } from 'react-bootstrap';
 import CoursesAPI from "../../../api/CoursesAPI";
 import SubjectAreaAPI from "../../../api/SubjectAreaAPI";
 
-export default function CreateDiscussion({openCreateDiscussionModal, setOpenCreateDiscussionModal}){
+export default function CreateDiscussion({openCreateDiscussionModal, setOpenCreateDiscussionModal, setDiscussionInfo}){
 
 	const [loading, setLoading] = useState(false)
   const [modulePages, setModulePages] = useState([])
@@ -28,6 +28,7 @@ export default function CreateDiscussion({openCreateDiscussionModal, setOpenCrea
     if(response.ok){
       alert("Saved")
 			handleCloseModal(e)
+      getDiscussionInfo()
     }else{
       alert(response.data.errorMessage)
     }
@@ -43,6 +44,19 @@ export default function CreateDiscussion({openCreateDiscussionModal, setOpenCrea
       console.log(response.data)
     }else{
       alert("Something went wrong while fetching all pages")
+    }
+  }
+
+  const getDiscussionInfo = async(e, data) => {
+    setLoading(true)
+    sessionStorage.setItem('moduleid', data)
+    let response = await new CoursesAPI().getDiscussionInformation(sessionModule)
+    setLoading(false)
+    if(response.ok){
+      setDiscussionInfo(response.data)
+      console.log(response.data)
+    }else{
+      alert("Something went wrong while fetching all discussion")
     }
   }
 

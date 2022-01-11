@@ -3,7 +3,7 @@ import { Button, Form, Modal } from 'react-bootstrap';
 import CoursesAPI from "../../../api/CoursesAPI";
 import SubjectAreaAPI from "../../../api/SubjectAreaAPI";
 
-export default function CreateTask({openCreateTaskModal, setCreateTaskModal}){
+export default function CreateTask({openCreateTaskModal, setCreateTaskModal, setTaskInfo}){
 
 	const [loading, setLoading] = useState(false)
   const [modulePages, setModulePages] = useState([])
@@ -28,6 +28,7 @@ export default function CreateTask({openCreateTaskModal, setCreateTaskModal}){
     if(response.ok){
       alert("Saved")
 			handleCloseModal(e)
+      getTaskInfo(sessionModule)
     }else{
       alert(response.data.errorMessage)
     }
@@ -43,6 +44,18 @@ export default function CreateTask({openCreateTaskModal, setCreateTaskModal}){
       console.log(response.data)
     }else{
       alert("Something went wrong while fetching all pages")
+    }
+  }
+
+  const getTaskInfo = async(e, data) => {
+    setLoading(true)
+    let response = await new CoursesAPI().getTaskInformation(sessionModule)
+    setLoading(false)
+    if(response.ok){
+      setTaskInfo(response.data)
+      console.log(response.data)
+    }else{
+      alert("Something went wrong while fetching all task")
     }
   }
 

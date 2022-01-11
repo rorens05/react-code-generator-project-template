@@ -56,6 +56,8 @@ export default function CoursesDiscussion({moduleInfo, setModuleInfo}) {
           </InputGroup>
         </div>
       </div>
+      <CreateDiscussion setDiscussionInfo={setDiscussionInfo} openCreateDiscussionModal={openCreateDiscussionModal} setOpenCreateDiscussionModal={setOpenCreateDiscussionModal}/>
+      <EditDiscussion setDiscussionInfo={setDiscussionInfo} selectedDiscussion={selectedDiscussion} openEditDiscussionModal={openEditDiscussionModal} setOpenEditDiscussionModal={setOpenEditDiscussionModal}/>
       <Accordion defaultActiveKey="0">
         {moduleInfo.map((item, index) => {
           return(
@@ -76,13 +78,11 @@ export default function CoursesDiscussion({moduleInfo, setModuleInfo}) {
                         <Button className="m-r-5 color-white tficolorbg-button" size="sm"  onClick={(e) => handleOpenEditDiscussionModal(e, item)}><i className="fa fa-edit"></i></Button>
                         <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i className="fa fa-trash"></i></Button>
                       </Col>
-                      <EditDiscussion selectedDiscussion={selectedDiscussion} openEditDiscussionModal={openEditDiscussionModal} setOpenEditDiscussionModal={setOpenEditDiscussionModal}/>
                     </Row>
                   )
                 })}
               </Accordion.Body>
             </Accordion.Item>
-            <CreateDiscussion openCreateDiscussionModal={openCreateDiscussionModal} setOpenCreateDiscussionModal={setOpenCreateDiscussionModal}/>
             </>
             )
           })

@@ -212,4 +212,86 @@ creatTask = async (mId, cId,  data) => {
     })
   }
 
+  getClassModules = async (id) =>{
+    return this.sendRequest({
+      path: `/api/Module/class/${id}/item/1`,
+      method: 'GET'
+    })
+  }
+
+  getClassTestModules = async (classid, moduleid) =>{
+    return this.sendRequest({
+      path: `/api/Class/${classid}/module/${moduleid}/test`,
+      // path: `/api/Class/${classid}/test/info?moduleId=${moduleid}`,
+      method: 'GET'
+    })
+  }
+
+  getTestReport = async (classid, testid) =>{
+    return this.sendRequest({
+      path: `/api/Class/${classid}/test/${testid}/report`,
+      method: 'GET'
+    })
+  }
+
+  getClassAssignmentModules = async (classid, moduleid) =>{
+    return this.sendRequest({
+      path: `/api/Class/${classid}/module/${moduleid}/assignment`,
+      method: 'GET'
+    })
+  }
+
+  getAssignmentReport = async (classid, assignmentid) =>{
+    return this.sendRequest({
+      // path: `/api/Class/${classid}/assignment/report`,
+      path: `/api/Class/${classid}/assignment/${assignmentid}/report`,
+      method: 'GET'
+    })
+  }
+
+  getClassTaskModules = async (classid, moduleid) =>{
+    return this.sendRequest({
+      path: `/api/Class/${classid}/module/${moduleid}/task`,
+      method: 'GET'
+    })
+  }
+
+  getTaskReport = async (classid, taskid) =>{
+    return this.sendRequest({
+      // path: `/api/Class/${classid}/task/report`,
+      path: `/api/Class/${classid}/task/${taskid}/report`,
+      method: 'GET'
+    })
+  }
+
+  getExamAnalysis = async (studentid, classid, testid) =>{
+    return this.sendRequest({
+      path: `/api/Student/${studentid}/class/${classid}/test/${testid}/score/analysis`,
+      method: 'GET'
+    })
+  }
+
+  getClassInteractiveModules = async (classid, moduleid) =>{
+    return this.sendRequest({
+      path: `/api/Class/${classid}/module/${moduleid}/interactive`,
+      method: 'GET'
+    })
+  }
+
+  getInteractiveReport = async (classid, interactiveid) =>{
+    return this.sendRequest({
+      // path: `/api/Class/${classid}/task/report`,
+      path: `/api/Class/${classid}/interactive/${interactiveid}/report`,
+      method: 'GET'
+    })
+  }
+  
+  considerAnswerExamTrue = async (studentid, classid, testid, answerid, data) =>{
+    return this.sendRequest({
+      path:`/api/Student/${studentid}/class/${classid}/test/${testid}/answer/${answerid}`,
+      method: 'PUT',
+      data
+    });
+  };
+
 }
