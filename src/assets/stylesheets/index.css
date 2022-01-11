@@ -506,6 +506,15 @@ border-top-right-radius: 0px !important;
   border: none!important;
   background: none!important;
 }
+
+.feed-logo{
+  outline: none!important;
+  color:#BCBCBC !important;
+  font-size: 35px!important;
+  border: none!important;
+  background: none!important;
+}
+
 .feed-box{
   border: none!important;
   background: none!important;
@@ -604,6 +613,10 @@ border-top-right-radius: 0px !important;
 .login-with-qr-container{
   padding-top: 10px;
   text-align: center;
+}
+
+.icon-post{
+  width: 4%!important;
 }
 
 .login-with-qr-container .qr-container{

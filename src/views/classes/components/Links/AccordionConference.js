@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useParams } from 'react-router'
 import ClassesAPI from '../../../../api/ClassesAPI'
 import SweetAlert from 'react-bootstrap-sweetalert';
+import moment from 'moment';
 
 
 function AccordionConference({conference, getConfe, setOpenEditModal, setEditLinks}) {
@@ -67,7 +68,8 @@ function AccordionConference({conference, getConfe, setOpenEditModal, setEditLin
             <Row>
               <Col sm={9}>
                 <div className='title-exam'>
-                  <Link style={{color:'#EE9337', textDecoration:'none'}} to={item?.url}>  {item?.description} </Link>
+                  {/* <Link style={{color:'#EE9337', textDecoration:'none'}} to={item?.url}>  {item?.description} </Link> */}
+                  <a style={{color:'#EE9337', textDecoration:'none'}}  href={item?.url}> {item?.description}</a>
                 </div>
               </Col>
               <Col sm={3} className='icon-exam'>
@@ -79,7 +81,7 @@ function AccordionConference({conference, getConfe, setOpenEditModal, setEditLin
                 <Col sm={3} style={{textAlign:'right'}} className='due-date-discusstion' >
                   <div className='inline-flex'>
                     <div className='text-color-bcbcbc'>
-                      Post Date: {item?.classLink.createdDate}
+                      Post Date: {moment(item?.classLink.createdDate).format('ll')}&nbsp; 
                     </div>
                   </div>
                 </Col>

@@ -28,6 +28,13 @@ function EditTask({modal, toggle, module, editTask, getTaskModule, moduleId}){
       }
   }
 
+  useEffect(() => {
+    if(editTask !== null) {
+      setTaskName(editTask?.task?.taskName)
+      setInstructions(editTask?.task?.instructions)
+		}
+  }, [editTask])
+
   return (
     <div>
         <Modal  size="lg" show={modal} onHide={toggle} aria-labelledby="example-modal-sizes-title-lg">

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useParams } from 'react-router'
 import ClassesAPI from '../../../../api/ClassesAPI'
 import SweetAlert from 'react-bootstrap-sweetalert';
+import moment from 'moment';
 
 function AccordionLinks({links, getLinks, setOpenEditModal, setEditLinks}) {
   const [deleteNotify, setDeleteNotify] = useState(false)
@@ -66,7 +67,8 @@ function AccordionLinks({links, getLinks, setOpenEditModal, setEditLinks}) {
             return( <Row>
               <Col sm={9}>
                 <div className='title-exam'>
-                <Link style={{color:'#EE9337', textDecoration:'none'}} to={item?.url}>{item?.description}</Link>
+                {/* <Link style={{color:'#EE9337', textDecoration:'none'}} to={item?.url}>{item?.description}</Link> */}
+                <a style={{color:'#EE9337', textDecoration:'none'}} href={item?.url}>{item?.description}</a>
                 </div>
               </Col>
               <Col sm={3} className='icon-exam'>
@@ -78,7 +80,7 @@ function AccordionLinks({links, getLinks, setOpenEditModal, setEditLinks}) {
                 <Col sm={3} style={{textAlign:'right'}} className='due-date-discusstion' >
                   <div className='inline-flex'>
                     <div className='text-color-bcbcbc'>
-                      Post Date:{item.classLink.createdDate}
+                      Post Date: {moment(item?.classLink?.createdDate).format('ll')}&nbsp;
                     </div>
                   </div>
                 </Col>
