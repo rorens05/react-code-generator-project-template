@@ -1,13 +1,11 @@
 import React, {useState, useEffect, useContext} from 'react'
 import {ListGroup, Tab, Row, Col, Form} from 'react-bootstrap'
 import ReportHeader from './ReportHeader'
-import AssignmentReport from './AssignmentReport'
 import AssignmentHeader from './AssignmentHeader'
-import ReportTask from './ReportTask'
-import ReportInteractives from '../ReportInteractives'
 import { UserContext } from './../../../context/UserContext'
 import ClassesAPI from './../../../api/ClassesAPI'
 import TaskHeader from './TaskHeader'
+import InteractiveHeader from './InteractiveHeader'
 
 function SideReport() {
 
@@ -20,6 +18,8 @@ function SideReport() {
   const [viewTestReport, setViewTestReport] = useState(false)
   const [viewAssignmentReport, setViewAssignmentReport] = useState(false)
   const [viewTaskReport, setViewTaskReport] = useState(false)
+  const [showReportHeader, setShowReportHeader] = useState(false)
+  const [viewInteractiveReport, setViewInteractiveReport] = useState(false)
 
   const getClasses = async() => {
     let response = await new ClassesAPI().getClasses(user.teacher.id)
@@ -43,22 +43,28 @@ function SideReport() {
 
   
   const onShowClassModules = (e) => {
+    
     sessionStorage.removeItem("taskName")
     sessionStorage.removeItem("assignmentName")
+    setShowReportHeader(false)
     setSelectedClassId(e.target.value)
     setViewTestReport(true)
     setViewTaskReport(true)
-    setViewAssignmentReport(true)
+    setViewInteractiveReport(true)
     if(e.target.value == null || e.target.value == ""){
       setViewTestReport(true)
       setViewTaskReport(true)
       setViewAssignmentReport(true)
+      setViewAssignmentReport(true)
+      setViewInteractiveReport(true)
       setClassesModules([])
     }else{
       setViewTestReport(true)
       setViewTaskReport(true)
       setViewAssignmentReport(true)
+      setViewInteractiveReport(true)
       getClassModules(e.target.value)
+      sessionStorage.setItem("classId", e.target.value)
     }
   }
 
@@ -66,6 +72,8 @@ function SideReport() {
     setViewTestReport(true)
     setViewAssignmentReport(false)
     setViewTaskReport(false)
+    setShowReportHeader(false)
+    setViewInteractiveReport(false)
     sessionStorage.removeItem("testName")
   }
 
@@ -73,6 +81,8 @@ function SideReport() {
     setViewAssignmentReport(true)
     setViewTestReport(false)
     setViewTaskReport(false)
+    setShowReportHeader(false)
+    setViewInteractiveReport(false)
     sessionStorage.removeItem("assignmentName")
   }
 
@@ -80,6 +90,17 @@ function SideReport() {
     setViewTaskReport(true)
     setViewAssignmentReport(false)
     setViewTestReport(false)
+    setShowReportHeader(false)
+    setViewInteractiveReport(false)
+    sessionStorage.removeItem("taskName")
+  }
+
+  const showInteractive = (e) => {
+    setViewInteractiveReport(true)
+    setViewTaskReport(false)
+    setViewAssignmentReport(false)
+    setViewTestReport(false)
+    setShowReportHeader(false)
     sessionStorage.removeItem("taskName")
   }
 
@@ -122,7 +143,7 @@ function SideReport() {
               <Tab.Pane eventKey="#link1">
               </Tab.Pane>
               <Tab.Pane className='content-pane report-content'  eventKey="#link3">
-                <ReportHeader viewTestReport={viewTestReport} setViewTestReport={setViewTestReport} classesModules={classesModules} setClassesModules={setClassesModules} selectedClassId={selectedClassId}/>
+                <ReportHeader showReportHeader={showReportHeader} setShowReportHeader={setShowReportHeader} viewTestReport={viewTestReport} setViewTestReport={setViewTestReport} classesModules={classesModules} setClassesModules={setClassesModules} selectedClassId={selectedClassId}/>
               </Tab.Pane>
               <Tab.Pane className='content-pane report-content' eventKey="#link5">
                 <AssignmentHeader viewAssignmentReport={viewAssignmentReport} setViewAssignmentReport={setViewAssignmentReport} classesModules={classesModules} setClassesModules={setClassesModules} selectedClassId={selectedClassId}/>
@@ -131,7 +152,7 @@ function SideReport() {
                 <TaskHeader viewTaskReport={viewTaskReport} setViewTaskReport={setViewTaskReport} classesModules={classesModules} setClassesModules={setClassesModules} selectedClassId={selectedClassId}/>
               </Tab.Pane>
               <Tab.Pane className='content-pane report-content' eventKey="#link7">
-              <ReportInteractives />
+                <InteractiveHeader viewInteractiveReport={viewInteractiveReport} setViewInteractiveReport={setViewInteractiveReport} classesModules={classesModules} setClassesModules={setClassesModules} selectedClassId={selectedClassId}/>
               </Tab.Pane>
             </Tab.Content> 
           </Col> 

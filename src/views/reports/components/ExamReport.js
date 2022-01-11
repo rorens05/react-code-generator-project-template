@@ -3,11 +3,12 @@ import {Accordion, Row, Col} from 'react-bootstrap'
 import ExamReportContent from '../contents/ExamReportContent'
 import ClassesAPI from './../../../api/ClassesAPI'
 
-function ExamReport({classesModules, setClassesModules, selectedClassId, viewTestReport, setViewTestReport}) {
+function ExamReport({classesModules, setClassesModules, selectedClassId, viewTestReport, setViewTestReport, showReportHeader, setShowReportHeader}) {
 
   const [testPerModule, setTestPerModule] = useState([])
   const [testReport, setTestReport] = useState([])
   const [loading, setLoading] = useState(false)
+  
 
   const getClassTestModules = async(e, moduleId) => {
     console.log(selectedClassId)
@@ -22,12 +23,13 @@ function ExamReport({classesModules, setClassesModules, selectedClassId, viewTes
     }
   }
 
-  const getTestReport = async(e, testid, testname) => {
+  const getTestReport = async(e, testid, testname, classid) => {
     setLoading(true)
     sessionStorage.setItem('testName',testname)
+    let sessionClass = sessionStorage.getItem("classId")
     setViewTestReport(false)
     console.log(viewTestReport)
-    let response = await new ClassesAPI().getTestReport(selectedClassId, testid)
+    let response = await new ClassesAPI().getTestReport(sessionClass, testid)
     setLoading(false)
     if(response.ok){
       setTestReport(response.data)
@@ -51,7 +53,7 @@ function ExamReport({classesModules, setClassesModules, selectedClassId, viewTes
                 item.classTest !== null &&
                 <Row>
                   <Col sm={8}>
-                    <div className='title-exam' onClick={(e) => getTestReport(e, item.test.id, item.test.testName)}>
+                    <div className='title-exam' onClick={(e) => getTestReport(e, item.test.id, item.test.testName, item.test.classId)}>
                       {item.test.testName}
                     </div>
                     <div className='code-exam'>
@@ -81,7 +83,7 @@ function ExamReport({classesModules, setClassesModules, selectedClassId, viewTes
   )
   }else if(viewTestReport === false){
     return(
-      <ExamReportContent setTestReport={setTestReport} testReport={testReport}/>
+      <ExamReportContent showReportHeader={showReportHeader} setShowReportHeader={setShowReportHeader} setTestReport={setTestReport} testReport={testReport}/>
     )
   }
 }

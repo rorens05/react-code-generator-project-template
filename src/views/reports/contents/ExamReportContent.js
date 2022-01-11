@@ -4,17 +4,20 @@ import ClassesAPI from '../../../api/ClassesAPI'
 import ExamAnalysis from './ExamAnalysis'
 
 
-function ExamReportContent({classesModules, setClassesModules, selectedClassId, viewTestReport, setViewTestReport, testReport, setTestReport}) {
+function ExamReportContent({classesModules, setClassesModules, selectedClassId, viewTestReport, setViewTestReport, testReport, setTestReport, showReportHeader, setShowReportHeader}) {
   
   const [examAnalysis, setExamAnalysis] = useState([])
   const [showExamAnalysis, setShowExamAnalysis] = useState(false)
   const [loading, setLoading] = useState(false)
+  let sessionClass = sessionStorage.getItem("classId")
 
   const getExamAnalysis = async(e, studentid, classid, testid) => {
     console.log(selectedClassId)
+    
+    sessionStorage.setItem('analysis','true')
     setShowExamAnalysis(true)
     console.log(showExamAnalysis)
-    let response = await new ClassesAPI().getExamAnalysis(studentid, classid, testid)
+    let response = await new ClassesAPI().getExamAnalysis(studentid, sessionClass, testid)
     if(response.ok){
       setExamAnalysis(response.data)
       console.log(response.data)
@@ -24,6 +27,16 @@ function ExamReportContent({classesModules, setClassesModules, selectedClassId, 
     }
   }
 
+  const testPartAnswers = () => {
+    if(examAnalysis.length > 0){ 
+      return examAnalysis.testPartAnswers?.map(item => item.instructions) || []
+    }
+    return []
+  }
+
+  useEffect(() => {
+    setShowReportHeader(true)
+  }, [])
   
   if(showExamAnalysis === false){
   return(
@@ -58,7 +71,7 @@ function ExamReportContent({classesModules, setClassesModules, selectedClassId, 
     </>
   )}else{
     return(
-    <ExamAnalysis examAnalysis={examAnalysis} setExamAnalysis={setExamAnalysis}/>
+    <ExamAnalysis showReportHeader={showReportHeader} setShowReportHeader={setShowReportHeader} examAnalysis={examAnalysis} setExamAnalysis={setExamAnalysis}/>
     )
   }
 }

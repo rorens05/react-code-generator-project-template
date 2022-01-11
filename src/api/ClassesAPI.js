@@ -256,4 +256,27 @@ creatTask = async (mId, cId,  data) => {
     })
   }
 
+  getClassInteractiveModules = async (classid, moduleid) =>{
+    return this.sendRequest({
+      path: `/api/Class/${classid}/module/${moduleid}/interactive`,
+      method: 'GET'
+    })
+  }
+
+  getInteractiveReport = async (classid, interactiveid) =>{
+    return this.sendRequest({
+      // path: `/api/Class/${classid}/task/report`,
+      path: `/api/Class/${classid}/interactive/${interactiveid}/report`,
+      method: 'GET'
+    })
+  }
+  
+  considerAnswerExamTrue = async (studentid, classid, testid, answerid, data) =>{
+    return this.sendRequest({
+      path:`/api/Student/${studentid}/class/${classid}/test/${testid}/answer/${answerid}`,
+      method: 'PUT',
+      data
+    });
+  };
+
 }
