@@ -1,33 +1,34 @@
 import React, {useState, useEffect, useRef} from 'react'
-import {InputGroup, FormControl, Button, Modal,Table, ProgressBar, Form } from 'react-bootstrap';
+import {Button, Modal,Table, ProgressBar, Form } from 'react-bootstrap';
 import FilesAPI from '../../api/FilesApi';
 
 function FileHeader(props) {
   const [smShow, setSmShow] = useState(false);
   const [lgShow, setLgShow] = useState(false);
   const [files, setFiles] = useState([]);
+  const [doneUpload, setDoneUpload] = useState(false)
   const [singleUpload, setSingleUpload] = useState({})//just for single file upload
-  const filesRef = useRef(files);
-  filesRef.current = files;
+  const [uploadStarted, setUploadStarted] = useState(false)
 
   const handlefilesUpload = (file) => {
-    console.log(file);
-    let temp = files, fileName = '', base64String = '', size = '';
-    getBase64(file).then(
-      data => {
-          let toAdd = {
-            fileName: file.name,
-            base64String: data,
-            size: file.size
-          },
-          singelData ={ //just for single file upload
-            fileName: file.name,
-            base64String: data,
-          }
-          setSingleUpload(singelData);  //just for single file upload
-          setFiles([...files, toAdd]);
-      }
+    if(file != ''){
+      getBase64(file).then(
+        data => {
+            let toAdd = {
+              fileName: file.name,
+              base64String: data,
+              size: file.size,
+              progress: 0
+            },
+            singelData ={ //just for single file upload
+              fileName: file.name,
+              base64String: data,
+            }
+            setSingleUpload(singelData);  //just for single file upload
+            setFiles([...files, toAdd]);
+        }
       );
+    }
   }
 
   const getBase64 = (file) => {
@@ -44,23 +45,66 @@ function FileHeader(props) {
       data: singleUpload,
       id: props.id
     }
+    setUploadStarted(true)
+    //course uploading
     if(props.type == 'Course'){
-      let response = await new FilesAPI().newCourseFile(save)
-      if(response.ok){
-        console.log(response.data)
-        alert('File already uploaded.')
-      }else{
-        alert("Something went wrong while creating new file")
-      }
+      files.map( async(item, index) => {
+        let tempData = {
+          fileName: item.fileName,
+          base64String: item.base64String,
+        },
+        toSave = {
+          data: tempData,
+          id: props.id
+        }
+        files[index].progress = 30;
+        setFiles([...files])
+        let response = await new FilesAPI().newCourseFile(toSave)
+        if(response.ok){
+          files[index].progress = 100;
+          setFiles([...files])
+          let allUploaded = files.filter(itm => { //check if all items is already 100% uploaded
+            return itm.progress != 100
+          })
+          setDoneUpload(allUploaded.length == 0 ? true : false)
+        }else{
+          setLgShow(false)
+          setFiles([])
+          setDoneUpload(false)
+          setUploadStarted(false)
+          alert("Something went wrong while creating new file")
+        }
+      })
     }
+    // class uploading
     if(props.type == 'Class'){
-      let response = await new FilesAPI().newClassFile(save)
-      if(response.ok){
-        console.log(response.data)
-        alert('File already uploaded.')
-      }else{
-        alert("Something went wrong while creating new file")
-      }
+      files.map( async(item, index) => {
+        let tempData = {
+          fileName: item.fileName,
+          base64String: item.base64String,
+        },
+        toSave = {
+          data: tempData,
+          id: props.id
+        }
+        files[index].progress = 30;
+        setFiles([...files])
+        let response = await new FilesAPI().newClassFile(toSave)
+        if(response.ok){
+          files[index].progress = 100;
+          setFiles([...files])
+          let allUploaded = files.filter(itm => { //check if all items is already 100% uploaded
+            return itm.progress != 100
+          })
+          setDoneUpload(allUploaded.length == 0 ? true : false)
+        }else{
+          setLgShow(false)
+          setFiles([])
+          setDoneUpload(false)
+          setUploadStarted(false)
+          alert("Something went wrong while creating new file")
+        }
+      })
     }
   }
 
@@ -68,6 +112,14 @@ function FileHeader(props) {
     let temp = files
     temp.splice(index, 1)
     setFiles([...temp])
+  }
+
+  const handleDoneUpload = () => {
+    setLgShow(false)
+    setFiles([])
+    props.doneUpload()
+    setDoneUpload(false)
+    setUploadStarted(false)
   }
 
   return (
@@ -103,16 +155,17 @@ function FileHeader(props) {
             <tbody>
              {files?.map((item, index) => {
               return(
-                <tr>
+                <tr key={item.fileName}>
                   <td>{item.fileName}</td>
-                  <td><ProgressBar variant="warning" now={50} /></td>
+                  <td><ProgressBar variant="warning" now={item.progress} /></td>
                   <td>{item.size} KB <i class="fas fa-times td-file-page" onClick={()=> handelRemoveSelectedFiles(index)}></i></td>
                 </tr>
               );
              })}
             </tbody>
           </Table>
-          <Button size="lg" variant="outline-warning" disabled={files.length == 0 ? true : false} className="file-library file-button-upload" onClick={()=> handleUploadSingleFile()}>Upload</Button>
+          <Button size="lg" variant="outline-warning" disabled={files.length == 0 || uploadStarted ? true : false} className={doneUpload ? 'd-none' : "file-library file-button-upload" } onClick={()=> handleUploadSingleFile()}>{uploadStarted ? 'Uploading...' : 'Upload'}</Button>
+          <Button size="lg" variant="outline-warning" className={ doneUpload ? "file-library file-button-upload" : 'd-none'} onClick={()=> handleDoneUpload()}>Done</Button>
         </Modal.Body>
       </Modal>
     </div>

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import MainContainer from '../../components/layouts/MainContainer'
 import {Button, Row, Col, Accordion, Form} from 'react-bootstrap'
 import FilesContent from './FilesContent';
+import FileHeader from './FileHeader'
 import CoursesAPI from "../../api/CoursesAPI";
 import ClassesAPI from '../../api/ClassesAPI';
 import FilesAPI from '../../api/FilesApi';
@@ -40,7 +41,6 @@ export default function Files() {
   }
 
   const getClasses = async() => {
-    console.log(user)
     setLoading(true)
     let response = await new ClassesAPI().getClasses(user?.teacher?.id)
     setLoading(false)
@@ -69,10 +69,18 @@ export default function Files() {
     let response = await new FilesAPI().getClassFiles(id)
     setLoading(false)
     if(response.ok){
-      console.log(response.data)
       setFilesToDisplay(response.data)
     }else{
       alert("Something went wrong while fetching class files.")
+    }
+  }
+
+  const handleRefetch = () => {
+    if(selectedFile == 'Course'){
+      handleGetCourseFiles(selected)
+    }
+    if(selectedFile == 'Class'){
+      handleGetClassFiles(selected)
     }
   }
 
@@ -96,7 +104,7 @@ export default function Files() {
                   <option>-- Select {selectedFile} Here --</option>
                   {optionsDisplayed.map(item => {
                     return(
-                      <option value={item.classId}>{item.className}</option>
+                      <option key={item.classId} value={item.classId}>{item.className}</option>
                     )
                   })}
                 </Form.Select>
@@ -111,7 +119,10 @@ export default function Files() {
               </Col>
             </Row>
             <div className={selected ? 'd-block' : 'd-none'}>
-              <FilesContent data={filesToDisplay} type={selectedFile} id={selected}/>
+              <div className="row m-b-20 file-content">
+                <FileHeader type={selectedFile} id={selected} doneUpload={()=> handleRefetch()}/>
+                <FilesContent data={filesToDisplay} type={selectedFile} id={selected}/>
+              </div>
             </div>
           </Col>
         </Row>
