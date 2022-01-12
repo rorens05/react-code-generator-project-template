@@ -3,29 +3,22 @@ import {Button, Modal,Table, ProgressBar, Form } from 'react-bootstrap';
 import FilesAPI from '../../api/FilesApi';
 
 function FileHeader(props) {
-  const [smShow, setSmShow] = useState(false);
   const [lgShow, setLgShow] = useState(false);
   const [files, setFiles] = useState([]);
   const [doneUpload, setDoneUpload] = useState(false)
-  const [singleUpload, setSingleUpload] = useState({})//just for single file upload
   const [uploadStarted, setUploadStarted] = useState(false)
 
   const handlefilesUpload = (file) => {
     if(file != ''){
       getBase64(file).then(
         data => {
-            let toAdd = {
-              fileName: file.name,
-              base64String: data,
-              size: file.size,
-              progress: 0
-            },
-            singelData ={ //just for single file upload
-              fileName: file.name,
-              base64String: data,
-            }
-            setSingleUpload(singelData);  //just for single file upload
-            setFiles([...files, toAdd]);
+          let toAdd = {
+            fileName: file.name,
+            base64String: data,
+            size: file.size,
+            progress: 0
+          };
+          setFiles([...files, toAdd]);
         }
       );
     }
@@ -40,11 +33,7 @@ function FileHeader(props) {
     });
   }
 
-  const handleUploadSingleFile = async() => { //just for single file upload
-    let save = {
-      data: singleUpload,
-      id: props.id
-    }
+  const handleUploadFile = async() => {
     setUploadStarted(true)
     //course uploading
     if(props.type == 'Course'){
@@ -164,7 +153,7 @@ function FileHeader(props) {
              })}
             </tbody>
           </Table>
-          <Button size="lg" variant="outline-warning" disabled={files.length == 0 || uploadStarted ? true : false} className={doneUpload ? 'd-none' : "file-library file-button-upload" } onClick={()=> handleUploadSingleFile()}>{uploadStarted ? 'Uploading...' : 'Upload'}</Button>
+          <Button size="lg" variant="outline-warning" disabled={files.length == 0 || uploadStarted ? true : false} className={doneUpload ? 'd-none' : "file-library file-button-upload" } onClick={()=> handleUploadFile()}>{uploadStarted ? 'Uploading...' : 'Upload'}</Button>
           <Button size="lg" variant="outline-warning" className={ doneUpload ? "file-library file-button-upload" : 'd-none'} onClick={()=> handleDoneUpload()}>Done</Button>
         </Modal.Body>
       </Modal>
