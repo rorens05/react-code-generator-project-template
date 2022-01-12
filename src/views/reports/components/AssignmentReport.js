@@ -1,58 +1,101 @@
 import React, { useState } from 'react'
 import {Accordion, Row, Col, Button} from 'react-bootstrap'
 import AssignmentContent from './AssignmentContent'
+import AssignmentReportContent from '../contents/AssignmentReportContent'
+import ClassesAPI from './../../../api/ClassesAPI'
 
-function AssignmentReport() {
+function AssignmentReport({classesModules, setClassesModules, selectedClassId, viewAssignmentReport, setViewAssignmentReport}) {
+
+const [assignmentPerModule, setAssignmentPerModule] = useState([])
+const [assignmentReport, setAssignmentReport] = useState([])
 const [open, setOpen] = useState(false)
+const [loading, setLoading] = useState(false)
+
 const handleOpen = e =>{
     e.preventDefault()
     setOpen(true)
+}
+
+const getClassAssignmentModules = async(e, moduleId) => {
+  console.log(selectedClassId)
+  sessionStorage.setItem('assignmentModuleId', moduleId)
+  let sessionModuleId = sessionStorage.getItem('assignmentModuleId')
+  let response = await new ClassesAPI().getClassAssignmentModules(selectedClassId, sessionModuleId)
+  if(response.ok){
+    setAssignmentPerModule(response.data)
+    console.log(response.data)
+  }else{
+    alert("Something went wrong while fetching all courses")
   }
-    return (
-      <div> 
-        {open === true?(<AssignmentContent />):<span>
+}
+
+const assignmentColumns = () => {
+  if(assignmentReport.length > 0){ 
+    return assignmentReport[0].columnAssignments?.map(item => item.assignmentName) || []
+  }
+  return []
+}
+
+const getAssignmentReport = async(e, assignmentid, assignmentname) => {
+  setLoading(true)
+  sessionStorage.setItem('assignmentName',assignmentname)
+  setViewAssignmentReport(false)
+  console.log(viewAssignmentReport)
+  let response = await new ClassesAPI().getAssignmentReport(selectedClassId, assignmentid)
+  setLoading(false)
+  if(response.ok){
+    setAssignmentReport(response.data)
+    console.log(response.data)
+  }else{
+    alert(response.data.errorMessage)
+  }
+}
+if(viewAssignmentReport === true){
+  return (
+    <div> 
         <Accordion>
-          <Accordion.Item eventKey="0">
-            <Accordion.Header><div className='unit-exam'>Unit 1 </div></Accordion.Header>
+        {classesModules.map(item => {
+          return(
+            <Accordion.Item eventKey={item.id}>
+            <Accordion.Header onClick={(e) => getClassAssignmentModules(e, item.id)}><div className='unit-exam'>{item.moduleName} </div></Accordion.Header>
               <Accordion.Body>
-                <Row>
-                  <Col sm={8}>
-                    <div className='title-exam'>
-                      <Button variant="link" onClick={handleOpen}><h3>Assignment</h3></Button>
-                    </div>
-                  </Col>
-                  <Col sm={9} className='instruction-exam' >
-                    <p>Submit your answer here.</p>
-                  </Col>
-                  <Col sm={3} className='icon-exam'>
-                    <i class="fas fa-edit"style={{paddingRight:'10px'}}></i>
-                    <i class="fas fa-trash-alt" style={{paddingRight:'10px'}}></i>
-                  </Col>
-                </Row>
-             </Accordion.Body>
-          </Accordion.Item>
-          <Accordion.Item eventKey="1 ">
-            <Accordion.Header><div className='unit-exam'>Unit 2 </div></Accordion.Header>
-              <Accordion.Body>
-                <Row>
-                  <Col sm={8}>
-                    <div className='title-exam'>
-                      Assignment 2
-                    </div>
-                  </Col>
-                  <Col sm={9} className='instruction-exam' >
-                    <p>Submit your answer here.</p>
-                  </Col>
-                  <Col sm={3} className='icon-exam'>
-                    <i class="fas fa-edit"style={{paddingRight:'10px'}}></i>
-                    <i class="fas fa-trash-alt" style={{paddingRight:'10px'}}></i>
-                  </Col>
-                </Row>
-             </Accordion.Body>
-          </Accordion.Item>
-        </Accordion>
-              </span>}     
+                {assignmentPerModule.map((item, index) => { 
+                return(
+                  item.classAssignment !== null &&
+                  <Row>
+                    <Col sm={8}>
+                      <div className='title-exam' onClick={(e) => getAssignmentReport(e, item.assignment.id, item.assignment.assignmentName)}>
+                        {item.assignment.assignmentName}
+                      </div>
+                      <div className='code-exam'>
+                        EQF1
+                      </div>
+                    </Col>
+                    <Col sm={9} className='instruction-exam' >
+                      <p>{item.instructions}</p>
+                    </Col>
+                    <Col sm={3} className='icon-exam'>
+                      <i class="fas fa-eye" style={{paddingRight:'10px'}} ></i>{' '}
+                      <i class="fas fa-edit"style={{paddingRight:'10px'}}></i>
+                      <i class="fas fa-trash-alt" style={{paddingRight:'10px'}}></i>
+                    </Col>
+                    <hr></hr>
+                  </Row>
+                  )
+                })
+              }
+              </Accordion.Body>
+            </Accordion.Item>
+            )
+          })
+          }
+          </Accordion>    
     </div>
-  )
+  )}else{
+    return(
+      <AssignmentReportContent assignmentColumns={assignmentColumns()} setAssignmentReport={setAssignmentReport} assignmentReport={assignmentReport}/>
+    )
+  }
+  
 }
 export default AssignmentReport

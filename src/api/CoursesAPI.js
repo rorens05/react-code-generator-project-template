@@ -48,7 +48,7 @@ export default class CoursesAPI extends Base {
 
   getCourseUnitPages = async (courseid, moduleid) => {
     return this.sendRequest({
-      path: `/api/Content/course/${courseid}/module/${moduleid}/pages`,
+      path: `/api/Content/course/${courseid}/module/${moduleid}`,
       method: 'GET',
     });
   };
@@ -125,9 +125,9 @@ export default class CoursesAPI extends Base {
     });
   };
 
-  editTask = async (moduleid, data) => {
+  editTask = async (taskid, data) => {
     return this.sendRequest({
-      path: `/api/Task/module/${moduleid}`,
+      path: `/api/Task/${taskid}`,
       method: 'PUT',
       data
     });
@@ -141,9 +141,9 @@ export default class CoursesAPI extends Base {
     });
   };
 
-  editAssignment = async (moduleid, data) => {
+  editAssignment = async (assignmentid, data) => {
     return this.sendRequest({
-      path: `/api/Assignment/module/${moduleid}`,
+      path: `/api/Assignment/${assignmentid}`,
       method: 'PUT',
       data
     });
@@ -188,6 +188,14 @@ export default class CoursesAPI extends Base {
     return this.sendRequest({
       path: `/api/Course/${id}/link/type/3`,
       method: 'GET',
+    });
+  };
+
+  deleteLesson = async (id, data) => {
+    return this.sendRequest({
+      path: `/api/Content/${id}`,
+      method: 'DELETE',
+      data
     });
   };
 

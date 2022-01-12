@@ -506,6 +506,15 @@ border-top-right-radius: 0px !important;
   border: none!important;
   background: none!important;
 }
+
+.feed-logo{
+  outline: none!important;
+  color:#BCBCBC !important;
+  font-size: 35px!important;
+  border: none!important;
+  background: none!important;
+}
+
 .feed-box{
   border: none!important;
   background: none!important;
@@ -604,6 +613,10 @@ border-top-right-radius: 0px !important;
 .login-with-qr-container{
   padding-top: 10px;
   text-align: center;
+}
+
+.icon-post{
+  width: 4%!important;
 }
 
 .login-with-qr-container .qr-container{
@@ -728,6 +741,14 @@ border-top-right-radius: 0px !important;
   color: #EE9337;
   font-size: 28px;
 }
+.td-icon-report-person{
+  color: #EE9337;
+  font-size: 28px;
+}
+.td-icon-report-redo{
+  color: #EE9337;
+  font-size: 28px;
+}
 .td-title-exam{
   font-size: 18px;
   color: #EE9337;
@@ -811,4 +832,26 @@ border-top-right-radius: 0px !important;
   text-overflow: ellipsis;
   width: 500px;
   max-width: 550px !important;
+}
+
+.tfi-font-color {
+  color:#EE9337 !important;
+}
+
+.font-exam-analysis-header {
+  /* color: #EE9337!important; */
+  color: #707070;
+  font-size: 36px!important;
+}
+
+.font-exam-analysis-content-24 {
+  /* color: #EE9337!important; */
+  color: #707070;
+  font-size: 24px!important;
+}
+
+.font-exam-analysis-content-24-tfi {
+  /* color: #EE9337!important; */
+  color:#EE9337;
+  font-size: 24px!important;
 }

@@ -1,67 +1,72 @@
 import React, {useState, useEffect, useContext} from 'react'
 import {Accordion, Row, Col} from 'react-bootstrap'
-import ExamReportContent from '../contents/ExamReportContent'
+import TaskReportContent from '../contents/TaskReportContent'
 import ClassesAPI from './../../../api/ClassesAPI'
 
-function ExamReport({classesModules, setClassesModules, selectedClassId, viewTestReport, setViewTestReport, showReportHeader, setShowReportHeader}) {
+function TaskReport({classesModules, setClassesModules, selectedClassId, viewTaskReport, setViewTaskReport}) {
 
-  const [testPerModule, setTestPerModule] = useState([])
-  const [testReport, setTestReport] = useState([])
+  const [taskPerModule, setTaskPerModule] = useState([])
+  const [taskReport, setTaskReport] = useState([])
   const [loading, setLoading] = useState(false)
-  
 
-  const getClassTestModules = async(e, moduleId) => {
+  const getClassTaskModules = async(e, moduleId) => {
     console.log(selectedClassId)
     sessionStorage.setItem('testModuleId', moduleId)
     let sessionModuleId = sessionStorage.getItem('testModuleId')
-    let response = await new ClassesAPI().getClassTestModules(selectedClassId, sessionModuleId)
+    let response = await new ClassesAPI().getClassTaskModules(selectedClassId, sessionModuleId)
     if(response.ok){
-      setTestPerModule(response.data)
+      setTaskPerModule(response.data)
       console.log(response.data)
     }else{
       alert("Something went wrong while fetching all courses")
     }
   }
 
-  const getTestReport = async(e, testid, testname, classid) => {
+  const getTaskReport = async(e, taskid, taskname) => {
     setLoading(true)
-    sessionStorage.setItem('testName',testname)
-    let sessionClass = sessionStorage.getItem("classId")
-    setViewTestReport(false)
-    console.log(viewTestReport)
-    let response = await new ClassesAPI().getTestReport(sessionClass, testid)
+    setViewTaskReport(false)
+    sessionStorage.setItem('taskName',taskname)
+    let response = await new ClassesAPI().getTaskReport(selectedClassId, taskid, taskname)
     setLoading(false)
     if(response.ok){
-      setTestReport(response.data)
+      setTaskReport(response.data)
       console.log(response.data)
     }else{
       alert(response.data.errorMessage)
     }
   }
 
-  if(viewTestReport === true){
+  const taskColumns = () => {
+    if(taskReport.length > 0){ 
+      return taskReport[0].columnTasks?.map(item => item.taskName) || []
+    }
+    return []
+  }
+
+  if(viewTaskReport === true){
   return (
     <div>
       <Accordion>
       {classesModules.map(item => {
         return(
           <Accordion.Item eventKey={item.id}>
-          <Accordion.Header onClick={(e) => getClassTestModules(e, item.id)}><div className='unit-exam'>{item.moduleName} </div></Accordion.Header>
+          <Accordion.Header onClick={(e) => getClassTaskModules(e, item.id)}><div className='unit-exam'>{item.moduleName} </div></Accordion.Header>
             <Accordion.Body>
-              {testPerModule.map((item, index) => { 
+              {taskPerModule.map((item, index) => { 
               return(
                 item.classTest !== null &&
                 <Row>
                   <Col sm={8}>
-                    <div className='title-exam' onClick={(e) => getTestReport(e, item.test.id, item.test.testName, item.test.classId)}>
-                      {item.test.testName}
+                    <div className='title-exam' onClick={(e) => getTaskReport(e, item.task.id, item.task.taskName)}>
+                      {item.task.taskName}
                     </div>
                     <div className='code-exam'>
                       EQF1
                     </div>
                   </Col>
                   <Col sm={9} className='instruction-exam' >
-                    <p>{item.test.testInstructions}</p>
+                    {/* <p>{item.task.instructions}</p> */}
+                    <div dangerouslySetInnerHTML={{ __html: item.task.instructions }} />
                   </Col>
                   <Col sm={3} className='icon-exam'>
                     <i class="fas fa-eye" style={{paddingRight:'10px'}} ></i>{' '}
@@ -81,10 +86,10 @@ function ExamReport({classesModules, setClassesModules, selectedClassId, viewTes
       </Accordion>
     </div>
   )
-  }else if(viewTestReport === false){
+  }else{
     return(
-      <ExamReportContent showReportHeader={showReportHeader} setShowReportHeader={setShowReportHeader} setTestReport={setTestReport} testReport={testReport}/>
+      <TaskReportContent setTaskReport={setTaskReport} taskReport={taskReport} taskColumns={taskColumns()}/>
     )
   }
 }
-export default ExamReport
+export default TaskReport

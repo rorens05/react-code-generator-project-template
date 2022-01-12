@@ -14,8 +14,7 @@ export default function CoursesTask({moduleInfo, setModuleInfo}) {
   const [selectedTask, setSelectedTask] = useState(null)
   const [taskInfo, setTaskInfo] = useState([])
 
-  const courseid = sessionStorage.getItem('courseid')
-  const moduleid = sessionStorage.getItem('moduleid')
+  const sessionCourse = sessionStorage.getItem('courseid')
 
   const handleOpenCreateTaskModal = () =>{
     setCreateTaskModal(!openCreateTaskModal)
@@ -30,7 +29,8 @@ export default function CoursesTask({moduleInfo, setModuleInfo}) {
   const getTaskInfo = async(e, data) => {
     setLoading(true)
     sessionStorage.setItem('moduleid', data)
-    let response = await new CoursesAPI().getTaskInformation(data)
+    const sessionModule = sessionStorage.getItem('moduleid')
+    let response = await new CoursesAPI().getTaskInformation(sessionModule)
     setLoading(false)
     if(response.ok){
       setTaskInfo(response.data)
@@ -56,6 +56,8 @@ export default function CoursesTask({moduleInfo, setModuleInfo}) {
           </InputGroup>
         </div>
       </div>
+      <EditTask setTaskInfo={setTaskInfo} selectedTask={selectedTask} openEditTaskModal={openEditTaskModal} setOpenEditTaskModal={setOpenEditTaskModal}/>
+      <CreateTask setTaskInfo={setTaskInfo} openCreateTaskModal={openCreateTaskModal} setCreateTaskModal={setCreateTaskModal}/>
       <Accordion defaultActiveKey="0">
         {moduleInfo.map((item, index) => {
           return(
@@ -76,13 +78,11 @@ export default function CoursesTask({moduleInfo, setModuleInfo}) {
                         <Button className="m-r-5 color-white tficolorbg-button" size="sm"  onClick={(e) => handleOpenEditTaskModal(e, item)}><i className="fa fa-edit"></i></Button>
                         <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i className="fa fa-trash"></i></Button>
                       </Col>
-                      <EditTask selectedTask={selectedTask} openEditTaskModal={openEditTaskModal} setOpenEditTaskModal={setOpenEditTaskModal}/>
                     </Row>
                   )
                 })}
               </Accordion.Body>
             </Accordion.Item>
-            <CreateTask openCreateTaskModal={openCreateTaskModal} setCreateTaskModal={setCreateTaskModal}/>
             </>
             )
           })

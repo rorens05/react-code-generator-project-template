@@ -5,9 +5,16 @@ import ClassesAPI from '../../api/ClassesAPI'
 import { useParams } from 'react-router'
 import EditAssignment from './components/Assignment/EditAssignment'
 import SweetAlert from 'react-bootstrap-sweetalert';
+import moment from 'moment'
+import AssignAssignment from './components/Assignment/AssignAssignment'
+import EditAssignedAssignment from './components/Assignment/EditAssignedAssignment'
 
 function ClassAssignment({classInfo}) {
   const [modal, setModal] = useState(false)
+  const [assginModal, setAssignModal] = useState(false)
+  const [editAssignAssignmentItem, setEditAssignAssignmentItem] = useState()
+  const [editAssignedAssignmentModal, setEditAssignedAssignmentModal] = useState(false)
+  const [assignmentId, setAssignmentId] = useState('')
   const [module, setModule] = useState([])
   const [assignment, setAssignment] = useState([])
   const [editAssignment, setEditAssignment] = useState()
@@ -16,10 +23,25 @@ function ClassAssignment({classInfo}) {
   const [deleteNotify, setDeleteNotify] = useState(false)
   const [itemId, setItemId] = useState('')
   const [moduleId, setModuleId] = useState()
+  const dateCompareNow = moment().format("YYYY-MM-DD")
+  const timeNow = moment().format('HH:mm');
+  const dateTimeNow = dateCompareNow + ' ' + '00:00:00';
+
+  console.log('this is assignment:', assignment)
 
   const toggle = (e, item) =>{
     setEditAssignment(item)
     setModal(!modal)
+  }
+
+  const editAssignedAssignmentToggle = (e, item) => {
+    setEditAssignAssignmentItem(item)
+    setEditAssignedAssignmentModal(!editAssignedAssignmentModal)
+  }
+
+  const assignAssignmentToggle = (e, item) => {
+    setAssignmentId(item)
+    setAssignModal(!assginModal)
   }
 
   const cancelSweetAlert = () => {
@@ -49,6 +71,7 @@ function ClassAssignment({classInfo}) {
     let response = await new ClassesAPI().getAssignment(id, item)
       if(response.ok){
         setAssignment(response.data)
+        setModuleId(item)
     }else{
       alert("Something went wrong while fetching all Assignment")
     }
@@ -107,25 +130,67 @@ function ClassAssignment({classInfo}) {
               </div>
             </Col>
             {assigItem.assignment.classId?( 
-                    <Col sm={3} className='icon-exam'>
-                        <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button>
-                        <Button onClick={(e) => toggle(e, assigItem)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-edit"></i></Button>
-                        <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-user-clock"></i></Button>
-                        <Button onClick={() => handleDeleteNotify(assigItem?.assignment?.id, item?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-trash-alt"></i></Button>
-                      </Col>
-                      ):
-                      <Col sm={3} className='icon-exam'>
-                        <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button>
-                        <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-user-clock"></i></Button>
-                      </Col>
-                   }
-              <Col sm={7} className='due-date-discusstion' >
+              <Col sm={3} className='icon-exam'>
+                {/* <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button> */}
+                <Button onClick={(e) => toggle(e, assigItem)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-edit"></i></Button>
+                {assigItem?.classAssignment?(
+                  <Button onClick={(e) => editAssignedAssignmentToggle(e, assigItem)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-clock"></i></Button>
+                ):
+                  <Button onClick={(e) => assignAssignmentToggle(e, assigItem?.assignment?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-user-clock"></i></Button>
+                } 
+                  <Button onClick={() => handleDeleteNotify(assigItem?.assignment?.id, item?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-trash-alt"></i></Button>
+              </Col>
+            ):
+            <>
+            {assigItem.assignment.classId?(
+              <>
+              <Col sm={3} className='icon-exam'>
+                {/* <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button> */}
+                <Button onClick={(e) => assignAssignmentToggle(e, assigItem?.assignment?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-user-clock"></i></Button>
+              </Col>
+              </>
+            ):
+              <>
+              <Col sm={3} className='icon-exam'>
+                {/* <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button> */}
+                <Button onClick={(e) => editAssignedAssignmentToggle(e, assigItem)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-clock"></i></Button>
+              </Col>
+              </>
+            }
+              </>
+            }
+            {assigItem?.classAssignment?(
+              <Row>
+                {
+                  moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isBefore(moment(assigItem?.classAssignment?.startDate + ' ' + assigItem?.classAssignment?.startTime, 'YYYY-MM-DD HH:mm')) &&  
+                    <div style={{color:'#EE9337', fontSize:'15px'}}><b>Upcoming</b></div>
+                }
+                {
+                  moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isAfter(moment(assigItem?.classAssignment?.endDate + ' ' + assigItem?.classAssignment?.endTime, 'YYYY-MM-DD HH:mm')) &&
+                    <div style={{color:'#EE9337', fontSize:'15px'}}><b>Ended</b></div>
+                }
+                {
+                  moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isSame(moment(assigItem?.classAssignment?.startDate + ' ' + assigItem?.classAssignment?.startTime, 'YYYY-MM-DD HH:mm')) &&
+                  <div style={{color:'#EE9337', fontSize:'15px'}}><b>Ongoing</b></div>
+                }
+                {
+                  moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isAfter(moment(assigItem?.classAssignment?.startDate + ' ' + assigItem?.classAssignment?.startTime, 'YYYY-MM-DD HH:mm')) &&
+                  moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isBefore(moment(assigItem?.classAssignment?.endDate + ' ' + assigItem?.classAssignment?.endTime, 'YYYY-MM-DD HH:mm')) &&
+                    <div style={{color:'#EE9337', fontSize:'15px'}}><b>Ongoing</b></div>
+                } 
+                <Col sm={7} className='due-date-discusstion' >
                 <div className='inline-flex'>
                   <div className='text-color-bcbcbc'>
                     Start Date:&nbsp;
                   </div>
+                <div className='text-color-707070'>
+                  {moment(assigItem?.classAssignment.startDate).format('LL')}&nbsp;
+                </div>
+                  <div className='text-color-bcbcbc'>
+                    Start Time:&nbsp;
+                  </div>
                   <div className='text-color-707070'>
-                    November 11/10:30AM
+                    {assigItem?.classAssignment?.startTime}
                   </div>
                 </div>
               </Col>
@@ -135,13 +200,29 @@ function ClassAssignment({classInfo}) {
                     End Date:&nbsp;
                   </div>
                   <div className='text-color-707070'>
-                    November 12/10:30AM
+                    {moment(assigItem?.classAssignment.endDate).format('LL')}&nbsp;
+                  </div>
+                  <div className='text-color-bcbcbc'>
+                    End Time:&nbsp;
+                  </div>
+                  <div className='text-color-707070'>
+                    {assigItem?.classAssignment?.endTime}
                   </div>
                 </div>
               </Col>
-            <div className='text-color-bcbcbc' >
-              ___________________________________________________________________________________________________________________________________________________________________________________________________________
+              <div className='text-color-bcbcbc' >
+                ___________________________________________________________________________________________________________________________________________________________________________________________________________
+              </div>
+            </Row>):
+              <div>                      
+                <div style={{color:'red'}}>
+                    <b>Not Assigned</b>
+                </div>
+              <div className='text-color-bcbcbc' >
+                ___________________________________________________________________________________________________________________________________________________________________________________________________________
+              </div>
             </div>
+            }
           </Row>)
         })}
          
@@ -150,6 +231,8 @@ function ClassAssignment({classInfo}) {
       })}
       </Accordion>
       <EditAssignment toggle={toggle} modal={modal} editAssignment={editAssignment} getAssignmentList={getAssignmentList} moduleId={moduleId} />
+      <AssignAssignment moduleId={moduleId} assignmentId={assignmentId} assginModal={assginModal} assignAssignmentToggle={assignAssignmentToggle} getAssignmentList={getAssignmentList} />
+      <EditAssignedAssignment moduleId={moduleId} getAssignmentList={getAssignmentList} editAssignAssignmentItem={editAssignAssignmentItem} editAssignedAssignmentModal={editAssignedAssignmentModal} editAssignedAssignmentToggle={editAssignedAssignmentToggle} />
     </div>
   )
 }

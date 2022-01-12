@@ -4,7 +4,7 @@ import Modal from 'react-bootstrap/Modal'
 import CoursesAPI from "../../../api/CoursesAPI";
 import SubjectAreaAPI from "../../../api/SubjectAreaAPI";
 
-export default function EditLesson({openEditLessonModal, setOpenEditLessonModal, selectedLesson}){
+export default function EditLesson({openEditLessonModal, setOpenEditLessonModal, selectedLesson, setLessonInfo}){
 
 	const [loading, setLoading] = useState(false)
   const [modulePages, setModulePages] = useState([])
@@ -21,21 +21,38 @@ export default function EditLesson({openEditLessonModal, setOpenEditLessonModal,
     setOpenEditLessonModal(false)
   }
 
-	const saveEditLesson = async(e, id) => {
+	const saveEditLesson = async(e, id ) => {
     e.preventDefault()
     setLoading(true)
     let response = await new CoursesAPI().editLesson(
-      id,
+      selectedLesson?.id,
       {pageName, sequenceNo, content}
     )
     if(response.ok){
       alert("Saved")
       getCourseUnitPages()
+      console.log(getCourseUnitPages())
+    getCourseLessons(sessionCourse, sessionModule)
+
 			handleCloseModal(e)
     }else{
       alert(response.data.errorMessage)
     }
     setLoading(false)
+  }
+
+  const getCourseLessons = async(e, data, modulename) => {
+    setLoading(true)
+    sessionStorage.setItem('moduleid', data)
+    sessionStorage.setItem('modulename', modulename)
+    let response = await new CoursesAPI().getCourseUnitPages(sessionCourse, data)
+    setLoading(false)
+    if(response.ok){
+      setLessonInfo(response.data)
+      console.log(response.data)
+    }else{
+      alert("Something went wrong while fetching all pages")
+    }
   }
 
   const getCourseUnitPages = async(e, data, data1) => {
@@ -100,6 +117,7 @@ export default function EditLesson({openEditLessonModal, setOpenEditLessonModal,
                   </Form.Label>
                   <Form.Control 
                     defaultValue={selectedLesson?.content}
+                    // value={selectedLesson?.content}
                     className="custom-input" 
                     size="lg" 
                     as="textarea"

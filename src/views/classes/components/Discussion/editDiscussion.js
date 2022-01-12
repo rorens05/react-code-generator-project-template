@@ -1,12 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Modal from 'react-bootstrap/Modal'
 import { Form, Button, } from 'react-bootstrap'
 import ClassesAPI from '../../../../api/ClassesAPI'
+import SweetAlert from 'react-bootstrap-sweetalert';
 
 function EditDiscussion({modal, toggle, editDiscussionItem, getDiscussionUnit}) {
-  console.log('this is discussion:', editDiscussionItem)
   const [discussionName, setDiscussionName] = useState('')
   const [instructions, setInstructions] = useState('')
+  const [editNotufy, setEditNotify] = useState(false)
+
+  const closeNotify = () =>{
+    setEditNotify(false)
+  }
 
   const updateDiscussion = async (e) =>{
     e.preventDefault()
@@ -15,12 +20,20 @@ function EditDiscussion({modal, toggle, editDiscussionItem, getDiscussionUnit}) 
     let response = await new ClassesAPI().updateDiscussion(id, {discussionName, instructions})
       if(response.ok){
         // alert('Discussion Updated')
+        setEditNotify(true)
         getDiscussionUnit(null, mId)
         toggle(e)
       }else{
         alert(response.data.errorMessage)
       }
   }
+
+  useEffect(() => {
+    if(editDiscussionItem !== null) {
+      setDiscussionName(editDiscussionItem?.discussion?.discussionName)
+      setInstructions(editDiscussionItem?.discussion?.instructions)
+		}
+  }, [editDiscussionItem])
 
   return (
     <div>
@@ -36,7 +49,6 @@ function EditDiscussion({modal, toggle, editDiscussionItem, getDiscussionUnit}) 
           <Form.Label>Unit</Form.Label>
             <Form.Select disabled>
               <option>{editDiscussionItem?.module?.moduleName}</option>
-
             </Form.Select>
               </Form.Group>
               <Form.Group className="mb-4">
@@ -53,6 +65,12 @@ function EditDiscussion({modal, toggle, editDiscussionItem, getDiscussionUnit}) 
         </Form> 
         </Modal.Body>
         </Modal>
+        <SweetAlert 
+            success
+            show={editNotufy} 
+            title="Done!" 
+            onConfirm={closeNotify}>
+          </SweetAlert>
     </div>
   )
 }

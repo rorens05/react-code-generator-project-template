@@ -50,8 +50,8 @@ export default function CourseCreate({setCourse, openModal, setOpenModal}){
     )
     if(response.ok){
       alert("Saved")
-			getCourses()
-			handleCloseModal(e)
+	  handleCloseModal(e)
+	  getCourses()
     }else{
       alert(response.data.errorMessage)
     }
