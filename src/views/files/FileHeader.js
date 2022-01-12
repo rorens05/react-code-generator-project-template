@@ -1,50 +1,163 @@
-import React, {useState} from 'react'
-import {InputGroup, FormControl, Button, Modal,Table, ProgressBar } from 'react-bootstrap';
+import React, {useState, useEffect, useRef} from 'react'
+import {Button, Modal,Table, ProgressBar, Form } from 'react-bootstrap';
+import FilesAPI from '../../api/FilesApi';
 
-function FileHeader() {
-		const [smShow, setSmShow] = useState(false);
-		const [lgShow, setLgShow] = useState(false);
-		return (
-			<div>
-				<div className="row m-b-20">
-					<div className="col-md-10 pages-header file-content"><h1>Files<i class="fas fa-folder-plus file-upload-content td-file-page"></i></h1>
-							<h1 className="file-upload-content"><Button size="sm" variant="outline-warning"><i class="fas fa-folder file-upload-content "></i> New Folder</Button></h1> <h5 className="fileupload"> OR </h5>
-							<h1 className="file-upload-content"><Button className="file-upload-content" size='sm' variant="outline-warning" onClick={() => setLgShow(true)}> +Upload File</Button></h1>
-					</div>
-				</div>
-						<Modal size="lg" show={lgShow} onHide={() => setLgShow(false)} aria-labelledby="example-modal-sizes-title-lg">
-							<Modal.Header closeButton>
-								<Modal.Title id="example-modal-sizes-title-lg">
-									Upload File
-								</Modal.Title>
-							</Modal.Header>
-							<Modal.Body>
-											<div style={{ paddingBottom:'45px', paddingTop:'25px'}}><Button size='lg' variant="outline-warning" className="file-library"><i class="fas fa-paperclip"></i> Choose Files</Button></div>
-									<Table responsive="sm">
-										<thead>
-											<tr>
-												<th>File Name</th>
-												<th>Progress</th>
-												<th>Size</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>Exam1_Delacruz.docx</td>
-												<td><ProgressBar variant="warning" now={100} /></td>
-												<td>317.56 KB <i class="fas fa-times td-file-page"></i></td>
-											</tr>
-											<tr>
-												<td>Exam1_Delacruz.docx</td>
-												<td><ProgressBar variant="warning" now={100} /></td>
-												<td>317.56 KB <i class="fas fa-times td-file-page"></i></td>
-											</tr>
-										</tbody>
-									</Table>
-										<Button size="lg" variant="outline-warning" className="file-library file-button-upload">Upload</Button>
-							</Modal.Body>
-						</Modal>
-		</div>
+function FileHeader(props) {
+  const [lgShow, setLgShow] = useState(false);
+  const [files, setFiles] = useState([]);
+  const [doneUpload, setDoneUpload] = useState(false)
+  const [uploadStarted, setUploadStarted] = useState(false)
+
+  const handlefilesUpload = (file) => {
+    if(file != ''){
+      getBase64(file).then(
+        data => {
+          let toAdd = {
+            fileName: file.name,
+            base64String: data,
+            size: file.size,
+            progress: 0
+          };
+          setFiles([...files, toAdd]);
+        }
+      );
+    }
+  }
+
+  const getBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
+  }
+
+  const handleUploadFile = async() => {
+    setUploadStarted(true)
+    //course uploading
+    if(props.type == 'Course'){
+      files.map( async(item, index) => {
+        let tempData = {
+          fileName: item.fileName,
+          base64String: item.base64String,
+        },
+        toSave = {
+          data: tempData,
+          id: props.id
+        }
+        files[index].progress = 30;
+        setFiles([...files])
+        let response = await new FilesAPI().newCourseFile(toSave)
+        if(response.ok){
+          files[index].progress = 100;
+          setFiles([...files])
+          let allUploaded = files.filter(itm => { //check if all items is already 100% uploaded
+            return itm.progress != 100
+          })
+          setDoneUpload(allUploaded.length == 0 ? true : false)
+        }else{
+          setLgShow(false)
+          setFiles([])
+          setDoneUpload(false)
+          setUploadStarted(false)
+          alert("Something went wrong while creating new file")
+        }
+      })
+    }
+    // class uploading
+    if(props.type == 'Class'){
+      files.map( async(item, index) => {
+        let tempData = {
+          fileName: item.fileName,
+          base64String: item.base64String,
+        },
+        toSave = {
+          data: tempData,
+          id: props.id
+        }
+        files[index].progress = 30;
+        setFiles([...files])
+        let response = await new FilesAPI().newClassFile(toSave)
+        if(response.ok){
+          files[index].progress = 100;
+          setFiles([...files])
+          let allUploaded = files.filter(itm => { //check if all items is already 100% uploaded
+            return itm.progress != 100
+          })
+          setDoneUpload(allUploaded.length == 0 ? true : false)
+        }else{
+          setLgShow(false)
+          setFiles([])
+          setDoneUpload(false)
+          setUploadStarted(false)
+          alert("Something went wrong while creating new file")
+        }
+      })
+    }
+  }
+
+  const handelRemoveSelectedFiles = (index) => {
+    let temp = files
+    temp.splice(index, 1)
+    setFiles([...temp])
+  }
+
+  const handleDoneUpload = () => {
+    setLgShow(false)
+    setFiles([])
+    props.doneUpload()
+    setDoneUpload(false)
+    setUploadStarted(false)
+  }
+
+  return (
+    <div>
+      <div className="row m-b-20">
+        <div className="col-md-10 pages-header file-content"><h1>Files<i class="fas fa-folder-plus file-upload-content td-file-page"></i></h1>
+            {/* <h1 className="file-upload-content"><Button size="sm" variant="outline-warning"><i class="fas fa-folder file-upload-content "></i> New Folder</Button></h1> <h5 className="fileupload"> OR </h5> */}
+            <h1 className="file-upload-content"><Button className="file-upload-content" size='sm' variant="outline-warning" onClick={() => setLgShow(true)}> +Upload File</Button></h1>
+        </div>
+      </div>
+      <Modal size="lg" show={lgShow} onHide={() => setLgShow(false)} aria-labelledby="example-modal-sizes-title-lg">
+        <Modal.Header closeButton>
+          <Modal.Title id="example-modal-sizes-title-lg">
+            Upload File
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div style={{ paddingBottom:'45px', paddingTop:'25px'}}>
+            <Button size='lg' variant="outline-warning" className="file-library" onClick={() => { document.getElementById('inputFile').click() }}>
+              <i class="fas fa-paperclip"></i>
+                Choose Files
+              </Button>
+              <input id='inputFile' className='d-none' type='file' placeholder='Choose color' style={{ backgroundColor: 'inherit' }} onChange={(e) => handlefilesUpload(e.target.files[0])} />
+          </div>
+          <Table responsive="sm">
+            <thead>
+              <tr>
+                <th>File Name</th>
+                <th>Progress</th>
+                <th>Size</th>
+              </tr>
+            </thead>
+            <tbody>
+             {files?.map((item, index) => {
+              return(
+                <tr key={item.fileName}>
+                  <td>{item.fileName}</td>
+                  <td><ProgressBar variant="warning" now={item.progress} /></td>
+                  <td>{item.size} KB <i class="fas fa-times td-file-page" onClick={()=> handelRemoveSelectedFiles(index)}></i></td>
+                </tr>
+              );
+             })}
+            </tbody>
+          </Table>
+          <Button size="lg" variant="outline-warning" disabled={files.length == 0 || uploadStarted ? true : false} className={doneUpload ? 'd-none' : "file-library file-button-upload" } onClick={()=> handleUploadFile()}>{uploadStarted ? 'Uploading...' : 'Upload'}</Button>
+          <Button size="lg" variant="outline-warning" className={ doneUpload ? "file-library file-button-upload" : 'd-none'} onClick={()=> handleDoneUpload()}>Done</Button>
+        </Modal.Body>
+      </Modal>
+    </div>
 	)
 }
 export default FileHeader

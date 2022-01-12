@@ -166,7 +166,7 @@ color:#BCBCBC !important;
 .file-content{
   background-color:#ffffff !important;
   border: 0px !important;
-  margin-top: 50px !important;
+  margin-top: 20px !important;
   border-radius: 10px;
   opacity: 1;
   top: 178px;
@@ -824,6 +824,14 @@ border-top-right-radius: 0px !important;
 
 .tficolorbgbutton {
   background-color:#EE9337 !important;
+}
+
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 500px;
+  max-width: 550px !important;
 }
 
 .tfi-font-color {
