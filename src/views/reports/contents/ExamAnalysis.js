@@ -8,6 +8,12 @@ function ExamAnalysis({classesModules, setClassesModules, selectedClassId, examA
   const [considerAnswer, setConsiderAnswer] = useState("")
   const [loading, setLoading] = useState(false)
   const [openModal, setOpenModal] = useState(false)
+  const [selectedExam, setSelectedExam] = useState([])
+  const [selectedRate, setSelectedRate] = useState("")
+  const [selectedQuestionId, setSelectedQuestionId] = useState("")
+  const [selectedAnswerId, setSelectedAnswerId] = useState("")
+  const [selectedStudentId, setSelectedStudentId] = useState("")
+  const [selectedTestId, setSelectedTestId] = useState("")
 
   let testname = sessionStorage.getItem('testName')
   let classid = sessionStorage.getItem('classId')
@@ -15,6 +21,11 @@ function ExamAnalysis({classesModules, setClassesModules, selectedClassId, examA
   const handleOpenModal = (e, questionid, answerid, studentid, testid, rate) => {
     e.preventDefault()
     setOpenModal(true)
+    setSelectedRate(rate)
+    setSelectedStudentId(studentid)
+    setSelectedTestId(testid)
+    setSelectedAnswerId(answerid)
+    setSelectedQuestionId(questionid)
     console.log(answerid)
 }
 
@@ -164,6 +175,7 @@ function ExamAnalysis({classesModules, setClassesModules, selectedClassId, examA
 												Rate / Points
 										</Form.Label>
 										<Form.Control 
+                      defaultValue={selectedRate}
                       className="custom-input" 
                       size="lg" 
                       type="text" 
@@ -171,7 +183,7 @@ function ExamAnalysis({classesModules, setClassesModules, selectedClassId, examA
                       // onChange={(e) => setDiscussionName(e.target.value)}
                     />
 								</Form.Group>
-								
+								Rate:{selectedRate}, Answerid: {selectedAnswerId}, Studentid: {selectedStudentId}, Testid: {selectedTestId}
 								<span style={{float:"right"}}>
 										<Button className="tficolorbg-button" type="submit">
 												Save

@@ -32,9 +32,8 @@ export default function CoursesTask({moduleInfo, setModuleInfo}) {
 
   const getTaskInfo = async(e, data) => {
     setLoading(true)
-    sessionStorage.setItem('moduleid', data)
-    const sessionModule = sessionStorage.getItem('moduleid')
-    let response = await new CoursesAPI().getTaskInformation(sessionModule)
+    setLocalModuleId(data)
+    let response = await new CoursesAPI().getTaskInformation(data)
     setLoading(false)
     if(response.ok){
       console.log(localModuleId)
@@ -63,7 +62,7 @@ export default function CoursesTask({moduleInfo, setModuleInfo}) {
     setLoading(false)
     if(response.ok){
       // setLessonInfo(response.data)
-      getTaskInfo(sessionModule)
+      getTaskInfo(null, localModuleId)
       console.log(response.data)
     }else{
       alert(response.data.errorMessage)
