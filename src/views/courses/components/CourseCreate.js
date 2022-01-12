@@ -79,7 +79,7 @@ export default function CourseCreate({setCourse, openModal, setOpenModal}){
                       size="lg" 
                       type="text" 
                       placeholder="Enter course name"
-                      onChange={(e) => setCourseName(e.target.value)}
+                      // onChange={(e) => setCourseName(e.target.value)}
                     />
 								</Form.Group>
 								{' '}
@@ -93,67 +93,11 @@ export default function CourseCreate({setCourse, openModal, setOpenModal}){
                       size="lg" 
                       type="text" 
                       placeholder="Enter course description"
-                      onChange={(e) => setDescription(e.target.value)}
+                      // onChange={(e) => setDescription(e.target.value)}
                     />
 								</Form.Group>
 								{' '}
-
-								<Form.Group className="m-b-20">
-										<Form.Label for="subjectArea">
-												Subject Area
-										</Form.Label>
-										<Form.Select size="lg" onChange={(e) => setSubjectArea(e.target.value)}>
-											<option value="">
-												Select subject area
-											</option>
-										{
-											sarea.map(item => {
-												return(
-													<option value={item.id}>
-														{item.subjectAreaName}
-													</option>
-												)
-											})
-										}
-										</Form.Select>
-								</Form.Group>
-								{' '}
-
-								<Form.Group className="m-b-20">
-										<Form.Label for="status">
-												Status
-										</Form.Label>
-										<Form.Select size="lg" onChange={(e) => setStatus(e.target.value)}>
-											<option>
-												Select Status
-											</option>
-											<option value={true}>
-												Active
-											</option>
-											<option value={false}> 
-												Inactive
-											</option>
-										</Form.Select>
-								</Form.Group>
-								{' '}
-
-								<Form.Group className="m-b-20">
-										<Form.Label for="lock">
-												Lock Status
-										</Form.Label>
-										<Form.Select size="lg" onChange={(e) => setLockStatus(e.target.value)}>
-											<option>
-												Select Lock Status
-											</option>
-											<option value={true}>
-												Locked
-											</option>
-											<option value={false}> 
-												Unlocked
-											</option>
-										</Form.Select>
-								</Form.Group>
-								{' '}
+								
 						
 								<span style={{float:"right"}}>
 										<Button className="tficolorbg-button" type="submit">

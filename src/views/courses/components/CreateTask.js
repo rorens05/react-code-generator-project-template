@@ -21,9 +21,10 @@ export default function CreateTask({openCreateTaskModal, setCreateTaskModal, set
 	const saveTask = async(e) => {
     e.preventDefault()
     setLoading(true)
+    let isShared = false
     let response = await new CoursesAPI().createTask(
       sessionModule,
-      {taskName, instructions}
+      {taskName, instructions, isShared:false}
     )
     if(response.ok){
       alert("Saved")

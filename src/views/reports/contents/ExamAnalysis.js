@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react'
-import {Accordion, Row, Col, Table, Button, Form} from 'react-bootstrap'
+import {Accordion, Row, Col, Table, Button, Form, Modal} from 'react-bootstrap'
 import ClassesAPI from '../../../api/ClassesAPI'
 
 function ExamAnalysis({classesModules, setClassesModules, selectedClassId, examAnalysis, setExamAnalysis, testPartAnswers, showReportHeader, setShowReportHeader}) {
@@ -7,9 +7,41 @@ function ExamAnalysis({classesModules, setClassesModules, selectedClassId, examA
   const [showExamAnalysis, setShowExamAnalysis] = useState([])
   const [considerAnswer, setConsiderAnswer] = useState("")
   const [loading, setLoading] = useState(false)
+  const [openModal, setOpenModal] = useState(false)
+  const [selectedExam, setSelectedExam] = useState([])
+  const [selectedRate, setSelectedRate] = useState("")
+  const [selectedQuestionId, setSelectedQuestionId] = useState("")
+  const [selectedAnswerId, setSelectedAnswerId] = useState("")
+  const [selectedStudentId, setSelectedStudentId] = useState("")
+  const [selectedTestId, setSelectedTestId] = useState("")
 
   let testname = sessionStorage.getItem('testName')
   let classid = sessionStorage.getItem('classId')
+
+  const handleOpenModal = (e, questionid, answerid, studentid, testid, rate) => {
+    e.preventDefault()
+    setOpenModal(true)
+    setSelectedRate(rate)
+    setSelectedStudentId(studentid)
+    setSelectedTestId(testid)
+    setSelectedAnswerId(answerid)
+    setSelectedQuestionId(questionid)
+    console.log(answerid)
+}
+
+  const getExamAnalysis = async(e, studentid, classid, testid) => {
+    console.log(selectedClassId)
+    setShowExamAnalysis(true)
+    console.log(showExamAnalysis)
+    let response = await new ClassesAPI().getExamAnalysis(studentid, classid, testid)
+    if(response.ok){
+      setExamAnalysis(response.data)
+      console.log(response.data)
+      
+    }else{
+      alert("Something went wrong while fetching all courses")
+    }
+  }
 
   const considerAnswerExamT = async(e, questionid, answerid, studentid, testid, rate) => {
     let isConsider = true
@@ -24,6 +56,8 @@ function ExamAnalysis({classesModules, setClassesModules, selectedClassId, examA
     }
   }
 
+
+
   const considerAnswerExamF = async(e, questionid, answerid, studentid, testid, rate) => {
     let isConsider = false
     let response = await new ClassesAPI().considerAnswerExamTrue
@@ -37,12 +71,21 @@ function ExamAnalysis({classesModules, setClassesModules, selectedClassId, examA
     }
   }
 
+  const updatePoints = async(e, questionid, answerid, studentid, testid, rate) => {
+    let isConsider = false
+    let response = await new ClassesAPI().updateExamPoints
+    (
+      studentid, classid, testid, answerid, {isConsider, rate}
+    )
+    if(response.ok){
+      console.log(response.data)
+    }else{
+      alert(response.data.errorMessage)
+    }
+  }
+
 
   const handleInputChange = (e, questionid, answerid, studentid, testid, rate) => {
-    // console.log(e.target.name)
-    // console.log(e.target.value)
-    // console.log(e.target.checked)
-    // console.log(answerid)
     setConsiderAnswer(true)
     console.log(studentid)
     isChecked(e, e.target.checked, questionid, answerid, studentid, testid, rate);
@@ -52,14 +95,11 @@ function ExamAnalysis({classesModules, setClassesModules, selectedClassId, examA
     let haru = etc
         if(haru === true){
           considerAnswerExamT(e, questionid, answerid, studentid, testid, rate)
+          handleOpenModal(e, questionid, answerid, studentid, testid, rate)
         }else{
           considerAnswerExamF(e, questionid, answerid, studentid, testid, rate)
         }
   }
-
-
-
-
 
   useEffect(() => {
     setShowReportHeader(false)
@@ -124,6 +164,34 @@ function ExamAnalysis({classesModules, setClassesModules, selectedClassId, examA
             </div>
         )
       })}
+      <Modal size="lg" className="modal-all" show={openModal} onHide={()=> setOpenModal(!openModal)} backdrop="static">
+				<Modal.Header className="modal-header" closeButton>
+				Update Points
+				</Modal.Header>
+				<Modal.Body className="modal-label b-0px">
+						<Form onSubmit={updatePoints}>
+								<Form.Group className="m-b-20">
+										<Form.Label for="courseName">
+												Rate / Points
+										</Form.Label>
+										<Form.Control 
+                      defaultValue={selectedRate}
+                      className="custom-input" 
+                      size="lg" 
+                      type="text" 
+                      placeholder="Enter points"
+                      // onChange={(e) => setDiscussionName(e.target.value)}
+                    />
+								</Form.Group>
+								Rate:{selectedRate}, Answerid: {selectedAnswerId}, Studentid: {selectedStudentId}, Testid: {selectedTestId}
+								<span style={{float:"right"}}>
+										<Button className="tficolorbg-button" type="submit">
+												Save
+										</Button>
+								</span>
+						</Form>
+				</Modal.Body>
+			</Modal>
   </> 
   )
 }

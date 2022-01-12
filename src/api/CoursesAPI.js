@@ -199,8 +199,36 @@ export default class CoursesAPI extends Base {
     });
   };
 
-  
+  deleteExam = async (id, data) => {
+    return this.sendRequest({
+      path: `/api/Test/${id}`,
+      method: 'DELETE',
+      data
+    });
+  };
 
+  deleteDiscussion= async (id, data) => {
+    return this.sendRequest({
+      path: `/api/Discussion/${id}`,
+      method: 'DELETE',
+      data
+    });
+  };
 
+  deleteTask = async (id, data) => {
+    return this.sendRequest({
+      path: `/api/Task/${id}`,
+      method: 'DELETE',
+      data
+    });
+  };
+
+  deleteAssignment = async (id, data) => {
+    return this.sendRequest({
+      path: `/api/Assignment/${id}`,
+      method: 'DELETE',
+      data
+    });
+  };
 
 }

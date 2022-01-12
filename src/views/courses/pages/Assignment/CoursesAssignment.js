@@ -4,6 +4,7 @@ import CoursesAPI from "../../../../api/CoursesAPI";
 import CourseCreateUnit from "./../../components/CourseCreateUnit";
 import CreateAssignment from "./../../components/CreateAssignment";
 import EditAssignment from "./../../components/EditAssignment";
+import SweetAlert from 'react-bootstrap-sweetalert';
 
 export default function CoursesAssignment({moduleInfo, setModuleInfo}) {
 
@@ -14,6 +15,9 @@ export default function CoursesAssignment({moduleInfo, setModuleInfo}) {
   const [openEditAssignmentModal, setOpenEditAssignmentModal] = useState(false)
   const [selectedAssignment, setselectedAssignment] = useState(null)
   const [assignmentInfo, setAssignmentInfo] = useState([])
+  const [sweetError, setSweetError] = useState(false)
+  const [assignmentId, setAssignmentId] = useState("")
+  const [localModuleId, setLocalModuleId] = useState(false)
 
   const courseid = sessionStorage.getItem('courseid')
   const moduleid = sessionStorage.getItem('moduleid')
@@ -34,16 +38,40 @@ export default function CoursesAssignment({moduleInfo, setModuleInfo}) {
 
   const getAssignmentInfo = async(e, data) => {
     setLoading(true)
-    sessionStorage.setItem('moduleid', data)
+    setLocalModuleId(data)
     let response = await new CoursesAPI().getAssignmentInformation(data)
     setLoading(false)
     if(response.ok){
       setAssignmentInfo(response.data)
       console.log(response.data)
     }else{
-      alert("Something went wrong while fetching all assignment")
+      alert(response.data.errorMessage)
     }
   }
+
+  const cancelSweetError = () => {
+    setSweetError(false)
+  }
+
+  const confirmSweetError = (id) => {
+    alert('Deleted')
+    console.log(assignmentId)
+    deleteCourseAssignment(id)
+    setSweetError(false)
+  } 
+
+  const deleteCourseAssignment = async(e, data) => {
+    setLoading(true)
+    let response = await new CoursesAPI().deleteAssignment(assignmentId)
+    setLoading(false)
+    if(response.ok){
+      getAssignmentInfo(null, localModuleId)
+      console.log(response.data)
+    }else{
+      alert(response.data.errorMessage)
+    }
+  }
+
 
   useEffect(() => {
   }, [])
@@ -83,11 +111,25 @@ export default function CoursesAssignment({moduleInfo, setModuleInfo}) {
                         </Col>
                         <Col className="align-right-content" md={3}>
                           <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={(e) => handleOpenEditAssignmentModal(e, item)}><i className="fa fa-edit"></i></Button>
-                          <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i className="fa fa-trash"></i></Button>
+                          <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i className="fa fa-trash"  onClick={() => {setSweetError(true); setAssignmentId(item.id)}}></i></Button>
+                            
                         </Col>
                       </Row>
                     )
                   })}
+                    <SweetAlert
+                      warning
+                      showCancel
+                      show={sweetError}
+                      confirmBtnText="Yes, delete it!"
+                      confirmBtnBsStyle="danger"
+                      title="Are you sure?"
+                      onConfirm={() => confirmSweetError(item.id)}
+                      onCancel={cancelSweetError}
+                      focusCancelBtn
+                    >
+                      You will not be able to recover this imaginary file!
+                    </SweetAlert>
                 </Accordion.Body>
               </Accordion.Item>
             </>

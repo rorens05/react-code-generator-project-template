@@ -16,6 +16,7 @@ export default function CourseContent(course) {
   const [moduleInfo, setModuleInfo] = useState([])
   const [viewLesson, setViewLesson] = useState(false)
   const [courseInfo, setCourseInfo] = useState("")
+  const [selectedModule, setSelectedModule] = useState("")
 
   const courseid = sessionStorage.getItem('courseid')
 
@@ -29,6 +30,13 @@ export default function CourseContent(course) {
     }else{
       alert("Something went wrong while fetching all a")
     }
+  }
+
+  const moduleId = () => {
+    if(moduleInfo.length > 0){ 
+      return (moduleInfo.map(item => item.id)) || []
+    }
+    return []
   }
 
   const getCourseInformation = async(e) => {
@@ -107,7 +115,7 @@ export default function CourseContent(course) {
                 <CoursesExam />
               </Tab.Pane>
               <Tab.Pane eventKey="#link3">
-                <CoursesDiscussion moduleInfo={moduleInfo} setModuleInfo={setModuleInfo} />
+                <CoursesDiscussion moduleInfo={moduleInfo} setModuleInfo={setModuleInfo} moduleId={moduleId()} />
               </Tab.Pane>
               <Tab.Pane eventKey="#link4">
                 <CoursesAssignment moduleInfo={moduleInfo} setModuleInfo={setModuleInfo} />
