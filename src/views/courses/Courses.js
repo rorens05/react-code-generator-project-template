@@ -1,12 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import CoursesItem from "../../views/courses/components/CourseItem";
 import CourseCreate from "../../views/courses/components/CourseCreate";
 import MainContainer from '../../components/layouts/MainContainer'
 import { Button, InputGroup, FormControl, CardGroup } from 'react-bootstrap';
 import CourseEdit from "./components/CourseEdit";
 import CoursesAPI from "../../api/CoursesAPI";
+import { UserContext } from './../../context/UserContext'
+
 
 export default function Courses() {
+
+  const userContext = useContext(UserContext)
+  const {user} = userContext.data
   const [openModal, setOpenModal] = useState(false)
   const [loading, setLoading] = useState(false)
   const [selectedCourse, setSelectedCourse] = useState(null)

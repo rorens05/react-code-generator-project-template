@@ -1,6 +1,9 @@
 import React, {useState, useEffect, useContext} from 'react'
 import {Accordion, Row, Col, Table, Button, Form, Modal} from 'react-bootstrap'
 import ClassesAPI from '../../../api/ClassesAPI'
+import SweetAlert from 'react-bootstrap-sweetalert';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function ExamAnalysis({classesModules, setClassesModules, selectedClassId, examAnalysis, setExamAnalysis, testPartAnswers, showReportHeader, setShowReportHeader}) {
   
@@ -14,14 +17,19 @@ function ExamAnalysis({classesModules, setClassesModules, selectedClassId, examA
   const [selectedAnswerId, setSelectedAnswerId] = useState("")
   const [selectedStudentId, setSelectedStudentId] = useState("")
   const [selectedTestId, setSelectedTestId] = useState("")
+  const [studentScore, setStudentScore] = useState("")
+  const [sweetError, setSweetError] = useState(false)
+  const [show, setShow] = useState(false);
 
   let testname = sessionStorage.getItem('testName')
   let classid = sessionStorage.getItem('classId')
+  let studentidsession = sessionStorage.getItem('studentid')
+  let testidsession = sessionStorage.getItem('testid')
 
   const handleOpenModal = (e, questionid, answerid, studentid, testid, rate) => {
     e.preventDefault()
     setOpenModal(true)
-    setSelectedRate(rate)
+    setStudentScore(rate)
     setSelectedStudentId(studentid)
     setSelectedTestId(testid)
     setSelectedAnswerId(answerid)
@@ -30,6 +38,7 @@ function ExamAnalysis({classesModules, setClassesModules, selectedClassId, examA
 }
 
   const getExamAnalysis = async(e, studentid, classid, testid) => {
+    e.preventDefault()
     console.log(selectedClassId)
     setShowExamAnalysis(true)
     console.log(showExamAnalysis)
@@ -44,6 +53,7 @@ function ExamAnalysis({classesModules, setClassesModules, selectedClassId, examA
   }
 
   const considerAnswerExamT = async(e, questionid, answerid, studentid, testid, rate) => {
+    e.preventDefault()
     let isConsider = true
     let response = await new ClassesAPI().considerAnswerExamTrue
     (
@@ -59,26 +69,50 @@ function ExamAnalysis({classesModules, setClassesModules, selectedClassId, examA
 
 
   const considerAnswerExamF = async(e, questionid, answerid, studentid, testid, rate) => {
+    e.preventDefault()
     let isConsider = false
     let response = await new ClassesAPI().considerAnswerExamTrue
     (
       studentid, classid, testid, answerid, {isConsider}
     )
     if(response.ok){
-      console.log(response.data)
+      notifyUnconsidered()
+      getExamAnalysis(e, studentidsession, classid, testidsession)
     }else{
       alert(response.data.errorMessage)
     }
   }
 
   const updatePoints = async(e, questionid, answerid, studentid, testid, rate) => {
-    let isConsider = false
+    e.preventDefault()
+    let isConsider = true
     let response = await new ClassesAPI().updateExamPoints
     (
-      studentid, classid, testid, answerid, {isConsider, rate}
+      selectedStudentId, classid, selectedTestId, selectedAnswerId, {isConsider, studentScore}
     )
     if(response.ok){
-      console.log(response.data)
+      // setSweetError(true);
+      setShow(true);
+      setOpenModal(false)
+      notifyConsidered()
+      getExamAnalysis(e, selectedStudentId, classid, selectedTestId)
+    }else{
+      alert(response.data.errorMessage)
+    }
+  }
+
+  const retakeExam = async(e, questionid, answerid, studentid, testid, rate) => {
+    e.preventDefault()
+    let isConsider = true
+    let response = await new ClassesAPI().retakeExam
+    (
+      selectedStudentId, classid, selectedTestId, selectedAnswerId, {isConsider, studentScore}
+    )
+    if(response.ok){
+      // setSweetError(true);
+      setShow(true);
+      setOpenModal(false)
+      getExamAnalysis(e, selectedStudentId, classid, selectedTestId)
     }else{
       alert(response.data.errorMessage)
     }
@@ -86,6 +120,7 @@ function ExamAnalysis({classesModules, setClassesModules, selectedClassId, examA
 
 
   const handleInputChange = (e, questionid, answerid, studentid, testid, rate) => {
+    e.preventDefault()
     setConsiderAnswer(true)
     console.log(studentid)
     isChecked(e, e.target.checked, questionid, answerid, studentid, testid, rate);
@@ -98,15 +133,47 @@ function ExamAnalysis({classesModules, setClassesModules, selectedClassId, examA
           handleOpenModal(e, questionid, answerid, studentid, testid, rate)
         }else{
           considerAnswerExamF(e, questionid, answerid, studentid, testid, rate)
+          
         }
   }
 
+  const cancelSweetError = () => {
+    setSweetError(false)
+  }
+
   useEffect(() => {
+    setSweetError(false)
     setShowReportHeader(false)
-  }, [])
+    if(studentScore !== null) {
+			setStudentScore(studentScore)
+		}
+  }, [studentScore])
+
+  const notifyConsidered = () => 
+  toast.success('Considered', {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+
+  const notifyUnconsidered = () => 
+  toast.warning('Unconsidered', {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
 
   return(
   <>
+    <ToastContainer />
 		<Row>
       <Col md={6}>
         <span className='font-exam-analysis-header'>{examAnalysis.student?.lname},  {examAnalysis.student?.fname}</span>
@@ -141,6 +208,7 @@ function ExamAnalysis({classesModules, setClassesModules, selectedClassId, examA
                       <div>
                         <span className='font-exam-analysis-content-24' style={{marginRight:10}}>Correct Answer :</span>
                         <span className='font-exam-analysis-content-24' style={{marginRight:10}}>{ad.assignedAnswer}</span>
+                        {ad.studentAnswer?.toLowerCase() !== ad.assignedAnswer.toLowerCase() &&
                         <Form>
                           <Form.Group className="m-b-20">
                             <Form.Check
@@ -153,6 +221,7 @@ function ExamAnalysis({classesModules, setClassesModules, selectedClassId, examA
                           </Form.Group>
                           {' '}
                         </Form>
+                        }
                       </div>
                       
                       <hr></hr>
@@ -161,9 +230,15 @@ function ExamAnalysis({classesModules, setClassesModules, selectedClassId, examA
                 })
                 )
               })}
+              <SweetAlert success title="Good job!" 
+                show={sweetError} onConfirm={cancelSweetError} onCancel={cancelSweetError}>
+                  You clicked the button!
+              </SweetAlert>
             </div>
         )
       })}
+     
+
       <Modal size="lg" className="modal-all" show={openModal} onHide={()=> setOpenModal(!openModal)} backdrop="static">
 				<Modal.Header className="modal-header" closeButton>
 				Update Points
@@ -175,15 +250,14 @@ function ExamAnalysis({classesModules, setClassesModules, selectedClassId, examA
 												Rate / Points
 										</Form.Label>
 										<Form.Control 
-                      defaultValue={selectedRate}
+                      defaultValue={studentScore}
                       className="custom-input" 
                       size="lg" 
                       type="text" 
                       placeholder="Enter points"
-                      // onChange={(e) => setDiscussionName(e.target.value)}
+                      onChange={(e) => setStudentScore(e.target.value)}
                     />
 								</Form.Group>
-								Rate:{selectedRate}, Answerid: {selectedAnswerId}, Studentid: {selectedStudentId}, Testid: {selectedTestId}
 								<span style={{float:"right"}}>
 										<Button className="tficolorbg-button" type="submit">
 												Save

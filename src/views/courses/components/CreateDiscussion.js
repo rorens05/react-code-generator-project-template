@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Button, Form, Modal } from 'react-bootstrap';
 import CoursesAPI from "../../../api/CoursesAPI";
 import SubjectAreaAPI from "../../../api/SubjectAreaAPI";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function CreateDiscussion({openCreateDiscussionModal, setOpenCreateDiscussionModal, setDiscussionInfo}){
 
@@ -26,7 +28,7 @@ export default function CreateDiscussion({openCreateDiscussionModal, setOpenCrea
       {discussionName, instructions}
     )
     if(response.ok){
-      alert("Saved")
+      notifySaveDiscussion()
 			handleCloseModal(e)
       getDiscussionInfo()
     }else{
@@ -60,11 +62,23 @@ export default function CreateDiscussion({openCreateDiscussionModal, setOpenCrea
     }
   }
 
+  const notifySaveDiscussion = () => 
+  toast.success('Discussion Saved!', {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+
 	useEffect(() => {
   }, [])
 
 	return (
 		<div>
+      <ToastContainer />
 			<Modal size="lg" className="modal-all" show={openCreateDiscussionModal} onHide={()=> setOpenCreateDiscussionModal(!openCreateDiscussionModal)} >
 				<Modal.Header className="modal-header" closeButton>
 				Create discussion

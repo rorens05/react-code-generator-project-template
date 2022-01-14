@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Button, Form, Modal } from 'react-bootstrap';
 import CoursesAPI from "../../../api/CoursesAPI";
 import SubjectAreaAPI from "../../../api/SubjectAreaAPI";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function CreateTask({openCreateTaskModal, setCreateTaskModal, setTaskInfo}){
 
@@ -27,9 +29,9 @@ export default function CreateTask({openCreateTaskModal, setCreateTaskModal, set
       {taskName, instructions, isShared:false}
     )
     if(response.ok){
-      alert("Saved")
 			handleCloseModal(e)
       getTaskInfo(sessionModule)
+      notifySaveTask()
     }else{
       alert(response.data.errorMessage)
     }
@@ -60,11 +62,23 @@ export default function CreateTask({openCreateTaskModal, setCreateTaskModal, set
     }
   }
 
+  const notifySaveTask = () => 
+  toast.success('Task Saved!', {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+
 	useEffect(() => {
   }, [])
 
 	return (
 		<div>
+      <ToastContainer />
 			<Modal size="lg" className="modal-all" show={openCreateTaskModal} onHide={()=> setCreateTaskModal(!openCreateTaskModal)} >
 				<Modal.Header className="modal-header" closeButton>
 				Create Task

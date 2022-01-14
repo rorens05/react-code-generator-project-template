@@ -3,7 +3,7 @@ import {InputGroup, FormControl } from 'react-bootstrap';
 import AssignmentReport from './AssignmentReport';
 
 
-function AssignmentHeader({classesModules, setClassesModules, selectedClassId, viewAssignmentReport, setViewAssignmentReport}) {
+function AssignmentHeader({classesModules, setClassesModules, selectedClassId, viewAssignmentReport, setViewAssignmentReport, showAssignmentHeader, setShowAssignmentHeader}) {
 	
 	let assignmentname = sessionStorage.getItem("assignmentName")
 	
@@ -21,7 +21,7 @@ function AssignmentHeader({classesModules, setClassesModules, selectedClassId, v
 					</InputGroup>
 				</div>
 			</div>
-			<AssignmentReport classesModules={classesModules} setClassesModules={setClassesModules} selectedClassId={selectedClassId} viewAssignmentReport={viewAssignmentReport} setViewAssignmentReport={setViewAssignmentReport}/>
+			<AssignmentReport showAssignmentHeader={showAssignmentHeader} setShowAssignmentHeader={setShowAssignmentHeader} classesModules={classesModules} setClassesModules={setClassesModules} selectedClassId={selectedClassId} viewAssignmentReport={viewAssignmentReport} setViewAssignmentReport={setViewAssignmentReport}/>
 		</div>
 	)
 }

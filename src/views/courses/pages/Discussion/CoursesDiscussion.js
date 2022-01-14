@@ -33,6 +33,7 @@ export default function CoursesDiscussion({moduleInfo, setModuleInfo, moduleId})
   const getDiscussionInfo = async(e, data) => {
     setLoading(true)
     setLocalModuleId(data)
+    sessionStorage.setItem("moduleid", data)
     let response = await new CoursesAPI().getDiscussionInformation(data)
     setLoading(false)
     if(response.ok){

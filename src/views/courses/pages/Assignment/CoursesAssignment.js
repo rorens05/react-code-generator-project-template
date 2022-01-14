@@ -39,6 +39,7 @@ export default function CoursesAssignment({moduleInfo, setModuleInfo}) {
   const getAssignmentInfo = async(e, data) => {
     setLoading(true)
     setLocalModuleId(data)
+    sessionStorage.setItem("moduleid", data)
     let response = await new CoursesAPI().getAssignmentInformation(data)
     setLoading(false)
     if(response.ok){
@@ -90,7 +91,7 @@ export default function CoursesAssignment({moduleInfo, setModuleInfo}) {
           </InputGroup>
         </div>
       </div>
-      <CreateAssignment openCreateAssignmentModal={openCreateAssignmentModal} setOpenCreateAssignmentModal={setOpenCreateAssignmentModal}/>
+      <CreateAssignment openCreateAssignmentModal={openCreateAssignmentModal} setOpenCreateAssignmentModal={setOpenCreateAssignmentModal} setAssignmentInfo={setAssignmentInfo}/>
       <EditAssignment setAssignmentInfo={setAssignmentInfo} selectedAssignment={selectedAssignment} openEditAssignmentModal={openEditAssignmentModal} setOpenEditAssignmentModal={setOpenEditAssignmentModal}/>
 
       <Accordion defaultActiveKey="0">

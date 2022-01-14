@@ -3,7 +3,7 @@ import {InputGroup, FormControl } from 'react-bootstrap';
 import TaskReport from './TaskReport';
 
 
-function TaskHeader({classesModules, setClassesModules, selectedClassId, viewTaskReport, setViewTaskReport}) {
+function TaskHeader({classesModules, setClassesModules, selectedClassId, viewTaskReport, setViewTaskReport,  showTaskHeader, setShowTaskHeader}) {
 
 	let taskname = sessionStorage.getItem("taskName")
 
@@ -21,7 +21,7 @@ function TaskHeader({classesModules, setClassesModules, selectedClassId, viewTas
 					</InputGroup>
 				</div>
 			</div>
-			<TaskReport classesModules={classesModules} setClassesModules={setClassesModules} selectedClassId={selectedClassId} viewTaskReport={viewTaskReport} setViewTaskReport={setViewTaskReport}/>
+			<TaskReport showTaskHeader={showTaskHeader} setShowTaskHeader={setShowTaskHeader} classesModules={classesModules} setClassesModules={setClassesModules} selectedClassId={selectedClassId} viewTaskReport={viewTaskReport} setViewTaskReport={setViewTaskReport}/>
 		</div>
 	)
 }

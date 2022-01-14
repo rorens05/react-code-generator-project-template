@@ -3,7 +3,7 @@ import {Accordion, Row, Col} from 'react-bootstrap'
 import TaskReportContent from '../contents/TaskReportContent'
 import ClassesAPI from './../../../api/ClassesAPI'
 
-function TaskReport({classesModules, setClassesModules, selectedClassId, viewTaskReport, setViewTaskReport}) {
+function TaskReport({classesModules, setClassesModules, selectedClassId, viewTaskReport, setViewTaskReport, showTaskHeader, setShowTaskHeader}) {
 
   const [taskPerModule, setTaskPerModule] = useState([])
   const [taskReport, setTaskReport] = useState([])
@@ -26,6 +26,7 @@ function TaskReport({classesModules, setClassesModules, selectedClassId, viewTas
     setLoading(true)
     setViewTaskReport(false)
     sessionStorage.setItem('taskName',taskname)
+    sessionStorage.setItem('taskId',taskid)
     let response = await new ClassesAPI().getTaskReport(selectedClassId, taskid, taskname)
     setLoading(false)
     if(response.ok){
@@ -54,7 +55,7 @@ function TaskReport({classesModules, setClassesModules, selectedClassId, viewTas
             <Accordion.Body>
               {taskPerModule.map((item, index) => { 
               return(
-                item.classTest !== null &&
+                item.taskAssignment !== null &&
                 <Row>
                   <Col sm={8}>
                     <div className='title-exam' onClick={(e) => getTaskReport(e, item.task.id, item.task.taskName)}>
@@ -88,7 +89,7 @@ function TaskReport({classesModules, setClassesModules, selectedClassId, viewTas
   )
   }else{
     return(
-      <TaskReportContent setTaskReport={setTaskReport} taskReport={taskReport} taskColumns={taskColumns()}/>
+      <TaskReportContent showTaskHeader={showTaskHeader} setShowTaskHeader={setShowTaskHeader} setTaskReport={setTaskReport} taskReport={taskReport} taskColumns={taskColumns()}/>
     )
   }
 }

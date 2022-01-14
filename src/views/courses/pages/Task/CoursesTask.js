@@ -33,6 +33,7 @@ export default function CoursesTask({moduleInfo, setModuleInfo}) {
   const getTaskInfo = async(e, data) => {
     setLoading(true)
     setLocalModuleId(data)
+    sessionStorage.setItem("moduleid", data)
     let response = await new CoursesAPI().getTaskInformation(data)
     setLoading(false)
     if(response.ok){
@@ -98,15 +99,15 @@ export default function CoursesTask({moduleInfo, setModuleInfo}) {
                 </span>
               </Accordion.Header>
               <Accordion.Body>
-                {taskInfo.map((item, index) => {
+                {taskInfo.map((ti, index) => {
                   return(
                     <Row>
                       <Col className="lesson-header" md={9}>
-                        {item?.taskName}
+                        {ti?.taskName}
                       </Col>
                       <Col className="align-right-content" md={3}>
-                        <Button className="m-r-5 color-white tficolorbg-button" size="sm"  onClick={(e) => handleOpenEditTaskModal(e, item)}><i className="fa fa-edit"></i></Button>
-                        <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i className="fa fa-trash"  onClick={() => {setSweetError(true); setTaskId(item.id)}}></i></Button>
+                        <Button className="m-r-5 color-white tficolorbg-button" size="sm"  onClick={(e) => handleOpenEditTaskModal(e, ti)}><i className="fa fa-edit"></i></Button>
+                        <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i className="fa fa-trash"  onClick={() => {setSweetError(true); setTaskId(ti.id)}}></i></Button>
                         </Col>
                       </Row>
                     )
