@@ -855,3 +855,78 @@ border-top-right-radius: 0px !important;
   color:#EE9337;
   font-size: 24px!important;
 }
+
+.class-container{
+  padding: 20px
+}
+
+.absolute-loader{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255,255,255,0.5);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.absolute-loader img{
+  width: 100px
+}
+
+.exam-item-container{
+  padding: 10px 20px;
+  border: 1px solid #E9E9E9;
+  border-radius: 10px;
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.exam-item-container .exam-content{
+  flex: 1;
+}
+  
+.exam-item-container .exam-content .exam-title{
+  font-size: 24px;
+  color: #EE9337;
+  text-decoration: none !important;
+}
+
+.exam-item-container .exam-content .exam-title:hover{
+  opacity: 0.6;
+}
+
+.exam-item-container .exam-content .exam-course-name{
+  font-size: 20px;
+  color: #707070;
+  text-decoration: none !important;
+  margin-bottom: 10px;
+}
+
+.exam-item-container .exam-content .exam-instruction{
+  font-size: 20px;
+  color: #BCBCBC;
+  text-decoration: none !important;
+}
+
+.exam-item-container .exam-actions{
+  display: flex;
+  align-items: flex-end;
+}
+
+.exam-item-container .exam-actions a{
+  width: 32px;
+  height: 32px;
+  background-color: #EE9337;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white !important;
+  border-radius: 5px;
+  margin-left: 10px;
+  text-decoration: none !important;
+  font-size: 20px;
+}
