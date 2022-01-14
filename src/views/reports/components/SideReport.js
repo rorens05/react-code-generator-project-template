@@ -18,11 +18,24 @@ function SideReport() {
   const [viewTestReport, setViewTestReport] = useState(false)
   const [viewAssignmentReport, setViewAssignmentReport] = useState(false)
   const [viewTaskReport, setViewTaskReport] = useState(false)
+
   const [showReportHeader, setShowReportHeader] = useState(false)
+  const [showAssignmentHeader, setShowAssignmentHeader] = useState(false)
+  const [showTaskHeader, setShowTaskHeader] = useState(false)
+
   const [viewInteractiveReport, setViewInteractiveReport] = useState(false)
 
   const getClasses = async() => {
     let response = await new ClassesAPI().getClasses(user.teacher.id)
+    if(response.ok){
+      setClasses(response.data)
+    }else{
+      alert("Something went wrong while fetching all courses")
+    }
+  }
+
+  const getClassesStudent = async() => {
+    let response = await new ClassesAPI().getClasses(user.student.id)
     if(response.ok){
       setClasses(response.data)
     }else{
@@ -105,8 +118,12 @@ function SideReport() {
   }
 
   useEffect(() => {
-    getClasses()
-    //getClassModules()
+    if(user.role === "Teacher"){
+      getClasses()
+    }else if(user.role === "Student"){
+      getClassesStudent()
+    }
+
   }, [])
 
   return (
@@ -146,13 +163,13 @@ function SideReport() {
                 <ReportHeader showReportHeader={showReportHeader} setShowReportHeader={setShowReportHeader} viewTestReport={viewTestReport} setViewTestReport={setViewTestReport} classesModules={classesModules} setClassesModules={setClassesModules} selectedClassId={selectedClassId}/>
               </Tab.Pane>
               <Tab.Pane className='content-pane report-content' eventKey="#link5">
-                <AssignmentHeader viewAssignmentReport={viewAssignmentReport} setViewAssignmentReport={setViewAssignmentReport} classesModules={classesModules} setClassesModules={setClassesModules} selectedClassId={selectedClassId}/>
+                <AssignmentHeader showAssignmentHeader={showAssignmentHeader} setShowAssignmentHeader={setShowAssignmentHeader} viewAssignmentReport={viewAssignmentReport} setViewAssignmentReport={setViewAssignmentReport} classesModules={classesModules} setClassesModules={setClassesModules} selectedClassId={selectedClassId}/>
               </Tab.Pane>
               <Tab.Pane className='content-pane report-content' eventKey="#link6">
-                <TaskHeader viewTaskReport={viewTaskReport} setViewTaskReport={setViewTaskReport} classesModules={classesModules} setClassesModules={setClassesModules} selectedClassId={selectedClassId}/>
+                <TaskHeader showTaskHeader={showTaskHeader} setShowTaskHeader={setShowTaskHeader} viewTaskReport={viewTaskReport} setViewTaskReport={setViewTaskReport} classesModules={classesModules} setClassesModules={setClassesModules} selectedClassId={selectedClassId}/>
               </Tab.Pane>
               <Tab.Pane className='content-pane report-content' eventKey="#link7">
-                <InteractiveHeader viewInteractiveReport={viewInteractiveReport} setViewInteractiveReport={setViewInteractiveReport} classesModules={classesModules} setClassesModules={setClassesModules} selectedClassId={selectedClassId}/>
+                <InteractiveHeader showReportHeader={showReportHeader} setShowReportHeader={setShowReportHeader} viewInteractiveReport={viewInteractiveReport} setViewInteractiveReport={setViewInteractiveReport} classesModules={classesModules} setClassesModules={setClassesModules} selectedClassId={selectedClassId}/>
               </Tab.Pane>
             </Tab.Content> 
           </Col> 

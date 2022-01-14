@@ -7,6 +7,12 @@ export default class ClassesAPI extends Base {
       method: 'GET'
     });
   };
+  getClassesStudent = async (id) => {
+    return this.sendRequest({
+      path: `/api/Student/${id}/class`,
+      method: 'GET'
+    });
+  };
   createClasses = async data => {
     return this.sendRequest({
       path: `/api/Class`,
@@ -372,6 +378,20 @@ creatTask = async (mId, cId,  data) => {
     })
   }
 
+  getAssignmentAnalysis = async (studentid, classid, assignmentid) =>{
+    return this.sendRequest({
+      path: `/api/Student/${studentid}/class/${classid}/assignment/${assignmentid}/analysis`,
+      method: 'GET'
+    })
+  }
+
+  getTaskAnalysis = async (studentid, classid, taskid) =>{
+    return this.sendRequest({
+      path: `/api/Student/${studentid}/class/${classid}/task/${taskid}/analysis`,
+      method: 'GET'
+    })
+  }
+
   getClassInteractiveModules = async (classid, moduleid) =>{
     return this.sendRequest({
       path: `/api/Class/${classid}/module/${moduleid}/interactive`,
@@ -403,11 +423,26 @@ creatTask = async (mId, cId,  data) => {
     });
   };
 
-  retakeExam = async (studentid, classid, testid, answerid, data) =>{
+  updateAssignmentPoints = async (studentid, classid, assignmentid, answerid, data) =>{
     return this.sendRequest({
-      path:`/api/Student/${studentid}/class/${classid}/test/${testid}/answer/${answerid}`,
+      path:`/api/Student/${studentid}/class/${classid}/assignment/${assignmentid}/answer/${answerid}`,
       method: 'PUT',
       data
+    });
+  };
+
+  updateTaskPoints = async (studentid, classid, taskid, answerid, data) =>{
+    return this.sendRequest({
+      path:`/api/Student/${studentid}/class/${classid}/task/${taskid}/answer/${answerid}`,
+      method: 'PUT',
+      data
+    });
+  };
+
+  retakeExam = async (classid, testid, studentid) =>{
+    return this.sendRequest({
+      path:`/api/Class/${classid}/test/${testid}/student/${studentid}/retake`,
+      method: 'DELETE',
     });
   };
 }

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Button, Form, Modal } from 'react-bootstrap';
 import CoursesAPI from "../../../api/CoursesAPI";
 import SubjectAreaAPI from "../../../api/SubjectAreaAPI";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function CreateAssignment({openCreateAssignmentModal, setOpenCreateAssignmentModal, setAssignmentInfo}){
 
@@ -20,7 +22,6 @@ export default function CreateAssignment({openCreateAssignmentModal, setOpenCrea
 
   const getAssignmentInfo = async(e, data) => {
     setLoading(true)
-    sessionStorage.setItem('moduleid', data)
     let response = await new CoursesAPI().getAssignmentInformation(sessionModule)
     setLoading(false)
     if(response.ok){
@@ -33,16 +34,15 @@ export default function CreateAssignment({openCreateAssignmentModal, setOpenCrea
 
 	const saveAssignmennt = async(e) => {
     e.preventDefault()
-    
     setLoading(true)
     let response = await new CoursesAPI().createAssignment(
       sessionModule,
       {assignmentName, instructions}
     )
     if(response.ok){
-      alert("Saved")
 			handleCloseModal(e)
       getAssignmentInfo(sessionModule)
+      notifySaveAssignment()
     }else{
       alert(response.data.errorMessage)
     }
@@ -61,11 +61,23 @@ export default function CreateAssignment({openCreateAssignmentModal, setOpenCrea
     }
   }
 
+  const notifySaveAssignment = () => 
+  toast.success('Assignment Saved!', {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+
 	useEffect(() => {
   }, [])
 
 	return (
 		<div>
+      <ToastContainer />
 			<Modal size="lg" className="modal-all" show={openCreateAssignmentModal} onHide={()=> setOpenCreateAssignmentModal(!openCreateAssignmentModal)} >
 				<Modal.Header className="modal-header" closeButton>
 				Create Assignment
