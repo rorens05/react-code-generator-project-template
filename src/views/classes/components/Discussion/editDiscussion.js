@@ -56,7 +56,7 @@ function EditDiscussion({modal, toggle, editDiscussionItem, getDiscussionUnit}) 
               <Form.Control   type="text" defaultValue={editDiscussionItem?.discussion?.discussionName} onChange={(e) => setDiscussionName(e.target.value)} />
                 </Form.Group>
                 <Form.Group className="mb-4">
-                  <Form.Label >Instructions</Form.Label>
+                  <Form.Label >Instruction</Form.Label>
                     <Form.Control type="text" defaultValue={editDiscussionItem?.discussion?.instructions} onChange={(e) => setInstructions(e.target.value)} />
                   </Form.Group>
               <Form.Group className='right-btn'>

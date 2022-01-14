@@ -2,12 +2,23 @@ import React, { useState } from 'react'
 import { Card, Dropdown, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import ClassesAPI from '../../../../api/ClassesAPI';
+import SweetAlert from 'react-bootstrap-sweetalert';
 
 
 function ClassCard({item, setOpenEditModal, setSeletedClass, getClasses}) {
-  
+  const [deleteNotify, setDeleteNotify] = useState(false)
   const [openDropdown, setOpenDropdown] = useState(false)
+  const [itemId, setItemId] = useState('')
   const [loading, setLoading] = useState(false)
+
+  const cancelSweetAlert = () => {
+    setDeleteNotify(false)
+  }
+
+  const handleDeleteNotify = (e, item) =>{
+    setDeleteNotify(true)
+    setItemId(item)
+  }
 
   const handleOpeEditModal = (e, item) => {
     e.preventDefault()
@@ -15,11 +26,10 @@ function ClassCard({item, setOpenEditModal, setSeletedClass, getClasses}) {
     setOpenEditModal(true)
   }
 
-  const deleteClasses = async (e, item) =>{
-    e.preventDefault()
+  const deleteClasses = async (item) =>{
     let response = await new ClassesAPI().deleteClasses(item)
       if(response.ok){
-          alert('Class Deleted')
+          setDeleteNotify(false)
           getClasses()
       }else{
         alert(response.data.errorMessage)
@@ -38,6 +48,19 @@ function ClassCard({item, setOpenEditModal, setSeletedClass, getClasses}) {
   ));
   return (
     <div>
+        <SweetAlert
+          warning
+          showCancel
+          show={deleteNotify}
+          confirmBtnText="Yes, delete it!"
+          confirmBtnBsStyle="danger"
+          title="Are you sure?"
+          onConfirm={() => deleteClasses(itemId)}
+          onCancel={cancelSweetAlert}
+          focusCancelBtn
+          >
+            You will not be able to recover this imaginary file!
+      </SweetAlert>
       <Card className='class-card' >
         <Link to={`/classescontent/${item.classId}`}>
           <Card.Header className='class-header-card' >
@@ -54,7 +77,7 @@ function ClassCard({item, setOpenEditModal, setSeletedClass, getClasses}) {
                     <Dropdown.Item onClick={(e) => handleOpeEditModal(e, item)}>
                       Edit 
                     </Dropdown.Item>
-                    <Dropdown.Item onClick={(e) => deleteClasses(e,item.classId)}>
+                    <Dropdown.Item onClick={(e) => handleDeleteNotify(e, item.classId)}>
                       Delete
                     </Dropdown.Item>
                   </Dropdown.Menu>

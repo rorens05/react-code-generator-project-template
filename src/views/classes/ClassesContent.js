@@ -10,11 +10,11 @@ function ClassesContent() {
   return (
     <div>
       <MainContainer loading={loading} fluid>
-        <Row>
-          <Col style={{ textAlign:'right'}} sm={15}>
+        
+          
             <ClassBreedCrumbs />
-          </Col>
-        </Row>
+         
+       
       
         <ClassSideNavigation setLoading={setLoading}/>
       </MainContainer>

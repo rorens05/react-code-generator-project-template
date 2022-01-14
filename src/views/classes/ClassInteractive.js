@@ -78,7 +78,7 @@ function ClassInteractive({classInfo}) {
                 <Col sm={8}>
                   <div className='title-exam'>
                     {/* <Link style={{color:'#EE9337', textDecoration:'none'}} to={interItem?.interactive?.path} >{interItem?.interactive?.interactiveName}</Link> */}
-                    <a style={{color:'#EE9337', textDecoration:'none'}} href={interItem?.interactive?.path}>{interItem?.interactive?.interactiveName}</a>
+                    <a target="_blank" style={{color:'#EE9337', textDecoration:'none'}} href={interItem?.interactive?.path}>{interItem?.interactive?.interactiveName}</a>
                   </div>
                 </Col>
                 <Col sm={9} className='instruction-exam' >

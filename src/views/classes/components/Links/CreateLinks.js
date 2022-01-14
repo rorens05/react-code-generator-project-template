@@ -61,7 +61,7 @@ function CreateLinks({modal, toggle, getConfe, getVideos, getLinks}) {
               <Form.Select onChange={(e) => setTypeId(e.target.value)}>
                 <option>-- Select Unit Here --</option>
                 <option value='1'>Conferences</option>
-                <option value='2'>Vidoes</option>
+                <option value='2'>Videos</option>
                 <option value='3'>Links</option>
               </Form.Select>
             </Form.Group>
