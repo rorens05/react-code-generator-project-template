@@ -1,14 +1,14 @@
 import React, {useState, useEffect, useContext} from 'react'
-import { CardGroup, Col } from 'react-bootstrap'
+import { CardGroup } from 'react-bootstrap'
 import ClassesAPI from '../../api/ClassesAPI'
 import MainContainer from '../../components/layouts/MainContainer'
 import ClassCard from './components/Classes/ClassCard'
 import ClassHeader from './components/Classes/ClassHeader'
 import EditClassModal from './components/Classes/EditClassModal'
 import { UserContext } from '../../context/UserContext'
-import moment from 'moment'
 
 export default function Classes() {
+  const [loading, setLoading] = useState(true)
   const [classes, setClasses] = useState([])
   const [seletedClass, setSeletedClass] = useState(null)
   const [openEditModal, setOpenEditModal] = useState(false)
@@ -16,7 +16,9 @@ export default function Classes() {
   const {user} = userContext.data
 
   const getClasses = async() => {
-    let response = await new ClassesAPI().getClasses(user?.teacher?.id)
+    setLoading(true)
+    let response = await new ClassesAPI().getClasses(user.isTeacher ? user?.teacher?.id : user?.student?.id)
+    setLoading(false)
     if(response.ok){
       setClasses(response.data)
     }else{
@@ -24,15 +26,12 @@ export default function Classes() {
     }
   }
 
-  console.log('TEST', user?.teacher?.id)
-
   useEffect(() => {
-    // console.log('moment data', moment("2021-07-01T00:00:00").format('dddd'))
     getClasses()
   }, [])
   
   return (
-    <MainContainer activeHeader={'classes'}>
+    <MainContainer activeHeader={'classes'} loading={loading}>
       <div className='page-container'>
         <div className='containerpages'>
         <ClassHeader getClasses={getClasses} />
