@@ -206,6 +206,20 @@ creatTask = async (mId, cId,  data) => {
     })
   }
 
+  getArchive = async () => {
+    return this.sendRequest({
+      path:`/api/Class/archive`,
+      method:'GET'
+    })
+  }
+
+  retrieveArchive = async(id) => {
+    return this.sendRequest({
+      path: `/api/Class/${id}/archive/retrieve`,
+      method: 'POST'
+    })
+  }
+
 //get pages
   getPages = async (cId, mId) => {
     return this.sendRequest({

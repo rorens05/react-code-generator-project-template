@@ -7,8 +7,10 @@ import ClassHeader from './components/Classes/ClassHeader'
 import EditClassModal from './components/Classes/EditClassModal'
 import { UserContext } from '../../context/UserContext'
 import moment from 'moment'
+import StudentClasslist from './student/StudentClasslist'
 
 export default function Classes() {
+  const [loading, setLoading] = useState(true)
   const [classes, setClasses] = useState([])
   const [seletedClass, setSeletedClass] = useState(null)
   const [openEditModal, setOpenEditModal] = useState(false)
@@ -20,22 +22,22 @@ export default function Classes() {
     if(response.ok){
       setClasses(response.data)
     }else{
-      alert("Something went wrong while fetching all courses")
+      alert("Something went wrong while fetching all Classes")
     }
+    setLoading(false)
   }
 
-  console.log('TEST', user?.teacher?.id)
+  console.log('teacher', user?.teacher?.id)
 
   useEffect(() => {
     // console.log('moment data', moment("2021-07-01T00:00:00").format('dddd'))
     getClasses()
   }, [])
-  
   return (
-    <MainContainer activeHeader={'classes'}>
+    <MainContainer loading={loading} activeHeader={'classes'}>
       <div className='page-container'>
         <div className='containerpages'>
-        <ClassHeader getClasses={getClasses} />
+          <ClassHeader getClasses={getClasses} />
           <CardGroup className='card-group2'>
             {classes.length?
               classes.map(item => {

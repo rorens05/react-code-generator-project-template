@@ -6,9 +6,10 @@ import GradeAPI from '../../../../api/GradeAPI';
 import ClassesAPI from '../../../../api/ClassesAPI';
 import AcademicTermAPI from '../../../../api/AcademicTermAPI';
 import { UserContext } from '../../../../context/UserContext'
+import SweetAlert from 'react-bootstrap-sweetalert';
 
 function EditClassModal({seletedClass, openEditModal, setOpenEditModal, getClasses }) {
-
+  const [addNotify, setAddNotity] = useState(false)
   const [course, setCourse] = useState([])
   const [grade, setGreade] = useState([])
   const [className, setClassName] = useState('')
@@ -22,6 +23,10 @@ function EditClassModal({seletedClass, openEditModal, setOpenEditModal, getClass
   const handleCloseModal = (e) =>{
     e.preventDefault()
     setOpenEditModal(false)
+  }
+
+  const closeNotify = () =>{
+    setAddNotity(false)
   }
 
   const getAcademicTerm = async () =>{
@@ -74,7 +79,7 @@ function EditClassModal({seletedClass, openEditModal, setOpenEditModal, getClass
       {classCode, className, courseId, gradeLevelId, academicTermId, teacherId }
     )
     if(response.ok){
-      alert('Done Edit')
+      setAddNotity(true)
       getClasses()
       handleCloseModal(e)
     }else{
@@ -87,6 +92,7 @@ function EditClassModal({seletedClass, openEditModal, setOpenEditModal, getClass
       setGradeLevelId(seletedClass?.gradeLevelId)
       setClassName(seletedClass?.className)
       setCourseId(seletedClass?.courseId) 
+      setAcademicTermId(seletedClass?.academicTermId)
     }
   }, [seletedClass])
   
@@ -138,8 +144,8 @@ function EditClassModal({seletedClass, openEditModal, setOpenEditModal, getClass
                 <Form.Control defaultValue={seletedClass?.className} onChange={(e) => setClassName(e.target.value)} type="text" placeholder='Enter class name here'/>
             </Form.Group>
             <Form.Group className="mb-4">
-            	<Form.Label >Class Discription</Form.Label>
-                <Form.Control type="text" placeholder='Enter class discription here'/>
+            	<Form.Label >Class Description</Form.Label>
+                <Form.Control type="text" placeholder='Enter class Description here'/>
             </Form.Group>
               <Form.Group className='mb-4'>
               	<Form.Label >Class Code</Form.Label>{' '}
@@ -156,6 +162,12 @@ function EditClassModal({seletedClass, openEditModal, setOpenEditModal, getClass
          </Form>
 				</Modal.Body>
       </Modal>
+      <SweetAlert 
+          success
+          show={addNotify} 
+          title="Done!" 
+          onConfirm={closeNotify}>
+        </SweetAlert>
     </div>
     )
 }

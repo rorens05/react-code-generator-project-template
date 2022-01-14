@@ -68,7 +68,7 @@ function AccordionLinks({links, getLinks, setOpenEditModal, setEditLinks}) {
               <Col sm={9}>
                 <div className='title-exam'>
                 {/* <Link style={{color:'#EE9337', textDecoration:'none'}} to={item?.url}>{item?.description}</Link> */}
-                <a style={{color:'#EE9337', textDecoration:'none'}} href={item?.url}>{item?.description}</a>
+                <a target="_blank" style={{color:'#EE9337', textDecoration:'none'}} href={item?.url}>{item?.description}</a>
                 </div>
               </Col>
               <Col sm={3} className='icon-exam'>
