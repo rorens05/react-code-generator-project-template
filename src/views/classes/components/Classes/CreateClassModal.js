@@ -6,9 +6,10 @@ import CoursesAPI from '../../../../api/CoursesAPI'
 import ClassesAPI from '../../../../api/ClassesAPI';
 import { UserContext } from '../../../../context/UserContext'
 import AcademicTermAPI from '../../../../api/AcademicTermAPI';
+import SweetAlert from 'react-bootstrap-sweetalert';
 
 function CreateClassModal({modal, toggle,getClasses}) {
-  
+  const [addNotify, setAddNotity] = useState(false)
   const [grade, setGreade] = useState([])
   const [course, setCourse] = useState([])
   const [classCode, setGetCode] = useState('')
@@ -19,6 +20,10 @@ function CreateClassModal({modal, toggle,getClasses}) {
   const [academicTermId, setAcademicTermId] = useState('')
   const userContext = useContext(UserContext)
   const {user} = userContext.data
+
+  const closeNotify = () =>{
+    setAddNotity(false)
+  }
 
   const getClassCode = e =>{
     e.preventDefault()
@@ -74,7 +79,7 @@ function CreateClassModal({modal, toggle,getClasses}) {
       {classCode, gradeLevelId, className, courseId, teacherId, academicTermId}
     )
     if(response.ok){
-      alert('Add')
+      setAddNotity(true)
       toggle(e)
       getClasses()
 
@@ -133,16 +138,15 @@ function CreateClassModal({modal, toggle,getClasses}) {
                       return(<option value={item.id}>{item.academicTermName}</option>)
                       })
                     }
-                </Form.Select>
-                
+                </Form.Select> 
             </Form.Group>
             <Form.Group className="mb-4">
           		<Form.Label >Class Name</Form.Label>
                 <Form.Control onChange={(e) => setClassName(e.target.value)} type="text" placeholder='Enter class name here'/>
             </Form.Group>
             <Form.Group className="mb-4">
-            <Form.Label >Class Discription</Form.Label>
-              <Form.Control type="text" placeholder='Enter class discription here' />
+            <Form.Label >Class Description</Form.Label>
+              <Form.Control type="text" placeholder='Enter class Description here' />
             </Form.Group>
               <Form.Group className='mb-4'>
                 <Form.Label >Class Code</Form.Label>&nbsp;{' '}
@@ -159,6 +163,12 @@ function CreateClassModal({modal, toggle,getClasses}) {
           </Form>  
         </Modal.Body>
       </Modal>
+      <SweetAlert 
+          success
+          show={addNotify} 
+          title="Done!" 
+          onConfirm={closeNotify}>
+        </SweetAlert>
     </div>
     )
 }

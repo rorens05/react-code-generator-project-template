@@ -8,9 +8,13 @@ import SweetAlert from 'react-bootstrap-sweetalert';
 import moment from 'moment'
 import AssignTask from './components/Task/AssignTask'
 import EditAssignTask from './components/Task/EditAssignTask'
+import StundentAnswerTask from './student/components/StundentAnswerTask'
+import StudentSubmittedTask from './student/components/StudentSubmittedTask'
 
 
 function ClassTask({classInfo}) {
+  const [answerTaskModal, setAnswerTaskModal] = useState(false)
+  const [submittedTaskModal, setSubmittedTaskModal] = useState(false)
   const [modal, setModal] = useState(false)
   const [moduleId, setModuleId] = useState()
   const [module, setModule] = useState([])
@@ -29,6 +33,14 @@ function ClassTask({classInfo}) {
   const dateTimeNow = dateCompareNow + ' ' + '00:00:00';
 
   console.log('this is task assign:',taskModule)
+
+  const submittedTaskToggle = () => {
+    setSubmittedTaskModal(!submittedTaskModal)
+  }
+
+  const answerTaskToggle = () => {
+    setAnswerTaskModal(!answerTaskModal)
+  }
 
   const toggle = (e, item) =>{
     setEditTask(item)
@@ -136,7 +148,9 @@ function ClassTask({classInfo}) {
                     </Col>
                     {moduleitem.task.classId?( 
                     <Col sm={3} className='icon-exam'>
-                        {/* <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button> */}
+                      {/* <Button onClick={() =>submittedTaskToggle() } className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button>
+                      <Button onClick={() => answerTaskToggle()} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-user-edit"></i></Button> */}
+                      {/* Student Modal Answers */}
                         <Button onClick={(e) => toggle(e, moduleitem)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-edit"></i></Button>
                         {moduleitem?.taskAssignment?(
                           <>
@@ -227,6 +241,8 @@ function ClassTask({classInfo}) {
             )
           })}
           </Accordion>
+          <StundentAnswerTask answerTaskToggle={answerTaskToggle} answerTaskModal={answerTaskModal} />
+          <StudentSubmittedTask submittedTaskToggle={submittedTaskToggle} submittedTaskModal={submittedTaskModal} />
           <EditTask moduleId={moduleId} editTask={editTask} toggle={toggle} modal={modal} module={module} getTaskModule={getTaskModule} />
           <AssignTask moduleId={moduleId} getTaskModule={getTaskModule} assingTaskId={assingTaskId} assignTaskModal={assignTaskModal} assignTaskToggle={assignTaskToggle} />
           <EditAssignTask getTaskModule={getTaskModule} editAssignTaskItem={editAssignTaskItem} editAssignTaskToggle={editAssignTaskToggle} editAssignTaskModal={editAssignTaskModal} />

@@ -58,8 +58,8 @@ function CreateDiscussion({modal, toggle, classInfo, module, getDiscussionUnit})
               <Form.Control onChange={(e) => setDiscussionName(e.target.value)} type="text" placeholder='Enter discussion name here'/>
                 </Form.Group>
                 <Form.Group className="mb-4">
-                  <Form.Label >Instructions</Form.Label>
-                    <Form.Control onChange={(e) => setInstructions(e.target.value)} type="text" placeholder='Enter instructions here'/>
+                  <Form.Label >Instruction</Form.Label>
+                    <Form.Control onChange={(e) => setInstructions(e.target.value)} type="text" placeholder='Enter instruction here'/>
                   </Form.Group>
               <Form.Group className='right-btn'>
               <Button className='tficolorbg-button' type='submit' >Save</Button>

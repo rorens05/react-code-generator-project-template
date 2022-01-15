@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react'
+import React, { useState, useEffect, useContext} from 'react'
 import AssignmentHeader from './components/Assignment/AssignmentHeader'
 import {Accordion, Row, Col, Button} from 'react-bootstrap'
 import ClassesAPI from '../../api/ClassesAPI'
@@ -8,8 +8,14 @@ import SweetAlert from 'react-bootstrap-sweetalert';
 import moment from 'moment'
 import AssignAssignment from './components/Assignment/AssignAssignment'
 import EditAssignedAssignment from './components/Assignment/EditAssignedAssignment'
+import { UserContext } from '../../context/UserContext'
+import StudentAssignment from './student/components/StudentAssignment'
+import StudentAnswerAssignment from './student/components/StudentAnswerAssignment'
+import StudentSubmittedAssigment from './student/components/StudentSubmittedAssigment'
 
 function ClassAssignment({classInfo}) {
+  const [submittedAssignment, setSubmittedAssignment] = useState(false)
+  const [answerModal, setAnswerModal] = useState(false)
   const [modal, setModal] = useState(false)
   const [assginModal, setAssignModal] = useState(false)
   const [editAssignAssignmentItem, setEditAssignAssignmentItem] = useState()
@@ -26,8 +32,18 @@ function ClassAssignment({classInfo}) {
   const dateCompareNow = moment().format("YYYY-MM-DD")
   const timeNow = moment().format('HH:mm');
   const dateTimeNow = dateCompareNow + ' ' + '00:00:00';
+  const userContext = useContext(UserContext)
+  const {user} = userContext.data
 
   console.log('this is assignment:', assignment)
+
+  const submittedAssignmentToggle = () => {
+    setSubmittedAssignment(!submittedAssignment)
+  }
+
+  const answerAnswerToggle = () => {
+    setAnswerModal(!answerModal)
+  }
 
   const toggle = (e, item) =>{
     setEditAssignment(item)
@@ -130,8 +146,11 @@ function ClassAssignment({classInfo}) {
               </div>
             </Col>
             {assigItem.assignment.classId?( 
+              <>
               <Col sm={3} className='icon-exam'>
-                {/* <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button> */}
+                {/* <Button onClick={() => submittedAssignmentToggle()} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button>
+                <Button onClick={() => answerAnswerToggle()} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-user-edit"></i></Button>
+                Student Modal Answers */}
                 <Button onClick={(e) => toggle(e, assigItem)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-edit"></i></Button>
                 {assigItem?.classAssignment?(
                   <Button onClick={(e) => editAssignedAssignmentToggle(e, assigItem)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-clock"></i></Button>
@@ -140,6 +159,7 @@ function ClassAssignment({classInfo}) {
                 } 
                   <Button onClick={() => handleDeleteNotify(assigItem?.assignment?.id, item?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-trash-alt"></i></Button>
               </Col>
+              </>
             ):
             <>
             {assigItem.assignment.classId?(
@@ -230,6 +250,8 @@ function ClassAssignment({classInfo}) {
         </Accordion.Item>)
       })}
       </Accordion>
+      <StudentSubmittedAssigment submittedAssignmentToggle={submittedAssignmentToggle} submittedAssignment={submittedAssignment}  />
+      <StudentAnswerAssignment answerAnswerToggle={answerAnswerToggle} answerModal={answerModal} />
       <EditAssignment toggle={toggle} modal={modal} editAssignment={editAssignment} getAssignmentList={getAssignmentList} moduleId={moduleId} />
       <AssignAssignment moduleId={moduleId} assignmentId={assignmentId} assginModal={assginModal} assignAssignmentToggle={assignAssignmentToggle} getAssignmentList={getAssignmentList} />
       <EditAssignedAssignment moduleId={moduleId} getAssignmentList={getAssignmentList} editAssignAssignmentItem={editAssignAssignmentItem} editAssignedAssignmentModal={editAssignedAssignmentModal} editAssignedAssignmentToggle={editAssignedAssignmentToggle} />

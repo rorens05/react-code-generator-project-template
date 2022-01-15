@@ -4,7 +4,7 @@ import AssignmentContent from './AssignmentContent'
 import AssignmentReportContent from '../contents/AssignmentReportContent'
 import ClassesAPI from './../../../api/ClassesAPI'
 
-function AssignmentReport({classesModules, setClassesModules, selectedClassId, viewAssignmentReport, setViewAssignmentReport}) {
+function AssignmentReport({classesModules, setClassesModules, selectedClassId, viewAssignmentReport, setViewAssignmentReport, showAssignmentHeader, setShowAssignmentHeader}) {
 
 const [assignmentPerModule, setAssignmentPerModule] = useState([])
 const [assignmentReport, setAssignmentReport] = useState([])
@@ -39,6 +39,7 @@ const assignmentColumns = () => {
 const getAssignmentReport = async(e, assignmentid, assignmentname) => {
   setLoading(true)
   sessionStorage.setItem('assignmentName',assignmentname)
+  sessionStorage.setItem('assignmentId',assignmentid)
   setViewAssignmentReport(false)
   console.log(viewAssignmentReport)
   let response = await new ClassesAPI().getAssignmentReport(selectedClassId, assignmentid)
@@ -93,7 +94,7 @@ if(viewAssignmentReport === true){
     </div>
   )}else{
     return(
-      <AssignmentReportContent assignmentColumns={assignmentColumns()} setAssignmentReport={setAssignmentReport} assignmentReport={assignmentReport}/>
+      <AssignmentReportContent showAssignmentHeader={showAssignmentHeader} setShowAssignmentHeader={setShowAssignmentHeader} assignmentColumns={assignmentColumns()} setAssignmentReport={setAssignmentReport} assignmentReport={assignmentReport}/>
     )
   }
   
