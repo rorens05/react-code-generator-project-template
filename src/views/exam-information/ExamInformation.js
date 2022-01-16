@@ -80,13 +80,27 @@ export default function ExamInformation() {
 
   const submitPartsAnswer = async (part) => {
     console.log("SUBMIT PART", { part });
-
-    const payload = part.questionDtos.map((question) => {
-      return {
-        questionId: question.question.id,
-        answer: question.studentAnswer,
-      };
-    });
+    let payload = [];
+    if (part.questionPart.questionTypeId == 5) {
+      payload = part.questionDtos.map((question) => {
+        return {
+          answer: "",
+          questionId: question.question.id,
+          enumeration: question.studentAnswer,
+          "webEnumerationAnswers": question.studentAnswer.map(item =>
+            item.answer
+          )
+        };
+      });
+    } else {
+      payload = part.questionDtos.map((question) => {
+        return {
+          questionId: question.question.id,
+          answer: question.studentAnswer,
+        };
+      });
+    }
+    console.log({ payload });
     setLoading(true);
     let response = await new ExamAPI().submitTestPerPart(
       user?.student?.id,
