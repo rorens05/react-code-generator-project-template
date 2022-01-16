@@ -1,9 +1,13 @@
 import Base from './Base';
 
 export default class ExamAPI extends Base {
-  getExams = async () => {
-    return this.sendRequest({
-      path: `/api/Class/3/test`,
+  getExams = async (id) =>
+    this.sendRequest({
+      path: `/api/Class/${id}/test`,
     });
-  };
+
+  getExamInformation = async (id) =>
+    this.sendRequest({
+      path: `/api/Test/${id}/information`,
+    });
 }

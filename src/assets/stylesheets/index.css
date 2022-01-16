@@ -604,6 +604,11 @@ border-top-right-radius: 0px !important;
   font-size: 24px
 }
 
+.btn-primary{
+  background-color: #EE9337 !important;
+  border-color: #ff8103 !important;
+}
+
 .btn-auth{
   background-color: #EE9337 !important;
   border-color: #ff8103 !important;
@@ -929,4 +934,51 @@ border-top-right-radius: 0px !important;
   margin-left: 10px;
   text-decoration: none !important;
   font-size: 20px;
+}
+
+.primary-title{
+  font-size: 24px;
+  color: #EE9337;
+  margin: 0
+}
+
+.secondary-title{
+  font-size: 24px;
+  color: #707070;
+  margin: 0
+}
+
+.default-item-container{
+  padding: 10px 20px;
+  border: 1px solid #E9E9E9;
+  border-radius: 10px;
+}
+
+.exam-parts-container{
+  margin-top: 20px;
+}
+
+hr{
+  border-top: 1px solid gray !important
+}
+
+.exam-information-container .accordion-button:not(.collapsed){
+  background-color: white;
+  color: white;
+}
+
+.exam-information-container .accordion-item{
+  border: none;
+  margin-bottom: 24px;
+}
+
+.exam-information-container .accordion-button{
+  padding: 12px 0 !important;
+  margin: 12px 0 ;
+  outline: none !important;
+}
+
+.exam-information-container .accordion-button:focus{
+  box-shadow: none !important;
+  border-color: none !important;
 }

@@ -12,12 +12,12 @@ function ClassExamHeader({onSearch}) {
           <h1 className='exam-title'>Exam </h1>
           {user.isTeacher && (
             <>
-              <Button className='btn-create-exam' Button variant='link'>
-                <i className='fa fa-plus'></i> Create Exam{" "}
+              <Button className='btn-`create-exam' Button variant='link'>
+                <i className='fa fa-plus'></i> Create Exam
               </Button>
               <h4 className='exam-or'>OR</h4>
               <Button className='btn-create-exam' Button variant='link'>
-                <i className='fa fa-plus'></i> Import Exam{" "}
+                <i className='fa fa-plus'></i> Import Exam
               </Button>
             </>
           )}
