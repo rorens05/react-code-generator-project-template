@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import {Card, InputGroup, FormControl, Row, Col,Button, Form} from 'react-bootstrap'
 import ClassesAPI from '../../api/ClassesAPI'
 import { useParams } from 'react-router'
 import SweetAlert from 'react-bootstrap-sweetalert';
 import EditAnnouncement from './components/Feed/EditAnnouncement';
 import moment from 'moment';
+import { UserContext } from '../../context/UserContext'
 
 function ClassFeed() {
   const [title, setTitle] = useState('Feed')
@@ -18,6 +19,8 @@ function ClassFeed() {
   const [editAnnouncementModal, setEditAnnouncementModal] = useState(false)
   const [editAnnouncementItem, setEditAssignAssignmentItem] = useState()
   const [feedClass, setFeedClass] = useState([])
+  const userContext = useContext(UserContext)
+  const {user} = userContext.data
 
   const closeNotify = () =>{
     setAddNotity(false)
@@ -99,19 +102,26 @@ function ClassFeed() {
             >
               You will not be able to recover this imaginary file!
         </SweetAlert>
-    <Card className='calendar-card'>
-      <Card.Body>
-      <Form onSubmit={createAnnouncementClass}>
-      <InputGroup  size="lg">
-        <InputGroup.Text id="basic-addon2" className="feed-button"><i class="fas fa-user-circle fas-1x" ></i></InputGroup.Text>
-          <FormControl onChange={(e) => setContent(e.target.value)} value={content} className='feed-box'  aria-label="small" aria-describedby="inputGroup-sizing-sm" placeholder="Type an Announcement for the class here" type="text"/> 
-      </InputGroup>
-      <div style={{textAlign:'right', paddingTop:'15px'}}>
-      <Button className='tficolorbg-button' type='submit' >POST</Button>
-      </div>
-      </Form>
-      </Card.Body>
-    </Card>
+        {(user?.teacher === null)?(
+        <></>
+        ):(
+        <>
+          <Card className='calendar-card'>
+            <Card.Body>
+            <Form onSubmit={createAnnouncementClass}>
+            <InputGroup  size="lg">
+              <InputGroup.Text id="basic-addon2" className="feed-button"><i class="fas fa-user-circle fas-1x" ></i></InputGroup.Text>
+                <FormControl onChange={(e) => setContent(e.target.value)} value={content} className='feed-box'  aria-label="small" aria-describedby="inputGroup-sizing-sm" placeholder="Type an Announcement for the class here" type="text"/> 
+            </InputGroup>
+            <div style={{textAlign:'right', paddingTop:'15px'}}>
+            <Button className='tficolorbg-button' type='submit' >POST</Button>
+            </div>
+            </Form>
+            </Card.Body>
+        </Card>
+        </>
+        )}
+    
     {}
     {feedClass?.map(item => {
       return(

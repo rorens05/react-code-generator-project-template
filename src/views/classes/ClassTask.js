@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import {Row, Col, Accordion, Button} from 'react-bootstrap'
 import ClassesAPI from '../../api/ClassesAPI'
 import HeaderTask from './components/Task/HeaderTask'
@@ -10,11 +10,11 @@ import AssignTask from './components/Task/AssignTask'
 import EditAssignTask from './components/Task/EditAssignTask'
 import StundentAnswerTask from './student/components/StundentAnswerTask'
 import StudentSubmittedTask from './student/components/StudentSubmittedTask'
+import StudentTask from './student/StudentTask'
+import { UserContext } from '../../context/UserContext'
 
 
 function ClassTask({classInfo}) {
-  const [answerTaskModal, setAnswerTaskModal] = useState(false)
-  const [submittedTaskModal, setSubmittedTaskModal] = useState(false)
   const [modal, setModal] = useState(false)
   const [moduleId, setModuleId] = useState()
   const [module, setModule] = useState([])
@@ -31,16 +31,10 @@ function ClassTask({classInfo}) {
   const dateCompareNow = moment().format("YYYY-MM-DD")
   const timeNow = moment().format('HH:mm');
   const dateTimeNow = dateCompareNow + ' ' + '00:00:00';
+  const userContext = useContext(UserContext)
+  const {user} = userContext.data
 
   console.log('this is task assign:',taskModule)
-
-  const submittedTaskToggle = () => {
-    setSubmittedTaskModal(!submittedTaskModal)
-  }
-
-  const answerTaskToggle = () => {
-    setAnswerTaskModal(!answerTaskModal)
-  }
 
   const toggle = (e, item) =>{
     setEditTask(item)
@@ -57,7 +51,7 @@ function ClassTask({classInfo}) {
     setAssignTaskModal(!assignTaskModal)
   }
 
-  console.log("this is task:", taskModule)
+ 
   const cancelSweetAlert = () => {
     setDeleteNotify(false)
   }
@@ -128,6 +122,10 @@ function ClassTask({classInfo}) {
             <Accordion.Item eventKey={index} onClick={(e) => getTaskModule(e, item?.id)}>
             <Accordion.Header ><div style={{fontSize:'20px'}}>{item.moduleName}</div></Accordion.Header>
             <Accordion.Body>
+              {(user?.teacher === null)?(
+              <>
+                <StudentTask taskModule={taskModule} />
+              </>):<>
               {taskModule?.map(moduleitem => {
                 return (
                   <Row>
@@ -148,8 +146,6 @@ function ClassTask({classInfo}) {
                     </Col>
                     {moduleitem.task.classId?( 
                     <Col sm={3} className='icon-exam'>
-                      {/* <Button onClick={() =>submittedTaskToggle() } className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button>
-                      <Button onClick={() => answerTaskToggle()} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-user-edit"></i></Button> */}
                       {/* Student Modal Answers */}
                         <Button onClick={(e) => toggle(e, moduleitem)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-edit"></i></Button>
                         {moduleitem?.taskAssignment?(
@@ -236,13 +232,13 @@ function ClassTask({classInfo}) {
                     </>}
                   </Row>  
                     )})}
+              </>}
+              
               </Accordion.Body>
               </Accordion.Item>
             )
           })}
           </Accordion>
-          <StundentAnswerTask answerTaskToggle={answerTaskToggle} answerTaskModal={answerTaskModal} />
-          <StudentSubmittedTask submittedTaskToggle={submittedTaskToggle} submittedTaskModal={submittedTaskModal} />
           <EditTask moduleId={moduleId} editTask={editTask} toggle={toggle} modal={modal} module={module} getTaskModule={getTaskModule} />
           <AssignTask moduleId={moduleId} getTaskModule={getTaskModule} assingTaskId={assingTaskId} assignTaskModal={assignTaskModal} assignTaskToggle={assignTaskToggle} />
           <EditAssignTask getTaskModule={getTaskModule} editAssignTaskItem={editAssignTaskItem} editAssignTaskToggle={editAssignTaskToggle} editAssignTaskModal={editAssignTaskModal} />

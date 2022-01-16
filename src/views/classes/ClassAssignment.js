@@ -128,7 +128,14 @@ function ClassAssignment({classInfo}) {
           </div>
         </Accordion.Header>
         <Accordion.Body>
-        {assignment.map(assigItem => {
+          {(user?.teacher === null)?(
+          <>
+            <StudentAssignment assignment={assignment} />
+          </>
+          ):
+          (
+          <>
+            {assignment.map(assigItem => {
           return( <Row>
             <Col sm={8}>
               <div className='title-exam'>
@@ -245,6 +252,10 @@ function ClassAssignment({classInfo}) {
             }
           </Row>)
         })}
+          </>
+          )}
+
+        
          
         </Accordion.Body>
         </Accordion.Item>)

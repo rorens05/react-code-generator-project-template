@@ -1,16 +1,29 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 import { Button, InputGroup, FormControl } from 'react-bootstrap';
 import CreateDiscussion from './CreateDiscussion';
+import { UserContext } from '../../../../context/UserContext'
 
 function HeaderDiscussion({module, getDiscussionUnit}) {
 const [modal, setModal] = useState(false)
+const userContext = useContext(UserContext)
+const {user} = userContext.data
+
 const toggle = () =>{
     setModal(!modal)
   }
 	return (
 		<div>
 			<div className="row m-b-20" style={{paddingTop:'15px'}}>
-				<div className="col-md-10 pages-header"><p className='title-header'>Discussion <Button className='btn-create-discussion' variant="link" onClick={() => setModal(true) }> <i className="fa fa-plus"></i>  Create Discussion  </Button></p></div>
+				<div className="col-md-10 pages-header"><p className='title-header'>Discussion </p>
+				{(user?.teacher === null)?(
+				<>
+				</>):(
+				<>
+					<p><Button className='btn-create-discussion' variant="link" onClick={() => setModal(true) }> <i className="fa fa-plus"></i>  Create Discussion  </Button></p>
+				</>
+				)}
+				
+				</div>
 			</div>
 			<div className="row m-b-20">
 				<div className="col-md-12">

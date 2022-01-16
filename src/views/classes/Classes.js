@@ -8,10 +8,12 @@ import EditClassModal from './components/Classes/EditClassModal'
 import { UserContext } from '../../context/UserContext'
 import moment from 'moment'
 import StudentClasslist from './student/StudentClasslist'
+import StudentClassListHeader from './student/components/StudentClassListHeader'
 
 export default function Classes() {
   const [loading, setLoading] = useState(true)
   const [classes, setClasses] = useState([])
+  const [studentClasses, setStudentClasses] = useState([])
   const [seletedClass, setSeletedClass] = useState(null)
   const [openEditModal, setOpenEditModal] = useState(false)
   const userContext = useContext(UserContext)
@@ -24,20 +26,47 @@ export default function Classes() {
     if(response.ok){
       setClasses(response.data)
     }else{
-      alert("Something went wrong while fetching all Classes")
+      // alert("Something went wrong while fetching all Classes")
     }
     setLoading(false)
   }
 
-  console.log('teacher', user?.teacher?.id)
+  const getClassesStudent = async() => {
+    let response = await new ClassesAPI().getClassesStudent(user?.student?.id)
+    if(response.ok){
+      setStudentClasses(response.data)
+    }else{
+      // alert("Something went wrong while fetching all Classes")
+    }
+    setLoading(false)
+  }
+
+  useEffect(() => {
+    getClassesStudent()
+  }, [])
 
   useEffect(() => {
     getClasses()
   }, [])
+
   return (
     <MainContainer activeHeader={'classes'} loading={loading}>
       <div className='page-container'>
         <div className='containerpages'>
+          {(user?.teacher === null)?(
+          <>
+          <StudentClassListHeader />
+          <CardGroup className='card-group2'>
+          {studentClasses.length?
+            studentClasses.map(item => {
+              return( <StudentClasslist item={item} />)
+            }):<></>  
+            
+          } 
+          </CardGroup>
+          </>
+          ):
+          <>
           <ClassHeader getClasses={getClasses} />
           <CardGroup className='card-group2'>
             {classes.length?
@@ -46,6 +75,8 @@ export default function Classes() {
                   }):<span></span>
                 }
           </CardGroup>
+          </>
+          }
         </div>
       </div>
       <EditClassModal getClasses={getClasses} seletedClass={seletedClass} openEditModal={openEditModal} setOpenEditModal={setOpenEditModal} />

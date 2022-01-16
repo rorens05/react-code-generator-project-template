@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import ClassInteractiveHeader from './components/Interactive/ClassInteractiveHeader'
 import { Row, Col, Accordion, Button} from 'react-bootstrap'
 import ClassesAPI from '../../api/ClassesAPI'
@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom'
 import moment from 'moment'
 import AssignInteractive from './components/Interactive/AssignInteractive'
 import EditAssignInteractive from './components/Interactive/EditAssignInteractive'
+import { UserContext } from '../../context/UserContext'
+import StudentInteractive from './student/StudentInteractive'
 
 function ClassInteractive({classInfo}) {
   const [module, setModule] = useState([])
@@ -21,6 +23,8 @@ function ClassInteractive({classInfo}) {
   const dateCompareNow = moment().format("YYYY-MM-DD")
   const timeNow = moment().format('HH:mm');
   const dateTimeNow = dateCompareNow + ' ' + '00:00:00';
+  const userContext = useContext(UserContext)
+  const {user} = userContext.data
 
   const editAssignIteractiveToggle = (e, item) => {
     setEditAssignInteractiveItem(item)
@@ -73,6 +77,12 @@ function ClassInteractive({classInfo}) {
             </div>
           </Accordion.Header>
           <Accordion.Body>
+            {(user?.teacher === null)?(
+            <>
+              <StudentInteractive interactive={interactive} />
+            </>
+            ):(
+            <>
             {interactive.map(interItem =>{
               return( <Row>
                 <Col sm={8}>
@@ -169,8 +179,11 @@ function ClassInteractive({classInfo}) {
                     </div>
                   </>
                   }
-              </Row>)
-            })}
+              </Row>
+              )})}
+            </>
+            )}
+
           </Accordion.Body>
           </Accordion.Item>)
         })}
