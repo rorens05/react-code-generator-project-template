@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import {Row, Col, Accordion, Button} from 'react-bootstrap'
 import HeaderDiscussion from './components/Discussion/HeaderDiscussion'
 import { useParams } from 'react-router'
@@ -8,6 +8,8 @@ import SweetAlert from 'react-bootstrap-sweetalert';
 import AssignedDiscussion from './components/Discussion/AssignedDiscussion'
 import moment from 'moment'
 import EditAssignDiscussion from './components/Discussion/EditAssignDiscussion'
+import { UserContext } from '../../context/UserContext'
+import StudentDiscussion from './student/StudentDiscussion'
 
 function ClassDiscussion({classInfo}) {
   const [modal, setModal] = useState(false)
@@ -26,6 +28,8 @@ function ClassDiscussion({classInfo}) {
   const dateCompareNow = moment().format("YYYY-MM-DD")
   const timeNow = moment().format('HH:mm');
   const dateTimeNow = dateCompareNow + ' ' + '00:00:00';
+  const userContext = useContext(UserContext)
+  const {user} = userContext.data
 
   const assignToggle = (e, item) =>{
     setDiscussionId(item)
@@ -109,6 +113,12 @@ function ClassDiscussion({classInfo}) {
             <Accordion.Item eventKey={index} onClick={(e) => getDiscussionUnit(e, item?.id)}>
             <Accordion.Header><div style={{fontSize:'20px'}}>{item.moduleName}</div></Accordion.Header>
             <Accordion.Body>
+              {(user?.teacher === null)?(
+              <>
+                <StudentDiscussion discussionModule={discussionModule} />
+              </>
+              ):(
+              <>
               {discussionModule?.map(moduleitem => {
                 return (
                   <Row>
@@ -231,6 +241,8 @@ function ClassDiscussion({classInfo}) {
                     }
               </Row>
                  )})}
+              </>
+              )}
               </Accordion.Body>
               </Accordion.Item>
             )

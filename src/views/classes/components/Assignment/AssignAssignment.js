@@ -5,7 +5,7 @@ import ClassesAPI from '../../../../api/ClassesAPI'
 import { useParams } from 'react-router'
 import SweetAlert from 'react-bootstrap-sweetalert';
 
-function AssignAssignment({ moduleId, getAssignmentList, assginModal,assignAssignmentToggle, assignmentId }) {
+function AssignAssignment({ moduleId, getAssignmentList, assginModal, assignAssignmentToggle, assignmentId }) {
   console.log('assingmentId:', assignmentId)
   const [startDate, setStartDate] = useState('')
   const [startTime, setStartTime] = useState('')
@@ -22,7 +22,7 @@ function AssignAssignment({ moduleId, getAssignmentList, assginModal,assignAssig
     e.preventDefault()
     let response = await new ClassesAPI().assignAssignment(id, assignmentId, {startDate, startTime, endDate, endTime})
       if(response.ok){
-        alert('Assigned Assingment')
+        setAssignNotify(true)
         setStartDate('')
         setStartTime('')
         setEndDate('')

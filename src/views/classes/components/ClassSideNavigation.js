@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import {ListGroup, Tab, Row, Col} from 'react-bootstrap'
 import ClassAssignment from '../ClassAssignment'
 import ClassDiscussion from '../ClassDiscussion'
@@ -12,11 +12,14 @@ import ClassInteractive from '../ClassInteractive'
 import ClassList from '../ClassList'
 import DiscussionAPI from '../../../api/DiscussionAPI'
 import { useParams } from 'react-router'
-
+import { UserContext } from '../../../context/UserContext'
 
 export default function ClassSideNavigation({setLoading}) {
+  const userContext = useContext(UserContext)
   const [classInfo, setClassInfo] = useState(null)
   const {id} = useParams()
+  const {user} = userContext.data
+
   const getClassInfo = async() => {
     setLoading(true)
     let response = await new DiscussionAPI().getClassInfo(id)
@@ -84,9 +87,16 @@ export default function ClassSideNavigation({setLoading}) {
               <ListGroup.Item className="list-group-item-o " action href="#link8">
                 Links
               </ListGroup.Item>
+              {(user?.teacher === null)?(
+              <>
+              </>
+              ):
+              <>
               <ListGroup.Item className="list-group-item-o " action href="#link9">
                 Class List
               </ListGroup.Item>
+              </>
+              }
             </ListGroup>
           </div>
           <Col sm={9}>

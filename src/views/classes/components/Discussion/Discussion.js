@@ -1,9 +1,15 @@
-import React, { useState } from "react";
+import React, {useState, useContext} from 'react'
 import CreateDiscussion from "././CreateDiscussion"
 import { Button, InputGroup, FormControl, CardGroup } from 'react-bootstrap';
-export default function Discussion() {
+import CreateAssignment from './CreateAssignment'
+import { UserContext } from '../../../../context/UserContext'
 
+
+export default function Discussion() {
+const userContext = useContext(UserContext)
+const {user} = userContext.data
 const [openModal, setOpenModal] = useState(false)
+
 const handleOpenModal = e => {
       e.preventDefault()
       setOpenModal(true)
@@ -13,7 +19,16 @@ const handleOpenModal = e => {
       <div className="page-container">
         <div className="containerpages">
           	<div className="row m-b-20">
-              <div className="col-md-10 pages-header"><h1>Create Discussion <Button variant="outline-warning" onClick={handleOpenModal}></Button></h1></div>
+              <div className="col-md-10 pages-header"><h1>Create Discussion </h1>
+              {(user?.teacher === null)?(
+              <></>
+              ):(
+              <>
+                <h1><Button variant="outline-warning" onClick={handleOpenModal}></Button></h1>
+              </>
+              )}
+              
+              </div>
               <div className="col-md-2"></div>
           	</div>
           		<div className="row m-b-20">

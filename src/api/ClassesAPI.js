@@ -7,12 +7,14 @@ export default class ClassesAPI extends Base {
       method: 'GET'
     });
   };
+
   getClassesStudent = async (id) => {
     return this.sendRequest({
       path: `/api/Student/${id}/class`,
       method: 'GET'
     });
   };
+
   createClasses = async data => {
     return this.sendRequest({
       path: `/api/Class`,
@@ -32,6 +34,37 @@ export default class ClassesAPI extends Base {
     return this.sendRequest({
       path: `/api/Class/${id}`,
       method: 'DELETE'
+    })
+  }
+
+  getStudentTaskAnwswer = async(id, classId, taskId) => {
+    return this.sendRequest({
+      path: `/api/Student/${id}/class/${classId}/task/${taskId}/answer`,
+      method: 'GET'
+    })
+  }
+
+  getStudentAssignmentAnswer = async (id, classId, assignmentId) => {
+    return this.sendRequest({
+      path: `/api/Student/${id}/class/${classId}/assignment/${assignmentId}/answer`,
+      method: 'GET'
+    })
+  }
+
+  submitStudentAssignmentAnswer = async (id, classId, assignmentId, data) => {
+    return this.sendRequest({
+      path: `/api/Student/${id}/class/${classId}/assignment/${assignmentId}/answer`,
+      method: 'POST',
+      data
+    })
+  }
+    
+
+  submitStudentTaskAnswer = async(id, classId, taskId, data) => {
+    return this.sendRequest({
+      path:`/api/Student/${id}/class/${classId}/task/${taskId}/answer`,
+      method: 'POST',
+      data
     })
   }
 
