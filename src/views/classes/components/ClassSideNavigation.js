@@ -93,13 +93,13 @@ export default function ClassSideNavigation({setLoading}) {
               </>
               ):
               <>
-              <ListGroup.Item className="list-group-item-o " action href="#link9">
-                Class List
-              </ListGroup.Item>
-              <ListGroup.Item className="list-group-item-o " action href="#link10">
-                Files
-              </ListGroup.Item>
-              </>
+                <ListGroup.Item className="list-group-item-o " action href="#link9">
+                  Class List
+                </ListGroup.Item>
+                <ListGroup.Item className="list-group-item-o " action href="#link10">
+                  Files
+                </ListGroup.Item>
+              </>}
             </ListGroup>
           </div>
           <Col sm={9}>
