@@ -9,6 +9,7 @@ import CoursesDiscussion from "./pages/Discussion/CoursesDiscussion";
 import CoursesAssignment from "./pages/Assignment/CoursesAssignment";
 import CoursesTask from "./pages/Task/CoursesTask";
 import CourseLinks from "./pages/Links/CourseLinks";
+import CourseFiles from "./pages/Files/CourseFiles";
 
 export default function CourseContent(course) {
 
@@ -101,6 +102,9 @@ export default function CourseContent(course) {
               <ListGroup.Item className="list-group-item-o " action href="#link5">
               Task
               </ListGroup.Item>
+              <ListGroup.Item className="list-group-item-o " action href="#link6">
+                Files
+              </ListGroup.Item>
               {/* <ListGroup.Item className="list-group-item-o " action href="#link6">
               Links
               </ListGroup.Item> */}
@@ -122,6 +126,9 @@ export default function CourseContent(course) {
               </Tab.Pane>
               <Tab.Pane eventKey="#link5">
                 <CoursesTask moduleInfo={moduleInfo} setModuleInfo={setModuleInfo} />
+              </Tab.Pane>
+              <Tab.Pane eventKey="#link6">
+                <CourseFiles id={courseid}/>
               </Tab.Pane>
               {/* <Tab.Pane eventKey="#link6">
                 <CourseLinks moduleInfo={moduleInfo} setModuleInfo={setModuleInfo} />

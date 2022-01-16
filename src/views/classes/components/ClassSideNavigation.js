@@ -10,6 +10,7 @@ import ClassTask from '../ClassTask'
 import ClassCalendar from './ClassCalendar'
 import ClassInteractive from '../ClassInteractive'
 import ClassList from '../ClassList'
+import ClassFiles from '../ClassFiles'
 import DiscussionAPI from '../../../api/DiscussionAPI'
 import { useParams } from 'react-router'
 
@@ -87,6 +88,9 @@ export default function ClassSideNavigation({setLoading}) {
               <ListGroup.Item className="list-group-item-o " action href="#link9">
                 Class List
               </ListGroup.Item>
+              <ListGroup.Item className="list-group-item-o " action href="#link10">
+                Files
+              </ListGroup.Item>
             </ListGroup>
           </div>
           <Col sm={9}>
@@ -124,6 +128,9 @@ export default function ClassSideNavigation({setLoading}) {
               </Tab.Pane>
               <Tab.Pane className='content-pane' eventKey="#link9">
                 <ClassList />
+              </Tab.Pane>
+              <Tab.Pane className='content-pane' eventKey="#link10">
+                <ClassFiles id={id}/>
               </Tab.Pane>
             </Tab.Content> 
           </Col> 
