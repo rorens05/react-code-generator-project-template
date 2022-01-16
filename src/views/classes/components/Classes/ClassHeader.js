@@ -39,9 +39,9 @@ function ClassHeader({getClasses}) {
 						<FormControl className='search-box' aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Search here for available classes" type="search"/>
 					<InputGroup.Text id="basic-addon2" className="search-button"><i className="fas fa-search fa-1x"></i></InputGroup.Text>
 					</InputGroup>
-					</div>
 				</div>
-				<CreateClassModal toggle={toggle} modal={modal} getClasses={getClasses}  />
+			</div>
+			<CreateClassModal toggle={toggle} modal={modal} getClasses={getClasses}  />
 		</div>
 	)
 }

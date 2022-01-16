@@ -695,6 +695,11 @@ border-top-right-radius: 0px !important;
   font-size: 24px
 }
 
+.btn-primary{
+  background-color: #EE9337 !important;
+  border-color: #ff8103 !important;
+}
+
 .btn-auth{
   background-color: #EE9337 !important;
   border-color: #ff8103 !important;
@@ -945,4 +950,201 @@ border-top-right-radius: 0px !important;
   /* color: #EE9337!important; */
   color:#EE9337;
   font-size: 24px!important;
+}
+
+.class-container{
+  padding: 20px
+}
+
+.absolute-loader{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255,255,255,0.5);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.absolute-loader img{
+  width: 100px
+}
+
+.exam-item-container{
+  padding: 10px 20px;
+  border: 1px solid #E9E9E9;
+  border-radius: 10px;
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.exam-item-container .exam-content{
+  flex: 1;
+}
+  
+.exam-item-container .exam-content .exam-title{
+  font-size: 24px;
+  color: #EE9337;
+  text-decoration: none !important;
+}
+
+.exam-item-container .exam-content .exam-title:hover{
+  opacity: 0.6;
+}
+
+.exam-item-container .exam-content .exam-course-name{
+  font-size: 20px;
+  color: #707070;
+  text-decoration: none !important;
+  margin-bottom: 10px;
+}
+
+.exam-item-container .exam-content .exam-instruction{
+  font-size: 20px;
+  color: #BCBCBC;
+  text-decoration: none !important;
+}
+
+.exam-item-container .exam-actions{
+  display: flex;
+  align-items: flex-end;
+}
+
+.exam-item-container .exam-actions a{
+  width: 32px;
+  height: 32px;
+  background-color: #EE9337;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white !important;
+  border-radius: 5px;
+  margin-left: 10px;
+  text-decoration: none !important;
+  font-size: 20px;
+}
+
+.primary-title{
+  font-size: 24px;
+  color: #EE9337;
+  margin: 0
+}
+
+.secondary-title{
+  font-size: 24px;
+  color: #707070;
+  margin: 0
+}
+
+.default-item-container{
+  padding: 10px 20px;
+  border: 1px solid #E9E9E9;
+  border-radius: 10px;
+}
+
+.exam-parts-container{
+  margin-top: 20px;
+}
+
+hr{
+  border-top: 1px solid gray !important
+}
+
+.exam-information-container .accordion-button:not(.collapsed){
+  background-color: white;
+  color: white;
+}
+
+.exam-information-container .accordion-item{
+  border: none;
+  margin-bottom: 24px;
+}
+
+.exam-information-container .accordion-body{
+  padding: 20px 0
+}
+
+.exam-information-container .accordion-button{
+  padding: 12px 0 !important;
+  margin: 12px 0 ;
+  outline: none !important;
+}
+
+.exam-information-container .accordion-button:focus{
+  box-shadow: none !important;
+  border-color: none !important;
+  border-bottom-color: #E9E9E9 !important;
+}
+
+.exam-information-container .question-input-number{
+  font: normal normal normal 20px Segoe UI;
+  letter-spacing: 0px;
+  color: #EE9337;
+  margin-right: 20px
+}
+
+.exam-information-container .question-input-content-title{
+  font: normal normal normal 20px Segoe UI;
+  letter-spacing: 0px;
+  color: #707070;
+}
+.exam-information-container .question-input-content{
+  flex: 1
+}
+
+.exam-information-container .question-input-content-choices{
+  padding: 10px 0;
+}
+
+.exam-information-container .question-input-content-choices-item{
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding-bottom: 9px;
+  padding-top: 9px;
+  flex: 1
+}
+
+.exam-information-container .question-input-content-choices-item:hover{
+  background-color: #fff7ee;
+}
+
+.exam-information-container .question-input-content-choices-item .hover-none:hover{
+  background-color: white !important;
+}
+
+.exam-information-container .question-choice-title{
+  font: normal normal normal 20px Segoe UI;
+  letter-spacing: 0px;
+  color: #707070;
+}
+
+.exam-information-container .question-radio{
+  width: 24px;
+  height: 24px;
+  border: 2px solid #EE9337;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+}
+
+
+.exam-information-container .question-radio div{
+  width: 12px;
+  height: 12px;
+  border-radius: 12px;
+}
+
+.exam-information-container .question-radio.active div{
+  background-color: #EE9337; 
+}
+
+.status-text{
+  font-size: 20px;
+  font-weight: bold;  
 }

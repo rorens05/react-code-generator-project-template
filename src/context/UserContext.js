@@ -18,9 +18,11 @@ export class UserContextProvider extends Component {
       switch (user.role) {
         case "Student":
           user.name = `${user.student?.fname} ${user.student?.lname}`
+          user.isStudent = true
           break;
         case "Teacher":
           user.name = `${user.teacher?.fname} ${user.teacher?.lname}`
+          user.isTeacher = true
           break;
         default:
           break;

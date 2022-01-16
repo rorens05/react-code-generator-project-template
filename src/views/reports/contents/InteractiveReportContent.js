@@ -19,7 +19,6 @@ function InteractiveReportContent({classesModules, setClassesModules, selectedCl
           <th>Easy Score</th>
           <th>Average Score</th>
           <th>Hard Score</th>
-          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -32,9 +31,6 @@ function InteractiveReportContent({classesModules, setClassesModules, selectedCl
               <td>{st.easyScore}</td>
               <td>{st.averageScore}</td>
               <td>{st.hardScore}</td>
-              <td>
-                <Button variant="outline-warning" size="sm"><i class="fas fa-redo"style={{paddingRight:'10px'}}></i>Retake</Button>
-              </td>
             </tr>
           )
         })
