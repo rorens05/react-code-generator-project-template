@@ -1,8 +1,6 @@
 import React from 'react'
 import { Button, InputGroup, FormControl} from 'react-bootstrap'
 
-
-
 function ExamHeaders() {
   return (
   <div>

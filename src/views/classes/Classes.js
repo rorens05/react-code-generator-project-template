@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react'
-import { CardGroup, Col } from 'react-bootstrap'
+import { CardGroup } from 'react-bootstrap'
 import ClassesAPI from '../../api/ClassesAPI'
 import MainContainer from '../../components/layouts/MainContainer'
 import ClassCard from './components/Classes/ClassCard'
@@ -18,7 +18,9 @@ export default function Classes() {
   const {user} = userContext.data
 
   const getClasses = async() => {
-    let response = await new ClassesAPI().getClasses(user?.teacher?.id)
+    setLoading(true)
+    let response = await new ClassesAPI().getClasses(user.isTeacher ? user?.teacher?.id : user?.student?.id)
+    setLoading(false)
     if(response.ok){
       setClasses(response.data)
     }else{
@@ -30,11 +32,10 @@ export default function Classes() {
   console.log('teacher', user?.teacher?.id)
 
   useEffect(() => {
-    // console.log('moment data', moment("2021-07-01T00:00:00").format('dddd'))
     getClasses()
   }, [])
   return (
-    <MainContainer loading={loading} activeHeader={'classes'}>
+    <MainContainer activeHeader={'classes'} loading={loading}>
       <div className='page-container'>
         <div className='containerpages'>
           <ClassHeader getClasses={getClasses} />
