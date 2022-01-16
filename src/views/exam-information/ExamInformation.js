@@ -23,9 +23,32 @@ export default function ExamInformation() {
     }
   };
 
+  
+  const onAnswer = (partId, questionId, answer) => {
+    console.log({partId, questionId, answer});
+    let questionPartDto = [...exam.questionPartDto];
+    questionPartDto = questionPartDto.map(part => {
+      console.log({part});
+      if (part.questionPart.id === partId) {
+        part.questionDtos = part.questionDtos.map(question => {
+          console.log({question});
+          if (question.question.id === questionId) {
+            question.studentAnswer = answer;
+          }
+          return question;
+        });
+      }
+      return part;
+    });
+    let newExam = { ...exam };
+    newExam.questionPartDto = questionPartDto;
+    setExam(newExam);
+    console.log({newExam});
+  };
+
   const startExam = () => {
     setExamStarted(true)
-    setRemainingTime(66)
+    setRemainingTime(600)
   }
 
   useEffect(() => {
@@ -34,9 +57,9 @@ export default function ExamInformation() {
 
   useEffect(() => {
     if(remainingTime > 0){
-      setTimeout(() => {
-        setRemainingTime(value => value - 1)
-      }, 1000);
+      // setTimeout(() => {
+      //   setRemainingTime(value => value - 1)
+      // }, 1000);
     }else{
       setExamStarted(false)
     }
@@ -47,7 +70,7 @@ export default function ExamInformation() {
       <div className='page-container exam-information-container'>
         <div className='containerpages'>
           <ExamDetails exam={exam} loading={loading} startExam={startExam} remainingTime={remainingTime} examStarted={examStarted}/>
-          <ExamForm exam={exam} loading={loading} examStarted={examStarted}/>
+          <ExamForm exam={exam} loading={loading} examStarted={examStarted} onAnswer={onAnswer}/>
         </div>
       </div>
     </MainContainer>
