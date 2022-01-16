@@ -11,7 +11,7 @@ const Identification = ({ number, part, question, onAnswer }) => {
         </div>
         <div className='question-input-content-choices'>
           <div className='question-input-content-choices-item hover-none'>
-            <Form.Control id="disabledTextInput" placeholder="" as="textarea" className="w-100" value={question.studentAnswer} onChange={(e) => {
+            <Form.Control id="disabledTextInput" placeholder="" readOnly={part.isDone} as="textarea" className="w-100" value={question.studentAnswer} onChange={(e) => {
               onAnswer(part.questionPart.id, question.question.id, e.target.value);
             }} />
           </div>

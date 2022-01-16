@@ -9,11 +9,19 @@ const TrueOrFalse = ({ number, part, question, onAnswer }) => {
           {question.question.testQuestion}
         </div>
         <div className='question-input-content-choices'>
-          <div className='question-input-content-choices-item' onClick={() => onAnswer(part.questionPart.id, question.question.id, "TRUE")}>
+          <div className='question-input-content-choices-item' onClick={() => {
+              if (!part.isDone) {
+                onAnswer(part.questionPart.id, question.question.id, "TRUE")}
+              }
+            }>
             <div className={`question-radio ${"TRUE" === question.studentAnswer ? "active" : ""}`}><div/></div>
             <p className="question-choice-title m-0">{"TRUE"}</p>
           </div>
-          <div className='question-input-content-choices-item' onClick={() => onAnswer(part.questionPart.id, question.question.id, "FALSE")}>
+          <div className='question-input-content-choices-item' onClick={() => {
+              if (!part.isDone) {
+                onAnswer(part.questionPart.id, question.question.id, "FALSE")}
+              }
+            }>
             <div className={`question-radio ${"FALSE" === question.studentAnswer ? "active" : ""}`}><div/></div>
             <p className="question-choice-title m-0">{"FALSE"}</p>
           </div>

@@ -1,9 +1,19 @@
-import React from "react";
-import { Accordion } from "react-bootstrap";
+import React, { useState } from "react";
+import { Accordion, Button } from "react-bootstrap";
+import Status from "../../../components/utilities/Status";
 import { integerToRoman } from "../../../utils/integerToRoman";
 import QuestionInput from "./QuestionInput";
+import SweetAlert from "react-bootstrap-sweetalert";
 
-export default function ExamForm({ exam, onAnswer, onSubmit, examStarted }) {
+export default function ExamForm({
+  exam,
+  onAnswer,
+  onSubmit,
+  examStarted,
+  submitPartsAnswer,
+}) {
+  const [showAlert, setShowAlert] = useState(false);
+
   if (exam == null) return <div />;
   if (!examStarted) return <div />;
   return (
@@ -22,6 +32,7 @@ export default function ExamForm({ exam, onAnswer, onSubmit, examStarted }) {
                   className='secondary-title'
                   style={{ fontSize: 16 }}
                 >{`${part.questionDtos.length} Question(s)`}</p>
+                <Status>{part.isDone ? "Completed" : "Not Completed"}</Status>
               </div>
             </Accordion.Header>
             <Accordion.Body>
@@ -37,10 +48,51 @@ export default function ExamForm({ exam, onAnswer, onSubmit, examStarted }) {
                   />
                 );
               })}
+              {examStarted && !part.isDone && (
+                <Button
+                  className='btn btn-primary my-4 mx-3'
+                  variant='primary'
+                  size='lg'
+                  onClick={() => submitPartsAnswer(part)}
+                >
+                  SUBMIT
+                </Button>
+              )}
             </Accordion.Body>
           </Accordion.Item>
         </Accordion>
       ))}
+      <SweetAlert
+        warning
+        showCancel
+        show={showAlert}
+        confirmBtnText='Yes!'
+        confirmBtnBsStyle='danger'
+        cancelBtnBsStyle='light'
+        title='Are you sure you want to end the exam?'
+        onConfirm={(e) => {
+          onSubmit();
+          setShowAlert(false);
+        }}
+        onCancel={() => {
+          setShowAlert(false);
+        }}
+        focusCancelBtn
+      >
+        All not submitted answers will be lost.
+      </SweetAlert>
+      {examStarted && (
+        <Button
+          className='btn btn-primary my-4 mx-3'
+          variant='primary'
+          size='lg'
+          onClick={() => {
+            setShowAlert(true);
+          }}
+        >
+          END EXAM
+        </Button>
+      )}
     </div>
   );
 }

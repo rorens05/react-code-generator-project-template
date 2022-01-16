@@ -1,37 +1,55 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState, useContext } from "react";
+import { Button } from "react-bootstrap";
+import { Redirect, useParams } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import ClassesAPI from "../../api/ClassesAPI";
 import ExamAPI from "../../api/ExamAPI";
 import MainContainer from "../../components/layouts/MainContainer";
+import { UserContext } from "../../context/UserContext";
 import ExamDetails from "./components/ExamDetails";
 import ExamForm from "./components/ExamForm";
 
 export default function ExamInformation() {
-  const {id} = useParams()
   const [loading, setLoading] = useState(true);
   const [exam, setExam] = useState(null);
-  const [remainingTime, setRemainingTime] = useState(0)
-  const [examStarted, setExamStarted] = useState(false)
+  const [remainingTime, setRemainingTime] = useState(0);
+  const [examStarted, setExamStarted] = useState(false);
+  const [additionalExamInfo, setAdditionalExamInfo] = useState({});
+
+  const userContext = useContext(UserContext);
+  const { user } = userContext.data;
+  const { id } = useParams();
 
   const getExamInformation = async () => {
     setLoading(true);
     let response = await new ExamAPI().getExamInformation(id);
-    setLoading(false);
+    let classId = 0;
     if (response.ok) {
+      classId = response.data.test.classId;
       setExam(response.data);
     } else {
       alert("Something went wrong while fetching exam information");
     }
+    response = await new ExamAPI().getExams(classId);
+    setLoading(false);
+    if (response.ok) {
+      const examInfo = response.data.find(
+        (item) => item.test.id.toString() === id.toString()
+      );
+      console.log({ examInfo });
+      setAdditionalExamInfo(examInfo);
+      setRemainingTime((examInfo.classTest?.timeLimit || 0) * 60);
+    } else {
+      alert("Something went wrong while fetching exams");
+    }
   };
 
-  
   const onAnswer = (partId, questionId, answer) => {
-    console.log({partId, questionId, answer});
     let questionPartDto = [...exam.questionPartDto];
-    questionPartDto = questionPartDto.map(part => {
-      console.log({part});
+    questionPartDto = questionPartDto.map((part) => {
       if (part.questionPart.id === partId) {
-        part.questionDtos = part.questionDtos.map(question => {
-          console.log({question});
+        part.questionDtos = part.questionDtos.map((question) => {
+          console.log({ question });
           if (question.question.id === questionId) {
             question.studentAnswer = answer;
           }
@@ -43,36 +61,152 @@ export default function ExamInformation() {
     let newExam = { ...exam };
     newExam.questionPartDto = questionPartDto;
     setExam(newExam);
-    console.log({newExam});
+    console.log({ newExam });
   };
 
-  const startExam = () => {
-    setExamStarted(true)
-    setRemainingTime(600)
-  }
+  const completePart = (partParams) => {
+    let questionPartDto = [...exam.questionPartDto];
+    questionPartDto = questionPartDto.map((part) => {
+      if (part.questionPart.id === partParams.questionPart.id) {
+        part.isDone = true;
+      }
+      return part;
+    });
+
+    let newExam = { ...exam };
+    newExam.questionPartDto = questionPartDto;
+    setExam(newExam);
+  };
+
+  const submitPartsAnswer = async (part) => {
+    console.log("SUBMIT PART", { part });
+
+    const payload = part.questionDtos.map((question) => {
+      return {
+        questionId: question.question.id,
+        answer: question.studentAnswer,
+      };
+    });
+    setLoading(true);
+    let response = await new ExamAPI().submitTestPerPart(
+      user?.student?.id,
+      exam.test.classId,
+      part.questionPart.testId,
+      part.questionPart.id,
+      payload
+    );
+    setLoading(false);
+    if (response.ok) {
+      completePart(part);
+    } else {
+      alert("Something went wrong in submitting answer");
+    }
+  };
+
+  const endTest = async (e) => {
+    window.onbeforeunload = undefined;
+    setLoading(true);
+    let response = await new ExamAPI().endTest(
+      user.student?.id,
+      exam?.test?.classId,
+      id
+    );
+    setLoading(false);
+    if (!response.ok) {
+      // alert("Something went wrong in ending test");
+    }
+    window.location.reload();
+  };
+
+  const startExam = async () => {
+    setLoading(true);
+    let response = await new ExamAPI().startTest(
+      user.student?.id,
+      exam?.test?.classId,
+      id
+    );
+    setLoading(false);
+
+    if (response.ok) {
+      setExamStarted(true);
+      setRemainingTime((additionalExamInfo.classTest?.timeLimit || 0) * 60);
+    } else {
+      if (response.statusMessage === "Bad Request") {
+        alert("This test has already been ended");
+        endTest();
+        getExamInformation();
+      } else {
+        alert("Something went wrong in starting test");
+      }
+    }
+  };
 
   useEffect(() => {
+    if (examStarted) {
+      window.onbeforeunload = async (e) => {
+        e.preventDefault();
+        await endTest();
+        return "";
+      };
+    }
+  }, [examStarted]);
+
+  useEffect(() => {
+    if (user.isTeacher) return (window.location.href = "/404");
     getExamInformation();
+    return () => {
+      endTest();
+    };
   }, []);
 
   useEffect(() => {
-    if(remainingTime > 0){
-      // setTimeout(() => {
-      //   setRemainingTime(value => value - 1)
-      // }, 1000);
-    }else{
-      setExamStarted(false)
+    if (remainingTime > 0) {
+      setTimeout(() => {
+        if (!examStarted) return;
+        setRemainingTime((value) => value - 1);
+        if (remainingTime == 600) {
+          toast.success("You only have 10 minutes left to finish the test");
+        }
+        if (remainingTime == 300) {
+          toast.success("You only have 5 minutes left to finish the test");
+        }
+        if (remainingTime == 60) {
+          toast.success("You only have 1 minute left to finish the test");
+        }
+        if (remainingTime == 10) {
+          toast.success("You only have 10 seconds left to finish the test");
+        }
+      }, 1000);
+    } else {
+      if (!examStarted) return;
+      endTest();
+      setExamStarted(false);
     }
-  }, [remainingTime]);
+  }, [remainingTime, examStarted]);
 
   return (
     <MainContainer title='Exam Information' loading={loading}>
       <div className='page-container exam-information-container'>
         <div className='containerpages'>
-          <ExamDetails exam={exam} loading={loading} startExam={startExam} remainingTime={remainingTime} examStarted={examStarted}/>
-          <ExamForm exam={exam} loading={loading} examStarted={examStarted} onAnswer={onAnswer}/>
+          <ExamDetails
+            exam={exam}
+            loading={loading}
+            startExam={startExam}
+            remainingTime={remainingTime}
+            examStarted={examStarted}
+            isDoneTest={additionalExamInfo.isLoggedUserDone}
+          />
+          <ExamForm
+            exam={exam}
+            loading={loading}
+            examStarted={examStarted}
+            onAnswer={onAnswer}
+            submitPartsAnswer={submitPartsAnswer}
+            onSubmit={endTest}
+          />
         </div>
       </div>
+      <ToastContainer />
     </MainContainer>
   );
 }

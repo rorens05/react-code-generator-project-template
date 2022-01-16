@@ -1143,3 +1143,8 @@ hr{
 .exam-information-container .question-radio.active div{
   background-color: #EE9337; 
 }
+
+.status-text{
+  font-size: 20px;
+  font-weight: bold;  
+}

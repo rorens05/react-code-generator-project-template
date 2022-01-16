@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "react-bootstrap";
+import Status from "../../../components/utilities/Status";
 import ExamTimer from "./ExamTimer";
 
 const ExamParts = ({exam}) => {
@@ -19,7 +20,7 @@ const ExamParts = ({exam}) => {
   ))
 }
 
-export default function ExamDetails({ exam, loading, remainingTime, startExam, examStarted }) {
+export default function ExamDetails({ exam, loading, remainingTime, startExam, examStarted, isDoneTest }) {
   return exam != null && !loading ? (
     <div className='exam-information-container'>
       <div className='d-flex justify-content-between '>
@@ -31,7 +32,9 @@ export default function ExamDetails({ exam, loading, remainingTime, startExam, e
             {exam.test.testName}
           </p>
           <p className='secondary-title mb-2'>{`${exam.totalItems} Total Item(s)`}</p>
-          {!examStarted && <Button
+          {!examStarted && (<Status>{isDoneTest ? "Completed" : "Not Started"}</Status>)}
+          {examStarted && (<Status>{"Test is Ongoing.."}</Status>)}
+          {!examStarted && !isDoneTest && <Button
             className='btn btn-primary my-4 mx-3'
             variant='primary'
             size='lg'
@@ -40,7 +43,7 @@ export default function ExamDetails({ exam, loading, remainingTime, startExam, e
             START TEST
           </Button>}
         </div>
-        {examStarted && <ExamTimer remainingTime={remainingTime} />}
+        {<ExamTimer remainingTime={remainingTime} examStarted={examStarted}/>}
         
       </div>
       <hr />
