@@ -64,11 +64,14 @@ function TaskReportContent({setShowTaskHeader, showTaskHeader, selectedClassId, 
             <tr>
               
               {item.studentTasks.map(st =>{
-                <td><i class="fas fa-user-circle td-icon-report-person"></i> 
-                  <span onClick={(e) => getTaskAnalysis(e, item.student.id, st.task.classId, st.task.id)}>{item.student.lname}, {item.student.fname}</span>
-                </td>
+                
                 return (
-                <td>{st.score} </td>
+                <>
+                  <td><i class="fas fa-user-circle td-icon-report-person"></i> 
+                    <span onClick={(e) => getTaskAnalysis(e, item.student.id, st.task.classId, st.task.id)}>{item.student.lname}, {item.student.fname}</span>
+                  </td>
+                  <td>{st.score} </td>
+                </>
                 )
             })}
             </tr>
