@@ -58,19 +58,19 @@ function ClassList() {
 
   return (
     <div>
-    <Row>
-      <Col style={{color:'#707070'}}>
-       <h1> Class List </h1>
+    <Row style={{paddingTop:'15px'}}>
+      <Col className='title-header' >
+      <p>Class List </p> 
       </Col>
       <Col style={{textAlign:'right'}}>
-        <Button onClick={handleOpenClassEnrolled} size='lg' variant="outline-warning">Enrolled</Button>
-        <Button  onClick={handleOpenClassWaiting} size='lg' variant="outline-warning">Waiting List</Button>
+        <Button className='btn-Enrolled' onClick={handleOpenClassEnrolled} size='lg' variant="outline-warning"><b>Enrolled</b></Button>
+        <Button  className='btn-Enrolled'  onClick={handleOpenClassWaiting} size='lg' variant="outline-warning"><b>Waiting List</b></Button>
       </Col>
     </Row>
-    <div className="row m-b-20" style={{marginTop:'50px'}}>
+    <div className="row m-b-20" style={{marginTop:'30px'}}>
         <div className="col-md-12">
           <InputGroup size="lg">
-            <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Search..." type="search"/>
+            <FormControl  aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Search Student Here" type="search"/>
             <InputGroup.Text id="basic-addon2" className="search-button"><i className="fas fa-search fa-1x"></i>
             </InputGroup.Text>
           </InputGroup>

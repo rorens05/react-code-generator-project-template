@@ -4,8 +4,8 @@ import { InputGroup, FormControl } from 'react-bootstrap';
 function ClassInteractiveHeader() {
   return (
 		<div>
-			<div className="row m-b-20">
-				<div className="col-md-10 pages-header"><h1>Interactive Exercises</h1></div>
+			<div className="row m-b-20" style={{paddingTop:'15px'}}>
+				<div className="col-md-10 pages-header"><p className='title-header' >Interactive Exercises</p></div>
 			</div>
 			<div className="row m-b-20">
 				<div className="col-md-12">

@@ -41,7 +41,7 @@ function EditAssignment({modal, toggle, editAssignment, getAssignmentList, modul
         <Modal  size="lg" show={modal} onHide={toggle} aria-labelledby="example-modal-sizes-title-lg">
           <Modal.Header className='class-modal-header' closeButton>
             <Modal.Title id="example-modal-sizes-title-lg" >
-              Edit Assingment
+              Edit Assignment
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
@@ -57,7 +57,7 @@ function EditAssignment({modal, toggle, editAssignment, getAssignmentList, modul
                 <Form.Control defaultValue={editAssignment?.assignment?.assignmentName} type="text" onChange={(e) => setAssignmentName(e.target.value)} />
                   </Form.Group>
                   <Form.Group className="mb-4">
-                    <Form.Label >Instructions</Form.Label>
+                    <Form.Label >Instruction</Form.Label>
                       <Form.Control defaultValue={editAssignment?.assignment?.instructions} type="text" onChange={(e) => setInstructions(e.target.value)} />
                     </Form.Group>
                 <Form.Group className='right-btn'>

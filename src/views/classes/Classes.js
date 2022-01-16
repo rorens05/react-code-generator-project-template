@@ -6,6 +6,8 @@ import ClassCard from './components/Classes/ClassCard'
 import ClassHeader from './components/Classes/ClassHeader'
 import EditClassModal from './components/Classes/EditClassModal'
 import { UserContext } from '../../context/UserContext'
+import moment from 'moment'
+import StudentClasslist from './student/StudentClasslist'
 
 export default function Classes() {
   const [loading, setLoading] = useState(true)
@@ -22,19 +24,21 @@ export default function Classes() {
     if(response.ok){
       setClasses(response.data)
     }else{
-      alert("Something went wrong while fetching all courses")
+      alert("Something went wrong while fetching all Classes")
     }
+    setLoading(false)
   }
+
+  console.log('teacher', user?.teacher?.id)
 
   useEffect(() => {
     getClasses()
   }, [])
-  
   return (
     <MainContainer activeHeader={'classes'} loading={loading}>
       <div className='page-container'>
         <div className='containerpages'>
-        <ClassHeader getClasses={getClasses} />
+          <ClassHeader getClasses={getClasses} />
           <CardGroup className='card-group2'>
             {classes.length?
               classes.map(item => {

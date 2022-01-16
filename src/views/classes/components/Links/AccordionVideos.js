@@ -59,7 +59,7 @@ function AccordionVideos({videos, getVideos, setOpenEditModal, setEditLinks}) {
         <Accordion.Item eventKey="0">
         <Accordion.Header>
           <div className='unit-exam' style={{fontSize:'25px'}}>
-            Vidoes 
+            Videos 
           </div>
         </Accordion.Header>
         <Accordion.Body>
@@ -69,7 +69,7 @@ function AccordionVideos({videos, getVideos, setOpenEditModal, setEditLinks}) {
               <Col sm={9}>
                 <div className='title-exam'>
                   {/* <Link style={{color:'#EE9337', textDecoration:'none'}} to={item?.url}>{item?.description}</Link> */}
-                  <a style={{color:'#EE9337', textDecoration:'none'}} href={item?.url}>{item?.description}</a>
+                  <a target="_blank" style={{color:'#EE9337', textDecoration:'none'}} href={item?.url}>{item?.description}</a>
                 </div>
               </Col>
               <Col sm={3} className='icon-exam'>

@@ -84,8 +84,8 @@ export default function ClassLearnHeader({classInfo}) {
 console.log('this is Content:', content)
   return (
     <div>
-      <div className="row m-b-20">
-				<div className="col-md-10 pages-header"><h1>Learn </h1>
+      <div className="row m-b-20" style={{paddingTop:'15px'}}>
+				<div className="col-md-10 pages-header"><p className='title-header'>Learn </p>
 				</div>
 			</div>
       <Row>

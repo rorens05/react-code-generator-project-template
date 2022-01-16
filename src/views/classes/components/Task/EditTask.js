@@ -59,7 +59,7 @@ function EditTask({modal, toggle, module, editTask, getTaskModule, moduleId}){
               <Form.Control onChange={(e) => setTaskName(e.target.value)}  type="text" defaultValue={editTask?.task?.taskName}/>
                 </Form.Group>
                 <Form.Group className="mb-4">
-                  <Form.Label >Instructions</Form.Label>
+                  <Form.Label >Instruction</Form.Label>
                     <Form.Control onChange={(e) => setInstructions(e.target.value)} type="text"  defaultValue={editTask?.task?.instructions}/>
                   </Form.Group>
               <Form.Group className='right-btn'>

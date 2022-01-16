@@ -26,6 +26,7 @@ function ExamReport({classesModules, setClassesModules, selectedClassId, viewTes
   const getTestReport = async(e, testid, testname, classid) => {
     setLoading(true)
     sessionStorage.setItem('testName',testname)
+    sessionStorage.setItem('testid',testid)
     let sessionClass = sessionStorage.getItem("classId")
     setViewTestReport(false)
     console.log(viewTestReport)

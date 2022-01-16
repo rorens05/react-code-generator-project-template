@@ -4,7 +4,7 @@ import { UserContext } from "../../../../context/UserContext";
 
 function ClassExamHeader({onSearch}) {
   const { data } = useContext(UserContext);
-  const { user, loading } = data;
+  const { user } = data;
   return (
     <div>
       <div className='row m-b-20'>
