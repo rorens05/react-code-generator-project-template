@@ -18,7 +18,6 @@ export default function CourseContent(course) {
   const [viewLesson, setViewLesson] = useState(false)
   const [courseInfo, setCourseInfo] = useState("")
   const [selectedModule, setSelectedModule] = useState("")
-
   const courseid = sessionStorage.getItem('courseid')
 
   const getCourseUnitInformation = async(e) => {
@@ -57,6 +56,12 @@ export default function CourseContent(course) {
     setViewLesson(false)
   }
 
+  const setBread = (e, data) => {
+    setLoading(true)
+    sessionStorage.setItem('breadname', data)
+    setLoading(false)
+  }
+
   useEffect(() => {
     getCourseUnitInformation()
     getCourseInformation()
@@ -90,19 +95,19 @@ export default function CourseContent(course) {
               <ListGroup.Item className="list-group-item-o " action href="#link1" onClick={(e) => contentDisplay(e)}>
               Learn
               </ListGroup.Item>
-              <ListGroup.Item className="list-group-item-o "action href="#link2">
+              <ListGroup.Item className="list-group-item-o "action href="#link2" onClick={(e) => setBread(e, "Exam")}>
               Exam
               </ListGroup.Item>
-              <ListGroup.Item  className="list-group-item-o "action href="#link3">
+              <ListGroup.Item  className="list-group-item-o "action href="#link3" onClick={(e) => setBread(e, "Discussion")}>
               Discussion
               </ListGroup.Item>
-              <ListGroup.Item className="list-group-item-o " action href="#link4">
+              <ListGroup.Item className="list-group-item-o " action href="#link4" onClick={(e) => setBread(e, "Assignment")}>
               Assignment
               </ListGroup.Item>
-              <ListGroup.Item className="list-group-item-o " action href="#link5">
+              <ListGroup.Item className="list-group-item-o " action href="#link5" onClick={(e) => setBread(e, "Task")}>
               Task
               </ListGroup.Item>
-              <ListGroup.Item className="list-group-item-o " action href="#link6">
+              <ListGroup.Item className="list-group-item-o " action href="#link6" onClick={(e) => setBread(e, "Files")}>
                 Files
               </ListGroup.Item>
               {/* <ListGroup.Item className="list-group-item-o " action href="#link6">
