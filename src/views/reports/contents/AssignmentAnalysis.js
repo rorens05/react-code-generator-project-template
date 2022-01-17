@@ -76,7 +76,7 @@ function AssignmentAnalysis({selectedClassId, assignmentAnalysis, setAssignmentA
 
   useEffect(() => {
     setSweetError(false)
-    setShowAssignmentHeader(false)
+    setShowAssignmentHeader(true)
   }, [])
 
   const notifyUpdateAssignmentScore = () => 

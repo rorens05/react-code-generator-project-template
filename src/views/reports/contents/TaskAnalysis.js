@@ -74,7 +74,7 @@ const updateScoreTask = async(e, studentid, classid, assignmentid, answerid) => 
 
   useEffect(() => {
     setSweetError(false)
-    setShowTaskHeader(false)
+    setShowTaskHeader(true)
   }, [])
 
   const notifyUpdateTaskScore = () => 

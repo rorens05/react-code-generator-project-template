@@ -8,6 +8,8 @@ function AssignmentHeader({classesModules, setClassesModules, selectedClassId, v
 	let assignmentname = sessionStorage.getItem("assignmentName")
 	
 	return (
+		<>
+		{showAssignmentHeader === false ?
 		<div>
 			<div className="row m-b-20">
 				<div className="col-md-10 pages-header"><h1>Grade Report - Assignment</h1></div>
@@ -21,9 +23,14 @@ function AssignmentHeader({classesModules, setClassesModules, selectedClassId, v
 					</InputGroup>
 				</div>
 			</div>
-			<AssignmentReport showAssignmentHeader={showAssignmentHeader} setShowAssignmentHeader={setShowAssignmentHeader} classesModules={classesModules} setClassesModules={setClassesModules} selectedClassId={selectedClassId} viewAssignmentReport={viewAssignmentReport} setViewAssignmentReport={setViewAssignmentReport}/>
 		</div>
+		:
+			<div className="col-md-4 pages-header"><h1>{assignmentname}</h1></div>
+		}
+		<AssignmentReport showAssignmentHeader={showAssignmentHeader} setShowAssignmentHeader={setShowAssignmentHeader} classesModules={classesModules} setClassesModules={setClassesModules} selectedClassId={selectedClassId} viewAssignmentReport={viewAssignmentReport} setViewAssignmentReport={setViewAssignmentReport}/>
+	</>
 	)
 }
+
 export default AssignmentHeader
 
