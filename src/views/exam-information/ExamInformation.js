@@ -18,19 +18,17 @@ export default function ExamInformation() {
 
   const userContext = useContext(UserContext);
   const { user } = userContext.data;
-  const { id } = useParams();
+  const { class_id, id } = useParams();
 
   const getExamInformation = async () => {
     setLoading(true);
     let response = await new ExamAPI().getExamInformation(id);
-    let classId = 0;
     if (response.ok) {
-      classId = response.data.test.classId;
       setExam(response.data);
     } else {
       alert("Something went wrong while fetching exam information");
     }
-    response = await new ExamAPI().getExams(classId);
+    response = await new ExamAPI().getExams(class_id);
     setLoading(false);
     if (response.ok) {
       const examInfo = response.data.find(
