@@ -4,6 +4,7 @@ import ClassesAPI from '../../../api/ClassesAPI'
 import SweetAlert from 'react-bootstrap-sweetalert';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import moment from 'moment'
 
 function ExamAnalysis({classesModules, setClassesModules, selectedClassId, examAnalysis, setExamAnalysis, testPartAnswers, showReportHeader, setShowReportHeader}) {
   
@@ -20,6 +21,9 @@ function ExamAnalysis({classesModules, setClassesModules, selectedClassId, examA
   const [studentScore, setStudentScore] = useState("")
   const [sweetError, setSweetError] = useState(false)
   const [show, setShow] = useState(false);
+  const dateCompareNow = moment().format("YYYY-MM-DD")
+  const timeNow = moment().format('HH:mm');
+  const dateTimeNow = dateCompareNow + ' ' + '00:00:00';
 
   let testname = sessionStorage.getItem('testName')
   let classid = sessionStorage.getItem('classId')
@@ -143,7 +147,7 @@ function ExamAnalysis({classesModules, setClassesModules, selectedClassId, examA
 
   useEffect(() => {
     setSweetError(false)
-    setShowReportHeader(false)
+    setShowReportHeader(true)
     if(studentScore !== null) {
 			setStudentScore(studentScore)
 		}
@@ -185,7 +189,7 @@ function ExamAnalysis({classesModules, setClassesModules, selectedClassId, examA
         <p className='font-exam-analysis-content-24-tfi'>{testname} </p>
       </Col>
       <Col md={6}>
-        <p className='font-exam-analysis-content-24-tfi float-right'>{examAnalysis.classTest?.startDate} </p>
+        <p className='font-exam-analysis-content-24-tfi float-right'>{moment(examAnalysis.classTest?.startDate).format("LL")} </p>
       </Col>
     </Row>
       {examAnalysis.testPartAnswers?.map((item, index) => {

@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Button, Form, Modal } from 'react-bootstrap';
 import CoursesAPI from "../../../api/CoursesAPI";
 import SubjectAreaAPI from "../../../api/SubjectAreaAPI";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-export default function CreateExam({setCourse, openCreateExamModal, setOpenCreateExamModal}){
+export default function CreateExam({setCourse, openCreateExamModal, setOpenCreateExamModal, setExamInfo, examInfo}){
 
 	const [loading, setLoading] = useState(false)
   const [modulePages, setModulePages] = useState([])
@@ -26,8 +28,9 @@ export default function CreateExam({setCourse, openCreateExamModal, setOpenCreat
       {testName, testInstructions}
     )
     if(response.ok){
-      alert("Saved")
 			handleCloseModal(e)
+      notifySaveExam()
+      getExamInfo()
     }else{
       alert(response.data.errorMessage)
     }
@@ -46,11 +49,36 @@ export default function CreateExam({setCourse, openCreateExamModal, setOpenCreat
     }
   }
 
+  const getExamInfo = async(e, data) => {
+    setLoading(true)
+    sessionStorage.setItem('moduleid', data)
+    let response = await new CoursesAPI().getExamInformation(sessionModule)
+    setLoading(false)
+    if(response.ok){
+      setExamInfo(response.data)
+      console.log(response.data)
+    }else{
+      alert("Something went wrong while fetching all a")
+    }
+  }
+
+  const notifySaveExam = () => 
+  toast.success('Exam Saved', {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+
 	useEffect(() => {
   }, [])
 
 	return (
 		<div>
+      <ToastContainer />
 			<Modal size="lg" className="modal-all" show={openCreateExamModal} onHide={()=> setOpenCreateExamModal(!openCreateExamModal)} >
 				<Modal.Header className="modal-header" closeButton>
 				Create Exam
