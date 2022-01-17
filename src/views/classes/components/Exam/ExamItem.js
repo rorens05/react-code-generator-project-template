@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Status from "../../../../components/utilities/Status";
 import { UserContext } from "../../../../context/UserContext";
@@ -7,11 +8,13 @@ export default function ExamItem({ exam }) {
   const userContext = useContext(UserContext);
   const { user } = userContext.data;
   console.log({ exam });
+  const {id} = useParams();
+
   return (
     <div className='exam-item-container'>
       <div className='exam-content'>
         <Link
-          to={user.isStudent ? `/exam/${exam.test.id}` : "#"}
+          to={user.isStudent ? `/class/${id}/exam/${exam.test.id}` : "#"}
           className='exam-title'
         >
           {exam.test.testName}
