@@ -16,7 +16,7 @@ import { UserContext } from '../../context/UserContext'
 
 function ClassTask({classInfo}) {
   const [modal, setModal] = useState(false)
-  const [moduleId, setModuleId] = useState()
+  const [moduleId, setModuleId] = useState(null)
   const [module, setModule] = useState([])
   const [assignTaskModal, setAssignTaskModal] = useState(false)
   const [editAssignTaskModal, setEditAssignTaskModal] = useState()
@@ -81,13 +81,18 @@ function ClassTask({classInfo}) {
       setTaskModule(response.data)
       setModuleId(item)
     }else{
-    
+      alert("Something went wrong while Deleting a getTaskModule")
     }
   }
 
-  useEffect(() => {
-    getTaskModule(null, moduleId)
-  }, [])
+  // useEffect(() => {
+  //   if(moduleId === null){
+  //     return(
+  //       getTaskModule(null, moduleId)
+  //     )
+  //   }
+    
+  // }, [])
 
   const removeTask = async (e, item, item1) => {
     let response = await new ClassesAPI().deleteTasks(item)

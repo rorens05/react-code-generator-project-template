@@ -9,15 +9,24 @@ import { UserContext } from '../../context/UserContext'
 import moment from 'moment'
 import StudentClasslist from './student/StudentClasslist'
 import StudentClassListHeader from './student/components/StudentClassListHeader'
+import StudentClassListPending from './student/StudentClassListPending'
+import StudentJoinClass from './student/StudentJoinClass'
 
 export default function Classes() {
   const [loading, setLoading] = useState(true)
   const [classes, setClasses] = useState([])
   const [studentClasses, setStudentClasses] = useState([])
+  const [pendingClasses, setPendingClasses] = useState([])
   const [seletedClass, setSeletedClass] = useState(null)
   const [openEditModal, setOpenEditModal] = useState(false)
+  const [joinClassestModal, setJoinClassesModal] = useState(false)
   const userContext = useContext(UserContext)
   const {user} = userContext.data
+  let studentId = user?.student?.id
+
+  const joinClassesToggle = () => {
+    setJoinClassesModal(!joinClassestModal)
+  }
 
   const getClasses = async() => {
     setLoading(true)
@@ -26,27 +35,45 @@ export default function Classes() {
     if(response.ok){
       setClasses(response.data)
     }else{
-      // alert("Something went wrong while fetching all Classes")
+      alert("Something went wrong while fetching all getClasses")
     }
     setLoading(false)
   }
 
   const getClassesStudent = async() => {
-    let response = await new ClassesAPI().getClassesStudent(user?.student?.id)
+    setLoading(true)
+    let response = await new ClassesAPI().getClassesStudent(studentId)
+    setLoading(false)
     if(response.ok){
       setStudentClasses(response.data)
     }else{
-      // alert("Something went wrong while fetching all Classes")
+      alert("Something went wrong while fetching all getClassesStudent")
     }
-    setLoading(false)
+  }
+
+  const getPendingClasses = async() => {
+    let response = await new ClassesAPI().getPendingClasses(studentId)
+      if(response.ok){
+        setPendingClasses(response.data)
+      }else{
+        alert("Something went wrong while fetching all getPendingClasses")
+      }
   }
 
   useEffect(() => {
-    getClassesStudent()
+    if(user?.teacher === null)
+    return(
+      getClassesStudent(),
+      getPendingClasses()
+    )
   }, [])
 
   useEffect(() => {
-    getClasses()
+    if(user?.student === null)
+      return(
+        getClasses()
+      )
+   
   }, [])
 
   return (
@@ -55,14 +82,25 @@ export default function Classes() {
         <div className='containerpages'>
           {(user?.teacher === null)?(
           <>
-          <StudentClassListHeader />
+          <StudentClassListHeader getPendingClasses={getPendingClasses}  joinClassesToggle={joinClassesToggle} joinClassestModal={joinClassestModal} />
           <CardGroup className='card-group2'>
           {studentClasses.length?
             studentClasses.map(item => {
-              return( <StudentClasslist item={item} />)
+              return( 
+              <StudentClasslist item={item} />
+              )
             }):<></>  
             
           } 
+          {pendingClasses.length?
+            pendingClasses.map(item =>{
+              return(
+                <StudentClassListPending item={item} />
+              )
+            }):<></>
+          }
+        
+            
           </CardGroup>
           </>
           ):

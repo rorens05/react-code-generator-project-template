@@ -35,9 +35,6 @@ function CreateTask({modal, toggle, module, getTaskModule, refModuleId}) {
 
   console.log('ModuleId:', refModuleId)
 
-  useEffect(() => {
-    getTaskModule(null, refModuleId)
-  }, [])
 
   console.log('this is modules:', module)
 	return (
