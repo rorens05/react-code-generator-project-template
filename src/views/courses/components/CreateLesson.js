@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Button, Form } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal'
 import CoursesAPI from "../../../api/CoursesAPI";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function CreateLesson({openCreateLessonModal, setCreateLessonModal, setLessonInfo}){
 
@@ -40,14 +42,25 @@ export default function CreateLesson({openCreateLessonModal, setCreateLessonModa
       {pageName, sequenceNo, content}
     )
     if(response.ok){
-      alert("Saved")
 			handleCloseModal(e)
+      notifySaveLesson()
       getCourseLessons(sessionCourse, sessionModule)
     }else{
       alert(response.data.errorMessage)
     }
     setLoading(false)
   }
+
+  const notifySaveLesson = () => 
+  toast.success('Lesson Saved!', {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
 
   return (
 		<div>

@@ -78,7 +78,6 @@ export default function CreateTask({openCreateTaskModal, setCreateTaskModal, set
 
 	return (
 		<div>
-      <ToastContainer />
 			<Modal size="lg" className="modal-all" show={openCreateTaskModal} onHide={()=> setCreateTaskModal(!openCreateTaskModal)} >
 				<Modal.Header className="modal-header" closeButton>
 				Create Task
