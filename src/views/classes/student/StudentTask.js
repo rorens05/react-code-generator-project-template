@@ -12,7 +12,7 @@ function StudentTask({taskModule}) {
   const {user} = userContext.data
   const [answerTaskModal, setAnswerTaskModal] = useState(false)
   const [submittedTaskModal, setSubmittedTaskModal] = useState(false)
-  const [taskId, setTaskId] = useState('')
+  const [taskId, setTaskId] = useState(null)
   const [taskAnswerItem, setTaskAnswerItem] = useState()
   const {id} = useParams()
   const dateCompareNow = moment().format("YYYY-MM-DD")
@@ -29,8 +29,6 @@ function StudentTask({taskModule}) {
     setSubmittedTaskModal(!submittedTaskModal)
   }
 
-  console.log("tang ina mo:", taskId)
-
   const getStudentTaskAnwswer = async(item) =>{
     let studentId = user?.student?.id
     let classId = id
@@ -39,12 +37,17 @@ function StudentTask({taskModule}) {
       setTaskAnswerItem(response.data)
       setSubmittedTaskModal(!submittedTaskModal)
     }else{
-      
+      alert('ERROR')
     }
   }
   
   useEffect(() => {
-    getStudentTaskAnwswer()
+    if(taskId !== null){
+      return(
+        getStudentTaskAnwswer()
+      )
+    }
+    
   }, [])
 
   return (

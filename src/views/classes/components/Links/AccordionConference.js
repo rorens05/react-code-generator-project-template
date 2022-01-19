@@ -1,16 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Accordion, Row, Col, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router'
 import ClassesAPI from '../../../../api/ClassesAPI'
 import SweetAlert from 'react-bootstrap-sweetalert';
 import moment from 'moment';
+import { UserContext } from '../../../../context/UserContext'
 
 
 function AccordionConference({conference, getConfe, setOpenEditModal, setEditLinks}) {
   const [deleteNotify, setDeleteNotify] = useState(false)
   const [itemId, setItemId] = useState('')
   const {id} = useParams()
+  const userContext = useContext(UserContext)
+  const {user} = userContext.data
 
   const cancelSweetAlert = () => {
     setDeleteNotify(false)
@@ -72,10 +75,17 @@ function AccordionConference({conference, getConfe, setOpenEditModal, setEditLin
                   <a target="_blank" style={{color:'#EE9337', textDecoration:'none'}}  href={item?.url}> {item?.description}</a>
                 </div>
               </Col>
-              <Col sm={3} className='icon-exam'>
-                  <Button onClick={(e) => handleOpeEditModal(e, item)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i className="fa fa-edit"></i></Button>
-                  <Button onClick={() => handleDeleteNotify(item?.classLink.id)} className="m-r-5 color-white tficolorbg-button" size="sm"> <i class="fas fa-trash-alt"></i> </Button>
-              </Col>
+              {(user.teacher === null)?(
+              <></>
+              ):(
+              <>
+                <Col sm={3} className='icon-exam'>
+                    <Button onClick={(e) => handleOpeEditModal(e, item)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i className="fa fa-edit"></i></Button>
+                    <Button onClick={() => handleDeleteNotify(item?.classLink.id)} className="m-r-5 color-white tficolorbg-button" size="sm"> <i class="fas fa-trash-alt"></i> </Button>
+                </Col>
+              </>
+              )}
+
               <Col sm={9}>
               </Col>
                 <Col sm={3} style={{textAlign:'right'}} className='due-date-discusstion' >

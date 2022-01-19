@@ -18,6 +18,8 @@ function StudentAnswerAssignment({answerAnswerToggle, answerModal, assignmentId}
     setAssignNotify(false)
   }
 
+  console.log("user:", user?.userId)
+
   const submitStudentAssignmentAnswer = async (e) => {
     e.preventDefault()
     let studentId = user?.student?.id

@@ -259,9 +259,12 @@ function ClassFeed() {
                 </Col> */}
               </Row>
               <Row>
-              <div style={{paddingBottom:'10px', color:'#00000029'}} >
+                <Col>
+                <div style={{paddingBottom:'10px', color:'#00000029'}} >
                       ____________________________________________________________________________________________________________________________________________________
               </div>
+                </Col>
+  
                 <Col style={{textAlign:'center'}}>
                   <div className='inline-flex'>
                     <div style={{color:'#EE9337', fontSize:'25px',}}>

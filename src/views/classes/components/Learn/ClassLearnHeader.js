@@ -74,14 +74,10 @@ export default function ClassLearnHeader({classInfo}) {
       setContent(response.data)
       console.log(response.data)
     }else{
-      
+      alert("Something went wrong while fetching all pages")
     }
   }
-
-  useEffect(() => {
-    getContent()
-  }, [])
-console.log('this is Content:', content)
+  
   return (
     <div>
       <div className="row m-b-20" style={{paddingTop:'15px'}}>
