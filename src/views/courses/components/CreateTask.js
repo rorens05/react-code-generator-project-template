@@ -4,6 +4,8 @@ import CoursesAPI from "../../../api/CoursesAPI";
 import SubjectAreaAPI from "../../../api/SubjectAreaAPI";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import FilesAPI from '../../../api/FilesApi';
+import FileHeader from '../../files/FileHeader';
 
 export default function CreateTask({openCreateTaskModal, setCreateTaskModal, setTaskInfo}){
 
@@ -11,6 +13,9 @@ export default function CreateTask({openCreateTaskModal, setCreateTaskModal, set
   const [modulePages, setModulePages] = useState([])
 	const [taskName, setTaskName] = useState('')
 	const [instructions, setInstructions] = useState('')
+  const [displayFiles, setDisplayFiles] = useState([]);
+  const [showFiles, setShowFiles] = useState(false)
+  const courseid = sessionStorage.getItem('courseid')
   let sessionCourse = sessionStorage.getItem('courseid')
   let sessionModule = sessionStorage.getItem('moduleid')
 
@@ -73,9 +78,21 @@ export default function CreateTask({openCreateTaskModal, setCreateTaskModal, set
     progress: undefined,
   });
 
-	useEffect(() => {
+  useEffect(() => {
+    handleGetCourseFiles()
   }, [])
 
+  const handleGetCourseFiles = async() => {
+    // setLoading(true)
+    let response = await new FilesAPI().getCourseFiles(courseid)
+    // setLoading(false)
+    if(response.ok){
+      console.log(response, '-----------------------')
+      setDisplayFiles(response.data)
+    }else{
+      alert("Something went wrong while fetching class files ----------.")
+    }
+  } 
 	return (
 		<div>
       <ToastContainer />
@@ -85,6 +102,16 @@ export default function CreateTask({openCreateTaskModal, setCreateTaskModal, set
 				</Modal.Header>
 				<Modal.Body className="modal-label b-0px">
 						<Form onSubmit={saveTask}>
+              <div className={showFiles ? 'mb-3' : 'd-none'}>
+                <FileHeader type='Course' id={courseid} doneUpload={()=> handleGetCourseFiles()} />
+                {
+                  displayFiles.map( (item,ind) => {
+                    return(
+                      <img src={item.path_Base.replace('http:', 'https:')} className='p-1' alt={item.fileName} height={30} width={30}/>
+                    )
+                  })
+                }
+              </div>
 								<Form.Group className="m-b-20">
 										<Form.Label for="courseName">
 												Task Name
@@ -97,7 +124,9 @@ export default function CreateTask({openCreateTaskModal, setCreateTaskModal, set
                       onChange={(e) => setTaskName(e.target.value)}
                     />
 								</Form.Group>
-
+                <div>
+                  <Button className='float-right my-2' onClick={()=> setShowFiles(!showFiles)}>File Library</Button>
+                </div>
 								<Form.Group className="m-b-20">
 										<Form.Label for="description">
 												Instructions

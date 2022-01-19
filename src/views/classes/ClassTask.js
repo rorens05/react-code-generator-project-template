@@ -26,6 +26,7 @@ function ClassTask({classInfo}) {
   const [editTask, setEditTask] = useState()
   const {id} = useParams()
   const courseId = classInfo?.classInformation?.courseId
+  const classId = classInfo?.classInformation?.classId;
   const [deleteNotify, setDeleteNotify] = useState(false)
   const [itemId, setItemId] = useState('')
   const dateCompareNow = moment().format("YYYY-MM-DD")
@@ -34,7 +35,7 @@ function ClassTask({classInfo}) {
   const userContext = useContext(UserContext)
   const {user} = userContext.data
 
-  console.log('this is task assign:',taskModule)
+  console.log('this is task assign:',classInfo, id)
 
   const toggle = (e, item) =>{
     setEditTask(item)
@@ -99,10 +100,10 @@ function ClassTask({classInfo}) {
       alert("Something went wrong while Deleting a task")
     }
   }
-
+console.log( classInfo?.classInformation?.classId, '0000000000000000000000')
   return (
     <>
-      <HeaderTask module={module} getTaskModule={getTaskModule} refModuleId={moduleId} />
+      <HeaderTask module={module} getTaskModule={getTaskModule} classId={classId} refModuleId={moduleId} />
         <Accordion>
           <SweetAlert
             warning

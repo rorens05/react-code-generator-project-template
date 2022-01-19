@@ -4,6 +4,8 @@ import CoursesAPI from "../../../api/CoursesAPI";
 import SubjectAreaAPI from "../../../api/SubjectAreaAPI";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import FilesAPI from '../../../api/FilesApi';
+import FileHeader from '../../files/FileHeader';
 
 export default function CreateAssignment({openCreateAssignmentModal, setOpenCreateAssignmentModal, setAssignmentInfo}){
 
@@ -13,7 +15,8 @@ export default function CreateAssignment({openCreateAssignmentModal, setOpenCrea
 	const [instructions, setInstructions] = useState('')
   let sessionCourse = sessionStorage.getItem('courseid')
   let sessionModule = sessionStorage.getItem('moduleid')
-
+  const [displayFiles, setDisplayFiles] = useState([]);
+  const [showFiles, setShowFiles] = useState(false)
 
 	const handleCloseModal = e => {
     e.preventDefault()
@@ -73,7 +76,20 @@ export default function CreateAssignment({openCreateAssignmentModal, setOpenCrea
   });
 
 	useEffect(() => {
+    handleGetCourseFiles()
   }, [])
+
+  const handleGetCourseFiles = async() => {
+    // setLoading(true)
+    let response = await new FilesAPI().getCourseFiles(sessionCourse)
+    // setLoading(false)
+    if(response.ok){
+      console.log(response, '-----------------------')
+      setDisplayFiles(response.data)
+    }else{
+      alert("Something went wrong while fetching class files ----------.")
+    }
+  } 
 
 	return (
 		<div>
@@ -83,6 +99,19 @@ export default function CreateAssignment({openCreateAssignmentModal, setOpenCrea
 				Create Assignment
 				</Modal.Header>
 				<Modal.Body className="modal-label b-0px">
+          <div className={showFiles ? 'mb-3' : 'd-none'}>
+              <FileHeader type='Course' id={sessionCourse} doneUpload={()=> handleGetCourseFiles()} />
+              {
+                displayFiles.map( (item,ind) => {
+                  return(
+                    <img key={ind+item.filename} src={item.path_Base.replace('http:', 'https:')} className='p-1' alt={item.fileName} height={30} width={30}/>
+                  )
+                })
+              }
+            </div>
+            <div className='text-align-right'>
+              <Button className='my-2' onClick={()=> setShowFiles(!showFiles)}>File Library</Button>
+            </div>
 						<Form onSubmit={saveAssignmennt}>
 								<Form.Group className="m-b-20">
 										<Form.Label for="courseName">
