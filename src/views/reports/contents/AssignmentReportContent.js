@@ -31,6 +31,10 @@ function AssignmentReportContent({showAssignmentHeader, setShowAssignmentHeader,
     }
   }
 
+  useEffect(() => {
+    setShowAssignmentHeader(true)
+  }, [])
+
   if(showAssignmentAnalysis === false){
   return(
     <>

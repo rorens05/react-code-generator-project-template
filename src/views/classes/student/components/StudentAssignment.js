@@ -11,7 +11,7 @@ function StudentAssignment({assignment}) {
   const [answerModal, setAnswerModal] = useState(false)
   const [submittedAssignment, setSubmittedAssignment] = useState(false)
   const [studentAnswer, setStudentAnswer] = useState()
-  const [assignmentId, setAssignmentId] = useState()
+  const [assignmentId, setAssignmentId] = useState(null)
   const userContext = useContext(UserContext)
   const {user} = userContext.data
   const {id} = useParams()
@@ -37,12 +37,17 @@ function StudentAssignment({assignment}) {
         setStudentAnswer(response.data)
         submittedAssignmentToggle()
       }else{
-       
+       alert('ERROR getStudentAssignmentAnswer')
       }
   }
 
   useEffect(() => {
-    getStudentAssignmentAnswer()
+    if(assignmentId !== null){
+      return(
+        getStudentAssignmentAnswer()
+      )
+    }
+    
   }, [])
 
   return (

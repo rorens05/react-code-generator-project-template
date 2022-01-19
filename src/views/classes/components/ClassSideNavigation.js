@@ -44,7 +44,7 @@ export default function ClassSideNavigation({setLoading}) {
   if(classInfo == null) return <div/>
 
   return (
-    <Tab.Container className="course-widget-font" id="list-group-tabs-example " defaultActiveKey="#link1">
+    <Tab.Container  className="course-widget-font" id="list-group-tabs-example " defaultActiveKey="#link1">
         <div className="row">
           <div className="row-course-bg course-widget-font col-md-3">
               <ListGroup.Item className="list-group-item-o">
@@ -64,7 +64,7 @@ export default function ClassSideNavigation({setLoading}) {
                 </Row>
               </ListGroup.Item>
             <ListGroup style={{paddingLeft:'15px'}}>
-              <ListGroup.Item className="list-group-item-o " action href="#link1">
+              <ListGroup.Item  className="list-group-item-o " action href="#link1">
                 Feed
               </ListGroup.Item>
               <ListGroup.Item className="list-group-item-o "action href="#link2">

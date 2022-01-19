@@ -12,7 +12,7 @@ import StudentInteractive from './student/StudentInteractive'
 
 function ClassInteractive({classInfo}) {
   const [module, setModule] = useState([])
-  const [moduleId, setModuleId] = useState()
+  const [moduleId, setModuleId] = useState(null)
   const [interactive, setInteractive] = useState([])
   const [assignInteractiveModal, setAssignInteractiveModal] = useState(false)
   const [editAssignInteractiveModal, setEditAssignInteractiveModal] = useState(false)
@@ -41,7 +41,7 @@ function ClassInteractive({classInfo}) {
     if(response.ok){
         setModule(response.data)
     }else{
-      
+      alert('error')
     }
   }
 
@@ -57,12 +57,17 @@ function ClassInteractive({classInfo}) {
       setInteractive(response.data)
       setModuleId(item)
     }else{
-      
+      alert('Error')
     }
   }
 
   useEffect(() => {
-    getIndteractive()
+    if(moduleId !== null){
+      return(
+        getIndteractive()
+      )
+    }
+    
     
   }, [])
 

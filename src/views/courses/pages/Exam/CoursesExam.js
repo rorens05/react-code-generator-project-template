@@ -83,7 +83,7 @@ export default function CoursesExam() {
   }, [])
 
   return (
-    <>
+    <React.Fragment>
       <span className="content-pane-title">
         Exam 
       </span>
@@ -95,13 +95,15 @@ export default function CoursesExam() {
           </InputGroup>
         </div>
       </div>
+      <EditExam selectedExam={selectedExam} openEditExamModal={openEditExamModal} setOpenEditExamModal={setOpenEditExamModal}/>
+      <CreateExam examInfo={examInfo} setExamInfo={setExamInfo} openCreateExamModal={openCreateExamModal} setOpenCreateExamModal={setOpenCreateExamModal}/>
       <Accordion defaultActiveKey="0">
         {moduleInfo.map((item, index) => {
           return(
             <Accordion.Item eventKey={item.id}> 
               <Accordion.Header onClick={(e) => getExamInfo(e, item.id)}>
                 <span className="unit-title">{item.moduleName} <Button className="m-l-10" variant="outline-warning" onClick={handleOpenCreateExamModal}><i className="fa fa-plus"></i> Add Exam</Button>
-                <CreateExam openCreateExamModal={openCreateExamModal} setOpenCreateExamModal={setOpenCreateExamModal}/></span>
+                </span>
               </Accordion.Header>
               <Accordion.Body>
                 {examInfo.map((item, index) => {
@@ -126,9 +128,7 @@ export default function CoursesExam() {
                             >
                               You will not be able to recover this imaginary file!
                             </SweetAlert>
-                      
                       </Col>
-                      <EditExam selectedExam={selectedExam} openEditExamModal={openEditExamModal} setOpenEditExamModal={setOpenEditExamModal}/>
                     </Row>
                   )
                 })}
@@ -138,6 +138,6 @@ export default function CoursesExam() {
           })
         }
       </Accordion>
-    </> 
+    </React.Fragment> 
   )
 }

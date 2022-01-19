@@ -94,7 +94,7 @@ function SideReport() {
     setViewAssignmentReport(true)
     setViewTestReport(false)
     setViewTaskReport(false)
-    setShowReportHeader(false)
+    setShowAssignmentHeader(false)
     setViewInteractiveReport(false)
     sessionStorage.removeItem("assignmentName")
   }
@@ -103,7 +103,7 @@ function SideReport() {
     setViewTaskReport(true)
     setViewAssignmentReport(false)
     setViewTestReport(false)
-    setShowReportHeader(false)
+    setShowTaskHeader(false)
     setViewInteractiveReport(false)
     sessionStorage.removeItem("taskName")
   }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
-import {Row, Col, Accordion, Button} from 'react-bootstrap'
+import {Row, Col, Accordion, Button, InputGroup, FormControl} from 'react-bootstrap'
 import HeaderDiscussion from './components/Discussion/HeaderDiscussion'
 import { useParams } from 'react-router'
 import ClassesAPI from '../../api/ClassesAPI'
@@ -10,13 +10,18 @@ import moment from 'moment'
 import EditAssignDiscussion from './components/Discussion/EditAssignDiscussion'
 import { UserContext } from '../../context/UserContext'
 import StudentDiscussion from './student/StudentDiscussion'
+import DiscussionComments from './components/Discussion/DiscussionComments'
 
 function ClassDiscussion({classInfo}) {
+  const [discussionCommentModal, setDiscussionCommentModal] = useState(false)
+  const [commentAlert, setCommentAlert] = useState(false)
+  const [comments, setComments] = useState([])
+  const [reply, setReply] = useState('')
   const [modal, setModal] = useState(false)
   const [module, setModule] = useState([])
   const [discussionModule, setdiscussionModule] = useState([])
   const [editDiscussionItem, setEditDiscussionItem] = useState()
-  const [moduleId, setModuleId] = useState()
+  const [moduleId, setModuleId] = useState(null)
   const [deleteNotify, setDeleteNotify] = useState(false)
   const {id} = useParams()
   const courseId = classInfo?.classInformation?.courseId
@@ -30,6 +35,30 @@ function ClassDiscussion({classInfo}) {
   const dateTimeNow = dateCompareNow + ' ' + '00:00:00';
   const userContext = useContext(UserContext)
   const {user} = userContext.data
+
+  const closeNotify = () =>{
+    setCommentAlert(false)
+  }
+
+  const submitComment = async (e, item) => {
+    e.preventDefault()
+    let classId = id
+    let userAccountId = user?.userId
+    let response = await new ClassesAPI().submitComment(classId, item, {userAccountId, reply})
+      if(response.ok){
+        setCommentAlert(true)
+        setReply('')
+        getDiscussionUnit(null, moduleId)
+      }else{
+        alert('No good')
+      }
+  }
+
+  const discussionCommentToggle = (item, item1) => {
+    setComments(item)
+    setDiscussionId(item1)
+    setDiscussionCommentModal(!discussionCommentModal)
+  }
 
   const assignToggle = (e, item) =>{
     setDiscussionId(item)
@@ -66,7 +95,7 @@ function ClassDiscussion({classInfo}) {
   }
 
   useEffect(() => {
-    getModule()
+    getModule() 
   }, [])
 
   const getDiscussionUnit = async(e, item) =>{
@@ -74,11 +103,19 @@ function ClassDiscussion({classInfo}) {
     if(response.ok){
       setdiscussionModule(response.data)
       setModuleId(item)
+    }else{
+      alert("Something went wrong while getDiscussionUnit")
     }
     }
-  useEffect(() => {
-    getDiscussionUnit()
-  }, [])
+
+    useEffect(() => {
+      if(moduleId !== null){
+        return(
+          getDiscussionUnit() 
+        )
+      }
+      
+    }, [])
 
   const deleteDiscussion = async(e, item) => {
     let response = await new ClassesAPI().deleteDiscussion(item)
@@ -87,7 +124,7 @@ function ClassDiscussion({classInfo}) {
       getDiscussionUnit(null, moduleId)
       setDeleteNotify(false)
     }else{
-      alert("Something went wrong while Deleting a task")
+      alert("Something went wrong while Deleting a deleteDiscussion")
     }
   }
 
@@ -115,7 +152,7 @@ function ClassDiscussion({classInfo}) {
             <Accordion.Body>
               {(user?.teacher === null)?(
               <>
-                <StudentDiscussion discussionModule={discussionModule} />
+                <StudentDiscussion moduleId={moduleId} getDiscussionUnit={getDiscussionUnit} discussionModule={discussionModule} />
               </>
               ):(
               <>
@@ -189,7 +226,22 @@ function ClassDiscussion({classInfo}) {
                     {
                       moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isAfter(moment(moduleitem?.discussionAssignment?.startDate + ' ' + moduleitem?.discussionAssignment?.startTime, 'YYYY-MM-DD HH:mm')) &&
                       moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isBefore(moment(moduleitem?.discussionAssignment?.endDate + ' ' + moduleitem?.discussionAssignment?.endTime, 'YYYY-MM-DD HH:mm')) &&
-                      <div style={{color:'#EE9337', fontSize:'15px'}}><b>Ongoing</b></div>
+                      <>
+                      <div className='inline-flex'>
+                      <div style={{color:'#EE9337', fontSize:'15px'}}><b>Ongoing &nbsp; </b></div>
+                      <div style={{paddingBottom:'15px'}} >
+                      <Button onClick={() => discussionCommentToggle(moduleitem?.responses, moduleitem?.discussionAssignment?.discussionId)} className="m-r-5 color-white tficolorbg-button" size="sm">Comments&nbsp;{moduleitem.responseCount}</Button>
+                      </div>
+                      
+                      </div>
+                      <>
+                      <br />
+                      <InputGroup size="sm">
+                        <FormControl onChange={(e) => setReply(e.target.value)} value={reply} aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Reply" />
+                        <InputGroup.Text onClick={(e) => submitComment(e, moduleitem?.discussion?.id)}  id="basic-addon2" className="comment-btn"><i className="fas fa-paper-plane"></i></InputGroup.Text>
+                      </InputGroup><br />
+                      </>
+                      </> 
                     }                
                   <Row>
                   <Col sm={7} className='due-date-discusstion' >
@@ -248,6 +300,13 @@ function ClassDiscussion({classInfo}) {
             )
           })}
           </Accordion>
+          <SweetAlert 
+            success
+            show={commentAlert} 
+            title="Done!" 
+            onConfirm={closeNotify}>
+        </SweetAlert>
+          <DiscussionComments getDiscussionUnit={getDiscussionUnit} moduleId={moduleId} discussionId={discussionId} comments={comments} discussionCommentToggle={discussionCommentToggle} discussionCommentModal={discussionCommentModal} />
           <EditDiscussion editDiscussionItem={editDiscussionItem} toggle={toggle} modal={modal} getDiscussionUnit={getDiscussionUnit} /> 
           <AssignedDiscussion moduleId={moduleId} getDiscussionUnit={getDiscussionUnit} discussionId={discussionId} assignToggle={assignToggle} assignModal={assignModal} />
           <EditAssignDiscussion getDiscussionUnit={getDiscussionUnit} editAssignDiscussionItem={editAssignDiscussionItem} editAssignToggle={editAssignToggle} editAssignModal={editAssignModal} />

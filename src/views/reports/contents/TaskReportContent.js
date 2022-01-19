@@ -32,6 +32,10 @@ function TaskReportContent({setShowTaskHeader, showTaskHeader, selectedClassId, 
       alert(response.data.errorMessage)
     }
   }
+
+  useEffect(() => {
+    setShowTaskHeader(true)
+  }, [])
   
   if(showTaskAnalysis === false){
   return(

@@ -15,6 +15,13 @@ export default class ClassesAPI extends Base {
     });
   };
 
+  getPendingClasses = async (id) =>{
+    return this.sendRequest({
+      path: `/api/Student/${id}/class/pending`,
+      method: 'GET'
+    })
+  }
+
   createClasses = async data => {
     return this.sendRequest({
       path: `/api/Class`,
@@ -279,6 +286,29 @@ creatTask = async (mId, cId,  data) => {
       path: `/api/Discussion/module/${moduleId}/class/${classId}`,
       method: 'POST',
       data
+    })
+  }
+
+  submitComment = async (id, discussionId, data) => {
+    return this.sendRequest({
+      path: `/api/Class/${id}/discussion/${discussionId}/response`,
+      method: 'POST',
+      data
+    })
+  }
+
+  submitRequest = async (code, data) => {
+    return this.sendRequest({
+      path: `/api/Class/join/${code}`,
+      method: 'POST',
+      data
+    })
+  }
+
+  deleteComment = async (id, discussionId, responseId) => {
+    return this.sendRequest({
+      path: `/api/Class/${id}/discussion/${discussionId}/response/${responseId}`,
+      method: 'DELETE'
     })
   }
 

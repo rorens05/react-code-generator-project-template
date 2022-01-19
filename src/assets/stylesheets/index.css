@@ -123,6 +123,13 @@ border-left:0px !important;
 color:#BCBCBC !important;
 }
 
+.comment-btn {
+  background-color: transparent !important;
+  border-left:0px !important;
+  color:#BCBCBC !important;
+  cursor: pointer !important;
+}
+
 .search-box{
   color:#E9E9E9 !important;
   font-family: 'Segoe UI' !important;
@@ -392,6 +399,14 @@ border-top-right-radius: 0px !important;
   color: #E9E9E9;
   height: 7.5rem;
   
+}
+
+.class-header-card-pending{
+  background-color: #F9F9F9 !important;
+  border-radius: 10px 10px 0px 0px!important;
+  box-shadow:1px 2px 5px 1px #eeeeee ;
+  color: #BCBCBC;
+  height: 7.5rem;
 }
 
 .class-card-font-color{

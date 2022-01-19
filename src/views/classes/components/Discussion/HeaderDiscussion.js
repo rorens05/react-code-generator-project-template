@@ -19,7 +19,7 @@ const toggle = () =>{
 				<>
 				</>):(
 				<>
-					<p><Button className='btn-create-discussion' variant="link" onClick={() => setModal(true) }> <i className="fa fa-plus"></i>  Create Discussion  </Button></p>
+					<p><Button style={{paddingTop:'17px'}} className='btn-create-discussion' variant="link" onClick={() => setModal(true) }> <i className="fa fa-plus"></i>  Create Discussion  </Button></p>
 				</>
 				)}
 				

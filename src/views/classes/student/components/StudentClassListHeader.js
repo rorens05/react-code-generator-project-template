@@ -1,14 +1,15 @@
 import React from 'react'
 import { Button, InputGroup, FormControl,} from 'react-bootstrap';
+import StudentJoinClass from '../StudentJoinClass';
 
-function StudentClassListHeader() {
+function StudentClassListHeader({joinClassesToggle, joinClassestModal, getPendingClasses}) {
   return (
     <div>
       
 			<div className="row m-b-20" >
 				<div style={{display:'inline-flex'}}>
 				<div className="col-md-10 pages-header">
-					<h1>Classes <Button className='btn-create-class' Button variant="link" > <i className="fa fa-plus"></i>  Join Class  </Button></h1>
+					<h1>Classes <Button onClick={() => joinClassesToggle()} className='btn-create-class' Button variant="link" > <i className="fa fa-plus"></i>  Join Class  </Button></h1>
 				</div>
 				</div>
 			</div>
@@ -20,7 +21,7 @@ function StudentClassListHeader() {
 					</InputGroup>
 					</div>
 				</div>
-			
+			<StudentJoinClass joinClassesToggle={joinClassesToggle} joinClassestModal={joinClassestModal} getPendingClasses={getPendingClasses} />
     </div>
   )
 }

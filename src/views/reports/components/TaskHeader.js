@@ -8,6 +8,8 @@ function TaskHeader({classesModules, setClassesModules, selectedClassId, viewTas
 	let taskname = sessionStorage.getItem("taskName")
 
 	return (
+		<>
+		{showTaskHeader === false ?
 		<div>
 			<div className="row m-b-20">
 				<div className="col-md-8 pages-header"><h1>Grade Report - Task</h1></div>
@@ -21,8 +23,12 @@ function TaskHeader({classesModules, setClassesModules, selectedClassId, viewTas
 					</InputGroup>
 				</div>
 			</div>
-			<TaskReport showTaskHeader={showTaskHeader} setShowTaskHeader={setShowTaskHeader} classesModules={classesModules} setClassesModules={setClassesModules} selectedClassId={selectedClassId} viewTaskReport={viewTaskReport} setViewTaskReport={setViewTaskReport}/>
 		</div>
+		:
+		<div className="col-md-4 pages-header"><h1>{taskname}</h1></div>
+		}
+		<TaskReport showTaskHeader={showTaskHeader} setShowTaskHeader={setShowTaskHeader} classesModules={classesModules} setClassesModules={setClassesModules} selectedClassId={selectedClassId} viewTaskReport={viewTaskReport} setViewTaskReport={setViewTaskReport}/>
+	</>
 	)
 }
 export default TaskHeader

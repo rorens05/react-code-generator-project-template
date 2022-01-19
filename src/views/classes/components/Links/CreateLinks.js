@@ -5,6 +5,7 @@ import ClassesAPI from '../../../../api/ClassesAPI'
 import { Form, Button, } from 'react-bootstrap'
 import { useParams } from 'react-router'
 
+
 function CreateLinks({modal, toggle, getConfe, getVideos, getLinks}) {
   const {id} = useParams()
   const [typeId, setTypeId] = useState('')
