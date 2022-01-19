@@ -3,7 +3,7 @@ import {InputGroup, FormControl } from 'react-bootstrap';
 import InteractiveReport from './InteractiveReport';
 
 
-function InteractiveHeader({classesModules, setClassesModules, selectedClassId, viewInteractiveReport, setViewInteractiveReport}) {
+function InteractiveHeader({classesModules, setClassesModules, selectedClassId, viewInteractiveReport, setViewInteractiveReport, setShowInteractiveHeader, showInteractiveHeader}) {
 	
 	let interactivename = sessionStorage.getItem("interactiveName")
 	
@@ -21,7 +21,7 @@ function InteractiveHeader({classesModules, setClassesModules, selectedClassId, 
 					</InputGroup>
 				</div>
 			</div>
-			<InteractiveReport classesModules={classesModules} setClassesModules={setClassesModules} selectedClassId={selectedClassId} viewInteractiveReport={viewInteractiveReport} setViewInteractiveReport={setViewInteractiveReport}/>
+			<InteractiveReport showInteractiveHeader={showInteractiveHeader} setShowInteractiveHeader={setShowInteractiveHeader} classesModules={classesModules} setClassesModules={setClassesModules} selectedClassId={selectedClassId} viewInteractiveReport={viewInteractiveReport} setViewInteractiveReport={setViewInteractiveReport}/>
 		</div>
 	)
 }
