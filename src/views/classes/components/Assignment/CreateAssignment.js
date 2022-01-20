@@ -4,18 +4,22 @@ import { Form, Button, } from 'react-bootstrap'
 import { useParams } from 'react-router'
 import ClassesAPI from '../../../../api/ClassesAPI'
 import SweetAlert from 'react-bootstrap-sweetalert';
+import FilesAPI from '../../../../api/FilesApi';
+import FileHeader from '../../../files/FileHeader';
 
 function CreateAssignment({modal, toggle, module, getAssignmentList, refmoduleId}) {
   const [moduleId, setModuleId] = useState('')
   const [assignmentName, setAssignmentName] = useState('')
   const [instructions, setInstructions] = useState('')
   const [addNotify, setAddNotity] = useState(false)
+  const [displayFiles, setDisplayFiles] = useState([]);
+  const [showFiles, setShowFiles] = useState(false)
   const {id} = useParams()
 
   const closeNotify = () =>{
     setAddNotity(false)
   }
- 
+ console.log(id , '---------------------------------------------')
   const createAssignment = async (e) =>{
     e.preventDefault()
     let response = await new ClassesAPI().createAssignment(moduleId, id, {assignment:{assignmentName, instructions,}, classAssignment:{}} )
@@ -32,6 +36,22 @@ function CreateAssignment({modal, toggle, module, getAssignmentList, refmoduleId
     }
   }
 
+  useEffect(() => {
+    handleGetClassFiles()
+  }, [])
+
+  const handleGetClassFiles = async() => {
+    // setLoading(true)
+    let response = await new FilesAPI().getClassFiles(id)
+    // setLoading(false)
+    if(response.ok){
+      console.log(response, '-----------------------')
+      setDisplayFiles(response.data)
+    }else{
+      alert("Something went wrong while fetching class files ----------.")
+    }
+  } 
+
 	return (
     <div>
     	<Modal size="lg" show={modal} onHide={toggle} aria-labelledby="example-modal-sizes-title-lg">
@@ -41,6 +61,19 @@ function CreateAssignment({modal, toggle, module, getAssignmentList, refmoduleId
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
+            <div className={showFiles ? 'mb-3' : 'd-none'}>
+              <FileHeader type='Class' id={id} doneUpload={()=> handleGetClassFiles()} />
+              {
+                displayFiles.map( (item,ind) => {
+                  return(
+                    <img key={ind+item.filename} src={item.path_Base.replace('http:', 'https:')} className='p-1' alt={item.fileName} height={30} width={30}/>
+                  )
+                })
+              }
+            </div>
+            <div className='text-align-right'>
+              <Button className='my-2' onClick={()=> setShowFiles(!showFiles)}>File Library</Button>
+            </div>
           <Form onSubmit={createAssignment} > 
             <Form.Group className="mb-3">
               <Form.Label>Unit</Form.Label>

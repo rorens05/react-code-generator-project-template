@@ -2,20 +2,40 @@ import React, { useState, useEffect } from 'react'
 import Modal from 'react-bootstrap/Modal'
 import { Form, Button, } from 'react-bootstrap'
 import ClassesAPI from '../../../../api/ClassesAPI'
+import FilesAPI from '../../../../api/FilesApi';
+import FileHeader from '../../../files/FileHeader';
 import { useParams } from 'react-router'
 import SweetAlert from 'react-bootstrap-sweetalert';
 
-function CreateTask({modal, toggle, module, getTaskModule, refModuleId}) {
+function CreateTask({modal, toggle, module, getTaskModule, classId, refModuleId}) {
   const [moduleId, setModuleId] = useState('')
   const [taskName, setTaskName] = useState('')
   const [instructions, setInstructions] = useState('')
-  const [addNotify, setAddNotity] = useState(false)
+  const [addNotify, setAddNotity] = useState(false);
+  const [displayFiles, setDisplayFiles] = useState([]);
+  const [showFiles, setShowFiles] = useState(false)
   const allowLate = true
   const {id} = useParams()
 
   const closeNotify = () =>{
     setAddNotity(false)
   }
+
+  useEffect(() => {
+    handleGetClassFiles()
+  }, [])
+
+  const handleGetClassFiles = async() => {
+    // setLoading(true)
+    let response = await new FilesAPI().getClassFiles(classId)
+    // setLoading(false)
+    if(response.ok){
+      console.log(response, '-----------------------')
+      setDisplayFiles(response.data)
+    }else{
+      alert("Something went wrong while fetching class files ----------.")
+    }
+  } 
 
   const saveTask = async (e) =>{
     e.preventDefault()
@@ -47,6 +67,16 @@ function CreateTask({modal, toggle, module, getTaskModule, refModuleId}) {
         </Modal.Header>
         <Modal.Body>
         <Form onSubmit={saveTask} >  
+          <div className={showFiles ? 'mb-3' : 'd-none'}>
+            <FileHeader type='Class' id={classId} doneUpload={()=> handleGetClassFiles()} />
+            {
+              displayFiles.map( (item,ind) => {
+                return(
+                  <img src={item.path_Base.replace('http:', 'https:')} className='p-1' alt={item.fileName} height={30} width={30}/>
+                )
+              })
+            }
+          </div>
           <Form.Group className="mb-3">
           <Form.Label>Unit</Form.Label>
             <Form.Select onChange={(e) => setModuleId(e.target.value)}>
@@ -55,6 +85,9 @@ function CreateTask({modal, toggle, module, getTaskModule, refModuleId}) {
                   return(<option value={item.id}>{item.moduleName} {item.id}</option>)
                 })}
             </Form.Select>
+            <div>
+              <Button className='float-right my-2' onClick={()=> setShowFiles(!showFiles)}>File Library</Button>
+            </div>
               </Form.Group>
               <Form.Group className="mb-4">
                 <Form.Label>Task Name</Form.Label>

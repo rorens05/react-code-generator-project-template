@@ -3,7 +3,7 @@ import { Button, InputGroup, FormControl } from 'react-bootstrap';
 import CreateTask from './CreateTask';
 import { UserContext } from '../../../../context/UserContext'
 
-function HeaderTask({module, getTaskModule, refModuleId}) {
+function HeaderTask({module, getTaskModule, classId, refModuleId}) {
 const [modal, setModal] = useState(false)
 const userContext = useContext(UserContext)
 const {user} = userContext.data
@@ -12,7 +12,7 @@ const toggle = () =>{
     setModal(!modal)
   }
 
-	console.log('ModuleId:', refModuleId)
+	console.log('ModuleId:', refModuleId, classId, '????????????????????????s')
 
 	return (
 		<div>
@@ -36,7 +36,7 @@ const toggle = () =>{
 					</InputGroup>
 				</div>
 			</div>
-				<CreateTask refModuleId={refModuleId} module={module} toggle={toggle} modal={modal} getTaskModule={getTaskModule} />
+				<CreateTask refModuleId={refModuleId} module={module} classId={classId} toggle={toggle} modal={modal} getTaskModule={getTaskModule} />
 		</div>
 	)
 }

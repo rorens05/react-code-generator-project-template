@@ -12,7 +12,7 @@ import CourseLinks from "./pages/Links/CourseLinks";
 import CourseFiles from "./pages/Files/CourseFiles";
 
 export default function CourseContent(course) {
-
+  console.log(course, '//////////////////')
   const [loading, setLoading] = useState(false)
   const [moduleInfo, setModuleInfo] = useState([])
   const [viewLesson, setViewLesson] = useState(false)
