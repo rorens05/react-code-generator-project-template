@@ -6,6 +6,9 @@ import CreateLesson from "./../../components/CreateLesson";
 import EditExam from "./../../components/EditExam";
 import CreateExam from "../CreateExam";
 import SweetAlert from 'react-bootstrap-sweetalert';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 export default function CoursesExam() {
 
@@ -61,7 +64,6 @@ export default function CoursesExam() {
   }
 
   const confirmSweetError = (id) => {
-    alert('Deleted')
     deleteCourseExam(id)
     setSweetError(false)
   } 
@@ -71,12 +73,23 @@ export default function CoursesExam() {
     let response = await new CoursesAPI().deleteExam(data)
     setLoading(false)
     if(response.ok){
-      // setLessonInfo(response.data)
-      console.log(response.data)
+      notifyDeletedExam()
+      getExamInfo(null, moduleid)
     }else{
       alert("Something went wrong while fetching all pages")
     }
   }
+
+  const notifyDeletedExam = () => 
+  toast.error('Exam Deleted!', {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
 
   useEffect(() => {
     getCourseUnitInformation()

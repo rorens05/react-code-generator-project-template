@@ -117,9 +117,9 @@ export default class CoursesAPI extends Base {
   };
 
 
-  editExam = async (moduleid, data) => {
+  editExam = async (testid, data) => {
     return this.sendRequest({
-      path: `/api/Test/module/${moduleid}`,
+      path: `/api/Test/${testid}`,
       method: 'PUT',
       data
     });
