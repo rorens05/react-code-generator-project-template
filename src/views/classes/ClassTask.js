@@ -35,7 +35,6 @@ function ClassTask({classInfo}) {
   const userContext = useContext(UserContext)
   const {user} = userContext.data
 
-  console.log('this is task assign:',classInfo, id)
 
   const toggle = (e, item) =>{
     setEditTask(item)
@@ -105,7 +104,7 @@ function ClassTask({classInfo}) {
       alert("Something went wrong while Deleting a task")
     }
   }
-console.log( classInfo?.classInformation?.classId, '0000000000000000000000')
+
   return (
     <>
       <HeaderTask module={module} getTaskModule={getTaskModule} classId={classId} refModuleId={moduleId} />

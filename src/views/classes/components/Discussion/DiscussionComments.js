@@ -1,30 +1,50 @@
 import React, {useContext, useState, useEffect} from 'react'
 import Modal from 'react-bootstrap/Modal'
-import { Form, Button, Row, Col, InputGroup } from 'react-bootstrap'
+import { Form, Button, Row, Col, InputGroup, FormControl } from 'react-bootstrap'
 import moment from 'moment'
 import { useParams } from 'react-router'
 import ClassesAPI from '../../../../api/ClassesAPI'
 import { UserContext } from '../../../../context/UserContext'
 import SweetAlert from 'react-bootstrap-sweetalert';
 
-function DiscussionComments({discussionCommentToggle, discussionCommentModal, comments, discussionId, moduleId, getDiscussionUnit}) {
+function DiscussionComments({discussionCommentToggle, discussionCommentModal, comments, discussionId, moduleId, getDiscussionUnit, startDate, startTime, endDate, endTime}) {
   const {id} = useParams()
   const userContext = useContext(UserContext)
+  const [commentAlert, setCommentAlert] = useState(false)
   const {user} = userContext.data
   const [deleteNotify, setDeleteNotify] = useState(false)
   const [itemId, setItemId] = useState('')
+  const [reply, setReply] = useState('')
+  const dateCompareNow = moment().format("YYYY-MM-DD")
+  const timeNow = moment().format('HH:mm');
+  const dateTimeNow = dateCompareNow + ' ' + '00:00:00';
 
   const handleDeleteNotify = (item) =>{
     getDiscussionUnit(null, moduleId)
     setDeleteNotify(true)
     setItemId(item)
   }
+  const closeNotify = () =>{
+    setCommentAlert(false)
+  }
 
   const cancelSweetAlert = () => {
     setDeleteNotify(false)
   }
 
-  console.log("discussionId:", discussionId)
+  const submitComment = async (e, item) => {
+    e.preventDefault()
+    let classId = id
+    let userAccountId = user?.userId
+    let response = await new ClassesAPI().submitComment(classId, item, {userAccountId, reply})
+      if(response.ok){
+        setCommentAlert(true)
+        setReply('')
+        getDiscussionUnit(null, moduleId)
+      }else{
+        alert('No good')
+      }
+  }
 
   const deleteComment = async (item) => {
     let classId = id
@@ -38,20 +58,20 @@ function DiscussionComments({discussionCommentToggle, discussionCommentModal, co
   }
 
   return (
-<div>
-<SweetAlert
-        warning
-        showCancel
-        show={deleteNotify}
-        confirmBtnText="Yes, delete it!"
-        confirmBtnBsStyle="danger"
-        title="Are you sure?"
-        onConfirm={() => deleteComment(itemId)}
-        onCancel={cancelSweetAlert}
-        focusCancelBtn
-        >
-          You will not be able to recover this imaginary file!
-      </SweetAlert>
+  <div>
+    <SweetAlert
+      warning
+      showCancel
+      show={deleteNotify}
+      confirmBtnText="Yes, delete it!"
+      confirmBtnBsStyle="danger"
+      title="Are you sure?"
+      onConfirm={() => deleteComment(itemId)}
+      onCancel={cancelSweetAlert}
+      focusCancelBtn
+      >
+        You will not be able to recover this imaginary file!
+    </SweetAlert>
       <Modal  size="lg" show={discussionCommentModal} onHide={discussionCommentToggle} aria-labelledby="example-modal-sizes-title-lg">
       <Modal.Header className='class-modal-header' closeButton>
         <Modal.Title id="example-modal-sizes-title-lg" >
@@ -59,7 +79,7 @@ function DiscussionComments({discussionCommentToggle, discussionCommentModal, co
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-      <Form>  
+  
       {(discussionCommentModal === true)?(<>
         {(comments.map(item => {
           return(
@@ -92,10 +112,39 @@ function DiscussionComments({discussionCommentToggle, discussionCommentModal, co
           )
         }))}
       </>):(<></>)}
-      </Form> 
+      {
+        moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isAfter(moment(endDate + ' ' + endTime, 'YYYY-MM-DD HH:mm')) &&
+          <>
+          <Form>  
+            <InputGroup size="sm">
+              <FormControl onChange={(e) => setReply(e.target.value)} value={reply} aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Reply" />
+              <InputGroup.Text onClick={(e) => submitComment(e, discussionId)}  id="basic-addon2" className="comment-btn"><i className="fas fa-paper-plane"></i></InputGroup.Text>
+            </InputGroup><br />
+          </Form> 
+          </>
+      }
+      {
+       moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isAfter(moment(startDate + ' ' + startTime, 'YYYY-MM-DD HH:mm')) &&
+        moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isBefore(moment(endDate + ' ' + endTime, 'YYYY-MM-DD HH:mm')) &&
+        <>
+            <br />
+          <Form>  
+            <InputGroup size="sm">
+              <FormControl onChange={(e) => setReply(e.target.value)} value={reply} aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Reply" />
+              <InputGroup.Text onClick={(e) => submitComment(e, discussionId)}  id="basic-addon2" className="comment-btn"><i className="fas fa-paper-plane"></i></InputGroup.Text>
+            </InputGroup><br />
+          </Form> 
+        </> 
+      }
       </Modal.Body>
     </Modal>
-    </div>
+    <SweetAlert 
+      success
+      show={commentAlert} 
+      title="Done!" 
+      onConfirm={closeNotify}>
+    </SweetAlert>
+  </div>
   )
 }
 

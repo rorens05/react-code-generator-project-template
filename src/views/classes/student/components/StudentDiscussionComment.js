@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react'
 import Modal from 'react-bootstrap/Modal'
-import { Form, Button, Row, Col, InputGroup } from 'react-bootstrap'
+import { Form, Button, Row, Col, InputGroup, FormControl } from 'react-bootstrap'
 import moment from 'moment'
 import ClassesAPI from '../../../../api/ClassesAPI'
 import { UserContext } from '../../../../context/UserContext'
@@ -8,12 +8,17 @@ import { useParams } from 'react-router'
 import SweetAlert from 'react-bootstrap-sweetalert';
 
 
-function StudentDiscussionComment({studentCommentToggle, studentCommentModal, comments, discussionId, moduleId, getDiscussionUnit}) {
+function StudentDiscussionComment({studentCommentToggle, studentCommentModal, comments, discussionId, moduleId, getDiscussionUnit, startDate, startTime, endDate, endTime}) {
   const {id} = useParams()
   const userContext = useContext(UserContext)
   const {user} = userContext.data
   const [deleteNotify, setDeleteNotify] = useState(false)
+  const [commentAlert, setCommentAlert] = useState(false)
   const [itemId, setItemId] = useState('')
+  const dateCompareNow = moment().format("YYYY-MM-DD")
+  const timeNow = moment().format('HH:mm');
+  const dateTimeNow = dateCompareNow + ' ' + '00:00:00';
+  const [reply, setReply] = useState('')
 
   const handleDeleteNotify = (item) =>{
     getDiscussionUnit(null, moduleId)
@@ -21,8 +26,26 @@ function StudentDiscussionComment({studentCommentToggle, studentCommentModal, co
     setItemId(item)
   }
 
+  const submitComment = async (e, item) => {
+    e.preventDefault()
+    let classId = id
+    let userAccountId = user?.userId
+    let response = await new ClassesAPI().submitComment(classId, item, {userAccountId, reply})
+      if(response.ok){
+        setCommentAlert(true)
+        setReply('')
+        getDiscussionUnit(null, moduleId)
+      }else{
+        alert('No good')
+      }
+  }
+
   const cancelSweetAlert = () => {
     setDeleteNotify(false)
+  }
+
+  const closeNotify = () =>{
+    setCommentAlert(false)
   }
 
   const deleteComment = async (item) => {
@@ -92,9 +115,28 @@ function StudentDiscussionComment({studentCommentToggle, studentCommentModal, co
           )
         }))}
       </>):(<></>)}
-      </Form> 
+      </Form>
+      {
+       moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isAfter(moment(startDate + ' ' + startTime, 'YYYY-MM-DD HH:mm')) &&
+        moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isBefore(moment(endDate + ' ' + endTime, 'YYYY-MM-DD HH:mm')) &&
+        <>
+        <br />
+          <Form>  
+            <InputGroup size="sm">
+              <FormControl onChange={(e) => setReply(e.target.value)} value={reply} aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Reply" />
+              <InputGroup.Text onClick={(e) => submitComment(e, discussionId)}  id="basic-addon2" className="comment-btn"><i className="fas fa-paper-plane"></i></InputGroup.Text>
+            </InputGroup><br />
+          </Form> 
+        </> 
+      } 
       </Modal.Body>
     </Modal>
+    <SweetAlert 
+      success
+      show={commentAlert} 
+      title="Done!" 
+      onConfirm={closeNotify}>
+    </SweetAlert>
     </div>
   )
 }

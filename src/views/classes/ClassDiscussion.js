@@ -14,9 +14,7 @@ import DiscussionComments from './components/Discussion/DiscussionComments'
 
 function ClassDiscussion({classInfo}) {
   const [discussionCommentModal, setDiscussionCommentModal] = useState(false)
-  const [commentAlert, setCommentAlert] = useState(false)
   const [comments, setComments] = useState([])
-  const [reply, setReply] = useState('')
   const [modal, setModal] = useState(false)
   const [module, setModule] = useState([])
   const [discussionModule, setdiscussionModule] = useState([])
@@ -30,33 +28,24 @@ function ClassDiscussion({classInfo}) {
   const [editAssignDiscussionItem, setEditAssignDiscussionItem] = useState()
   const [editAssignModal, setEditAssignModal] = useState(false)
   const [discussionId, setDiscussionId] = useState('')
+  const [startDate, setStartDate] = useState()
+  const [startTime, setStartTime] = useState()
+  const [endDate, setEndDate] = useState()
+  const [endTime, setEndTime] = useState()
   const dateCompareNow = moment().format("YYYY-MM-DD")
   const timeNow = moment().format('HH:mm');
   const dateTimeNow = dateCompareNow + ' ' + '00:00:00';
   const userContext = useContext(UserContext)
   const {user} = userContext.data
+  
 
-  const closeNotify = () =>{
-    setCommentAlert(false)
-  }
-
-  const submitComment = async (e, item) => {
-    e.preventDefault()
-    let classId = id
-    let userAccountId = user?.userId
-    let response = await new ClassesAPI().submitComment(classId, item, {userAccountId, reply})
-      if(response.ok){
-        setCommentAlert(true)
-        setReply('')
-        getDiscussionUnit(null, moduleId)
-      }else{
-        alert('No good')
-      }
-  }
-
-  const discussionCommentToggle = (item, item1) => {
+  const discussionCommentToggle = (item, item1, item3, item4, item5, item6) => {
     setComments(item)
     setDiscussionId(item1)
+    setStartDate(item3)
+    setStartTime(item4)
+    setEndDate(item5)
+    setEndTime(item6)
     setDiscussionCommentModal(!discussionCommentModal)
   }
 
@@ -113,8 +102,7 @@ function ClassDiscussion({classInfo}) {
         return(
           getDiscussionUnit() 
         )
-      }
-      
+      }  
     }, [])
 
   const deleteDiscussion = async(e, item) => {
@@ -217,7 +205,14 @@ function ClassDiscussion({classInfo}) {
                     }
                     {
                       moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isAfter(moment(moduleitem?.discussionAssignment?.endDate + ' ' + moduleitem?.discussionAssignment?.endTime, 'YYYY-MM-DD HH:mm')) &&
-                      <div style={{color:'#EE9337', fontSize:'15px'}}><b>Ended</b></div>
+                      <>
+                      <div className='inline-flex'>
+                      <div style={{color:'#EE9337', fontSize:'15px'}}><b>Ended&nbsp;</b></div>
+                      <div style={{paddingBottom:'5px'}} >
+                        <Button onClick={() => discussionCommentToggle(moduleitem?.responses, moduleitem?.discussionAssignment?.discussionId, moduleitem?.discussionAssignment?.startDate, moduleitem?.discussionAssignment?.startTime, moduleitem?.discussionAssignment?.endDate, moduleitem?.discussionAssignment?.endTime)} className="m-r-5 color-white tficolorbg-button" size="sm">Comments&nbsp;{moduleitem.responseCount}</Button>
+                      </div>
+                      </div>
+                      </>
                     }
                     {
                        moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isSame(moment(moduleitem?.discussionAssignment?.startDate + ' ' + moduleitem?.discussionAssignment?.startTime, 'YYYY-MM-DD HH:mm')) &&
@@ -229,17 +224,12 @@ function ClassDiscussion({classInfo}) {
                       <>
                       <div className='inline-flex'>
                       <div style={{color:'#EE9337', fontSize:'15px'}}><b>Ongoing &nbsp; </b></div>
-                      <div style={{paddingBottom:'15px'}} >
-                      <Button onClick={() => discussionCommentToggle(moduleitem?.responses, moduleitem?.discussionAssignment?.discussionId)} className="m-r-5 color-white tficolorbg-button" size="sm">Comments&nbsp;{moduleitem.responseCount}</Button>
+                      <div style={{paddingBottom:'5px'}} >
+                        <Button onClick={() => discussionCommentToggle(moduleitem?.responses, moduleitem?.discussionAssignment?.discussionId, moduleitem?.discussionAssignment?.startDate, moduleitem?.discussionAssignment?.startTime, moduleitem?.discussionAssignment?.endDate, moduleitem?.discussionAssignment?.endTime)} className="m-r-5 color-white tficolorbg-button" size="sm">Comments&nbsp;{moduleitem.responseCount}</Button>
                       </div>
-                      
                       </div>
                       <>
                       <br />
-                      <InputGroup size="sm">
-                        <FormControl onChange={(e) => setReply(e.target.value)} value={reply} aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Reply" />
-                        <InputGroup.Text onClick={(e) => submitComment(e, moduleitem?.discussion?.id)}  id="basic-addon2" className="comment-btn"><i className="fas fa-paper-plane"></i></InputGroup.Text>
-                      </InputGroup><br />
                       </>
                       </> 
                     }                
@@ -300,13 +290,7 @@ function ClassDiscussion({classInfo}) {
             )
           })}
           </Accordion>
-          <SweetAlert 
-            success
-            show={commentAlert} 
-            title="Done!" 
-            onConfirm={closeNotify}>
-        </SweetAlert>
-          <DiscussionComments getDiscussionUnit={getDiscussionUnit} moduleId={moduleId} discussionId={discussionId} comments={comments} discussionCommentToggle={discussionCommentToggle} discussionCommentModal={discussionCommentModal} />
+          <DiscussionComments endTime={endTime} endDate={endDate} startTime={startTime} startDate={startDate} getDiscussionUnit={getDiscussionUnit} moduleId={moduleId} discussionId={discussionId} comments={comments} discussionCommentToggle={discussionCommentToggle} discussionCommentModal={discussionCommentModal} />
           <EditDiscussion editDiscussionItem={editDiscussionItem} toggle={toggle} modal={modal} getDiscussionUnit={getDiscussionUnit} /> 
           <AssignedDiscussion moduleId={moduleId} getDiscussionUnit={getDiscussionUnit} discussionId={discussionId} assignToggle={assignToggle} assignModal={assignModal} />
           <EditAssignDiscussion getDiscussionUnit={getDiscussionUnit} editAssignDiscussionItem={editAssignDiscussionItem} editAssignToggle={editAssignToggle} editAssignModal={editAssignModal} />

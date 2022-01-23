@@ -15,6 +15,10 @@ function StudentDiscussion({discussionModule, getDiscussionUnit, moduleId}) {
   const dateTimeNow = dateCompareNow + ' ' + '00:00:00';
   const [studentCommentModal, setstudentCommentModal] = useState(false)
   const [comments, setComments] = useState([])
+  const [startDate, setStartDate] = useState()
+  const [startTime, setStartTime] = useState()
+  const [endDate, setEndDate] = useState()
+  const [endTime, setEndTime] = useState()
   const {id} = useParams()
   const userContext = useContext(UserContext)
   const {user} = userContext.data
@@ -24,9 +28,13 @@ function StudentDiscussion({discussionModule, getDiscussionUnit, moduleId}) {
     setCommentAlert(false)
   }
 
-  const studentCommentToggle = (item, item1, item3) => {
+  const studentCommentToggle = (item, item1, item3, item4, item5, item6) => {
     setComments(item)
     setDiscussionId(item1)
+    setStartDate(item3)
+    setStartTime(item4)
+    setEndDate(item5)
+    setEndTime(item6)
     setstudentCommentModal(!studentCommentModal)
   }
 
@@ -83,13 +91,13 @@ function StudentDiscussion({discussionModule, getDiscussionUnit, moduleId}) {
                   moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isAfter(moment(item?.discussionAssignment?.startDate + ' ' + item?.discussionAssignment?.startTime, 'YYYY-MM-DD HH:mm')) &&
                   moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isBefore(moment(item?.discussionAssignment?.endDate + ' ' + item?.discussionAssignment?.endTime, 'YYYY-MM-DD HH:mm')) &&
                   <Col sm={3} className='icon-exam'>
-                  <Button onClick={() => studentCommentToggle(item.responses, item?.discussionAssignment?.discussionId)} className="m-r-5 color-white tficolorbg-button" size="sm">Comments&nbsp;{item.responseCount}</Button>
+                    <Button onClick={() => studentCommentToggle(item?.responses, item?.discussionAssignment?.discussionId, item?.discussionAssignment?.startDate, item?.discussionAssignment?.startTime, item?.discussionAssignment?.endDate, item?.discussionAssignment?.endTime)} className="m-r-5 color-white tficolorbg-button" size="sm">Comments&nbsp;{item.responseCount}</Button>
                   </Col>
                 }
                 {
                   moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isAfter(moment(item?.discussionAssignment?.endDate + ' ' + item?.discussionAssignment?.endTime, 'YYYY-MM-DD HH:mm')) &&
                   <Col sm={3} className='icon-exam'>
-                  <Button onClick={() => studentCommentToggle(item.responses, item?.discussionAssignment?.discussionId)} className="m-r-5 color-white tficolorbg-button" size="sm">Comments&nbsp;{item.responseCount}</Button>
+                    <Button onClick={() => studentCommentToggle(item?.responses, item?.discussionAssignment?.discussionId, item?.discussionAssignment?.startDate, item?.discussionAssignment?.startTime, item?.discussionAssignment?.endDate, item?.discussionAssignment?.endTime)} className="m-r-5 color-white tficolorbg-button" size="sm">Comments&nbsp;{item.responseCount}</Button>
                   </Col>
                 }
               </>
@@ -137,18 +145,6 @@ function StudentDiscussion({discussionModule, getDiscussionUnit, moduleId}) {
                 </Col>
           </Row>
           <br />
-        <div className="col-md-12">      
-        {
-          moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isAfter(moment(item?.discussionAssignment?.startDate + ' ' + item?.discussionAssignment?.startTime, 'YYYY-MM-DD HH:mm')) &&
-          moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isBefore(moment(item?.discussionAssignment?.endDate + ' ' + item?.taskAssignment?.endTime, 'YYYY-MM-DD HH:mm')) &&
-          <>
-            <InputGroup size="sm">
-              <FormControl onChange={(e) => setReply(e.target.value)} value={reply} aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Reply" />
-              <InputGroup.Text  onClick={(e) => submitComment(e, item?.discussion?.id)} id="basic-addon2" className="comment-btn"><i className="fas fa-paper-plane"></i></InputGroup.Text>
-            </InputGroup>
-          </>
-        }
-				</div>
           <div className='text-color-bcbcbc' >
               ___________________________________________________________________________________________________________________________________________________________________________________________________________
           </div>
@@ -160,7 +156,7 @@ function StudentDiscussion({discussionModule, getDiscussionUnit, moduleId}) {
           </>
         )
       }))}
-      <StudentDiscussionComment getDiscussionUnit={getDiscussionUnit} moduleId={moduleId} discussionId={discussionId} comments={comments} studentCommentToggle={studentCommentToggle} studentCommentModal={studentCommentModal} />
+      <StudentDiscussionComment endTime={endTime} endDate={endDate} startTime={startTime} startDate={startDate} getDiscussionUnit={getDiscussionUnit} moduleId={moduleId} discussionId={discussionId} comments={comments} studentCommentToggle={studentCommentToggle} studentCommentModal={studentCommentModal} />
       <SweetAlert 
           success
           show={commentAlert} 
