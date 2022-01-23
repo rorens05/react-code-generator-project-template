@@ -7,6 +7,7 @@ export default function Status({children}) {
       color ="#5cb85c";
       break;
     case "Not Started":
+    case "Unassigned":
       color = "red";
       break
     case "Test is Ongoing..":

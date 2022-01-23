@@ -23,6 +23,7 @@ import PageLoader from "../components/loaders/PageLoader";
 import AuthRoute from "./components/AuthRoute";
 import PageNotFound from "../components/error_pages/PageNotFound";
 import ExamInformation from "../views/exam-information/ExamInformation";
+import ExamCreation from "../views/exam-creation/ExamCreation";
 
 export default function Routes() {
   const userContext = useContext(UserContext);
@@ -47,6 +48,7 @@ export default function Routes() {
             <PrivateRoute path='/classescontent/:id' exact component={ClassesContent}/>
             <PrivateRoute path='/archive' exact component={ArchiveClass}/>
             <PrivateRoute path='/class/:class_id/exam/:id' exact component={ExamInformation}/>
+            <PrivateRoute path='/class/:class_id/exam_creation/:id' exact component={ExamCreation}/>
             <AuthRoute path='/login' exact component={Login}/>
             <AuthRoute path='/forgot_password' exact component={ForgotPassword}/>
             <PrivateRoute path='/' exact component={Home}/>

@@ -1163,3 +1163,24 @@ hr{
   font-size: 20px;
   font-weight: bold;  
 }
+
+.exam-part-creation{
+  /* background-color: red; */
+}
+
+.exam-part-creation .accordion-block-header{
+  display: flex;
+  justify-content: space-between;
+  flex: 1;
+  align-items: center;
+}
+
+.exam-part-creation .accordion-block-header .header-content{
+  flex: 1
+}
+
+.exam-actions a{
+  color: #ff8103 !important;
+  font-size: 22px;
+  margin-right: 12px;
+}

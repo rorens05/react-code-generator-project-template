@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import ClassExamHeader from "./components/Exam/ClassExamHeader";
 import { Row, Col, Accordion } from "react-bootstrap";
 import { useEffect } from "react";
@@ -6,6 +6,8 @@ import ExamItem from "./components/Exam/ExamItem";
 import ExamAPI from "../../api/ExamAPI";
 import { useParams } from "react-router-dom";
 import ActivityIndicator from "../../components/loaders/ActivityIndicator";
+import { UserContext } from "../../context/UserContext";
+import { toast } from "react-toastify";
 
 export const ClassExam = () => {
   const [loading, setLoading] = useState(true);
@@ -13,6 +15,8 @@ export const ClassExam = () => {
   const { id } = useParams();
   const [filter, setFilter] = useState("");
   const [modules, setModules] = useState([]);
+  const { data } = useContext(UserContext);
+  const { user } = data;
 
   const fetchExams = async () => {
     setLoading(true);
@@ -20,7 +24,7 @@ export const ClassExam = () => {
     setLoading(false);
     if (response.ok) {
       const filteredExams = response.data.filter(
-        (item) => item.classTest != null
+        (item) => user.isTeacher || item.classTest != null
       );
       const filteredModules = filteredExams.map((item) => item.module);
       const uniqueModules = [];
@@ -36,6 +40,19 @@ export const ClassExam = () => {
     }
   };
 
+  const deleteExam = async(id) => {
+    setLoading(true)
+    let response = await new ExamAPI().deleteExam(id)
+    if(response.ok){
+      await fetchExams()
+      toast.success("Exam was successfully deleted")
+    }else{
+      toast.error(response?.data?.errorMessage || "Something went wrong while deleting the exam")
+    }
+    setLoading(false)
+
+  }
+
   const onSearch = (text) => {
     setFilter(text);
   };
@@ -45,29 +62,33 @@ export const ClassExam = () => {
   }, []);
 
   return (
-    <div className='class-container position-relative'>
+    <div className="class-container position-relative">
       {loading && <ActivityIndicator />}
-      <ClassExamHeader onSearch={onSearch} />
-      <Accordion defaultActiveKey='0'>
+      <ClassExamHeader onSearch={onSearch} modules={modules} fetchExams={fetchExams} />
+      <Accordion defaultActiveKey="0">
         {modules.map((module, index) => {
-          if (exams
-            .filter(item => module.id === item.module.id)
-            .filter((item) =>
-              item.test.testName.toLowerCase().includes(filter.toLowerCase())
-            ).length == 0){
-              return <div/>
-            }
+          if (
+            exams
+              .filter((item) => module.id === item.module.id)
+              .filter((item) =>
+                item.test.testName.toLowerCase().includes(filter.toLowerCase())
+              ).length == 0
+          ) {
+            return <div />;
+          }
           return (
             <Accordion.Item key={index} eventKey={index}>
-              <Accordion.Header >{module.moduleName}</Accordion.Header>
+              <Accordion.Header>{module.moduleName}</Accordion.Header>
               <Accordion.Body>
                 {exams
-                  .filter(item => module.id === item.module.id)
+                  .filter((item) => module.id === item.module.id)
                   .filter((item) =>
-                    item.test.testName.toLowerCase().includes(filter.toLowerCase())
+                    item.test.testName
+                      .toLowerCase()
+                      .includes(filter.toLowerCase())
                   )
                   .map((exam, index) => (
-                    <ExamItem key={index} exam={exam} />
+                    <ExamItem key={index} exam={exam} deleteExam={deleteExam} />
                   ))}
               </Accordion.Body>
             </Accordion.Item>
@@ -75,11 +96,9 @@ export const ClassExam = () => {
         })}
       </Accordion>
       {exams.filter((item) =>
-                    item.test.testName.toLowerCase().includes(filter.toLowerCase())
-                  )
-                .length === 0 && !loading && (
-                  <div className='no-exams'>No exams found...</div>
-                )}
+        item.test.testName.toLowerCase().includes(filter.toLowerCase())
+      ).length === 0 &&
+        !loading && <div className="no-exams">No exams found...</div>}
     </div>
   );
 };

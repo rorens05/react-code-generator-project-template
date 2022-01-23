@@ -30,4 +30,30 @@ export default class ExamAPI extends Base {
       method: "POST",
       data,
     });
+
+  createExam = async (classId, moduleId, data) =>
+    this.sendRequest({
+      path: `/api/Test/module/${moduleId}/class/${classId}`,
+      method: "POST",
+      data,
+    });
+
+  deleteExam = async (id) =>
+    this.sendRequest({
+      path: `/api/Test/${id}`,
+      method: "DELETE"
+    });
+
+  addPart = async (id, typeId, data) =>
+  this.sendRequest({
+    path: `/api/Test/${id}/part/${typeId}`,
+    method: "POST",
+    data
+  });
+  
+  getParts = async (id) => 
+  this.sendRequest({
+    path: `/api/Test/${id}/part`,
+  });
+
 }
