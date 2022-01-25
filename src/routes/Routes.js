@@ -37,7 +37,7 @@ export default function Routes() {
     <div className="content">
       {loading ? <PageLoader/> : 
         (<Router>
-           <Switch>
+          
           {user?.isTeacher && 
             <>
               <PrivateRoute path='/courses' exact component={Courses}/>
@@ -61,9 +61,11 @@ export default function Routes() {
             <PrivateRoute path='/' exact component={Home}/>
             </>
           }
+          <Switch>
             <AuthRoute path='/login' exact component={Login}/>
             <AuthRoute path='/forgot_password' exact component={ForgotPassword}/>
             <PublicRoute path='/404' exact component={PageNotFound}/>
+            <PrivateRoute path='/' exact component={Home}/>
             {/* <Redirect to="/404"/> */}
           </Switch>
         </Router>)
