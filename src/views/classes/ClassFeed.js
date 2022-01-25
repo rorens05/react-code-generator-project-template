@@ -154,7 +154,13 @@ function ClassFeed() {
                 <Col sm={11} style={{fontSize:'20px', color:'#707070'}}>
                  <p>{feedItem.description}</p>
                 </Col>
-                <Col >
+                {(user?.teacher === null)?(
+                <>
+
+                </>):(
+                <>
+                                    <Row>
+                  <Col >
                 <div className='inline-flex' style={{paddingTop:'20px'}}>
                 <div style={{color:'#EE9337', fontSize:'18px',paddingTop:'4px'}}>            
                 <Button onClick={() => openEditAnnouncementToggle(feedItem)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-pencil-alt"></i>&nbsp; Edit Post</Button>
@@ -164,6 +170,9 @@ function ClassFeed() {
                 </div> 
               </div>
                 </Col>
+
+                  </Row>
+                </>)}
               </Row>
               <Row>
               <div style={{paddingBottom:'10px', color:'#00000029'}} >

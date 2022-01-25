@@ -19,6 +19,7 @@ function StudentDiscussion({discussionModule, getDiscussionUnit, moduleId}) {
   const [startTime, setStartTime] = useState()
   const [endDate, setEndDate] = useState()
   const [endTime, setEndTime] = useState()
+  const [getComments, setGetComments] = useState([])
   const {id} = useParams()
   const userContext = useContext(UserContext)
   const {user} = userContext.data
@@ -28,27 +29,22 @@ function StudentDiscussion({discussionModule, getDiscussionUnit, moduleId}) {
     setCommentAlert(false)
   }
 
-  const studentCommentToggle = (item, item1, item3, item4, item5, item6) => {
-    setComments(item)
-    setDiscussionId(item1)
-    setStartDate(item3)
-    setStartTime(item4)
-    setEndDate(item5)
-    setEndTime(item6)
+  const studentCommentToggle = () => {
     setstudentCommentModal(!studentCommentModal)
   }
 
-  const submitComment = async (e, item) => {
-    e.preventDefault()
-    let classId = id
-    let userAccountId = user?.userId
-    let response = await new ClassesAPI().submitComment(classId, item, {userAccountId, reply})
+  const getDiscussionComments = async (e, item1, item2, item3, item4, item5) => {
+    let response = await new ClassesAPI().getDiscussionComments(id, item1)
       if(response.ok){
-        setCommentAlert(true)
-        setReply('')
-        getDiscussionUnit(null, moduleId)
+        setGetComments(response.data)
+        setStartDate(item2)
+        setStartTime(item3)
+        setEndDate(item4)
+        setEndTime(item5)
+        setDiscussionId(item1)
+        setstudentCommentModal(true)
       }else{
-        alert('No good')
+        alert('Something went wrong while getCommenst')
       }
   }
 
@@ -91,13 +87,13 @@ function StudentDiscussion({discussionModule, getDiscussionUnit, moduleId}) {
                   moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isAfter(moment(item?.discussionAssignment?.startDate + ' ' + item?.discussionAssignment?.startTime, 'YYYY-MM-DD HH:mm')) &&
                   moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isBefore(moment(item?.discussionAssignment?.endDate + ' ' + item?.discussionAssignment?.endTime, 'YYYY-MM-DD HH:mm')) &&
                   <Col sm={3} className='icon-exam'>
-                    <Button onClick={() => studentCommentToggle(item?.responses, item?.discussionAssignment?.discussionId, item?.discussionAssignment?.startDate, item?.discussionAssignment?.startTime, item?.discussionAssignment?.endDate, item?.discussionAssignment?.endTime)} className="m-r-5 color-white tficolorbg-button" size="sm">Comments&nbsp;{item.responseCount}</Button>
+                    <Button onClick={(e) => getDiscussionComments(e, item.discussion?.id, item?.discussionAssignment?.startDate, item?.discussionAssignment?.startTime, item?.discussionAssignment?.endDate, item?.discussionAssignment?.endTime)} className="m-r-5 color-white tficolorbg-button" size="sm">Comments&nbsp;{item.responseCount}</Button>
                   </Col>
                 }
                 {
                   moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isAfter(moment(item?.discussionAssignment?.endDate + ' ' + item?.discussionAssignment?.endTime, 'YYYY-MM-DD HH:mm')) &&
                   <Col sm={3} className='icon-exam'>
-                    <Button onClick={() => studentCommentToggle(item?.responses, item?.discussionAssignment?.discussionId, item?.discussionAssignment?.startDate, item?.discussionAssignment?.startTime, item?.discussionAssignment?.endDate, item?.discussionAssignment?.endTime)} className="m-r-5 color-white tficolorbg-button" size="sm">Comments&nbsp;{item.responseCount}</Button>
+                    <Button onClick={(e) => getDiscussionComments(e, item.discussion?.id, item?.discussionAssignment?.startDate, item?.discussionAssignment?.startTime, item?.discussionAssignment?.endDate, item?.discussionAssignment?.endTime)} className="m-r-5 color-white tficolorbg-button" size="sm">Comments&nbsp;{item.responseCount}</Button>
                   </Col>
                 }
               </>
@@ -150,13 +146,12 @@ function StudentDiscussion({discussionModule, getDiscussionUnit, moduleId}) {
           </div>
             </>):(
             <>
-
             </>
             )}
           </>
         )
       }))}
-      <StudentDiscussionComment endTime={endTime} endDate={endDate} startTime={startTime} startDate={startDate} getDiscussionUnit={getDiscussionUnit} moduleId={moduleId} discussionId={discussionId} comments={comments} studentCommentToggle={studentCommentToggle} studentCommentModal={studentCommentModal} />
+      <StudentDiscussionComment getDiscussionComments={getDiscussionComments} getComments={getComments} endTime={endTime} endDate={endDate} startTime={startTime} startDate={startDate} getDiscussionUnit={getDiscussionUnit} moduleId={moduleId} discussionId={discussionId} comments={comments} studentCommentToggle={studentCommentToggle} studentCommentModal={studentCommentModal} />
       <SweetAlert 
           success
           show={commentAlert} 

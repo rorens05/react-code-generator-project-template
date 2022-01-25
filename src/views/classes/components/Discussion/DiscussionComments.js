@@ -7,7 +7,7 @@ import ClassesAPI from '../../../../api/ClassesAPI'
 import { UserContext } from '../../../../context/UserContext'
 import SweetAlert from 'react-bootstrap-sweetalert';
 
-function DiscussionComments({discussionCommentToggle, discussionCommentModal, comments, discussionId, moduleId, getDiscussionUnit, startDate, startTime, endDate, endTime}) {
+function DiscussionComments({getDiscussionComments, getComments, discussionCommentToggle, discussionCommentModal, comments, discussionId, moduleId, getDiscussionUnit, startDate, startTime, endDate, endTime}) {
   const {id} = useParams()
   const userContext = useContext(UserContext)
   const [commentAlert, setCommentAlert] = useState(false)
@@ -40,7 +40,7 @@ function DiscussionComments({discussionCommentToggle, discussionCommentModal, co
       if(response.ok){
         setCommentAlert(true)
         setReply('')
-        getDiscussionUnit(null, moduleId)
+        getDiscussionComments(null, item, startDate, startTime, endDate, endTime)
       }else{
         alert('No good')
       }
@@ -51,7 +51,7 @@ function DiscussionComments({discussionCommentToggle, discussionCommentModal, co
     let response = await new ClassesAPI().deleteComment(classId, discussionId, item)
       if(response.ok){
         setDeleteNotify(false)
-        getDiscussionUnit(null, moduleId)
+        getDiscussionComments(null, discussionId, startDate, startTime, endDate, endTime)
       }else{
         alert(response.data.errorMessage)
       }
@@ -81,7 +81,7 @@ function DiscussionComments({discussionCommentToggle, discussionCommentModal, co
       <Modal.Body>
   
       {(discussionCommentModal === true)?(<>
-        {(comments.map(item => {
+        {(getComments.map(item => {
           return(
             <>
         <Row>
@@ -96,7 +96,19 @@ function DiscussionComments({discussionCommentToggle, discussionCommentModal, co
         <Col sm={1} style={{paddingTop:'5px', paddingLeft:'15px'}} >
               {(user?.userId === item?.userAccountId)?(
               <>
-              <Button onClick={() => handleDeleteNotify(item?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-trash-alt"></i></Button>
+                {
+                 moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isAfter(moment(endDate + ' ' + endTime, 'YYYY-MM-DD HH:mm')) &&
+                  <>
+
+                  </>
+                }
+                {
+                  moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isAfter(moment(startDate + ' ' + startTime, 'YYYY-MM-DD HH:mm')) &&
+                  moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isBefore(moment(endDate + ' ' + endTime, 'YYYY-MM-DD HH:mm')) &&
+                  <>
+                    <Button onClick={() => handleDeleteNotify(item?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-trash-alt"></i></Button>
+                  </> 
+                }
               </>
               ):(
               <></>)}
@@ -115,12 +127,6 @@ function DiscussionComments({discussionCommentToggle, discussionCommentModal, co
       {
         moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isAfter(moment(endDate + ' ' + endTime, 'YYYY-MM-DD HH:mm')) &&
           <>
-          <Form>  
-            <InputGroup size="sm">
-              <FormControl onChange={(e) => setReply(e.target.value)} value={reply} aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Reply" />
-              <InputGroup.Text onClick={(e) => submitComment(e, discussionId)}  id="basic-addon2" className="comment-btn"><i className="fas fa-paper-plane"></i></InputGroup.Text>
-            </InputGroup><br />
-          </Form> 
           </>
       }
       {

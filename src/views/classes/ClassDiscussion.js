@@ -37,24 +37,18 @@ function ClassDiscussion({classInfo}) {
   const dateTimeNow = dateCompareNow + ' ' + '00:00:00';
   const userContext = useContext(UserContext)
   const {user} = userContext.data
+  const [getComments, setGetComments] = useState([])
   
 
-  const discussionCommentToggle = (item, item1, item3, item4, item5, item6) => {
-    setComments(item)
-    setDiscussionId(item1)
-    setStartDate(item3)
-    setStartTime(item4)
-    setEndDate(item5)
-    setEndTime(item6)
+  const discussionCommentToggle = (e) => {
     setDiscussionCommentModal(!discussionCommentModal)
+
   }
 
   const assignToggle = (e, item) =>{
     setDiscussionId(item)
     setAssignModal(!assignModal)
   }
-
-  console.log('discussionModule:', discussionModule)
 
   const editAssignToggle = (e, item) =>{
     setEditAssignDiscussionItem(item)
@@ -95,7 +89,22 @@ function ClassDiscussion({classInfo}) {
     }else{
       alert("Something went wrong while getDiscussionUnit")
     }
-    }
+  }
+
+  const getDiscussionComments = async (e, item1, item2, item3, item4, item5) => {
+    let response = await new ClassesAPI().getDiscussionComments(id, item1)
+      if(response.ok){
+        setGetComments(response.data)
+        setStartDate(item2)
+        setStartTime(item3)
+        setEndDate(item4)
+        setEndTime(item5)
+        setDiscussionId(item1)
+        setDiscussionCommentModal(true)
+      }else{
+        alert('Something went wrong while getCommenst')
+      }
+  }
 
     useEffect(() => {
       if(moduleId !== null){
@@ -209,7 +218,8 @@ function ClassDiscussion({classInfo}) {
                       <div className='inline-flex'>
                       <div style={{color:'#EE9337', fontSize:'15px'}}><b>Ended&nbsp;</b></div>
                       <div style={{paddingBottom:'5px'}} >
-                        <Button onClick={() => discussionCommentToggle(moduleitem?.responses, moduleitem?.discussionAssignment?.discussionId, moduleitem?.discussionAssignment?.startDate, moduleitem?.discussionAssignment?.startTime, moduleitem?.discussionAssignment?.endDate, moduleitem?.discussionAssignment?.endTime)} className="m-r-5 color-white tficolorbg-button" size="sm">Comments&nbsp;{moduleitem.responseCount}</Button>
+                        
+                        <Button onClick={(e) => getDiscussionComments(e, moduleitem.discussion?.id)} className="m-r-5 color-white tficolorbg-button" size="sm">Comments&nbsp;{moduleitem.responseCount}</Button>
                       </div>
                       </div>
                       </>
@@ -225,7 +235,7 @@ function ClassDiscussion({classInfo}) {
                       <div className='inline-flex'>
                       <div style={{color:'#EE9337', fontSize:'15px'}}><b>Ongoing &nbsp; </b></div>
                       <div style={{paddingBottom:'5px'}} >
-                        <Button onClick={() => discussionCommentToggle(moduleitem?.responses, moduleitem?.discussionAssignment?.discussionId, moduleitem?.discussionAssignment?.startDate, moduleitem?.discussionAssignment?.startTime, moduleitem?.discussionAssignment?.endDate, moduleitem?.discussionAssignment?.endTime)} className="m-r-5 color-white tficolorbg-button" size="sm">Comments&nbsp;{moduleitem.responseCount}</Button>
+                      <Button onClick={(e) => getDiscussionComments(e, moduleitem.discussion?.id, moduleitem?.discussionAssignment?.startDate, moduleitem?.discussionAssignment?.startTime, moduleitem?.discussionAssignment?.endDate, moduleitem?.discussionAssignment?.endTime)} className="m-r-5 color-white tficolorbg-button" size="sm">Comments&nbsp;{moduleitem.responseCount}</Button>
                       </div>
                       </div>
                       <>
@@ -290,7 +300,7 @@ function ClassDiscussion({classInfo}) {
             )
           })}
           </Accordion>
-          <DiscussionComments endTime={endTime} endDate={endDate} startTime={startTime} startDate={startDate} getDiscussionUnit={getDiscussionUnit} moduleId={moduleId} discussionId={discussionId} comments={comments} discussionCommentToggle={discussionCommentToggle} discussionCommentModal={discussionCommentModal} />
+          <DiscussionComments getDiscussionComments={getDiscussionComments} getComments={getComments} endTime={endTime} endDate={endDate} startTime={startTime} startDate={startDate} getDiscussionUnit={getDiscussionUnit} moduleId={moduleId} discussionId={discussionId} comments={comments} discussionCommentToggle={discussionCommentToggle} discussionCommentModal={discussionCommentModal} />
           <EditDiscussion editDiscussionItem={editDiscussionItem} toggle={toggle} modal={modal} getDiscussionUnit={getDiscussionUnit} /> 
           <AssignedDiscussion moduleId={moduleId} getDiscussionUnit={getDiscussionUnit} discussionId={discussionId} assignToggle={assignToggle} assignModal={assignModal} />
           <EditAssignDiscussion getDiscussionUnit={getDiscussionUnit} editAssignDiscussionItem={editAssignDiscussionItem} editAssignToggle={editAssignToggle} editAssignModal={editAssignModal} />
