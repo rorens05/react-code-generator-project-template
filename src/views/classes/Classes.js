@@ -80,7 +80,9 @@ export default function Classes() {
     <MainContainer activeHeader={'classes'} loading={loading}>
       <div className='page-container'>
         <div className='containerpages'>
-          {user.isStudent && <StudentClassListHeader getPendingClasses={getPendingClasses}  joinClassesToggle={joinClassesToggle} joinClassestModal={joinClassestModal} />}
+          {user.isStudent &&
+          <>
+          <StudentClassListHeader getPendingClasses={getPendingClasses}  joinClassesToggle={joinClassesToggle} joinClassestModal={joinClassestModal} />
           <CardGroup className='card-group2'>
           {studentClasses.length?
             studentClasses.map(item => {
@@ -97,7 +99,9 @@ export default function Classes() {
             }):<></>
           } 
           </CardGroup>
-          {user.isTeacher && 
+          </>
+          }
+        {user?.teacher && 
           <>
           <ClassHeader getClasses={getClasses} />
           <CardGroup className='card-group2'>
@@ -108,7 +112,7 @@ export default function Classes() {
                 }
           </CardGroup>
           </>
-          }
+        }
         </div>
       </div>
       <EditClassModal getClasses={getClasses} seletedClass={seletedClass} openEditModal={openEditModal} setOpenEditModal={setOpenEditModal} />

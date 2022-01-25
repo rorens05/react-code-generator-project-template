@@ -37,6 +37,7 @@ export default function Routes() {
     <div className="content">
       {loading ? <PageLoader/> : 
         (<Router>
+           <Switch>
           {user?.isTeacher && 
             <>
               <PrivateRoute path='/courses' exact component={Courses}/>
@@ -49,19 +50,21 @@ export default function Routes() {
               <PrivateRoute path='/classescontent/:id' exact component={ClassesContent}/>
               <PrivateRoute path='/archive' exact component={ArchiveClass}/>
               <PrivateRoute path='/class/:class_id/exam/:id' exact component={ExamInformation}/>
+              <PrivateRoute path='/' exact component={Home}/>
             </>
           }
-          <Switch>
-            <AuthRoute path='/login' exact component={Login}/>
-            <AuthRoute path='/forgot_password' exact component={ForgotPassword}/>
-            <PrivateRoute path='/' exact component={Home}/>
-            <PublicRoute path='/404' exact component={PageNotFound}/>
-            {/* <Redirect to="/404"/> */}
-            <PrivateRoute path='/classes' exact component={Classes}/>
-            <PrivateRoute path='/reports' exact component={Reports}/>
+          {user?.isStudent &&
+            <>
             <PrivateRoute path='/classescontent/:id' exact component={ClassesContent}/>
             <PrivateRoute path='/class/:class_id/exam/:id' exact component={ExamInformation}/>
+            <PrivateRoute path='/classes' exact component={Classes}/>
             <PrivateRoute path='/' exact component={Home}/>
+            </>
+          }
+            <AuthRoute path='/login' exact component={Login}/>
+            <AuthRoute path='/forgot_password' exact component={ForgotPassword}/>
+            <PublicRoute path='/404' exact component={PageNotFound}/>
+            {/* <Redirect to="/404"/> */}
           </Switch>
         </Router>)
       }
