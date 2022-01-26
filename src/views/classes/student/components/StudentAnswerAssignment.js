@@ -83,7 +83,7 @@ function StudentAnswerAssignment({answerAnswerToggle, answerModal, assignmentId}
             </Form.Group>
             <Form.Group className="mb-1">
               <Button className='tficolorbg-button' onClick={() => { document.getElementById('attachedFile').click() }}>Attache File</Button>
-              <input id='attachedFile' className='d-none' type='file' placeholder='Choose color' style={{ backgroundColor: 'inherit' }} onChange={(e) => handlefilesUpload(e.target.files[0])} />
+              <input id='attachedFile' className='d-none' multiple type='file' placeholder='Choose color' style={{ backgroundColor: 'inherit' }} onChange={(e) => handlefilesUpload(e.target.files[0])} />
             </Form.Group>
             <Table responsive="sm" className={files.length == 0 ? 'd-none' : ''}>
               <thead>

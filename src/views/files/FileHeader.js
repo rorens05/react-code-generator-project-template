@@ -9,18 +9,28 @@ function FileHeader(props) {
   const [uploadStarted, setUploadStarted] = useState(false)
 
   const handlefilesUpload = (file) => {
+    console.log(file)
     if(file != ''){
-      getBase64(file).then(
-        data => {
-          let toAdd = {
-            fileName: file.name,
-            base64String: data,
-            size: file.size,
-            progress: 0
-          };
-          setFiles([...files, toAdd]);
-        }
-      );
+      
+      Object.values(file).map(itm => {
+        console.log(itm)
+        let temp = []
+        getBase64(itm).then(
+          data => {
+            let toAdd = {
+              fileName: itm.name,
+              base64String: data,
+              size: itm.size,
+              progress: 0
+            };
+            console.log(toAdd, files)
+            setFiles([...files, toAdd]);
+            console.log(files)
+            temp.splice(0, toAdd)
+          }
+          );
+          console.log(temp)
+      })
     }
   }
 
@@ -131,7 +141,7 @@ function FileHeader(props) {
               <i class="fas fa-paperclip"></i>
                 Choose Files
               </Button>
-              <input id='inputFile' className='d-none' type='file' placeholder='Choose color' style={{ backgroundColor: 'inherit' }} onChange={(e) => handlefilesUpload(e.target.files[0])} />
+              <input id='inputFile' className='d-none' multiple type='file' placeholder='Choose color' style={{ backgroundColor: 'inherit' }} onChange={(e) => handlefilesUpload(e.target.files)} />
           </div>
           <Table responsive="sm">
             <thead>
