@@ -22,6 +22,7 @@ function SideReport() {
   const [showReportHeader, setShowReportHeader] = useState(false)
   const [showAssignmentHeader, setShowAssignmentHeader] = useState(false)
   const [showTaskHeader, setShowTaskHeader] = useState(false)
+  const [showInteractiveHeader, setShowInteractiveHeader] = useState(false)
 
   const [viewInteractiveReport, setViewInteractiveReport] = useState(false)
 
@@ -169,7 +170,7 @@ function SideReport() {
                 <TaskHeader showTaskHeader={showTaskHeader} setShowTaskHeader={setShowTaskHeader} viewTaskReport={viewTaskReport} setViewTaskReport={setViewTaskReport} classesModules={classesModules} setClassesModules={setClassesModules} selectedClassId={selectedClassId}/>
               </Tab.Pane>
               <Tab.Pane className='content-pane report-content' eventKey="#link7">
-                <InteractiveHeader showReportHeader={showReportHeader} setShowReportHeader={setShowReportHeader} viewInteractiveReport={viewInteractiveReport} setViewInteractiveReport={setViewInteractiveReport} classesModules={classesModules} setClassesModules={setClassesModules} selectedClassId={selectedClassId}/>
+                <InteractiveHeader showInteractiveHeader={showInteractiveHeader} setShowInteractiveHeader={setShowInteractiveHeader} viewInteractiveReport={viewInteractiveReport} setViewInteractiveReport={setViewInteractiveReport} classesModules={classesModules} setClassesModules={setClassesModules} selectedClassId={selectedClassId}/>
               </Tab.Pane>
             </Tab.Content> 
           </Col> 

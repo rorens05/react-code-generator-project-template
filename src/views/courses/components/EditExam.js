@@ -22,7 +22,7 @@ export default function EditExam({openEditExamModal, setOpenEditExamModal, selec
     e.preventDefault()
     setLoading(true)
     let response = await new CoursesAPI().editExam(
-      sessionModule,
+      selectedExam?.id,
       {testName, testInstructions}
     )
     if(response.ok){

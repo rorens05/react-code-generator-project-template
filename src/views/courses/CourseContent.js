@@ -10,6 +10,8 @@ import CoursesAssignment from "./pages/Assignment/CoursesAssignment";
 import CoursesTask from "./pages/Task/CoursesTask";
 import CourseLinks from "./pages/Links/CourseLinks";
 import CourseFiles from "./pages/Files/CourseFiles";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function CourseContent(course) {
   console.log(course, '//////////////////')
@@ -69,6 +71,7 @@ export default function CourseContent(course) {
 
   return (
     <MainContainer loading={loading} fluid>
+      <ToastContainer />
       <Row>
         <Col sm={3}>
         </Col>

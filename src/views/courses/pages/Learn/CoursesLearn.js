@@ -19,6 +19,7 @@ export default function CourseLearn({viewLesson, setViewLesson, moduleInfo, setM
   const [lessonInfo, setLessonInfo] = useState([])
   const [lessonContent, setLessonContent] = useState([])
   const [sweetError, setSweetError] = useState(false)
+  const [filter, setFilter] = useState("")
 
   const courseid = sessionStorage.getItem('courseid')
   const moduleid = sessionStorage.getItem('courseid')
@@ -88,6 +89,10 @@ export default function CourseLearn({viewLesson, setViewLesson, moduleInfo, setM
     }
   }
 
+  const onSearch = (text) => {
+    setFilter(text)
+  }
+
   useEffect(() => {
   }, [])
   
@@ -101,7 +106,7 @@ export default function CourseLearn({viewLesson, setViewLesson, moduleInfo, setM
         <div className="row m-b-20 m-t-30">
           <div className="col-md-12">
             <InputGroup size="lg">
-              <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Search..." type="search"/>
+              <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Search..." type="search" onChange={(e) => onSearch(e.target.value)}/>
               <InputGroup.Text id="basic-addon2" className="search-button"><i className="fas fa-search fa-1x"></i></InputGroup.Text>
             </InputGroup>
           </div>

@@ -78,7 +78,6 @@ export default function CreateExam({setCourse, openCreateExamModal, setOpenCreat
 
 	return (
 		<div>
-      <ToastContainer />
 			<Modal size="lg" className="modal-all" show={openCreateExamModal} onHide={()=> setOpenCreateExamModal(!openCreateExamModal)} >
 				<Modal.Header className="modal-header" closeButton>
 				Create Exam
