@@ -33,6 +33,7 @@ function StudentAssignment({assignment}) {
     let studentId = user.student.id
     let classId = id
     let response = await new ClassesAPI().getStudentAssignmentAnswer(studentId, classId, item)
+    console.log(response,'herererererere')
       if(response.ok){
         setStudentAnswer(response.data)
         submittedAssignmentToggle()

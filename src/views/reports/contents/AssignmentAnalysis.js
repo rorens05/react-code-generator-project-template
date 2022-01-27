@@ -19,6 +19,7 @@ function AssignmentAnalysis({selectedClassId, assignmentAnalysis, setAssignmentA
   const [sClassId, setSClassId] = useState("")
   const [selectedAssignmentId, setSelectedAssignmentId] = useState("")
   const [selectedAnswerId, setSelectedAnswerId] = useState("")
+  const [assignmentAnswer, setAssignmentAnswer] = useState({})
 
   let testname = sessionStorage.getItem('testName')
   let classid = sessionStorage.getItem('classId')
@@ -47,6 +48,23 @@ function AssignmentAnalysis({selectedClassId, assignmentAnalysis, setAssignmentA
       setAssignmentAnalysis(response.data)
       console.log(response.data)
       
+    }else{
+      alert(response.data.errorMessage)
+    }
+  }
+
+  useEffect(() => {
+    if(assignmentAnalysis?.assignment){
+      getAssignmentAnswer(studentidsession, classid, assignmentAnalysis?.assignment?.id)
+      console.log('hehehehehehehehe', assignmentAnalysis)
+    }
+  }, [assignmentAnalysis])
+
+  const getAssignmentAnswer = async(studentid, classid, assignmentid) => {
+    // e.preventDefault()
+    let response = await new ClassesAPI().getStudentAssignmentAnswer(studentid, classid, assignmentid)
+    if(response.ok){
+      setAssignmentAnswer(response.data)
     }else{
       alert(response.data.errorMessage)
     }
@@ -90,6 +108,24 @@ function AssignmentAnalysis({selectedClassId, assignmentAnalysis, setAssignmentA
     progress: undefined,
   });
 
+  console.log(assignmentAnalysis, '.............')
+
+  const  downloadImage = (url) => {
+    fetch(url, {
+      mode : 'no-cors',
+    })
+      .then(response => response.blob())
+      .then(blob => {
+      let blobUrl = window.URL.createObjectURL(blob);
+      let a = document.createElement('a');
+      a.download = url.replace(/^.*[\\\/]/, '');
+      a.href = blobUrl;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    })
+  }
+
   return(
   <>
     <ToastContainer />
@@ -107,10 +143,36 @@ function AssignmentAnalysis({selectedClassId, assignmentAnalysis, setAssignmentA
             {/* <Button variant="outline-warning" size="sm" onClick={(e) => updateScoreAssignment(e, assignmentAnalysis.student.id, classid, assignmentAnalysis.assignment.id, assignmentAnalysis.studentAssignment.id)}>
               <i class="fas fa-redo"style={{paddingRight:'10px'}} ></i>Update Score
             </Button> */}
-            <Button variant="outline-warning" size="sm" onClick={(e) => handleOpenModal(e, assignmentAnalysis.student.id, classid, assignmentAnalysis.assignment.id, assignmentAnalysis.studentAssignment.id, assignmentAnalysis.studentAssignment.assignmentGrade, assignmentAnalysis.studentAssignment.feedback )}>
+            <Button variant="outline-warning" size="sm" className='mx-3 mb-2' onClick={(e) => handleOpenModal(e, assignmentAnalysis.student.id, classid, assignmentAnalysis.assignment.id, assignmentAnalysis.studentAssignment.id, assignmentAnalysis.studentAssignment.assignmentGrade, assignmentAnalysis.studentAssignment.feedback )}>
               <i class="fas fa-redo"style={{paddingRight:'10px'}} ></i>Update Score
             </Button>
           </Col>
+          <hr />
+          <Col className='mb-3'>
+              <Row>
+                {
+                  assignmentAnswer?.uploadedFiles?.map( itm => {
+                    return (
+                      <>
+                        {
+                          itm.filePath.match(/.(jpg|jpeg|png|gif)$/i)
+                          ?
+                          <i class="fas fa-download td-file-page" onClick={() => downloadImage(itm.filePath)}></i>
+                          :
+                          <a href={itm.filePath}>
+                            <i class="fas fa-download td-file-page"></i>
+                          </a> 
+                        }
+                      </>
+                      // <a href={itm.filePath} download>
+                      //   <i class="fas fa-download td-file-page"></i>
+                      // </a>
+
+                    )
+                  })
+                }
+              </Row>
+            </Col>
           <hr></hr>
           <Col md={12}>{assignmentAnalysis.studentAssignment?.feedback}</Col>
         </>

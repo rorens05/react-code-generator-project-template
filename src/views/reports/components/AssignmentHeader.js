@@ -13,7 +13,7 @@ function AssignmentHeader({classesModules, setClassesModules, selectedClassId, v
 		<div>
 			<div className="row m-b-20">
 				<div className="col-md-10 pages-header"><h1>Grade Report - Assignment</h1></div>
-				<div className="col-md-4 pages-header" style={{float:"right"}}><h1>{assignmentname}</h1></div>
+				<div className="col-md-12 pages-header" style={{float:"right"}}><h1>{assignmentname}</h1></div>
 			</div>
 			<div className="row m-b-20">
 				<div className="col-md-12">
@@ -25,7 +25,7 @@ function AssignmentHeader({classesModules, setClassesModules, selectedClassId, v
 			</div>
 		</div>
 		:
-			<div className="col-md-4 pages-header"><h1>{assignmentname}</h1></div>
+			<div className="col-md-12 pages-header"><h1>{assignmentname}</h1></div>
 		}
 		<AssignmentReport showAssignmentHeader={showAssignmentHeader} setShowAssignmentHeader={setShowAssignmentHeader} classesModules={classesModules} setClassesModules={setClassesModules} selectedClassId={selectedClassId} viewAssignmentReport={viewAssignmentReport} setViewAssignmentReport={setViewAssignmentReport}/>
 	</>

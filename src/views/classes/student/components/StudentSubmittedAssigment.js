@@ -4,7 +4,23 @@ import Modal from 'react-bootstrap/Modal'
 
 function StudentSubmittedAssigment({submittedAssignmentToggle, submittedAssignment, studentAnswer}) {
 
-  console.log("asignmentAnswer:" ,studentAnswer)
+  console.log("asignmentAnswer: ----------" ,studentAnswer)
+
+  const  downloadImage = (url) => {
+    fetch(url, {
+      mode : 'no-cors',
+    })
+      .then(response => response.blob())
+      .then(blob => {
+      let blobUrl = window.URL.createObjectURL(blob);
+      let a = document.createElement('a');
+      a.download = url.replace(/^.*[\\\/]/, '');
+      a.href = blobUrl;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    })
+  }
 
   return (
     <div>
@@ -35,8 +51,26 @@ function StudentSubmittedAssigment({submittedAssignmentToggle, submittedAssignme
             <Form.Control defaultValue={studentAnswer?.assignmentGrade} type='text' disabled  />
           </Form.Group>
           <Form.Group className="mb-1">
-            <Form.Label>File</Form.Label>&nbsp;&nbsp;&nbsp;
-            <i style={{color:'#EE9337', fontSize:'30px'}} class="fas fa-download"></i>
+            <Form.Label>File/s</Form.Label>&nbsp;&nbsp;&nbsp;
+            {/* <i style={{color:'#EE9337', fontSize:'30px'}} class="fas fa-download"></i> */}
+            {
+                studentAnswer?.uploadedFiles?.map( itm => {
+                  console.log(itm)
+                  return (
+                    <>
+                    {
+                      itm.filePath.match(/.(jpg|jpeg|png|gif)$/i)
+                      ?
+                      <i class="fas fa-download td-file-page" onClick={() => downloadImage(itm.filePath)}></i>
+                      :
+                      <a href={itm.filePath}>
+                        <i class="fas fa-download td-file-page mb-2"></i>
+                      </a> 
+                    }
+                  </>
+                  )
+                })
+              }
           </Form.Group>
           <Form.Group className='right-btn'>
             <Button onClick={() => submittedAssignmentToggle()} className='tficolorbg-button' type='submit' >OK</Button>

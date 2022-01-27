@@ -3,6 +3,25 @@ import {Table, Button} from 'react-bootstrap'
 import moment from 'moment';
 
 function FilesContent(props) {
+
+
+  const  downloadImage = (url) => {
+    fetch(url, {
+      mode : 'no-cors',
+    })
+      .then(response => response.blob())
+      .then(blob => {
+      let blobUrl = window.URL.createObjectURL(blob);
+      let a = document.createElement('a');
+      a.download = url.replace(/^.*[\\\/]/, '');
+      a.href = blobUrl;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    })
+  }
+
+
   return (
     <Table responsive="sm">
       <thead>
@@ -20,6 +39,7 @@ function FilesContent(props) {
         </tr>
         {
           props.data?.map((item, index) => {
+            console.log(item.path_Base.split('.').pop(), 'gegegegegeg')
             return(
               <tr key={item.fileName+index}>
                 <td className='ellipsis w-25'>{item.fileName}</td>
@@ -28,8 +48,19 @@ function FilesContent(props) {
                     :
                   <td>{moment(item.createdDate).format('L')}</td>
                 }
-                <td><i class="fas fa-edit td-file-page"></i>
-                  <i class="fas fa-arrow-down td-file-page"></i>
+                <td>
+                  {/* if (!fileInput.files[0].name.match(/.(jpg|jpeg|png|gif)$/i))
+    alert('not an image'); */}
+                  {/* <i class="fas fa-edit td-file-page"></i> */}
+                  {
+                    item.path_Base.match(/.(jpg|jpeg|png|gif)$/i)
+                    ?
+                    <i class="fas fa-arrow-down td-file-page" onClick={() => downloadImage(item.path_Base)}></i>
+                    :
+                    <a href={item.path_Base}>
+                      <i class="fas fa-arrow-down td-file-page"></i>
+                    </a> 
+                  }
                   <i class="fas fa-trash-alt td-file-page"></i></td>
               </tr>
             )
