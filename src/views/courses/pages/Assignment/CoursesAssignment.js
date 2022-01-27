@@ -5,15 +5,16 @@ import CourseCreateUnit from "./../../components/CourseCreateUnit";
 import CreateAssignment from "./../../components/CreateAssignment";
 import EditAssignment from "./../../components/EditAssignment";
 import SweetAlert from 'react-bootstrap-sweetalert';
+import ViewAssignment from "./ViewAssignment";
 
-export default function CoursesAssignment({moduleInfo, setModuleInfo}) {
+export default function CoursesAssignment({moduleInfo, setModuleInfo, showAssignment, setShowAssignment}) {
 
   const [loading, setLoading] = useState(false)
 
   const [openCreateUnitModal, setOpenCreateUnitModal] = useState(false)
   const [openCreateAssignmentModal, setOpenCreateAssignmentModal] = useState(false)
   const [openEditAssignmentModal, setOpenEditAssignmentModal] = useState(false)
-  const [selectedAssignment, setselectedAssignment] = useState(null)
+  const [selectedAssignment, setSelectedAssignment] = useState(null)
   const [assignmentInfo, setAssignmentInfo] = useState([])
   const [sweetError, setSweetError] = useState(false)
   const [assignmentId, setAssignmentId] = useState("")
@@ -33,7 +34,7 @@ export default function CoursesAssignment({moduleInfo, setModuleInfo}) {
 
   const handleOpenEditAssignmentModal = (e, item) =>{
     e.preventDefault()
-    setselectedAssignment(item)
+    setSelectedAssignment(item)
     setOpenEditAssignmentModal(!openEditAssignmentModal)
   }
 
@@ -90,9 +91,15 @@ export default function CoursesAssignment({moduleInfo, setModuleInfo}) {
     setFilter(text)
   }
 
+  const viewAss = (data) => {
+    setSelectedAssignment(data)
+    setShowAssignment(true)
+  }
+
   useEffect(() => {
   }, [])
 
+  if(showAssignment === false){
   return (
     <React.Fragment>
       <span className="content-pane-title">
@@ -109,7 +116,6 @@ export default function CoursesAssignment({moduleInfo, setModuleInfo}) {
       </div>
       <CreateAssignment openCreateAssignmentModal={openCreateAssignmentModal} setOpenCreateAssignmentModal={setOpenCreateAssignmentModal} setAssignmentInfo={setAssignmentInfo}/>
       <EditAssignment setAssignmentInfo={setAssignmentInfo} selectedAssignment={selectedAssignment} openEditAssignmentModal={openEditAssignmentModal} setOpenEditAssignmentModal={setOpenEditAssignmentModal}/>
-
       <Accordion defaultActiveKey="0">
         {moduleInfo.map((item, index) => {
           return(
@@ -120,34 +126,19 @@ export default function CoursesAssignment({moduleInfo, setModuleInfo}) {
                   </span>
                 </Accordion.Header>
                 <Accordion.Body>
-                  {/* {assignmentInfo.map((item, index) => {
-                    return(
-                      <Row>
-                        <Col className="lesson-header" md={9}>
-                          {item?.assignmentName}
-                        </Col>
-                        <Col className="align-right-content" md={3}>
-                          <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={(e) => handleOpenEditAssignmentModal(e, item)}><i className="fa fa-edit"></i></Button>
-                          <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i className="fa fa-trash"  onClick={() => {setSweetError(true); setAssignmentId(item.id)}}></i></Button>
-                            
-                        </Col>
-                      </Row>
-                    )
-                  })} */}
                   {assignmentInfo.filter(item => 
                     item.assignmentName.toLowerCase().includes(filter.toLowerCase())
                   ).map((as, index) => (
                     <Row>
-                        <Col className="lesson-header" md={9}>
-                          {as?.assignmentName}
-                        </Col>
-                        <Col className="align-right-content" md={3}>
-                          <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={(e) => handleOpenEditAssignmentModal(e, item)}><i className="fa fa-edit"></i></Button>
-                          <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i className="fa fa-trash"  onClick={() => {setSweetError(true); setAssignmentId(as.id)}}></i></Button>
-                        </Col>
-                        {assignmentInfo.length == 0 && !loading && <div className="no-exams">No assignment found...</div>}
-                        
-                      </Row>
+                      <Col className="lesson-header" md={9} >
+                        <span onClick={(e) => {viewAss(as)}}>{as?.assignmentName}</span>
+                      </Col>
+                      <Col className="align-right-content" md={3}>
+                        <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={(e) => handleOpenEditAssignmentModal(e, as)}><i className="fa fa-edit"></i></Button>
+                        <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={() => {setSweetError(true); setAssignmentId(as.id)}}><i className="fa fa-trash"  ></i></Button>
+                      </Col>
+                      {assignmentInfo.length == 0 && !loading && <div className="no-exams">No assignment found...</div>}
+                    </Row>
                   ))}
                   <SweetAlert
                     warning
@@ -160,7 +151,7 @@ export default function CoursesAssignment({moduleInfo, setModuleInfo}) {
                     onCancel={cancelSweetError}
                     focusCancelBtn
                   >
-                    You will not be able to recover this imaginary file!
+                    You will not be able to recover this Assignment!
                   </SweetAlert>
                 </Accordion.Body>
               </Accordion.Item>
@@ -170,5 +161,9 @@ export default function CoursesAssignment({moduleInfo, setModuleInfo}) {
         }
       </Accordion>
     </React.Fragment>
-  )
+  )}else{
+    return(
+    <ViewAssignment setShowAssignment={setShowAssignment} selectedAssignment={selectedAssignment} assignmentInfo={assignmentInfo} setAssignmentInfo={setAssignmentInfo}/>
+    )
+  }
 }
