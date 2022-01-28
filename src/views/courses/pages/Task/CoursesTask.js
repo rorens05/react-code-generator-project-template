@@ -5,8 +5,9 @@ import CourseCreateUnit from "./../../components/CourseCreateUnit";
 import CreateTask from "./../../components/CreateTask";
 import EditTask from "./../../components/EditTask";
 import SweetAlert from 'react-bootstrap-sweetalert';
+import ViewTask from "./ViewTask";
 
-export default function CoursesTask({moduleInfo, setModuleInfo}) {
+export default function CoursesTask({moduleInfo, showTask, setShowTask}) {
 
   const [loading, setLoading] = useState(false)
 
@@ -71,9 +72,15 @@ export default function CoursesTask({moduleInfo, setModuleInfo}) {
     setFilter(text)
   }
 
+  const viewTas = (data) => {
+    setSelectedTask(data)
+    setShowTask(true)
+  }
+
   useEffect(() => {
   }, [])
 
+  if(showTask === false){
   return (
     <>
       <span className="content-pane-title">
@@ -99,25 +106,12 @@ export default function CoursesTask({moduleInfo, setModuleInfo}) {
                 </span>
               </Accordion.Header>
               <Accordion.Body>
-                {/* {taskInfo.map((ti, index) => {
-                  return(
-                    <Row>
-                      <Col className="lesson-header" md={9}>
-                        {ti?.taskName}
-                      </Col>
-                      <Col className="align-right-content" md={3}>
-                        <Button className="m-r-5 color-white tficolorbg-button" size="sm"  onClick={(e) => handleOpenEditTaskModal(e, ti)}><i className="fa fa-edit"></i></Button>
-                        <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i className="fa fa-trash"  onClick={() => {setSweetError(true); setTaskId(ti.id)}}></i></Button>
-                        </Col>
-                      </Row>
-                    )
-                })} */}
                 {taskInfo.filter(item => 
                   item.taskName.toLowerCase().includes(filter.toLowerCase())
                 ).map((ti, index) => (
                   <Row>
                     <Col className="lesson-header" md={9}>
-                      {ti?.taskName}
+                      <span onClick={(e) => {viewTas(ti)}}>{ti?.taskName}</span>
                     </Col>
                     <Col className="align-right-content" md={3}>
                       <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={(e) => handleOpenEditTaskModal(e, ti)}><i className="fa fa-edit"></i></Button>
@@ -146,5 +140,9 @@ export default function CoursesTask({moduleInfo, setModuleInfo}) {
         }
       </Accordion>
     </> 
-  )
+  )}else{
+    return(
+      <ViewTask selectedTask={selectedTask} showTask={showTask} setShowTask={setShowTask} />
+    )
+  }
 }

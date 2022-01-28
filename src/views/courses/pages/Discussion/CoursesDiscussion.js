@@ -4,9 +4,10 @@ import CoursesAPI from "../../../../api/CoursesAPI";
 import CourseCreateUnit from "./../../components/CourseCreateUnit";
 import CreateDiscussion from "./../../components/CreateDiscussion";
 import EditDiscussion from "./../../components/EditDiscussion";
+import ViewDiscussion from "./ViewDiscussion";
 import SweetAlert from 'react-bootstrap-sweetalert';
 
-export default function CoursesDiscussion({moduleInfo, setModuleInfo, moduleId}) {
+export default function CoursesDiscussion({moduleInfo, moduleId, showDiscussion, setShowDiscussion}) {
 
   const [loading, setLoading] = useState(false)
   const [filter, setFilter] = useState("")
@@ -71,10 +72,16 @@ export default function CoursesDiscussion({moduleInfo, setModuleInfo, moduleId})
     setFilter(text)
   }
 
+  const viewDis = (data) => {
+    setSelectedDiscussion(data)
+    setShowDiscussion(true)
+  }
+
   useEffect(() => {
     console.log(moduleId)
   }, [])
 
+  if(showDiscussion === false){
   return (
     <>
       <span className="content-pane-title">
@@ -100,26 +107,13 @@ export default function CoursesDiscussion({moduleInfo, setModuleInfo, moduleId})
                 </span>
               </Accordion.Header>
               <Accordion.Body>
-                {/* {discussionInfo.map((item, index) => {
-                  return(
-                    <Row>
-                      <Col className="lesson-header" md={9}>
-                        {item?.discussion.discussionName}
-                      </Col>
-                      <Col className="align-right-content" md={3}>
-                        <Button className="m-r-5 color-white tficolorbg-button" size="sm"  onClick={(e) => handleOpenEditDiscussionModal(e, item)}><i className="fa fa-edit"></i></Button>
-                        <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i className="fa fa-trash"  onClick={() => {setSweetError(true); setLocalModuleId(moduleid)}}></i></Button>
-                        
-                      </Col>
-                    </Row>
-                  )
-                })} */}
+                
                 {discussionInfo.filter(item => 
                   item.discussion.discussionName.toLowerCase().includes(filter.toLowerCase())
                 ).map((di, index) => (
                   <Row>
                     <Col className="lesson-header" md={9}>
-                    {di?.discussion.discussionName}
+                    <span onClick={(e) => {viewDis(di)}}>{di?.discussion.discussionName}</span>
                     </Col>
                     <Col className="align-right-content" md={3}>
                       <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={(e) => handleOpenEditDiscussionModal(e, di)}><i className="fa fa-edit"></i></Button>
@@ -148,5 +142,9 @@ export default function CoursesDiscussion({moduleInfo, setModuleInfo, moduleId})
         }
       </Accordion>
     </> 
-  )
+  )}else{
+    return(
+      <ViewDiscussion selectedDiscussion={selectedDiscussion} setShowDiscussion={setShowDiscussion} />
+    )
+  }
 }
