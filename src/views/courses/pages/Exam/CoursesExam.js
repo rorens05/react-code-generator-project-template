@@ -8,6 +8,7 @@ import CreateExam from "../CreateExam";
 import SweetAlert from 'react-bootstrap-sweetalert';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Link } from "react-router-dom";
 
 
 export default function CoursesExam() {
@@ -123,7 +124,9 @@ export default function CoursesExam() {
                   return(
                     <Row>
                       <Col className="lesson-header" md={9}>
-                        {item?.testName}
+                        <Link className="lesson-header" to={`/exam_creation/${item?.id}`}>
+                          {item?.testName}
+                        </Link>
                       </Col>
                       <Col className="align-right-content" md={3}>
                         <Button className="m-r-5 color-white tficolorbg-button" size="sm"   onClick={(e) => handleOpenEditExamModal(e, item)}><i className="fa fa-edit"></i></Button>

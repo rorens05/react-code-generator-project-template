@@ -1,8 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Button, Form, Modal } from "react-bootstrap";
-import { Redirect, useParams } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import ClassesAPI from "../../api/ClassesAPI";
+import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import ExamAPI from "../../api/ExamAPI";
 import MainContainer from "../../components/layouts/MainContainer";
 import { UserContext } from "../../context/UserContext";
@@ -12,15 +10,12 @@ import ExamCreationDetails from "./components/ExamCreationDetails";
 export default function ExamCreation() {
   const [loading, setLoading] = useState(true);
   const [exam, setExam] = useState(null);
-  const [remainingTime, setRemainingTime] = useState(0);
-  const [examStarted, setExamStarted] = useState(false);
-  const [additionalExamInfo, setAdditionalExamInfo] = useState({});
   const [showModal, setShowModal] = useState(false)
   const [instructions, setInstructions] = useState("")
   const [typeId, setTypeId] = useState(1)
   const userContext = useContext(UserContext);
   const { user } = userContext.data;
-  const { class_id, id } = useParams();
+  const { id } = useParams();
   const [selectedPart, setSelectedPart] = useState(null);
 
   const getExamInformation = async () => {
@@ -40,18 +35,7 @@ export default function ExamCreation() {
     } else {
       alert("Something went wrong while fetching exam information");
     }
-    response = await new ExamAPI().getExams(class_id);
     setLoading(false);
-    if (response.ok) {
-      const examInfo = response.data.find(
-        (item) => item.test.id.toString() === id.toString()
-      );
-      console.log({ examInfo });
-      setAdditionalExamInfo(examInfo);
-      setRemainingTime((examInfo.classTest?.timeLimit || 0) * 60);
-    } else {
-      alert("Something went wrong while fetching exams");
-    }
   };
   
   const submitPartForm = async (e) => {
@@ -79,7 +63,6 @@ export default function ExamCreation() {
       toast.error(response.data?.errorMessage || "Something went wrong while creating the part")
       setLoading(false)
     }
-  
   }
 
   const addPart = async(e) => {
@@ -114,9 +97,7 @@ export default function ExamCreation() {
       toast.error(response.data?.errorMessage || "Something went wrong while deleting the part")
       setLoading(false)
     }
-
   }
-
 
   useEffect(() => {
     if (user.isStudent) return (window.location.href = "/404");
@@ -144,9 +125,6 @@ export default function ExamCreation() {
             setLoading={setLoading}
             exam={exam}
             loading={loading}
-            remainingTime={remainingTime}
-            examStarted={examStarted}
-            isDoneTest={additionalExamInfo.isLoggedUserDone}
             setShowModal={setShowModal}
             deletePart={deletePart}
             selectedPart={selectedPart}

@@ -50,7 +50,7 @@ export default function ExamItem({ exam, deleteExam, setLoading, fetchExams }) {
       </div>
       {user.isTeacher && (
         <div className='exam-actions'>
-          <Link to={`/class/${id}/exam_creation/${exam.test.id}`}>
+          <Link to={`/exam_creation/${exam.test.id}`}>
             <i class='fas fa-eye'></i>
           </Link>
 
