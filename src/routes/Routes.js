@@ -48,7 +48,7 @@ export default function Routes() {
             <PrivateRoute path='/classescontent/:id' exact component={ClassesContent}/>
             <PrivateRoute path='/archive' exact component={ArchiveClass}/>
             <PrivateRoute path='/class/:class_id/exam/:id' exact component={ExamInformation}/>
-            <PrivateRoute path='/class/:class_id/exam_creation/:id' exact component={ExamCreation}/>
+            <PrivateRoute path='/exam_creation/:id' exact component={ExamCreation}/>
             <AuthRoute path='/login' exact component={Login}/>
             <AuthRoute path='/forgot_password' exact component={ForgotPassword}/>
             <PrivateRoute path='/' exact component={Home}/>
