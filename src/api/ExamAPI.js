@@ -41,19 +41,108 @@ export default class ExamAPI extends Base {
   deleteExam = async (id) =>
     this.sendRequest({
       path: `/api/Test/${id}`,
-      method: "DELETE"
+      method: "DELETE",
     });
 
   addPart = async (id, typeId, data) =>
-  this.sendRequest({
-    path: `/api/Test/${id}/part/${typeId}`,
-    method: "POST",
-    data
-  });
-  
-  getParts = async (id) => 
-  this.sendRequest({
-    path: `/api/Test/${id}/part`,
-  });
+    this.sendRequest({
+      path: `/api/Test/${id}/part/${typeId}`,
+      method: "POST",
+      data,
+    });
 
+  getParts = async (id) =>
+    this.sendRequest({
+      path: `/api/Test/${id}/part`,
+    });
+
+  deletePart = async (id) =>
+    this.sendRequest({
+      path: `/api/TestPart/${id}`,
+      method: "DELETE",
+    });
+
+  deleteQuestion = async (id) =>
+    this.sendRequest({
+      path: `/api/Question/${id}`,
+      method: "DELETE",
+    });
+
+  addEssay = async (id, partId, data) =>
+    this.sendRequest({
+      path: `/api/Test/${id}/part/${partId}/question/type/essay`,
+      method: "POST",
+      data,
+    });
+
+  editEssay = async (id, data) =>
+    this.sendRequest({
+      path: `/api/Question/${id}`,
+      method: "PUT",
+      data,
+    });
+
+  addIdentification = async (id, partId, data) =>
+    this.sendRequest({
+      path: `/api/Test/${id}/part/${partId}/question/type/identification`,
+      method: "POST",
+      data,
+    });
+
+  editIdentification = async (id, data) =>
+    this.sendRequest({
+      path: `/api/Question/${id}`,
+      method: "PUT",
+      data,
+    });
+
+  editIdentificationAnswer = async (id, data) =>
+    this.sendRequest({
+      path: `/api/Choices/${id}`,
+      method: "PUT",
+      data,
+    });
+
+  addTrueOrFalse = async (id, partId, data) =>
+    this.sendRequest({
+      path: `/api/Test/${id}/part/${partId}/question/type/trueorfalse`,
+      method: "POST",
+      data,
+    });
+
+  editTrueOrFalse = async (id, data) =>
+    this.sendRequest({
+      path: `/api/Question/${id}`,
+      method: "PUT",
+      data,
+    });
+    
+  editTrueOrFalseAnswer = async (id, data) =>
+    this.sendRequest({
+      path: `/api/Choices/${id}`,
+      method: "PUT",
+      data,
+    });
+
+  
+  addMultipleChoice = async (id, partId, data) =>
+    this.sendRequest({
+      path: `/api/Test/${id}/part/${partId}/question/type/multiplechoice`,
+      method: "POST",
+      data,
+    });
+    
+  editMultipleChoice = async (id, data) =>
+    this.sendRequest({
+      path: `/api/Question/${id}`,
+      method: "PUT",
+      data,
+    });
+
+  editMultipleChoiceAnswer = async (id, data) =>
+    this.sendRequest({
+      path: `/api/Choices/${id}`,
+      method: "PUT",
+      data,
+    });
 }

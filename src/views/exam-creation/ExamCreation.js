@@ -34,7 +34,7 @@ export default function ExamCreation() {
           tempExam.questionPartDto.push({questionPart: item, questionDtos: []})
         }
       })
-      
+      console.log({tempExam})
       setExam(tempExam);
     } else {
       alert("Something went wrong while fetching exam information");
@@ -62,17 +62,29 @@ export default function ExamCreation() {
     let response = await new ExamAPI().addPart(id, typeId, data)
     if(response.ok){
       toast.success("Part created")
+      setShowModal(false)
       getExamInformation()
+      setTypeId('1')
     }else{
       toast.error(response.data?.errorMessage || "Something went wrong while creating the part")
+      setLoading(false)
     }
-    setLoading(false)
   }
 
   const deletePart = async(e, part) => {
     e.preventDefault()
     console.log({part})
-    alert(part.questionPart.id)
+    setLoading(true)
+    let response = await new ExamAPI().deletePart(part.questionPart.id)
+    if(response.ok){
+      toast.success("Part deleted")
+      getExamInformation()
+    }
+    else{
+      toast.error(response.data?.errorMessage || "Something went wrong while deleting the part")
+      setLoading(false)
+    }
+
   }
 
 
@@ -89,6 +101,8 @@ export default function ExamCreation() {
       <div className='page-container exam-information-container'>
         <div className='containerpages'>
           <ExamCreationDetails
+            getExamInformation={getExamInformation}
+            setLoading={setLoading}
             exam={exam}
             loading={loading}
             remainingTime={remainingTime}

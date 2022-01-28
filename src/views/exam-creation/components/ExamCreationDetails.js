@@ -2,9 +2,15 @@ import React from "react";
 import { Button } from "react-bootstrap";
 import ExamParts from "./ExamParts";
 
+export default function ExamCreationDetails({
+  exam,
 
-export default function ExamCreationDetails({ exam, loading, setShowModal, deletePart }) {
-  return exam != null && !loading ? (
+  getExamInformation,
+  setLoading,
+  setShowModal,
+  deletePart,
+}) {
+  return exam != null ? (
     <div className='exam-information-container'>
       <div className='d-flex justify-content-between '>
         <div>
@@ -19,15 +25,20 @@ export default function ExamCreationDetails({ exam, loading, setShowModal, delet
       </div>
       <hr />
       <p className='secondary-title mt-4'>Exam Parts</p>
-        <Button
-            className='btn btn-primary my-4'
-            variant='primary'
-            size='lg'
-            onClick={() => setShowModal(true)}
-          >
-            Add Part
-        </Button>
-      <ExamParts exam={exam} deletePart={deletePart}/>
+      <Button
+        className='btn btn-primary my-4'
+        variant='primary'
+        size='lg'
+        onClick={() => setShowModal(true)}
+      >
+        Add Part
+      </Button>
+      <ExamParts
+        exam={exam}
+        deletePart={deletePart}
+        getExamInformation={getExamInformation}
+        setLoading={setLoading}
+      />
     </div>
   ) : (
     <div>Loading Exam Information...</div>

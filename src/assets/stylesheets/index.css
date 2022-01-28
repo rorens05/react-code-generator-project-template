@@ -1137,7 +1137,7 @@ hr{
   color: #707070;
 }
 
-.exam-information-container .question-radio{
+.question-radio{
   width: 24px;
   height: 24px;
   border: 2px solid #EE9337;
@@ -1149,13 +1149,13 @@ hr{
 }
 
 
-.exam-information-container .question-radio div{
-  width: 12px;
-  height: 12px;
+.question-radio div{
+  width: 13px;
+  height: 13px;
   border-radius: 12px;
 }
 
-.exam-information-container .question-radio.active div{
+.question-radio.active div{
   background-color: #EE9337; 
 }
 
@@ -1183,4 +1183,33 @@ hr{
   color: #ff8103 !important;
   font-size: 22px;
   margin-right: 12px;
+}
+
+.accordion-item{
+  position: relative;
+}
+
+.exam-absolute-actions{
+  position: absolute;
+  top: 44px;
+  right: 28px;
+  z-index: 9999;
+}
+
+.hover-link:hover{
+  background-color: rgb(255, 250, 240);
+  cursor: pointer;
+}
+
+.choice-item{
+  padding: 16px;
+  background-color: #f1f1f1;
+  margin: 8px 0;
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+}
+
+.choice-item.active{
+  background-color: #ffd1a3;
 }

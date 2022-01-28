@@ -45,7 +45,7 @@ export default function ExamItem({ exam, deleteExam }) {
           <Status>Unassigned</Status>
         )}
       </div>
-      {user.isTeacher && exam.classTest == null && (
+      {user.isTeacher &&  (
         <div className="exam-actions">
           <Link to={`/class/${id}/exam_creation/${exam.test.id}`}>
             <i class="fas fa-eye"></i>
