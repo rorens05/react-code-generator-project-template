@@ -88,7 +88,7 @@ export const ClassExam = () => {
                       .includes(filter.toLowerCase())
                   )
                   .map((exam, index) => (
-                    <ExamItem key={index} exam={exam} deleteExam={deleteExam} />
+                    <ExamItem key={index} exam={exam} deleteExam={deleteExam} setLoading={setLoading} fetchExams={fetchExams}/>
                   ))}
               </Accordion.Body>
             </Accordion.Item>

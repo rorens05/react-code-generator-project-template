@@ -8,11 +8,17 @@ export default function ExamParts({
   deletePart,
   getExamInformation,
   setLoading,
+  setSelectedPart,
+  setShowModal,
 }) {
   return (
     <Accordion defaultActiveKey='0' className='exam-part-creation'>
       {exam.questionPartDto.map((part, index) => (
-        <Accordion.Item eventKey={index} key={index}>
+        <Accordion.Item
+          style={{ border: "1px solid #f1f1f1", padding: "8px 16px" }}
+          eventKey={index}
+          key={index}
+        >
           <Accordion.Header>
             <div className='accordion-block-header'>
               <div className='header-content'>
@@ -23,7 +29,13 @@ export default function ExamParts({
             </div>
           </Accordion.Header>
           <div className='exam-actions exam-absolute-actions'>
-            <a href='#edit-part' onClick={(e) => alert("Ongoing Development")}>
+            <a
+              href='#edit-part'
+              onClick={(e) => {
+                setShowModal(true);
+                setSelectedPart(part);
+              }}
+            >
               <i class='fas fa-edit'></i>
             </a>
             <a href='#delete-part' onClick={(e) => deletePart(e, part)}>
@@ -31,9 +43,11 @@ export default function ExamParts({
             </a>
           </div>
           <Accordion.Body>
-            <Questions part={part} 
-            getExamInformation={getExamInformation}
-            setLoading={setLoading} />
+            <Questions
+              part={part}
+              getExamInformation={getExamInformation}
+              setLoading={setLoading}
+            />
           </Accordion.Body>
         </Accordion.Item>
       ))}

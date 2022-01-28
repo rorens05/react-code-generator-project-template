@@ -5,9 +5,13 @@ export default function AddPartModal({
   setShowModal,
   showModal,
   setTypeId,
+  typeId,
   setInstructions,
+  instructions,
   addPart,
+  selectedPart
 }) {
+  console.log({typeId})
   return (
     <Modal
       size='lg'
@@ -16,23 +20,23 @@ export default function AddPartModal({
       onHide={() => setShowModal(false)}
     >
       <Modal.Header className='modal-header' closeButton>
-        Create Exam
+        Exam Part Form
       </Modal.Header>
       <Modal.Body className='modal-label b-0px'>
         <Form onSubmit={addPart}>
-          <Form.Group className='m-b-20'>
+          {selectedPart == null && <Form.Group className='m-b-20'>
             <Form.Label for='courseName'>Type of Test</Form.Label>
             <Form.Select
               aria-label='Default select example'
               onChange={(e) => setTypeId(e.target.value)}
             >
-              <option value='1'>Multiple Choice</option>
-              <option value='2'>True or False</option>
-              <option value='3'>Identification</option>
-              <option value='4'>Essay</option>
-              <option value='5'>Enumeration</option>
+              <option value='1' selected={ '1' === typeId?.toString()}>Multiple Choice</option>
+              <option value='2' selected={ '2' === typeId?.toString()}>True or False</option>
+              <option value='3' selected={ '3' === typeId?.toString()}>Identification</option>
+              <option value='4' selected={ '4' === typeId?.toString()}>Essay</option>
+              <option value='5' selected={ '5' === typeId?.toString()}>Enumeration</option>
             </Form.Select>
-          </Form.Group>
+          </Form.Group>}
           <Form.Group className='m-b-20'>
             <Form.Label for='description'>Test Instructions</Form.Label>
             <Form.Control
@@ -40,6 +44,7 @@ export default function AddPartModal({
               className='custom-input'
               size='lg'
               type='text'
+              value={instructions}
               placeholder='Enter test instructions'
               onChange={(e) => setInstructions(e.target.value)}
             />

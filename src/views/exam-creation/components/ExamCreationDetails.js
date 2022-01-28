@@ -4,7 +4,8 @@ import ExamParts from "./ExamParts";
 
 export default function ExamCreationDetails({
   exam,
-
+  selectedPart,
+  setSelectedPart,
   getExamInformation,
   setLoading,
   setShowModal,
@@ -29,15 +30,21 @@ export default function ExamCreationDetails({
         className='btn btn-primary my-4'
         variant='primary'
         size='lg'
-        onClick={() => setShowModal(true)}
+        onClick={() => {
+          setSelectedPart(null)
+          setShowModal(true)
+        }}
       >
         Add Part
       </Button>
       <ExamParts
+        selectedPart={selectedPart}
+        setSelectedPart={setSelectedPart}
         exam={exam}
         deletePart={deletePart}
         getExamInformation={getExamInformation}
         setLoading={setLoading}
+        setShowModal={setShowModal}
       />
     </div>
   ) : (

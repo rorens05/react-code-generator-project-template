@@ -37,6 +37,20 @@ export default class ExamAPI extends Base {
       method: "POST",
       data,
     });
+    
+  assignExam = async (classId, id, data) => 
+    this.sendRequest({
+      path: `/api/Class/${classId}/test/${id}/assign`,
+      method: "POST",
+      data,
+    });
+
+  updateExam = async (id, data) =>
+    this.sendRequest({
+      path: `/api/Test/${id}`,
+      method: "PUT",
+      data,
+    });
 
   deleteExam = async (id) =>
     this.sendRequest({
@@ -48,6 +62,13 @@ export default class ExamAPI extends Base {
     this.sendRequest({
       path: `/api/Test/${id}/part/${typeId}`,
       method: "POST",
+      data,
+    });
+
+  editPart = async (id, data) =>
+    this.sendRequest({
+      path: `/api/TestPart/${id}`,
+      method: "PUT",
       data,
     });
 
@@ -123,7 +144,6 @@ export default class ExamAPI extends Base {
       method: "PUT",
       data,
     });
-
   
   addMultipleChoice = async (id, partId, data) =>
     this.sendRequest({
@@ -140,6 +160,28 @@ export default class ExamAPI extends Base {
     });
 
   editMultipleChoiceAnswer = async (id, data) =>
+    this.sendRequest({
+      path: `/api/Choices/${id}`,
+      method: "PUT",
+      data,
+    });
+
+    
+  addEnumeration = async (id, partId, data) =>
+    this.sendRequest({
+      path: `/api/Test/${id}/part/${partId}/question/type/enumeration`,
+      method: "POST",
+      data,
+    });
+    
+  editEnumeration = async (id, data) =>
+    this.sendRequest({
+      path: `/api/Question/${id}`,
+      method: "PUT",
+      data,
+    });
+    
+  editEnumerationAnswer = async (id, data) =>
     this.sendRequest({
       path: `/api/Choices/${id}`,
       method: "PUT",

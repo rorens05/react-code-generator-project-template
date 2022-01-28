@@ -21,6 +21,7 @@ export default function ExamCreation() {
   const userContext = useContext(UserContext);
   const { user } = userContext.data;
   const { class_id, id } = useParams();
+  const [selectedPart, setSelectedPart] = useState(null);
 
   const getExamInformation = async () => {
     setLoading(true);
@@ -53,6 +54,34 @@ export default function ExamCreation() {
     }
   };
   
+  const submitPartForm = async (e) => {
+    if(selectedPart != null){
+      updatePart(e)
+    }else{
+      addPart(e)
+    }
+  }
+
+  const updatePart = async (e) => {
+    e.preventDefault()
+    setLoading(true)
+    const data = {
+      instructions
+    }
+    let response = await new ExamAPI().editPart(selectedPart.questionPart.id, data)
+    if(response.ok){
+      toast.success("Part updated")
+      setShowModal(false)
+      getExamInformation()
+      setTypeId('1')
+      setSelectedPart(null)
+    }else{
+      toast.error(response.data?.errorMessage || "Something went wrong while creating the part")
+      setLoading(false)
+    }
+  
+  }
+
   const addPart = async(e) => {
     e.preventDefault()
     setLoading(true)
@@ -65,6 +94,7 @@ export default function ExamCreation() {
       setShowModal(false)
       getExamInformation()
       setTypeId('1')
+      setSelectedPart(null)
     }else{
       toast.error(response.data?.errorMessage || "Something went wrong while creating the part")
       setLoading(false)
@@ -91,10 +121,19 @@ export default function ExamCreation() {
   useEffect(() => {
     if (user.isStudent) return (window.location.href = "/404");
     getExamInformation();
-    return () => {
-
-    };
   }, []);
+
+  useEffect(() => {
+    if(selectedPart != null){
+      setTypeId(selectedPart.questionPart.questionTypeId)
+      setInstructions(selectedPart.questionPart.instructions)
+    }else{
+      setTypeId(1)
+      setInstructions("")
+    }
+  
+  }, [selectedPart]);
+  
 
   return (
     <MainContainer title='Exam Information' loading={loading}>
@@ -110,6 +149,8 @@ export default function ExamCreation() {
             isDoneTest={additionalExamInfo.isLoggedUserDone}
             setShowModal={setShowModal}
             deletePart={deletePart}
+            selectedPart={selectedPart}
+            setSelectedPart={setSelectedPart}
           />
         </div>
       </div>
@@ -117,8 +158,11 @@ export default function ExamCreation() {
         setShowModal={setShowModal}
         showModal={showModal}
         setTypeId={setTypeId}
+        typeId={typeId}
         setInstructions={setInstructions}
-        addPart={addPart}/>
+        instructions={instructions}
+        selectedPart={selectedPart}
+        addPart={submitPartForm}/>
     </MainContainer>
   );
 }

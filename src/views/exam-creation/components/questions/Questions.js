@@ -1,6 +1,7 @@
 import React from "react";
 import { toast } from "react-toastify";
 import ExamAPI from "../../../../api/ExamAPI";
+import Enumeration from "./Enumeration";
 import Essay from "./Essay";
 import Identification from "./Identification";
 import MultipleChoice from "./MultipleChoice";
@@ -59,7 +60,15 @@ export default function Questions({ part, getExamInformation, setLoading }) {
         />
       );
     case 5:
-      return <div>Enumeration</div>;
+      return (
+        <Enumeration
+          part={part}
+          questionTypeId={part.questionPart.questionTypeId}
+          getExamInformation={getExamInformation}
+          setLoading={setLoading}
+          deleteQuestion={deleteQuestion}
+        />
+      );
     default:
       return <div>Unknown</div>;
   }
