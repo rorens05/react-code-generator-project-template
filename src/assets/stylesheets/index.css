@@ -797,6 +797,10 @@ border-top-right-radius: 0px !important;
   color:#EE9337;
   font-size: 24px;
 }
+.title-exam:hover{
+  color: #5B84C4;
+  cursor: pointer;
+}
 .code-exam{
   color: #BCBCBC;
   font-size: 20px;
