@@ -52,7 +52,6 @@ export default class ClassesAPI extends Base {
   }
 
   getStudentAssignmentAnswer = async (id, classId, assignmentId) => {
-    console.log(id, classId, assignmentId, '------------ ahahahahah')
     return this.sendRequest({
       path: `/api/Student/${id}/class/${classId}/assignment/${assignmentId}/answer`,
       method: 'GET'

@@ -18,7 +18,7 @@ function StudentAssignment({assignment}) {
   const dateCompareNow = moment().format("YYYY-MM-DD")
   const timeNow = moment().format('HH:mm');
   const dateTimeNow = dateCompareNow + ' ' + '00:00:00';
-  console.log('Assingment:', assignment)
+  // console.log('Assingment:', assignment)
 
   const answerAnswerToggle = (item) => {
     setAssignmentId(item)
@@ -33,7 +33,6 @@ function StudentAssignment({assignment}) {
     let studentId = user.student.id
     let classId = id
     let response = await new ClassesAPI().getStudentAssignmentAnswer(studentId, classId, item)
-    console.log(response,'herererererere')
       if(response.ok){
         setStudentAnswer(response.data)
         submittedAssignmentToggle()
