@@ -6,8 +6,9 @@ import StudentSubmittedTask from './components/StudentSubmittedTask';
 import { useParams } from 'react-router'
 import { UserContext } from '../../../context/UserContext'
 import ClassesAPI from '../../../api/ClassesAPI';
+import StudentViewTask from './components/StudentViewTask';
 
-function StudentTask({taskModule}) {
+function StudentTask({taskModule, searchTerm}) {
   const userContext = useContext(UserContext)
   const {user} = userContext.data
   const [answerTaskModal, setAnswerTaskModal] = useState(false)
@@ -18,6 +19,23 @@ function StudentTask({taskModule}) {
   const dateCompareNow = moment().format("YYYY-MM-DD")
   const timeNow = moment().format('HH:mm');
   const dateTimeNow = dateCompareNow + ' ' + '00:00:00';
+  const [viewTaskMotal, setViewTaskModal] = useState()
+  const [viewTaskItem, setViewTaskItem] = useState([])
+  const [startDate, setStartDate] = useState()
+  const [startTime, setStartTime] = useState()
+  const [endDate, setEndDate] = useState()
+  const [endTime, setEndTime] = useState() 
+
+  console.log("taskModuletaskModuletaskModule:", taskModule)
+
+  const viewTaskToggle = (item, item1, item2, item3, item4) => {
+    setViewTaskItem(item)
+    setStartDate(item1)
+    setStartTime(item2)
+    setEndDate(item3)
+    setEndTime(item4)
+    setViewTaskModal(!viewTaskMotal)
+  }
 
   const answerTaskToggle = (item) => {
     setTaskId(item)
@@ -52,7 +70,13 @@ function StudentTask({taskModule}) {
 
   return (
     <div>
-      {taskModule.map(item => {
+      {taskModule.filter((item) => {
+        if(searchTerm == ''){
+          return item
+        }else if(item?.task?.taskName.toLowerCase().includes(searchTerm.toLowerCase())){
+          return item
+        }
+      }).map(item => {
         return(
           <>
               {(item?.isScheduled === true)?(
@@ -77,6 +101,7 @@ function StudentTask({taskModule}) {
                     <>
                       <Col sm={3} className='icon-exam'>
                       <Button onClick={(e) => getStudentTaskAnwswer(item?.task?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button>
+                      <Button onClick={() => viewTaskToggle(item?.task, item?.taskAssignment?.startDate, item?.taskAssignment?.startTime, item?.taskAssignment?.endDate, item?.taskAssignment?.endTime)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-book-reader"></i></Button>
                     </Col>
                       {
                         moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isAfter(moment(item?.taskAssignment?.endDate + ' ' + item?.taskAssignment?.endTime, 'YYYY-MM-DD HH:mm')) &&
@@ -90,14 +115,22 @@ function StudentTask({taskModule}) {
                       moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isBefore(moment(item?.taskAssignment?.endDate + ' ' + item?.taskAssignment?.endTime, 'YYYY-MM-DD HH:mm')) &&
                       <Col sm={3} className='icon-exam'>
                       <Button onClick={() => answerTaskToggle(item?.task?.id)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-user-edit"></i></Button>
+                      <Button onClick={() => viewTaskToggle(item?.task, item?.taskAssignment?.startDate, item?.taskAssignment?.startTime, item?.taskAssignment?.endDate, item?.taskAssignment?.endTime)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-book-reader"></i></Button>
                       </Col>
                     }
-                      {
-                        moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isAfter(moment(item?.taskAssignment?.endDate + ' ' + item?.taskAssignment?.endTime, 'YYYY-MM-DD HH:mm')) &&
-                        <Col sm={3} className='icon-exam'>
-                        <Button  className="m-r-5 color-white tficolorbg-button" size="sm">Not Submitted</Button>
-                        </Col>
-                      }
+                    {
+                      moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isAfter(moment(item?.taskAssignment?.endDate + ' ' + item?.taskAssignment?.endTime, 'YYYY-MM-DD HH:mm')) &&
+                      <Col sm={3} className='icon-exam'>
+                      <Button  className="m-r-5 color-white tficolorbg-button" size="sm">Not Submitted</Button>
+                      <Button onClick={() => viewTaskToggle(item?.task, item?.taskAssignment?.startDate, item?.taskAssignment?.startTime, item?.taskAssignment?.endDate, item?.taskAssignment?.endTime)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-book-reader"></i></Button>
+                      </Col>
+                    }
+                    {
+                      moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isBefore(moment(item?.taskAssignment?.startDate + ' ' + item?.taskAssignment?.startTime, 'YYYY-MM-DD HH:mm')) &&
+                      <Col sm={3} className='icon-exam'>
+                        <Button onClick={() => viewTaskToggle(item?.task, item?.taskAssignment?.startDate, item?.taskAssignment?.startTime, item?.taskAssignment?.endDate, item?.taskAssignment?.endTime)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-book-reader"></i></Button>
+                      </Col>
+                    }
                     </>
                     }
                     {
@@ -108,6 +141,14 @@ function StudentTask({taskModule}) {
                     {
                       moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isAfter(moment(item?.taskAssignment?.endDate + ' ' + item?.taskAssignment?.endTime, 'YYYY-MM-DD HH:mm')) &&
                       <div style={{color:'#EE9337', fontSize:'15px'}}><b>Ended</b>&nbsp;</div>  
+                    }
+                    {
+                      moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isBefore(moment(item?.taskAssignment?.startDate + ' ' + item?.taskAssignment?.startTime, 'YYYY-MM-DD HH:mm')) &&
+                      <div style={{color:'#EE9337', fontSize:'15px'}}><b>Upcoming</b></div>
+                    }
+                    {
+                      moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isSame(moment(item?.taskAssignment?.startDate + ' ' + item?.taskAssignment?.startTime, 'YYYY-MM-DD HH:mm')) &&
+                      <div style={{color:'#EE9337', fontSize:'15px'}}><b>Ongoing</b></div>
                     }
                     <Col sm={7} className='due-date-discusstion' >
                         <div className='inline-flex'>
@@ -153,6 +194,7 @@ function StudentTask({taskModule}) {
         )
       })}
       <StundentAnswerTask taskId={taskId} answerTaskToggle={answerTaskToggle} answerTaskModal={answerTaskModal} />
+      <StudentViewTask startDate={startDate} startTime={startTime} endDate={endDate} endTime={endTime} viewTaskItem={viewTaskItem} viewTaskToggle={viewTaskToggle} viewTaskMotal={viewTaskMotal} />
       <StudentSubmittedTask taskAnswerItem={taskAnswerItem} submittedTaskToggle={submittedTaskToggle} submittedTaskModal={submittedTaskModal} />
     </div>
   )

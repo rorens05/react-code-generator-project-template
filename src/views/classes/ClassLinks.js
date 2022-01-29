@@ -15,7 +15,11 @@ function ClassLinks({classInfo}) {
   const [links, setLinks] = useState([])
   const [editLinks, setEditLinks] = useState()
   const {id} = useParams()
-  
+  const [searchTerm, setSearchTerm] = useState('')
+
+  const onSearch = (text) => {
+    setSearchTerm(text)
+  }
   
   const getConfe = async() => {
     let typeId = '1'
@@ -61,15 +65,15 @@ function ClassLinks({classInfo}) {
 
   return (
    <>
-    <HeaderLinks getConfe={getConfe} getVideos={getVideos} getLinks={getLinks}  />
+    <HeaderLinks onSearch={onSearch} getConfe={getConfe} getVideos={getVideos} getLinks={getLinks}  />
     <div style={{paddingBottom:'10px'}}>
-      <AccordionConference getConfe={getConfe} conference={conference} setOpenEditModal={setOpenEditModal}  setEditLinks={setEditLinks} />
+      <AccordionConference searchTerm={searchTerm} getConfe={getConfe} conference={conference} setOpenEditModal={setOpenEditModal}  setEditLinks={setEditLinks} />
     </div>
     <div style={{paddingBottom:'10px'}}>
-      <AccordionVideos getVideos={getVideos} videos={videos} setOpenEditModal={setOpenEditModal}  setEditLinks={setEditLinks}   />
+      <AccordionVideos searchTerm={searchTerm} getVideos={getVideos} videos={videos} setOpenEditModal={setOpenEditModal}  setEditLinks={setEditLinks}   />
     </div>
     <div style={{paddingBottom:'10px'}}>
-      <AccordionLinks getLinks={getLinks} links={links} setOpenEditModal={setOpenEditModal}  setEditLinks={setEditLinks}  />
+      <AccordionLinks searchTerm={searchTerm} getLinks={getLinks} links={links} setOpenEditModal={setOpenEditModal}  setEditLinks={setEditLinks}  />
     </div>
     <AccordionEdit getConfe={getConfe} getVideos={getVideos} getLinks={getLinks}  editLinks={editLinks} openEditModal={openEditModal} setOpenEditModal={setOpenEditModal} />
    </>

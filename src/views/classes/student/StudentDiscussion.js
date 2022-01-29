@@ -7,7 +7,7 @@ import StudentDiscussionComment from './components/StudentDiscussionComment'
 import ClassesAPI from '../../../api/ClassesAPI'
 import SweetAlert from 'react-bootstrap-sweetalert';
 
-function StudentDiscussion({discussionModule, getDiscussionUnit, moduleId}) {
+function StudentDiscussion({discussionModule, getDiscussionUnit, moduleId, searchTerm}) {
   const [discussionId, setDiscussionId] = useState('')
   const [commentAlert, setCommentAlert] = useState(false)
   const dateCompareNow = moment().format("YYYY-MM-DD")
@@ -48,9 +48,17 @@ function StudentDiscussion({discussionModule, getDiscussionUnit, moduleId}) {
       }
   }
 
+  console.log('discussionModulediscussionModulediscussionModule:', discussionModule)
+
   return (
     <div>
-      {(discussionModule?.map(item => {
+      {(discussionModule?.filter((item) => {
+        if(searchTerm == ''){
+          return item
+        }else if(item?.discussion?.discussionName.toLowerCase().includes(searchTerm.toLowerCase())){
+          return item
+        }
+      }).map(item => {
         return(
           <>
             {(item?.isScheduled === true)?(
@@ -106,6 +114,14 @@ function StudentDiscussion({discussionModule, getDiscussionUnit, moduleId}) {
                 {
                   moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isAfter(moment(item?.discussionAssignment?.endDate + ' ' + item?.discussionAssignment?.endTime, 'YYYY-MM-DD HH:mm')) &&
                   <div style={{color:'#EE9337', fontSize:'15px'}}><b>Ended</b>&nbsp;</div>  
+                }
+                {
+                  moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isBefore(moment(item?.discussionAssignment?.startDate + ' ' + item?.discussionAssignment?.startTime, 'YYYY-MM-DD HH:mm')) &&
+                  <div style={{color:'#EE9337', fontSize:'15px'}}><b>Upcoming</b></div>
+                }
+                {
+                  moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isSame(moment(item?.discussionAssignment?.startDate + ' ' + item?.discussionAssignment?.startTime, 'YYYY-MM-DD HH:mm')) &&
+                  <div style={{color:'#EE9337', fontSize:'15px'}}><b>Ongoing</b></div>
                 }
               <Col sm={7} className='due-date-discusstion' >
                   <div className='inline-flex'>

@@ -12,6 +12,7 @@ import StundentAnswerTask from './student/components/StundentAnswerTask'
 import StudentSubmittedTask from './student/components/StudentSubmittedTask'
 import StudentTask from './student/StudentTask'
 import { UserContext } from '../../context/UserContext'
+import ViewTask from './components/Task/ViewTask'
 
 
 function ClassTask({classInfo}) {
@@ -34,7 +35,20 @@ function ClassTask({classInfo}) {
   const dateTimeNow = dateCompareNow + ' ' + '00:00:00';
   const userContext = useContext(UserContext)
   const {user} = userContext.data
+  const [viewTaskModal, setViewTaskModal] = useState(false)
+  const [viewTaskItem, setViewTaskItem] = useState([])
+  const [viewTaskAssign, setViewTaskAssign] = useState(null)
+  const [searchTerm, setSearchTerm] = useState('')
 
+  const onSearch = (text) => {
+    setSearchTerm(text)
+  }
+  
+  const viewTaskTaggle = (item, item1,) => {
+    setViewTaskItem(item)
+    setViewTaskAssign(item1)
+    setViewTaskModal(!viewTaskModal)
+  }
 
   const toggle = (e, item) =>{
     setEditTask(item)
@@ -107,7 +121,7 @@ function ClassTask({classInfo}) {
 
   return (
     <>
-      <HeaderTask module={module} getTaskModule={getTaskModule} classId={classId} refModuleId={moduleId} />
+      <HeaderTask onSearch={onSearch} module={module} getTaskModule={getTaskModule} classId={classId} refModuleId={moduleId} />
         <Accordion>
           <SweetAlert
             warning
@@ -129,9 +143,15 @@ function ClassTask({classInfo}) {
             <Accordion.Body>
               {(user?.teacher === null)?(
               <>
-                <StudentTask taskModule={taskModule} />
+                <StudentTask searchTerm={searchTerm} taskModule={taskModule} />
               </>):<>
-              {taskModule?.map(moduleitem => {
+              {taskModule?.filter((moduleitem) => {
+                if(searchTerm == ''){
+                  return moduleitem
+                }else if(moduleitem?.task?.taskName.toLowerCase().includes(searchTerm.toLocaleLowerCase())){
+                  return moduleitem
+                }
+              }).map(moduleitem => {
                 return (
                   <Row>
                     <Col sm={8}>
@@ -152,9 +172,11 @@ function ClassTask({classInfo}) {
                     {moduleitem.task.classId?( 
                     <Col sm={3} className='icon-exam'>
                       {/* Student Modal Answers */}
+                      <Button onClick={() => viewTaskTaggle(moduleitem?.task, moduleitem?.taskAssignment)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button>
                         <Button onClick={(e) => toggle(e, moduleitem)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-edit"></i></Button>
                         {moduleitem?.taskAssignment?(
                           <>
+                            
                             <Button onClick={(e) => editAssignTaskToggle(e,moduleitem)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-clock"></i></Button>
                           </>
                         ):
@@ -167,8 +189,8 @@ function ClassTask({classInfo}) {
                       </Col>
                       ):
                       <Col sm={3} className='icon-exam'>
-                        <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button>
-                        <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-user-clock"></i></Button>
+                        <Button onClick={() => viewTaskTaggle(moduleitem?.task, moduleitem?.taskAssignment)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button>
+                        <Button onClick={(e) => assignTaskToggle(e, moduleitem?.task.id)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-user-clock"></i></Button>
                       </Col>
                     }
                     {moduleitem?.taskAssignment?(
@@ -244,6 +266,7 @@ function ClassTask({classInfo}) {
             )
           })}
           </Accordion>
+          <ViewTask viewTaskAssign={viewTaskAssign} viewTaskItem={viewTaskItem} viewTaskTaggle={viewTaskTaggle} viewTaskModal={viewTaskModal} />
           <EditTask moduleId={moduleId} editTask={editTask} toggle={toggle} modal={modal} module={module} getTaskModule={getTaskModule} />
           <AssignTask moduleId={moduleId} getTaskModule={getTaskModule} assingTaskId={assingTaskId} assignTaskModal={assignTaskModal} assignTaskToggle={assignTaskToggle} />
           <EditAssignTask getTaskModule={getTaskModule} editAssignTaskItem={editAssignTaskItem} editAssignTaskToggle={editAssignTaskToggle} editAssignTaskModal={editAssignTaskModal} />

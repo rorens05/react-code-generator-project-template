@@ -7,7 +7,7 @@ import SweetAlert from 'react-bootstrap-sweetalert';
 import moment from 'moment';
 import { UserContext } from '../../../../context/UserContext'
 
-function AccordionLinks({links, getLinks, setOpenEditModal, setEditLinks}) {
+function AccordionLinks({links, getLinks, setOpenEditModal, setEditLinks, searchTerm}) {
   const [deleteNotify, setDeleteNotify] = useState(false)
   const [itemId, setItemId] = useState('')
   const {id} = useParams()
@@ -66,7 +66,13 @@ function AccordionLinks({links, getLinks, setOpenEditModal, setEditLinks}) {
           </div>
         </Accordion.Header>
         <Accordion.Body>
-          {links.map(item => {
+          {links?.filter((item) => {
+            if(searchTerm == ''){
+              return item
+            }else if(item?.description.toLowerCase().includes(searchTerm.toLowerCase())){
+              return item
+            }
+          }).map(item => {
             return( <Row>
               <Col sm={9}>
                 <div className='title-exam'>

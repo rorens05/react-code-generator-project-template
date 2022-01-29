@@ -38,7 +38,11 @@ function ClassDiscussion({classInfo}) {
   const userContext = useContext(UserContext)
   const {user} = userContext.data
   const [getComments, setGetComments] = useState([])
+  const [searchTerm, setSearchTerm] = useState('')
   
+  const onSearch = (text) => {
+    setSearchTerm(text)
+  }
 
   const discussionCommentToggle = (e) => {
     setDiscussionCommentModal(!discussionCommentModal)
@@ -127,7 +131,7 @@ function ClassDiscussion({classInfo}) {
 
   return (
     <>
-      <HeaderDiscussion getDiscussionUnit={getDiscussionUnit} module={module} />
+      <HeaderDiscussion onSearch={onSearch} getDiscussionUnit={getDiscussionUnit} module={module} />
         <Accordion>
         <SweetAlert
             warning
@@ -149,11 +153,17 @@ function ClassDiscussion({classInfo}) {
             <Accordion.Body>
               {(user?.teacher === null)?(
               <>
-                <StudentDiscussion moduleId={moduleId} getDiscussionUnit={getDiscussionUnit} discussionModule={discussionModule} />
+                <StudentDiscussion searchTerm={searchTerm} moduleId={moduleId} getDiscussionUnit={getDiscussionUnit} discussionModule={discussionModule} />
               </>
               ):(
               <>
-              {discussionModule?.map(moduleitem => {
+              {discussionModule?.filter((moduleitem) => {
+                if(searchTerm == ''){
+                  return moduleitem
+                }else if (moduleitem?.discussion?.discussionName.toLowerCase().includes(searchTerm.toLocaleLowerCase())){
+                  return moduleitem
+                }
+              }).map(moduleitem => {
                 return (
                   <Row>
                     <Col sm={8}>
