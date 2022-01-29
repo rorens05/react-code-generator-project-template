@@ -57,18 +57,18 @@ function ExamReport({classesModules, setClassesModules, selectedClassId, viewTes
                     <div className='title-exam' onClick={(e) => getTestReport(e, item.test.id, item.test.testName, item.test.classId)}>
                       {item.test.testName}
                     </div>
-                    <div className='code-exam'>
+                    {/* <div className='code-exam'>
                       EQF1
-                    </div>
+                    </div> */}
                   </Col>
                   <Col sm={9} className='instruction-exam' >
                     <p>{item.test.testInstructions}</p>
                   </Col>
-                  <Col sm={3} className='icon-exam'>
+                  {/* <Col sm={3} className='icon-exam'>
                     <i class="fas fa-eye" style={{paddingRight:'10px'}} ></i>{' '}
                     <i class="fas fa-edit"style={{paddingRight:'10px'}}></i>
                     <i class="fas fa-trash-alt" style={{paddingRight:'10px'}}></i>
-                  </Col>
+                  </Col> */}
                   <hr></hr>
                 </Row>
                 )

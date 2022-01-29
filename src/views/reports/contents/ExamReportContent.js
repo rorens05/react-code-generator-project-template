@@ -26,7 +26,6 @@ function ExamReportContent({classesModules, setClassesModules, selectedClassId, 
     sessionStorage.setItem('studentid',studentid)
     sessionStorage.setItem('testid',testid)
     setShowExamAnalysis(true)
-    console.log(showExamAnalysis)
     let response = await new ClassesAPI().getExamAnalysis(studentid, sessionClass, testid)
     if(response.ok){
       setExamAnalysis(response.data)
