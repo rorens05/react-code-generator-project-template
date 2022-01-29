@@ -53,7 +53,7 @@ function FilesContent(props) {
     alert('not an image'); */}
                   {/* <i class="fas fa-edit td-file-page"></i> */}
                   {
-                    item.path_Base.match(/.(jpg|jpeg|png|gif)$/i)
+                    item.path_Base.match(/.(jpg|jpeg|png|gif|pdf)$/i)
                     ?
                     <i class="fas fa-arrow-down td-file-page" onClick={() => downloadImage(item.path_Base)}></i>
                     :

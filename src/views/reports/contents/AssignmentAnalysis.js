@@ -40,14 +40,10 @@ function AssignmentAnalysis({selectedClassId, assignmentAnalysis, setAssignmentA
 
   const getAssignmentAnalysis = async(e, studentid, classid, assignmentid) => {
     e.preventDefault()
-    console.log(selectedClassId)
     setShowAssignmentAnalysis(true)
-    console.log(showAssignmentAnalysis)
     let response = await new ClassesAPI().getAssignmentAnalysis(studentid, classid, assignmentid)
     if(response.ok){
       setAssignmentAnalysis(response.data)
-      console.log(response.data)
-      
     }else{
       alert(response.data.errorMessage)
     }
@@ -56,7 +52,6 @@ function AssignmentAnalysis({selectedClassId, assignmentAnalysis, setAssignmentA
   useEffect(() => {
     if(assignmentAnalysis?.assignment){
       getAssignmentAnswer(studentidsession, classid, assignmentAnalysis?.assignment?.id)
-      console.log('hehehehehehehehe', assignmentAnalysis)
     }
   }, [assignmentAnalysis])
 
@@ -108,8 +103,6 @@ function AssignmentAnalysis({selectedClassId, assignmentAnalysis, setAssignmentA
     progress: undefined,
   });
 
-  console.log(assignmentAnalysis, '.............')
-
   const  downloadImage = (url) => {
     fetch(url, {
       mode : 'no-cors',
@@ -127,35 +120,32 @@ function AssignmentAnalysis({selectedClassId, assignmentAnalysis, setAssignmentA
   }
 
   return(
-  <>
-    <ToastContainer />
-		<Row>
-      {assignmentAnalysis.studentAssignment === null ?
-      <Col md={12}>No Answer Yet</Col>
-      :
-        <>
-          <Col md={12}>Assignment Name : {assignmentAnalysis.assignment?.assignmentName}</Col>
-          <hr></hr>
-          <Col md={12}>{assignmentAnalysis.studentAssignment?.assignmentAnswer}</Col>
-          <hr></hr>
-          
-          <Col md={12}>{assignmentAnalysis.studentAssignment?.assignmentGrade}
-            {/* <Button variant="outline-warning" size="sm" onClick={(e) => updateScoreAssignment(e, assignmentAnalysis.student.id, classid, assignmentAnalysis.assignment.id, assignmentAnalysis.studentAssignment.id)}>
-              <i class="fas fa-redo"style={{paddingRight:'10px'}} ></i>Update Score
-            </Button> */}
-            <Button variant="outline-warning" size="sm" className='mx-3 mb-2' onClick={(e) => handleOpenModal(e, assignmentAnalysis.student.id, classid, assignmentAnalysis.assignment.id, assignmentAnalysis.studentAssignment.id, assignmentAnalysis.studentAssignment.assignmentGrade, assignmentAnalysis.studentAssignment.feedback )}>
-              <i class="fas fa-redo"style={{paddingRight:'10px'}} ></i>Update Score
-            </Button>
-          </Col>
-          <hr />
-          <Col className='mb-3'>
+    <>
+      <ToastContainer />
+      <Row>
+        {assignmentAnalysis.studentAssignment === null ?
+        <Col md={12}>No Answer Yet</Col>
+        :
+          <>
+            <Col md={12}>Assignment Name : {assignmentAnalysis.assignment?.assignmentName}</Col>
+            <hr></hr>
+            <Col md={12}>{assignmentAnalysis.studentAssignment?.assignmentAnswer}</Col>
+            <hr></hr>
+            
+            <Col md={12}>{assignmentAnalysis.studentAssignment?.assignmentGrade}
+              <Button variant="outline-warning" size="sm" className='mx-3 mb-2' onClick={(e) => handleOpenModal(e, assignmentAnalysis.student.id, classid, assignmentAnalysis.assignment.id, assignmentAnalysis.studentAssignment.id, assignmentAnalysis.studentAssignment.assignmentGrade, assignmentAnalysis.studentAssignment.feedback )}>
+                <i class="fas fa-redo"style={{paddingRight:'10px'}} ></i>Update Score
+              </Button>
+            </Col>
+            <hr />
+            <Col className='mb-3'>
               <Row>
                 {
                   assignmentAnswer?.uploadedFiles?.map( itm => {
                     return (
                       <>
                         {
-                          itm.filePath.match(/.(jpg|jpeg|png|gif)$/i)
+                          itm.filePath.match(/.(jpg|jpeg|png|gif|pdf)$/i)
                           ?
                           <i class="fas fa-download td-file-page" onClick={() => downloadImage(itm.filePath)}></i>
                           :
@@ -164,58 +154,54 @@ function AssignmentAnalysis({selectedClassId, assignmentAnalysis, setAssignmentA
                           </a> 
                         }
                       </>
-                      // <a href={itm.filePath} download>
-                      //   <i class="fas fa-download td-file-page"></i>
-                      // </a>
-
                     )
                   })
                 }
               </Row>
             </Col>
-          <hr></hr>
-          <Col md={12}>{assignmentAnalysis.studentAssignment?.feedback}</Col>
-        </>
-      }
-    </Row>
-    <Modal size="lg" className="modal-all" show={openModal} onHide={()=> setOpenModal(!openModal)} backdrop="static">
-				<Modal.Header className="modal-header" closeButton>
-				Update Points
-				</Modal.Header>
-				<Modal.Body className="modal-label b-0px">
-						<Form onSubmit={updateScoreAssignment}>
-								<Form.Group className="m-b-20">
-										<Form.Label for="courseName">
-												Rate / Points
-										</Form.Label>
-										<Form.Control 
-                      defaultValue={assignmentGrade}
-                      className="custom-input" 
-                      size="lg" 
-                      type="text" 
-                      placeholder="Enter points"
-                      onChange={(e) => setAssignmentGrade(e.target.value)}
-                    />
-								</Form.Group>
-                <Form.Group className="m-b-20">
+            <hr></hr>
+            <Col md={12}>{assignmentAnalysis.studentAssignment?.feedback}</Col>
+          </>
+        }
+      </Row>
+      <Modal size="lg" className="modal-all" show={openModal} onHide={()=> setOpenModal(!openModal)} backdrop="static">
+        <Modal.Header className="modal-header" closeButton>
+        Update Points
+        </Modal.Header>
+        <Modal.Body className="modal-label b-0px">
+          <Form onSubmit={updateScoreAssignment}>
+              <Form.Group className="m-b-20">
+                  <Form.Label for="courseName">
+                      Rate / Points
+                  </Form.Label>
+                  <Form.Control 
+                    defaultValue={assignmentGrade}
+                    className="custom-input" 
+                    size="lg" 
+                    type="text" 
+                    placeholder="Enter points"
+                    onChange={(e) => setAssignmentGrade(e.target.value)}
+                  />
+              </Form.Group>
+              <Form.Group className="m-b-20">
                 <Form.Control 
-                      defaultValue={feedback}
-                      className="custom-input" 
-                      size="lg" 
-                      type="text" 
-                      placeholder="Enter feedback"
-                      onChange={(e) => setFeedback(e.target.value)}
-                    />
-								</Form.Group>
-								<span style={{float:"right"}}>
-										<Button className="tficolorbg-button" type="submit">
-												Save
-										</Button>
-								</span>
-						</Form>
-				</Modal.Body>
-			</Modal>
-  </> 
+                  defaultValue={feedback}
+                  className="custom-input" 
+                  size="lg" 
+                  type="text" 
+                  placeholder="Enter feedback"
+                  onChange={(e) => setFeedback(e.target.value)}
+                />
+              </Form.Group>
+              <span style={{float:"right"}}>
+                <Button className="tficolorbg-button" type="submit">
+                  Save
+                </Button>
+              </span>
+          </Form>
+        </Modal.Body>
+      </Modal>
+    </> 
   )
 }
 export default AssignmentAnalysis

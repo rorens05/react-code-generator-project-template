@@ -2,9 +2,23 @@ import React, { useContext, useState, useEffect } from 'react'
 import { Form, Button, } from 'react-bootstrap'
 import Modal from 'react-bootstrap/Modal'
 
-
-
 function StudentSubmittedTask({submittedTaskToggle, submittedTaskModal, taskAnswerItem}) {
+
+  const downloadImage = (url) => {
+    fetch(url, {
+      mode : 'no-cors',
+    })
+      .then(response => response.blob())
+      .then(blob => {
+      let blobUrl = window.URL.createObjectURL(blob);
+      let a = document.createElement('a');
+      a.download = url.replace(/^.*[\\\/]/, '');
+      a.href = blobUrl;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    })
+  }
 
   return (
     <div>
@@ -35,11 +49,27 @@ function StudentSubmittedTask({submittedTaskToggle, submittedTaskModal, taskAnsw
               <Form.Control defaultValue={taskAnswerItem?.taskGrade} type='text' disabled  />
             </Form.Group>
             <Form.Group className="mb-1">
-              <Form.Label>File</Form.Label>&nbsp;&nbsp;&nbsp;
-              <i style={{color:'#EE9337', fontSize:'30px'}} class="fas fa-download"></i>
+            <Form.Label>File/s</Form.Label>&nbsp;&nbsp;&nbsp;
+              {
+                taskAnswerItem?.uploadedFiles?.map( itm => {
+                  return (
+                    <>
+                      {
+                        itm.filePath.match(/.(jpg|jpeg|png|gif|pdf)$/i)
+                        ?
+                        <i class="fas fa-download td-file-page" onClick={() => downloadImage(itm.filePath)}></i>
+                        :
+                        <a href={itm.filePath}>
+                          <i class="fas fa-download td-file-page mb-2"></i>
+                        </a> 
+                      }
+                    </>
+                  )
+                })
+              }
             </Form.Group>
             <Form.Group className='right-btn'>
-              <Button onClick={() => submittedTaskToggle()} className='tficolorbg-button' type='submit' >OK</Button>
+              <Button onClick={() => submittedTaskToggle()} className='tficolorbg-button' type='submit'>OK</Button>
             </Form.Group>
    
           </Modal.Body>

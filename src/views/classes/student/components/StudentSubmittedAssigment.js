@@ -4,8 +4,6 @@ import Modal from 'react-bootstrap/Modal'
 
 function StudentSubmittedAssigment({submittedAssignmentToggle, submittedAssignment, studentAnswer}) {
 
-  console.log("asignmentAnswer: ----------" ,studentAnswer)
-
   const  downloadImage = (url) => {
     fetch(url, {
       mode : 'no-cors',
@@ -52,14 +50,12 @@ function StudentSubmittedAssigment({submittedAssignmentToggle, submittedAssignme
           </Form.Group>
           <Form.Group className="mb-1">
             <Form.Label>File/s</Form.Label>&nbsp;&nbsp;&nbsp;
-            {/* <i style={{color:'#EE9337', fontSize:'30px'}} class="fas fa-download"></i> */}
             {
-                studentAnswer?.uploadedFiles?.map( itm => {
-                  console.log(itm)
-                  return (
-                    <>
+              studentAnswer?.uploadedFiles?.map( itm => {
+                return (
+                  <>
                     {
-                      itm.filePath.match(/.(jpg|jpeg|png|gif)$/i)
+                      itm.filePath.match(/.(jpg|jpeg|png|gif|pdf)$/i)
                       ?
                       <i class="fas fa-download td-file-page" onClick={() => downloadImage(itm.filePath)}></i>
                       :
@@ -68,14 +64,13 @@ function StudentSubmittedAssigment({submittedAssignmentToggle, submittedAssignme
                       </a> 
                     }
                   </>
-                  )
-                })
-              }
+                )
+              })
+            }
           </Form.Group>
           <Form.Group className='right-btn'>
             <Button onClick={() => submittedAssignmentToggle()} className='tficolorbg-button' type='submit' >OK</Button>
           </Form.Group>
-      
         </Modal.Body>
       </Modal>
     </div>
