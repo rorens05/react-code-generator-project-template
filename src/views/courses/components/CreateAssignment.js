@@ -93,7 +93,6 @@ export default function CreateAssignment({openCreateAssignmentModal, setOpenCrea
 
 	return (
 		<div>
-      <ToastContainer />
 			<Modal size="lg" className="modal-all" show={openCreateAssignmentModal} onHide={()=> setOpenCreateAssignmentModal(!openCreateAssignmentModal)} >
 				<Modal.Header className="modal-header" closeButton>
 				Create Assignment

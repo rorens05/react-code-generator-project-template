@@ -787,6 +787,7 @@ border-top-right-radius: 0px !important;
   color: #EE9337 !important;
   opacity: 1 !important;
   font-size: 24px;
+  text-decoration: none !important;
 }
 
 .color-white {
@@ -795,6 +796,10 @@ border-top-right-radius: 0px !important;
 .title-exam{
   color:#EE9337;
   font-size: 24px;
+}
+.title-exam:hover{
+  color: #5B84C4;
+  cursor: pointer;
 }
 .code-exam{
   color: #BCBCBC;
@@ -1136,7 +1141,7 @@ hr{
   color: #707070;
 }
 
-.exam-information-container .question-radio{
+.question-radio{
   width: 24px;
   height: 24px;
   border: 2px solid #EE9337;
@@ -1148,17 +1153,67 @@ hr{
 }
 
 
-.exam-information-container .question-radio div{
-  width: 12px;
-  height: 12px;
+.question-radio div{
+  width: 13px;
+  height: 13px;
   border-radius: 12px;
 }
 
-.exam-information-container .question-radio.active div{
+.question-radio.active div{
   background-color: #EE9337; 
 }
 
 .status-text{
   font-size: 20px;
   font-weight: bold;  
+}
+
+.exam-part-creation{
+  /* background-color: red; */
+}
+
+.exam-part-creation .accordion-block-header{
+  display: flex;
+  justify-content: space-between;
+  flex: 1;
+  align-items: center;
+}
+
+.exam-part-creation .accordion-block-header .header-content{
+  flex: 1
+}
+
+.exam-actions a{
+  color: #ff8103 !important;
+  font-size: 22px;
+  margin-right: 12px;
+}
+
+.accordion-item{
+  position: relative;
+}
+
+.exam-absolute-actions{
+  position: absolute;
+  top: 44px;
+  right: 28px;
+  z-index: 9999;
+}
+
+.hover-link:hover{
+  background-color: rgb(255, 250, 240);
+  cursor: pointer;
+}
+
+.choice-item{
+  padding: 16px;
+  background-color: #f1f1f1;
+  margin: 8px 0;
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+}
+
+.choice-item.active{
+  background-color: #ffd1a3;
 }

@@ -83,6 +83,7 @@ export default function ExamInformation() {
       payload = part.questionDtos.map((question) => {
         return {
           answer: "",
+          questionType: 5,
           questionId: question.question.id,
           enumeration: question.studentAnswer,
           "webEnumerationAnswers": question.studentAnswer.map(item =>
@@ -94,7 +95,7 @@ export default function ExamInformation() {
       payload = part.questionDtos.map((question) => {
         return {
           questionId: question.question.id,
-          answer: question.studentAnswer,
+          answer: question.studentAnswer || "",
         };
       });
     }
@@ -120,7 +121,7 @@ export default function ExamInformation() {
     setLoading(true);
     let response = await new ExamAPI().endTest(
       user.student?.id,
-      exam?.test?.classId,
+      class_id,
       id
     );
     setLoading(false);
@@ -134,7 +135,7 @@ export default function ExamInformation() {
     setLoading(true);
     let response = await new ExamAPI().startTest(
       user.student?.id,
-      exam?.test?.classId,
+      class_id,
       id
     );
     setLoading(false);

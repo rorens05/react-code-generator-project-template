@@ -10,6 +10,8 @@ import CoursesAssignment from "./pages/Assignment/CoursesAssignment";
 import CoursesTask from "./pages/Task/CoursesTask";
 import CourseLinks from "./pages/Links/CourseLinks";
 import CourseFiles from "./pages/Files/CourseFiles";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function CourseContent(course) {
   console.log(course, '//////////////////')
@@ -18,6 +20,9 @@ export default function CourseContent(course) {
   const [viewLesson, setViewLesson] = useState(false)
   const [courseInfo, setCourseInfo] = useState("")
   const [selectedModule, setSelectedModule] = useState("")
+  const [showAssignment, setShowAssignment] = useState(false)
+  const [showTask, setShowTask] = useState(false)
+  const [showDiscussion, setShowDiscussion] = useState(false)
   const courseid = sessionStorage.getItem('courseid')
 
   const getCourseUnitInformation = async(e) => {
@@ -59,6 +64,9 @@ export default function CourseContent(course) {
   const setBread = (e, data) => {
     setLoading(true)
     sessionStorage.setItem('breadname', data)
+    setShowAssignment(false)
+    setShowTask(false)
+    setShowDiscussion(false)
     setLoading(false)
   }
 
@@ -69,11 +77,12 @@ export default function CourseContent(course) {
 
   return (
     <MainContainer loading={loading} fluid>
+      <ToastContainer />
       <Row>
         <Col sm={3}>
         </Col>
         <Col sm={9}>
-          <CourseBreadcrumbs />
+          <CourseBreadcrumbs setShowAssignment={setShowAssignment} setShowTask={setShowTask} setShowDiscussion={setShowDiscussion} />
         </Col>
       </Row>
       <Tab.Container className="course-widget-font" id="list-group-tabs-example " defaultActiveKey="#link1">
@@ -124,13 +133,13 @@ export default function CourseContent(course) {
                 <CoursesExam />
               </Tab.Pane>
               <Tab.Pane eventKey="#link3">
-                <CoursesDiscussion moduleInfo={moduleInfo} setModuleInfo={setModuleInfo} moduleId={moduleId()} />
+                <CoursesDiscussion moduleInfo={moduleInfo} setModuleInfo={setModuleInfo} moduleId={moduleId()} setShowDiscussion={setShowDiscussion} showDiscussion={showDiscussion} />
               </Tab.Pane>
               <Tab.Pane eventKey="#link4">
-                <CoursesAssignment moduleInfo={moduleInfo} setModuleInfo={setModuleInfo} />
+                <CoursesAssignment moduleInfo={moduleInfo} setModuleInfo={setModuleInfo} setShowAssignment={setShowAssignment} showAssignment={showAssignment} />
               </Tab.Pane>
               <Tab.Pane eventKey="#link5">
-                <CoursesTask moduleInfo={moduleInfo} setModuleInfo={setModuleInfo} />
+                <CoursesTask moduleInfo={moduleInfo} setModuleInfo={setModuleInfo} setShowTask={setShowTask} showTask={showTask} />
               </Tab.Pane>
               <Tab.Pane eventKey="#link6">
                 <CourseFiles id={courseid}/>

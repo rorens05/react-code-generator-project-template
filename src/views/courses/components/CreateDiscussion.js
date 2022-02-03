@@ -78,7 +78,6 @@ export default function CreateDiscussion({openCreateDiscussionModal, setOpenCrea
 
 	return (
 		<div>
-      <ToastContainer />
 			<Modal size="lg" className="modal-all" show={openCreateDiscussionModal} onHide={()=> setOpenCreateDiscussionModal(!openCreateDiscussionModal)} >
 				<Modal.Header className="modal-header" closeButton>
 				Create discussion

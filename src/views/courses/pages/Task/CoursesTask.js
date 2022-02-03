@@ -5,8 +5,9 @@ import CourseCreateUnit from "./../../components/CourseCreateUnit";
 import CreateTask from "./../../components/CreateTask";
 import EditTask from "./../../components/EditTask";
 import SweetAlert from 'react-bootstrap-sweetalert';
+import ViewTask from "./ViewTask";
 
-export default function CoursesTask({moduleInfo, setModuleInfo}) {
+export default function CoursesTask({moduleInfo, showTask, setShowTask}) {
 
   const [loading, setLoading] = useState(false)
 
@@ -17,7 +18,7 @@ export default function CoursesTask({moduleInfo, setModuleInfo}) {
   const [sweetError, setSweetError] = useState(false)
   const [taskId, setTaskId] = useState("")
   const [localModuleId, setLocalModuleId] = useState("")
-
+  const [filter, setFilter] = useState("")
   const sessionCourse = sessionStorage.getItem('courseid')
 
   const handleOpenCreateTaskModal = () =>{
@@ -37,9 +38,7 @@ export default function CoursesTask({moduleInfo, setModuleInfo}) {
     let response = await new CoursesAPI().getTaskInformation(data)
     setLoading(false)
     if(response.ok){
-      console.log(localModuleId)
       setTaskInfo(response.data)
-      console.log(response.data)
     }else{
       alert("Something went wrong while fetching all task")
     }
@@ -64,25 +63,33 @@ export default function CoursesTask({moduleInfo, setModuleInfo}) {
     if(response.ok){
       // setLessonInfo(response.data)
       getTaskInfo(null, localModuleId)
-      console.log(response.data)
     }else{
       alert(response.data.errorMessage)
     }
   }
 
+  const onSearch = (text) => {
+    setFilter(text)
+  }
+
+  const viewTas = (data) => {
+    setSelectedTask(data)
+    setShowTask(true)
+  }
 
   useEffect(() => {
   }, [])
 
+  if(showTask === false){
   return (
     <>
       <span className="content-pane-title">
         Task 
       </span>
-      <div className="row m-b-20 m-t-30">
+      <div className="row m-b-20 m-t-30" onSearch={onSearch}>
         <div className="col-md-12">
           <InputGroup size="lg">
-            <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Search..." type="search"/>
+            <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Search..." type="search" onChange={(e) => onSearch(e.target.value)}/>
             <InputGroup.Text id="basic-addon2" className="search-button"><i className="fas fa-search fa-1x"></i></InputGroup.Text>
           </InputGroup>
         </div>
@@ -99,19 +106,19 @@ export default function CoursesTask({moduleInfo, setModuleInfo}) {
                 </span>
               </Accordion.Header>
               <Accordion.Body>
-                {taskInfo.map((ti, index) => {
-                  return(
-                    <Row>
-                      <Col className="lesson-header" md={9}>
-                        {ti?.taskName}
-                      </Col>
-                      <Col className="align-right-content" md={3}>
-                        <Button className="m-r-5 color-white tficolorbg-button" size="sm"  onClick={(e) => handleOpenEditTaskModal(e, ti)}><i className="fa fa-edit"></i></Button>
-                        <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i className="fa fa-trash"  onClick={() => {setSweetError(true); setTaskId(ti.id)}}></i></Button>
-                        </Col>
-                      </Row>
-                    )
-                })}
+                {taskInfo.filter(item => 
+                  item.taskName.toLowerCase().includes(filter.toLowerCase())
+                ).map((ti, index) => (
+                  <Row>
+                    <Col className="lesson-header" md={9}>
+                      <span onClick={(e) => {viewTas(ti)}}>{ti?.taskName}</span>
+                    </Col>
+                    <Col className="align-right-content" md={3}>
+                      <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={(e) => handleOpenEditTaskModal(e, ti)}><i className="fa fa-edit"></i></Button>
+                      <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i className="fa fa-trash"  onClick={() => {setSweetError(true); setTaskId(ti.id)}}></i></Button>
+                    </Col>
+                  </Row>
+                ))}
                     <SweetAlert
                       warning
                       showCancel
@@ -133,5 +140,9 @@ export default function CoursesTask({moduleInfo, setModuleInfo}) {
         }
       </Accordion>
     </> 
-  )
+  )}else{
+    return(
+      <ViewTask selectedTask={selectedTask} showTask={showTask} setShowTask={setShowTask} />
+    )
+  }
 }

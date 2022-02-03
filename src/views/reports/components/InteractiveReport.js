@@ -3,7 +3,7 @@ import {Accordion, Row, Col} from 'react-bootstrap'
 import InteractiveReportContent from '../contents/InteractiveReportContent'
 import ClassesAPI from './../../../api/ClassesAPI'
 
-function InteractiveReport({classesModules, setClassesModules, selectedClassId, viewInteractiveReport, setViewInteractiveReport}) {
+function InteractiveReport({classesModules, setClassesModules, selectedClassId, viewInteractiveReport, setViewInteractiveReport, setShowInteractiveHeader, showInteractiveHeader}) {
 
   const [interactivePerModule, setInteractivePerModule] = useState([])
   const [interactiveReport, setInteractiveReport] = useState([])
@@ -81,7 +81,7 @@ function InteractiveReport({classesModules, setClassesModules, selectedClassId, 
   )
   }else{
     return(
-      <InteractiveReportContent setInteractiveReport={setInteractiveReport} interactiveReport={interactiveReport}/>
+      <InteractiveReportContent showInteractiveHeader={showInteractiveHeader} setShowInteractiveHeader={setShowInteractiveHeader} setInteractiveReport={setInteractiveReport} interactiveReport={interactiveReport}/>
     )
   }
 }

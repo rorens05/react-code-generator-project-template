@@ -2,7 +2,7 @@ import React, {useState, useEffect, useContext} from 'react'
 import {Accordion, Row, Col, Table, Button} from 'react-bootstrap'
 import ClassesAPI from '../../../api/ClassesAPI'
 
-function InteractiveReportContent({classesModules, setClassesModules, selectedClassId, viewInteractiveReport, interactiveReport, setinteractiveReport, showReportHeader, setShowReportHeader}) {
+function InteractiveReportContent({setShowInteractiveHeader, showInteractiveHeader, classesModules, setClassesModules, selectedClassId, viewInteractiveReport, interactiveReport, setinteractiveReport, showReportHeader, setShowReportHeader}) {
   
   const [loading, setLoading] = useState(false)
   let sessionClass = sessionStorage.getItem("classId")
@@ -27,7 +27,7 @@ function InteractiveReportContent({classesModules, setClassesModules, selectedCl
         item.interactiveResults.map(st =>{
           return (
             <tr>
-              <td ><i class="fas fa-user-circle td-icon-report-person"></i></td>
+              <td ><i class="fas fa-user-circle td-icon-report-person"></i>{item.student.fname}</td>
               <td>{st.easyScore}</td>
               <td>{st.averageScore}</td>
               <td>{st.hardScore}</td>

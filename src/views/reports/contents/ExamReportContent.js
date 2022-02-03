@@ -26,7 +26,6 @@ function ExamReportContent({classesModules, setClassesModules, selectedClassId, 
     sessionStorage.setItem('studentid',studentid)
     sessionStorage.setItem('testid',testid)
     setShowExamAnalysis(true)
-    console.log(showExamAnalysis)
     let response = await new ClassesAPI().getExamAnalysis(studentid, sessionClass, testid)
     if(response.ok){
       setExamAnalysis(response.data)
@@ -93,7 +92,7 @@ function ExamReportContent({classesModules, setClassesModules, selectedClassId, 
     <>
     <ToastContainer />
     {user.student === null ?
-    <Table striped bordered hover size="sm">
+    <Table striped hover size="sm">
       <thead>
         <tr>
           <th>Student Name</th>
@@ -108,8 +107,8 @@ function ExamReportContent({classesModules, setClassesModules, selectedClassId, 
               return (
                 <tr>
                   <td >
-                    <i class="fas fa-user-circle td-icon-report-person"></i>
-                      <span onClick={(e) => getExamAnalysis(e, item.student.id, st.test.classId, st.test.id)}>
+                    <i className="fas fa-user-circle td-icon-report-person m-r-10"></i>
+                      <span onClick={(e) => getExamAnalysis(e, item.student.id, st.test.classId, st.test.id)} >
                       { item.student.lname, item.student.fname} 
                       </span> 
                   </td>
