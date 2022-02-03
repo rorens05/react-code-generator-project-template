@@ -12,6 +12,7 @@ import { UserContext } from '../../context/UserContext'
 import StudentAssignment from './student/components/StudentAssignment'
 import StudentAnswerAssignment from './student/components/StudentAnswerAssignment'
 import StudentSubmittedAssigment from './student/components/StudentSubmittedAssigment'
+import ViewAssignment from './components/Assignment/ViewAssignment'
 
 function ClassAssignment({classInfo}) {
   const [submittedAssignment, setSubmittedAssignment] = useState(false)
@@ -34,8 +35,23 @@ function ClassAssignment({classInfo}) {
   const dateTimeNow = dateCompareNow + ' ' + '00:00:00';
   const userContext = useContext(UserContext)
   const {user} = userContext.data
+  const [viewAssignmentModal, setViewAssigmentModal] = useState(false)
+  const [viewAssignmentItem, setViewAssignmentItem] = useState([])
+  const [viewAssignmentAssign, setViewAssignmentAssign] = useState()
+  const [searchTerm, setSearchTerm] = useState('')
+
+  const onSearch = (text) => {
+    setSearchTerm(text)
+  }
 
   console.log('this is assignment:', assignment)
+
+  const viewAssignmentToggle = (item, item1) => {
+    setViewAssignmentItem(item)
+    setViewAssignmentAssign(item1)
+
+    setViewAssigmentModal(!viewAssignmentModal)
+  }
 
   const submittedAssignmentToggle = () => {
     setSubmittedAssignment(!submittedAssignment)
@@ -106,7 +122,7 @@ function ClassAssignment({classInfo}) {
 
   return (
     <div>
-      <AssignmentHeader module={module} getAssignmentList={getAssignmentList} refmoduleId={moduleId} />
+      <AssignmentHeader onSearch={onSearch} module={module} getAssignmentList={getAssignmentList} refmoduleId={moduleId} />
       <Accordion>
         <SweetAlert
           warning
@@ -130,12 +146,18 @@ function ClassAssignment({classInfo}) {
         <Accordion.Body>
           {(user?.teacher === null)?(
           <>
-            <StudentAssignment assignment={assignment} />
+            <StudentAssignment searchTerm={searchTerm} assignment={assignment} />
           </>
           ):
           (
           <>
-            {assignment.map(assigItem => {
+            {assignment?.filter((assigItem) => {
+              if(searchTerm == ''){
+                return assigItem
+              }else if (assigItem?.assignment?.assignmentName.toLowerCase().includes(searchTerm.toLocaleLowerCase())){
+                return assigItem
+              }
+            }).map(assigItem => {
           return( <Row>
             <Col sm={8}>
               <div className='title-exam'>
@@ -158,6 +180,7 @@ function ClassAssignment({classInfo}) {
                 {/* <Button onClick={() => submittedAssignmentToggle()} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button>
                 <Button onClick={() => answerAnswerToggle()} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-user-edit"></i></Button>
                 Student Modal Answers */}
+                <Button onClick={() => viewAssignmentToggle(assigItem?.assignment, assigItem?.classAssignment)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button>
                 <Button onClick={(e) => toggle(e, assigItem)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-edit"></i></Button>
                 {assigItem?.classAssignment?(
                   <Button onClick={(e) => editAssignedAssignmentToggle(e, assigItem)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-clock"></i></Button>
@@ -179,7 +202,7 @@ function ClassAssignment({classInfo}) {
             ):
               <>
               <Col sm={3} className='icon-exam'>
-                {/* <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button> */}
+                <Button onClick={() => viewAssignmentToggle(assigItem?.assignment, assigItem?.classAssignment)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button>
                 <Button onClick={(e) => editAssignedAssignmentToggle(e, assigItem)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-clock"></i></Button>
               </Col>
               </>
@@ -254,13 +277,11 @@ function ClassAssignment({classInfo}) {
         })}
           </>
           )}
-
-        
-         
         </Accordion.Body>
         </Accordion.Item>)
       })}
       </Accordion>
+      <ViewAssignment viewAssignmentAssign={viewAssignmentAssign}  viewAssignmentItem={viewAssignmentItem} viewAssignmentToggle={viewAssignmentToggle} viewAssignmentModal={viewAssignmentModal} />
       <StudentSubmittedAssigment submittedAssignmentToggle={submittedAssignmentToggle} submittedAssignment={submittedAssignment}  />
       <StudentAnswerAssignment answerAnswerToggle={answerAnswerToggle} answerModal={answerModal} />
       <EditAssignment toggle={toggle} modal={modal} editAssignment={editAssignment} getAssignmentList={getAssignmentList} moduleId={moduleId} />

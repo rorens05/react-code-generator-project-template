@@ -3,7 +3,7 @@ import { Button, InputGroup, FormControl,} from 'react-bootstrap';
 import CreateClassModal from './CreateClassModal'
 import { BrowserRouter as Router, useHistory } from 'react-router-dom'
 
-function ClassHeader({getClasses}) {
+function ClassHeader({getClasses, onSearch}) {
   const [modal, setModal] = useState(false)
 	const history = useHistory();
   const toggle = () =>{
@@ -14,7 +14,7 @@ function ClassHeader({getClasses}) {
 		history.push('/archive')
 	}
 
-	const handleHistoryList = () => {
+	const handleHistoryList = ({}) => {
 		history.push('/classes')
 	}
 
@@ -36,7 +36,7 @@ function ClassHeader({getClasses}) {
 			<div className="row m-b-20">
 				<div className="col-md-12">
 					<InputGroup size="lg">
-						<FormControl className='search-box' aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Search here for available classes" type="search"/>
+						<FormControl onChange={(e) => onSearch(e.target.value)} className='search-box' aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Search here for available classes" type="search"/>
 					<InputGroup.Text id="basic-addon2" className="search-button"><i className="fas fa-search fa-1x"></i></InputGroup.Text>
 					</InputGroup>
 				</div>

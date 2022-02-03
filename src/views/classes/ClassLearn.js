@@ -1,13 +1,111 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import ClassLearnHeader from './components/Learn/ClassLearnHeader'
+import {  Col, Row, Card, Form, Button } from 'react-bootstrap';
+import ClassCalendar from './components/ClassCalendar';
+import ClassesAPI from '../../api/ClassesAPI'
+import { useParams } from 'react-router'
 
 
 
 function ClassLearn({classInfo}) {
+  const courseId = classInfo?.classInformation?.courseId
+  const [selectedModuleId, setSelectedModuleId] = useState(null)
+  const [modules, setModules] = useState([])
+  const [Pages, setPages] = useState([])
+  const [content, setContent] = useState([])
+  const {id} = useParams()
+
+  const getModules = async() => {
+    let response = await new ClassesAPI().getModule(courseId)
+    if(response.ok){
+      setModules(response.data)
+    }else{
+      alert("Something went wrong while fetching all modules")
+    }
+  }
+
+  useEffect(() => {
+    getModules()
+  }, [])
+
+  const onModuleChange = (e) => {
+    setSelectedModuleId(e.target.value)
+    if(e.target.value == null || e.target.value == ""){
+      setPages([])
+    }else{
+      getPages(e.target.value)
+      
+    }
+  }
+
+  const getPages = async(moduleId) => {
+    let response = await new ClassesAPI().getPages(id, moduleId)
+    if(response.ok){
+      setPages(response.data)
+      console.log(response.data)
+    }else{
+      alert("Something went wrong while fetching all pages")
+    }
+  }
+
+  const getContent = async(item) => {
+    let mId = selectedModuleId
+    let response = await new ClassesAPI().getContent(id, mId, item)
+    if(response.ok){
+      setContent(response.data)
+      console.log(response.data)
+    }else{
+      alert("Something went wrong while fetching all pages")
+    }
+  }
   
   return (
-    <div>
-      <ClassLearnHeader classInfo={classInfo}/>
+    <div style={{position:'relative'}}>
+      <Row>
+        <Col className='' style={{marginLeft:'15px'}} >
+          <ClassLearnHeader content={content}  classInfo={classInfo}/>
+        </Col>
+        <Col md='3'>
+        <Card className='calendar kb-0px'style={{backgroundColor:'white'}}>
+      <Card.Header className='calendar-header' style={{backgroundColor:'white'}}>
+        <div className="row calendar-title">
+          <div>
+           Table of Content
+          </div>
+        </div>
+        <div className="row calendar-subtitle">
+          <div>
+          <Form.Select onChange={onModuleChange} aria-label="Default select example">
+        <option value="">--SELECT UNIT HERE--</option>
+        {modules.map(item =>{
+            return (<option value={item?.id} > {item?.moduleName}</option>)
+          })}
+        </Form.Select>
+          </div>
+        </div>
+      </Card.Header>
+      <div >
+      <Card.Body >
+        <Card.Title tag="h5" className='card-title'>
+          UNIT
+        </Card.Title>
+        <Card.Text className='card-title' >
+        <ul style={{listStyle:'none'}}>
+        {Pages.map(item =>{
+            return (
+              <>
+                <li><Button onClick={() => getContent(item?.id)} className='btn-create-discussion' variant="link" > {item?.pageName}  </Button></li>
+              </>
+            )
+          })}
+          </ul>
+        </Card.Text>
+      </Card.Body>
+      </div>
+    </Card>
+        </Col>
+      </Row>
+      
     </div>
   )
 }

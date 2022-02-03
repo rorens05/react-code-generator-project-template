@@ -28,6 +28,7 @@ import ExamCreation from "../views/exam-creation/ExamCreation";
 export default function Routes() {
   const userContext = useContext(UserContext);
   const {loading, refreshUser} = userContext.data
+  const {user} = userContext.data
 
   useEffect(() => {
     refreshUser()
@@ -37,23 +38,37 @@ export default function Routes() {
     <div className="content">
       {loading ? <PageLoader/> : 
         (<Router>
-          <Switch>
-            <PrivateRoute path='/courses' exact component={Courses}/>
-            <PrivateRoute path='/coursecontent/:id' exact component={CourseContent}/>
-            <PrivateRoute path='/exam' exact component={Exam}/>
-            <PrivateRoute path='/files' exact component={Files}/>
-            <PrivateRoute path='/reports' exact component={Reports}/>
-            <PrivateRoute path='/classes' exact component={Classes}/>
-            <PrivateRoute path='/classlist' exact component={ClassList}/>
+          
+          {user?.isTeacher && 
+            <>
+              <PrivateRoute path='/courses' exact component={Courses}/>
+              <PrivateRoute path='/coursecontent/:id' exact component={CourseContent}/>
+              <PrivateRoute path='/exam' exact component={Exam}/>
+              <PrivateRoute path='/files' exact component={Files}/>
+              <PrivateRoute path='/reports' exact component={Reports}/>
+              <PrivateRoute path='/classes' exact component={Classes}/>
+              <PrivateRoute path='/classlist' exact component={ClassList}/>
+              <PrivateRoute path='/classescontent/:id' exact component={ClassesContent}/>
+              <PrivateRoute path='/archive' exact component={ArchiveClass}/>
+              <PrivateRoute path='/class/:class_id/exam/:id' exact component={ExamInformation}/>
+              <PrivateRoute path='/' exact component={Home}/>
+            </>
+          }
+          {user?.isStudent &&
+            <>
             <PrivateRoute path='/classescontent/:id' exact component={ClassesContent}/>
-            <PrivateRoute path='/archive' exact component={ArchiveClass}/>
             <PrivateRoute path='/class/:class_id/exam/:id' exact component={ExamInformation}/>
+            <PrivateRoute path='/classes' exact component={Classes}/>
+            <PrivateRoute path='/' exact component={Home}/>
+            </>
+          }
+          <Switch>
             <PrivateRoute path='/exam_creation/:id' exact component={ExamCreation}/>
             <AuthRoute path='/login' exact component={Login}/>
             <AuthRoute path='/forgot_password' exact component={ForgotPassword}/>
-            <PrivateRoute path='/' exact component={Home}/>
             <PublicRoute path='/404' exact component={PageNotFound}/>
-            <Redirect to="/404"/>
+            <PrivateRoute path='/' exact component={Home}/>
+            {/* <Redirect to="/404"/> */}
           </Switch>
         </Router>)
       }

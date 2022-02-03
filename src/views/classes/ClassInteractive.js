@@ -25,6 +25,11 @@ function ClassInteractive({classInfo}) {
   const dateTimeNow = dateCompareNow + ' ' + '00:00:00';
   const userContext = useContext(UserContext)
   const {user} = userContext.data
+  const [searchTerm, setSearchTerm] = useState('')
+
+  const onSearch = (item) => {
+    setSearchTerm(item)
+  }
 
   const editAssignIteractiveToggle = (e, item) => {
     setEditAssignInteractiveItem(item)
@@ -73,7 +78,7 @@ function ClassInteractive({classInfo}) {
 
   return (
     <div>
-      <ClassInteractiveHeader />
+      <ClassInteractiveHeader onSearch={onSearch} />
       <Accordion>
         {module.map((item, index) => {
           return ( <Accordion.Item eventKey={index} onClick={(e) => getIndteractive(e, item?.id)} >
@@ -84,11 +89,17 @@ function ClassInteractive({classInfo}) {
           <Accordion.Body>
             {(user?.teacher === null)?(
             <>
-              <StudentInteractive interactive={interactive} />
+              <StudentInteractive searchTerm={searchTerm}  interactive={interactive} />
             </>
             ):(
             <>
-            {interactive.map(interItem =>{
+            {interactive?.filter((interItem) => {
+              if(searchTerm == ''){
+                return interItem
+              }else if (interItem?.interactive?.interactiveName.toLowerCase().includes(searchTerm.toLocaleLowerCase())){
+                return interItem
+              }
+            }).map(interItem =>{
               return( <Row>
                 <Col sm={8}>
                   <div className='title-exam'>

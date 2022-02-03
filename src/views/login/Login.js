@@ -26,7 +26,7 @@ export default function Login() {
     if(response.ok){
       await window.localStorage.setItem('token', response.data.token)
       refreshUser()
-      history.replace("/courses")
+      history.replace("/classes")
     }else{
       alert(response.data.errorMessage)
     }

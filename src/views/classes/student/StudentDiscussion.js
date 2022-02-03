@@ -7,7 +7,7 @@ import StudentDiscussionComment from './components/StudentDiscussionComment'
 import ClassesAPI from '../../../api/ClassesAPI'
 import SweetAlert from 'react-bootstrap-sweetalert';
 
-function StudentDiscussion({discussionModule, getDiscussionUnit, moduleId}) {
+function StudentDiscussion({discussionModule, getDiscussionUnit, moduleId, searchTerm}) {
   const [discussionId, setDiscussionId] = useState('')
   const [commentAlert, setCommentAlert] = useState(false)
   const dateCompareNow = moment().format("YYYY-MM-DD")
@@ -15,6 +15,11 @@ function StudentDiscussion({discussionModule, getDiscussionUnit, moduleId}) {
   const dateTimeNow = dateCompareNow + ' ' + '00:00:00';
   const [studentCommentModal, setstudentCommentModal] = useState(false)
   const [comments, setComments] = useState([])
+  const [startDate, setStartDate] = useState()
+  const [startTime, setStartTime] = useState()
+  const [endDate, setEndDate] = useState()
+  const [endTime, setEndTime] = useState()
+  const [getComments, setGetComments] = useState([])
   const {id} = useParams()
   const userContext = useContext(UserContext)
   const {user} = userContext.data
@@ -24,29 +29,36 @@ function StudentDiscussion({discussionModule, getDiscussionUnit, moduleId}) {
     setCommentAlert(false)
   }
 
-  const studentCommentToggle = (item, item1, item3) => {
-    setComments(item)
-    setDiscussionId(item1)
+  const studentCommentToggle = () => {
     setstudentCommentModal(!studentCommentModal)
   }
 
-  const submitComment = async (e, item) => {
-    e.preventDefault()
-    let classId = id
-    let userAccountId = user?.userId
-    let response = await new ClassesAPI().submitComment(classId, item, {userAccountId, reply})
+  const getDiscussionComments = async (e, item1, item2, item3, item4, item5) => {
+    let response = await new ClassesAPI().getDiscussionComments(id, item1)
       if(response.ok){
-        setCommentAlert(true)
-        setReply('')
-        getDiscussionUnit(null, moduleId)
+        setGetComments(response.data)
+        setStartDate(item2)
+        setStartTime(item3)
+        setEndDate(item4)
+        setEndTime(item5)
+        setDiscussionId(item1)
+        setstudentCommentModal(true)
       }else{
-        alert('No good')
+        alert('Something went wrong while getCommenst')
       }
   }
 
+  console.log('discussionModulediscussionModulediscussionModule:', discussionModule)
+
   return (
     <div>
-      {(discussionModule?.map(item => {
+      {(discussionModule?.filter((item) => {
+        if(searchTerm == ''){
+          return item
+        }else if(item?.discussion?.discussionName.toLowerCase().includes(searchTerm.toLowerCase())){
+          return item
+        }
+      }).map(item => {
         return(
           <>
             {(item?.isScheduled === true)?(
@@ -83,13 +95,13 @@ function StudentDiscussion({discussionModule, getDiscussionUnit, moduleId}) {
                   moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isAfter(moment(item?.discussionAssignment?.startDate + ' ' + item?.discussionAssignment?.startTime, 'YYYY-MM-DD HH:mm')) &&
                   moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isBefore(moment(item?.discussionAssignment?.endDate + ' ' + item?.discussionAssignment?.endTime, 'YYYY-MM-DD HH:mm')) &&
                   <Col sm={3} className='icon-exam'>
-                  <Button onClick={() => studentCommentToggle(item.responses, item?.discussionAssignment?.discussionId)} className="m-r-5 color-white tficolorbg-button" size="sm">Comments&nbsp;{item.responseCount}</Button>
+                    <Button onClick={(e) => getDiscussionComments(e, item.discussion?.id, item?.discussionAssignment?.startDate, item?.discussionAssignment?.startTime, item?.discussionAssignment?.endDate, item?.discussionAssignment?.endTime)} className="m-r-5 color-white tficolorbg-button" size="sm">Comments&nbsp;{item.responseCount}</Button>
                   </Col>
                 }
                 {
                   moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isAfter(moment(item?.discussionAssignment?.endDate + ' ' + item?.discussionAssignment?.endTime, 'YYYY-MM-DD HH:mm')) &&
                   <Col sm={3} className='icon-exam'>
-                  <Button onClick={() => studentCommentToggle(item.responses, item?.discussionAssignment?.discussionId)} className="m-r-5 color-white tficolorbg-button" size="sm">Comments&nbsp;{item.responseCount}</Button>
+                    <Button onClick={(e) => getDiscussionComments(e, item.discussion?.id, item?.discussionAssignment?.startDate, item?.discussionAssignment?.startTime, item?.discussionAssignment?.endDate, item?.discussionAssignment?.endTime)} className="m-r-5 color-white tficolorbg-button" size="sm">Comments&nbsp;{item.responseCount}</Button>
                   </Col>
                 }
               </>
@@ -102,6 +114,14 @@ function StudentDiscussion({discussionModule, getDiscussionUnit, moduleId}) {
                 {
                   moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isAfter(moment(item?.discussionAssignment?.endDate + ' ' + item?.discussionAssignment?.endTime, 'YYYY-MM-DD HH:mm')) &&
                   <div style={{color:'#EE9337', fontSize:'15px'}}><b>Ended</b>&nbsp;</div>  
+                }
+                {
+                  moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isBefore(moment(item?.discussionAssignment?.startDate + ' ' + item?.discussionAssignment?.startTime, 'YYYY-MM-DD HH:mm')) &&
+                  <div style={{color:'#EE9337', fontSize:'15px'}}><b>Upcoming</b></div>
+                }
+                {
+                  moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isSame(moment(item?.discussionAssignment?.startDate + ' ' + item?.discussionAssignment?.startTime, 'YYYY-MM-DD HH:mm')) &&
+                  <div style={{color:'#EE9337', fontSize:'15px'}}><b>Ongoing</b></div>
                 }
               <Col sm={7} className='due-date-discusstion' >
                   <div className='inline-flex'>
@@ -137,30 +157,17 @@ function StudentDiscussion({discussionModule, getDiscussionUnit, moduleId}) {
                 </Col>
           </Row>
           <br />
-        <div className="col-md-12">      
-        {
-          moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isAfter(moment(item?.discussionAssignment?.startDate + ' ' + item?.discussionAssignment?.startTime, 'YYYY-MM-DD HH:mm')) &&
-          moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isBefore(moment(item?.discussionAssignment?.endDate + ' ' + item?.taskAssignment?.endTime, 'YYYY-MM-DD HH:mm')) &&
-          <>
-            <InputGroup size="sm">
-              <FormControl onChange={(e) => setReply(e.target.value)} value={reply} aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Reply" />
-              <InputGroup.Text  onClick={(e) => submitComment(e, item?.discussion?.id)} id="basic-addon2" className="comment-btn"><i className="fas fa-paper-plane"></i></InputGroup.Text>
-            </InputGroup>
-          </>
-        }
-				</div>
           <div className='text-color-bcbcbc' >
               ___________________________________________________________________________________________________________________________________________________________________________________________________________
           </div>
             </>):(
             <>
-
             </>
             )}
           </>
         )
       }))}
-      <StudentDiscussionComment getDiscussionUnit={getDiscussionUnit} moduleId={moduleId} discussionId={discussionId} comments={comments} studentCommentToggle={studentCommentToggle} studentCommentModal={studentCommentModal} />
+      <StudentDiscussionComment getDiscussionComments={getDiscussionComments} getComments={getComments} endTime={endTime} endDate={endDate} startTime={startTime} startDate={startDate} getDiscussionUnit={getDiscussionUnit} moduleId={moduleId} discussionId={discussionId} comments={comments} studentCommentToggle={studentCommentToggle} studentCommentModal={studentCommentModal} />
       <SweetAlert 
           success
           show={commentAlert} 

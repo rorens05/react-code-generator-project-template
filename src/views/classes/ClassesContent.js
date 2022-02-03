@@ -10,12 +10,7 @@ function ClassesContent() {
   return (
     <div>
       <MainContainer loading={loading} fluid>
-        
-          
             <ClassBreedCrumbs />
-         
-       
-      
         <ClassSideNavigation setLoading={setLoading}/>
       </MainContainer>
     </div>

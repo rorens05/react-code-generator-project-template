@@ -127,6 +127,13 @@ creatTask = async (mId, cId,  data) => {
       data
     })
   }
+
+  getDiscussionComments = async (id, discussionId) => {
+    return this.sendRequest({
+      path: `/api/Class/${id}/discussion/${discussionId}/response`,
+      method: 'GET'
+    })
+  }
   
   assignDiscussion = async(id, discussionId, data) =>{
     return this.sendRequest({

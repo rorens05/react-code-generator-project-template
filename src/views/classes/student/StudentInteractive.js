@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react'
 import {Row, Col, Button} from 'react-bootstrap'
 import moment from 'moment'
 
-function StudentInteractive({interactive}) {
+function StudentInteractive({interactive, searchTerm}) {
   const dateCompareNow = moment().format("YYYY-MM-DD")
   const timeNow = moment().format('HH:mm');
   const dateTimeNow = dateCompareNow + ' ' + '00:00:00';
@@ -10,7 +10,13 @@ function StudentInteractive({interactive}) {
   console.log('interactive:', interactive)
   return (
     <div>
-      {interactive?.map(item => {
+      {interactive?.filter((item) => {
+        if(searchTerm == ''){
+          return item
+        }else if(item?.interactive?.interactiveName.toLowerCase().includes(searchTerm.toLowerCase())){
+          return item
+        }
+      }).map(item => {
         return(
           <>
             {(item?.isScheduled === true)?(
