@@ -4,7 +4,7 @@ import ClassesAPI from '../../../../api/ClassesAPI'
 import { useParams } from 'react-router'
 import SweetAlert from 'react-bootstrap-sweetalert';
 
-function ClassEnrolled({enrolledStudent, getStudentEnrolled, getStudentWaiting}) {
+function ClassEnrolled({enrolledStudent, getStudentEnrolled, getStudentWaiting, searchTerm}) {
   const [deleteNotify, setDeleteNotify] = useState(false)
   const [itemId, setItemId] = useState('')
   const {id} = useParams()
@@ -56,7 +56,13 @@ function ClassEnrolled({enrolledStudent, getStudentEnrolled, getStudentWaiting})
           </tr>
         </thead>
         <tbody>
-        {enrolledStudent.students?.map(item => {
+        {enrolledStudent.students?.filter((item) => {
+          if(searchTerm == ''){
+            return item
+          }else if(item.lname.toLowerCase().includes(searchTerm.toLowerCase())){
+            return item
+          }
+        }).map(item => {
           return (         
             <tr>
               <td>

@@ -10,6 +10,11 @@ function ClassList() {
   const [waitingStudent, setWaitingStudent] = useState([])
   const [enrolledStudent, setEnrolledStudent] = useState([{}])
   const {id} = useParams()
+  const [searchTerm, setSearchTerm] = useState('')
+
+  const onSearch = (text) => {
+    setSearchTerm(text)
+  }
 
   const handleOpenClassWaiting = e =>{
 		e.preventDefault()
@@ -70,13 +75,13 @@ function ClassList() {
     <div className="row m-b-20" style={{marginTop:'30px'}}>
         <div className="col-md-12">
           <InputGroup size="lg">
-            <FormControl  aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Search Student Here" type="search"/>
+            <FormControl onChange={(e) => onSearch(e.target.value)} aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Search Student LastName Here" type="search"/>
             <InputGroup.Text id="basic-addon2" className="search-button"><i className="fas fa-search fa-1x"></i>
             </InputGroup.Text>
           </InputGroup>
         </div>
       </div>
-        {openClass === false?(<ClassEnrolled getStudentWaiting={getStudentWaiting} getStudentEnrolled={getStudentEnrolled} enrolledStudent={enrolledStudent}  />):<ClassWaiting getStudentEnrolled={getStudentEnrolled} getStudentWaiting={getStudentWaiting} waitingStudent={waitingStudent} />}
+        {openClass === false?(<ClassEnrolled searchTerm={searchTerm} getStudentWaiting={getStudentWaiting} getStudentEnrolled={getStudentEnrolled} enrolledStudent={enrolledStudent}  />):<ClassWaiting searchTerm={searchTerm} getStudentEnrolled={getStudentEnrolled} getStudentWaiting={getStudentWaiting} waitingStudent={waitingStudent} />}
     </div>
   )
 }

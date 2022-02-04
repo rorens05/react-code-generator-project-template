@@ -20,8 +20,8 @@ export default function Header({activeHeader}) {
         <Link className={activeHeader === "classes" && 'active'} to="/classes">Classes</Link>
         {user.isTeacher && <Link className={activeHeader === "exam" && 'active'} to="/exam">Exam</Link> }
         {user.isTeacher && <Link className={activeHeader === "files" && 'active'} to="/files">Files</Link> }
-        <Link className={activeHeader === "reports" && 'active'} to="/reports">Reports</Link>
-      </div>
+        {user.isTeacher && <Link className={activeHeader === "reports" && 'active'} to="/reports">Reports</Link>}
+    </div>
       <FloatingOptions/>
 
     </div>
