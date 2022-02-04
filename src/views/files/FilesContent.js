@@ -39,7 +39,6 @@ function FilesContent(props) {
         </tr>
         {
           props.data?.map((item, index) => {
-            console.log(item.path_Base.split('.').pop(), 'gegegegegeg')
             return(
               <tr key={item.fileName+index}>
                 <td className='ellipsis w-25'>{item.fileName}</td>
@@ -49,18 +48,15 @@ function FilesContent(props) {
                   <td>{moment(item.createdDate).format('L')}</td>
                 }
                 <td>
-                  {/* if (!fileInput.files[0].name.match(/.(jpg|jpeg|png|gif)$/i))
-    alert('not an image'); */}
-                  {/* <i class="fas fa-edit td-file-page"></i> */}
-                  {
+                  {/* {
                     item.path_Base.match(/.(jpg|jpeg|png|gif|pdf)$/i)
                     ?
                     <i class="fas fa-arrow-down td-file-page" onClick={() => downloadImage(item.path_Base)}></i>
-                    :
-                    <a href={item.path_Base}>
+                    : */}
+                    <a href={item.path_Base} download target='_blank'>
                       <i class="fas fa-arrow-down td-file-page"></i>
                     </a> 
-                  }
+                  {/* } */}
                   <i class="fas fa-trash-alt td-file-page"></i></td>
               </tr>
             )
