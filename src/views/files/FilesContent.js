@@ -53,7 +53,7 @@ function FilesContent(props) {
                     ?
                     <i class="fas fa-arrow-down td-file-page" onClick={() => downloadImage(item.path_Base)}></i>
                     : */}
-                    <a href={item.path_Base} download target='_blank'>
+                    <a href={item.path_Base} download={true} target='_blank'>
                       <i class="fas fa-arrow-down td-file-page"></i>
                     </a> 
                   {/* } */}

@@ -143,15 +143,15 @@ const updateScoreTask = async(e, studentid, classid, assignmentid, answerid) => 
                   taskAnswer?.uploadedFiles?.map( itm => {
                     return (
                       <>
-                        {
+                        {/* {
                           itm.filePath.match(/.(jpg|jpeg|png|gif|pdf)$/i)
                           ?
                           <i class="fas fa-download td-file-page" onClick={() => downloadImage(itm.filePath)}></i>
-                          :
-                          <a href={itm.filePath}>
+                          : */}
+                          <a href={itm.filePath} download={true} target='_blank'>
                             <i class="fas fa-download td-file-page"></i>
                           </a> 
-                        }
+                        {/* } */}
                       </>
                     )
                   })
