@@ -61,6 +61,8 @@ export const ClassExam = () => {
     fetchExams();
   }, []);
 
+  console.log('exams:', modules)
+
   return (
     <div className="class-container position-relative">
       {loading && <ActivityIndicator />}
