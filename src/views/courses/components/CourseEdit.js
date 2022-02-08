@@ -115,7 +115,7 @@ export default function CourseEdit({setCourse, openEditModal, setOpenEditModal, 
 										<Form.Label for="subjectArea">
 												Subject Area
 										</Form.Label>
-										<Form.Select size="lg" onChange={(e) => setSubjectArea(e.target.value)}>
+										{/* <Form.Select size="lg" onChange={(e) => setSubjectArea(e.target.value)}>
 											<option value={selectedCourse?.subjectAreaId}>
 												{selectedCourse?.subjectAreaId}
 											</option>
@@ -123,6 +123,17 @@ export default function CourseEdit({setCourse, openEditModal, setOpenEditModal, 
 												sarea.map(item => {
 													return(
 														<option value={item.id}>
+															{item.subjectAreaName}
+														</option>
+													)
+												})
+											}
+										</Form.Select> */}
+										<Form.Select size="lg" onChange={(e) => setSubjectArea(e.target.value)}>
+											{
+												sarea.map(item => {
+													return(
+														<option value={item.id} selected={selectedCourse?.subjectAreaId === item.id}>
 															{item.subjectAreaName}
 														</option>
 													)
@@ -136,7 +147,15 @@ export default function CourseEdit({setCourse, openEditModal, setOpenEditModal, 
 										<Form.Label for="status">
 												Status
 										</Form.Label>
-										<Form.Select size="lg" onChange={(e) => setStatus(e.target.value)}>
+										<Form.Select size="lg" onChange={(e) => setLockStatus(e.target.value)}>
+											<option value={true} selected={selectedCourse?.status === true}>
+												Active
+											</option>
+											<option value={false} selected={selectedCourse?.status === false}>
+												Inactive
+											</option>
+										</Form.Select>
+										{/* <Form.Select size="lg" onChange={(e) => setStatus(e.target.value)}>
 											<option>
 												{selectedCourse?.status === true ? 'Active' : 'Inactive'}
 											</option>
@@ -146,7 +165,7 @@ export default function CourseEdit({setCourse, openEditModal, setOpenEditModal, 
 											<option value={false}> 
 												Inactive
 											</option>
-										</Form.Select>
+										</Form.Select> */}
 								</Form.Group>
 								{' '}
 
@@ -155,13 +174,10 @@ export default function CourseEdit({setCourse, openEditModal, setOpenEditModal, 
 												Lock Status
 										</Form.Label>
 										<Form.Select size="lg" onChange={(e) => setLockStatus(e.target.value)}>
-											<option>
-												{selectedCourse?.locked === true ? 'Locked' : 'Unlocked'}
-											</option>
-											<option value={true}>
+											<option value={true} selected={selectedCourse?.locked === true}>
 												Locked
 											</option>
-											<option value={false}> 
+											<option value={false} selected={selectedCourse?.locked === false}>
 												Unlocked
 											</option>
 										</Form.Select>

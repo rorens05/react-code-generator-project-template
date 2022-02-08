@@ -62,13 +62,15 @@ export default function CoursesItem({course, setLoading, setOpenEditModal, setSe
               </Card.Header>
                 <Card.Body>
                     <Card.Title tag="h5">
-                      <Link to={"coursecontent/"+item.id} onClick={() => setCourseId(item.id)} course={course} setLoading={setLoading} className="active card-title">{item.courseName}</Link>
+                      <Link to={"coursecontent/"+item.id} onClick={() => setCourseId(item.id)} course={course} setLoading={setLoading} className="active card-title">
+                        {item.courseName.substring(0, 15)}...
+                      </Link>
                     </Card.Title>
                     <Card.Subtitle
                         className="mb-2 text-muted"
                         tag="h6"
                     >
-                        Card subtitle
+                        {item.subjectArea.subjectAreaName}
                     </Card.Subtitle>
                     <Card.Text>
                       {item.description}

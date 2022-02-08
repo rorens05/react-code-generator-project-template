@@ -130,7 +130,7 @@ export default function CourseContent(course) {
                 <CoursesLearn viewLesson={viewLesson} setViewLesson={setViewLesson} moduleInfo={moduleInfo} setModuleInfo={setModuleInfo}/>
               </Tab.Pane>
               <Tab.Pane eventKey="#link2">
-                <CoursesExam />
+                <CoursesExam moduleInfo={moduleInfo} setModuleInfo={setModuleInfo} moduleId={moduleId()}/>
               </Tab.Pane>
               <Tab.Pane eventKey="#link3">
                 <CoursesDiscussion moduleInfo={moduleInfo} setModuleInfo={setModuleInfo} moduleId={moduleId()} setShowDiscussion={setShowDiscussion} showDiscussion={showDiscussion} />

@@ -4,7 +4,7 @@ import AssignmentContent from './AssignmentContent'
 import AssignmentReportContent from '../contents/AssignmentReportContent'
 import ClassesAPI from './../../../api/ClassesAPI'
 
-function AssignmentReport({classesModules, setClassesModules, selectedClassId, viewAssignmentReport, setViewAssignmentReport, showAssignmentHeader, setShowAssignmentHeader}) {
+function AssignmentReport({filter, setFilter, classesModules, setClassesModules, selectedClassId, viewAssignmentReport, setViewAssignmentReport, showAssignmentHeader, setShowAssignmentHeader}) {
 
 const [assignmentPerModule, setAssignmentPerModule] = useState([])
 const [assignmentReport, setAssignmentReport] = useState([])
@@ -60,7 +60,9 @@ if(viewAssignmentReport === true){
             <Accordion.Item eventKey={item.id}>
             <Accordion.Header onClick={(e) => getClassAssignmentModules(e, item.id)}><div className='unit-exam'>{item.moduleName} </div></Accordion.Header>
               <Accordion.Body>
-                {assignmentPerModule.map((item, index) => { 
+                {assignmentPerModule.filter(item =>
+                  item.assignment.assignmentName.toLowerCase().includes(filter.toLowerCase())).map
+                  ((item, index) => {
                 return(
                   item.classAssignment !== null &&
                   <Row>
