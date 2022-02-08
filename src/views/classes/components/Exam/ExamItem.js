@@ -6,6 +6,7 @@ import Status from "../../../../components/utilities/Status";
 import { UserContext } from "../../../../context/UserContext";
 import AssignExam from "./AssignExam";
 import EditExam from "./EditExam";
+import PreviewExam from "./PreviewExam";
 
 export default function ExamItem({ exam, deleteExam, setLoading, fetchExams }) {
   const userContext = useContext(UserContext);
@@ -14,6 +15,7 @@ export default function ExamItem({ exam, deleteExam, setLoading, fetchExams }) {
   const [showWarning, setShowWarning] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [showPreviewExamModal, setShowPreviewExamModal] = useState(false)
   return (
     <div className='exam-item-container'>
       <SweetAlert
@@ -34,7 +36,7 @@ export default function ExamItem({ exam, deleteExam, setLoading, fetchExams }) {
       </SweetAlert>
       <div className='exam-content'>
         <Link
-          to={user.isStudent ? `/class/${id}/exam/${exam.test.id}` : "#"}
+          to={user.isStudent ? `/class/${id}/exam/${exam.test.id}` :  `/exam_creation/${exam.test.id}`}
           className='exam-title'
         >
           {exam.test.testName}
@@ -50,9 +52,18 @@ export default function ExamItem({ exam, deleteExam, setLoading, fetchExams }) {
       </div>
       {user.isTeacher && (
         <div className='exam-actions'>
-          <Link to={`/exam_creation/${exam.test.id}`}>
+          {/* <Link to={`/exam_creation/${exam.test.id}`}>
             <i class='fas fa-eye'></i>
-          </Link>
+          </Link> */}
+          <a href='#edit'>
+                <i
+                  class='fas fa-eye'
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setShowPreviewExamModal(true);
+                  }}
+                ></i>
+              </a>
 
           {exam.classTest == null && (
             <>
@@ -104,6 +115,10 @@ export default function ExamItem({ exam, deleteExam, setLoading, fetchExams }) {
         exam={exam}
         setLoading={setLoading}
         fetchExams={fetchExams}
+      />
+      <PreviewExam 
+      showPreviewExamModal={showPreviewExamModal}
+      setShowPreviewExamModal={setShowPreviewExamModal}
       />
     </div>
   );
