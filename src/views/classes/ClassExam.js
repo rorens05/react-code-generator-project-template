@@ -33,6 +33,10 @@ export const ClassExam = () => {
           uniqueModules.push(item);
         }
       });
+      // fetch modules by class id
+
+      
+
       setExams(filteredExams);
       setModules(uniqueModules);
     } else {
