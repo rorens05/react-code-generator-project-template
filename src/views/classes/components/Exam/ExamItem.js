@@ -34,7 +34,7 @@ export default function ExamItem({ exam, deleteExam, setLoading, fetchExams }) {
       </SweetAlert>
       <div className='exam-content'>
         <Link
-          to={user.isStudent ? `/class/${id}/exam/${exam.test.id}` : "#"}
+          to={user.isStudent ? `/class/${id}/exam/${exam.test.id}` : `/exam_creation/${exam.test.id}`}
           className='exam-title'
         >
           {exam.test.testName}
@@ -50,21 +50,21 @@ export default function ExamItem({ exam, deleteExam, setLoading, fetchExams }) {
       </div>
       {user.isTeacher && (
         <div className='exam-actions'>
-          <Link to={`/exam_creation/${exam.test.id}`}>
+          {/* <Link to={`/exam_creation/${exam.test.id}`}>
             <i class='fas fa-eye'></i>
-          </Link>
-
+          </Link> */}
+          <a href='#edit'>
+            <i
+              class='fas fa-edit'
+              onClick={(e) => {
+                e.preventDefault();
+                setShowEditModal(true);
+              }}
+            ></i>
+          </a>
           {exam.classTest == null && (
             <>
-              <a href='#edit'>
-                <i
-                  class='fas fa-edit'
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setShowEditModal(true);
-                  }}
-                ></i>
-              </a>
+              
 
               <a href='#assign'>
                 <i
