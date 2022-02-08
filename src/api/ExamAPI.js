@@ -45,6 +45,13 @@ export default class ExamAPI extends Base {
       data,
     });
 
+  reAssignExam = async (classId, id, data) => 
+  this.sendRequest({
+    path: `/api/Class/${classId}/test/${id}/assign`,
+    method: "PUT",
+    data,
+  });
+
   updateExam = async (id, data) =>
     this.sendRequest({
       path: `/api/Test/${id}`,

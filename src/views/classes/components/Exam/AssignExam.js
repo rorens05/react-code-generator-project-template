@@ -1,15 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
+import moment from "moment";
 import ExamAPI from "../../../../api/ExamAPI";
 
-export default function AssignExam({ showModal, setShowModal, exam, id, setLoading, fetchExams }) {
+export default function AssignExam({ showModal, setShowModal, exam, id, setLoading, fetchExams, closeModal }) {
   const [endDate, setEndDate] = useState("");
   const [endTime, setEndTime] = useState("");
   const [startDate, setStartDate] = useState("");
   const [startTime, setStartTime] = useState("");
   const [timeLimit, setTimeLimit] = useState("");
+
+  useEffect(() => {
+    if(exam.classTest){
+      let { endDate, endTime, startDate, startTime, timeLimit} = exam?.classTest;
+      let startD = moment(startDate).format('YYYY-MM-DD'),
+        endD = moment(endDate).format('YYYY-MM-DD');
+      setEndDate(endD);
+      setEndTime(endTime);
+      setStartDate(startD);
+      setStartTime(startTime);
+      setTimeLimit(timeLimit);
+    }
+  }, [exam])
 
   const assignExam = async(e) => {
     e.preventDefault();
@@ -21,15 +35,29 @@ export default function AssignExam({ showModal, setShowModal, exam, id, setLoadi
       startTime,
       timeLimit,
     };
-    console.log({ data });
+    console.log({ data }, exam);
     setLoading(true);
-    let response = await new ExamAPI().assignExam(id, exam.test.id, data)
-    if(response.ok){
-      toast.success("Exam assigned successfully")
-      fetchExams()
-    }else{
-      toast.error(response?.data?.errorMessage || "Something went wrong while deleting the exam")
-      setLoading(false);
+    if(exam.classTest){
+      let response = await new ExamAPI().reAssignExam(id, exam.test.id, data)
+      if(response.ok){
+        toast.success("Exam assigned successfully")
+        fetchExams()
+        closeModal()
+      }else{
+        toast.error(response?.data?.errorMessage || "Something went wrong while deleting the exam")
+        setLoading(false);
+      }
+    }
+    else{
+      let response = await new ExamAPI().assignExam(id, exam.test.id, data)
+      if(response.ok){
+        toast.success("Exam assigned successfully")
+        fetchExams()
+        closeModal()
+      }else{
+        toast.error(response?.data?.errorMessage || "Something went wrong while deleting the exam")
+        setLoading(false);
+      }
     }
   };
 
@@ -41,7 +69,7 @@ export default function AssignExam({ showModal, setShowModal, exam, id, setLoadi
       onHide={() => setShowModal(false)}
     >
       <Modal.Header className='modal-header' closeButton>
-        Assign Exam
+        {exam.classTest == null ? 'Assign Exam' :' Reassign Exam'}
       </Modal.Header>
       <Modal.Body className='modal-label b-0px'>
         <Form onSubmit={assignExam}>
@@ -54,7 +82,7 @@ export default function AssignExam({ showModal, setShowModal, exam, id, setLoadi
               size='lg'
               type='date'
               placeholder='Enter test name'
-              onChange={(e) => setStartDate(e.target.value)}
+              onChange={(e) => console.log(e.target.value)}
             />
           </Form.Group>
           <Form.Group className='m-b-20'>
