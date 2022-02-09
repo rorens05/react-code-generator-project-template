@@ -136,7 +136,7 @@ export default function Essay({
             <p className='primary-title'>
               {index + 1}. {question.question.testQuestion}
             </p>
-            <p className=''>Rating: {question.question.rate}</p>
+            <p className=''>Point(s): {question.question.rate}</p>
           </div>
           <QuestionActions onDelete={(e) => deleteQuestion(e, question.question.id)} onEdit={(e) => {
             setSelectedId(question.question.id)

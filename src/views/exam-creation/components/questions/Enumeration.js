@@ -229,7 +229,7 @@ export default function Enumeration({
               ))}
             </table>
             <hr/>
-            <p className=''>Ratings: {question.question.rate}</p>
+            <p className=''>Point(s): {question.question.rate}</p>
           </div>
           <QuestionActions
             onDelete={(e) => deleteQuestion(e, question.question.id)}

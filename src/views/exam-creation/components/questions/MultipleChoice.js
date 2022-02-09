@@ -232,7 +232,7 @@ export default function MultipleChoice({
               ))}
             </table>
             <h5 className='font-weight-bold mt-3'>Answer: {question.answer}</h5>
-            <p className=''>Ratings: {question.question.rate}</p>
+            <p className=''>Point(s): {question.question.rate}</p>
           </div>
           <QuestionActions
             onDelete={(e) => deleteQuestion(e, question.question.id)}

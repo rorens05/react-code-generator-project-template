@@ -175,7 +175,7 @@ export default function Identification({
               {index + 1}. {question.question.testQuestion}
             </p>
             <p className=''>Answer: {question.answer}</p>
-            <p className=''>Rating: {question.question.rate}</p>
+            <p className=''>Point(s): {question.question.rate}</p>
           </div>
           <QuestionActions
             onDelete={(e) => deleteQuestion(e, question.question.id)}
