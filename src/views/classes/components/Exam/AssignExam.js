@@ -82,7 +82,7 @@ export default function AssignExam({ showModal, setShowModal, exam, id, setLoadi
               size='lg'
               type='date'
               placeholder='Enter test name'
-              onChange={(e) => console.log(e.target.value)}
+              onChange={(e) => setStartDate(e.target.value)}
             />
           </Form.Group>
           <Form.Group className='m-b-20'>
