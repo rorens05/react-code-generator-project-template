@@ -1,6 +1,7 @@
 import moment from "moment";
 import React from "react";
 import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 
 export default function ExamItemContent({
   id,
@@ -9,13 +10,15 @@ export default function ExamItemContent({
   startDate,
   endDate,
 }) {
+
+
   return (
     <>
       <Link
         to={
           user.isStudent
             ? `/class/${id}/exam/${exam.test.id}`
-            : `/exam_creation/${exam.test.id}`
+            : `/exam_creation/${exam.test.id}?class_id=${id}`
         }
         className='exam-title'
       >

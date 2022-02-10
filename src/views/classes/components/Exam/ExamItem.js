@@ -4,6 +4,7 @@ import SweetAlert from "react-bootstrap-sweetalert";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../../../context/UserContext";
+import getStartAndEndDateFromClassTest from "../../../../utils/getStartAndEndDateFromClassTest";
 import AssignExam from "./AssignExam";
 import EditExam from "./EditExam";
 import ExamItemContent from "./ExamItemContent";
@@ -17,21 +18,7 @@ export default function ExamItem({ exam, deleteExam, setLoading, fetchExams }) {
   const [showWarning, setShowWarning] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
-
-  let startDate = null;
-  let endDate = null;
-  if (exam.classTest) {
-    startDate = new Date(exam.classTest.startDate);
-    startDate.setHours(
-      exam.classTest.startTime.split(":")[0],
-      exam.classTest.startTime.split(":")[1]
-    );
-    endDate = new Date(exam.classTest.endDate);
-    endDate.setHours(
-      exam.classTest.endTime.split(":")[0],
-      exam.classTest.endTime.split(":")[1]
-    );
-  }
+  const {startDate, endDate} = getStartAndEndDateFromClassTest(exam)
 
   return (
     <div className='exam-item-container'>

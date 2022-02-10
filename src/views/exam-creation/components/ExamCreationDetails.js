@@ -1,5 +1,9 @@
 import React from "react";
+import { useContext } from "react";
 import { Button } from "react-bootstrap";
+import { UserContext } from "../../../context/UserContext";
+import getStartAndEndDateFromClassTest from "../../../utils/getStartAndEndDateFromClassTest";
+import ExamStatuses from "../../classes/components/Exam/ExamStatuses";
 import ExamParts from "./ExamParts";
 
 export default function ExamCreationDetails({
@@ -10,7 +14,14 @@ export default function ExamCreationDetails({
   setLoading,
   setShowModal,
   deletePart,
+  noAssigned
 }) {
+
+  const userContext = useContext(UserContext)
+  const {user} = userContext.data
+
+  const {startDate, endDate} = getStartAndEndDateFromClassTest(exam)
+
   return exam != null ? (
     <div className='exam-information-container'>
       <div className='d-flex justify-content-between '>
@@ -22,6 +33,7 @@ export default function ExamCreationDetails({
             {exam.test.testName}
           </p>
           <p className='secondary-title mb-2'>{`${exam.totalItems} Total Item(s)`}</p>
+          <ExamStatuses user={user} exam={exam} startDate={startDate} endDate={endDate} noAssigned={noAssigned}/>
         </div>
       </div>
       <hr />

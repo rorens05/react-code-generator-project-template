@@ -15,7 +15,8 @@ export default function ExamCreation() {
   const [typeId, setTypeId] = useState(1)
   const userContext = useContext(UserContext);
   const { user } = userContext.data;
-  const { id } = useParams();
+  const { id, class_id } = useParams();
+  const [noAssigned, setNoAssigned] = useState(false)
   const [selectedPart, setSelectedPart] = useState(null);
 
   const getExamInformation = async () => {
@@ -30,13 +31,35 @@ export default function ExamCreation() {
           tempExam.questionPartDto.push({questionPart: item, questionDtos: []})
         }
       })
-      console.log({tempExam})
+      tempExam = await getClassTest(tempExam)
       setExam(tempExam);
     } else {
       alert("Something went wrong while fetching exam information");
     }
     setLoading(false);
   };
+
+  const getClassTest = async (tempExam) => {
+    console.log({tempExam})
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const params = Object.fromEntries(urlSearchParams.entries());
+    const classId = tempExam.test.classId || params.class_id
+    if(classId){
+      let response = await new ExamAPI().getExams(classId);
+      if (response.ok) {
+        console.log({response})
+        let foundExam = response.data.find(item => item.test.id === tempExam.test.id)
+        if(foundExam){
+          tempExam.classTest = foundExam.classTest
+        }else{
+          alert("Class test not found")
+        }
+      }
+    }else{
+      setNoAssigned(true)
+    }
+    return tempExam
+  }
   
   const submitPartForm = async (e) => {
     if(selectedPart != null){
@@ -128,6 +151,7 @@ export default function ExamCreation() {
             deletePart={deletePart}
             selectedPart={selectedPart}
             setSelectedPart={setSelectedPart}
+            noAssigned={noAssigned}
           />
         </div>
       </div>
