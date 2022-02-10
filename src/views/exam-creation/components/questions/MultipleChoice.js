@@ -160,9 +160,19 @@ export default function MultipleChoice({
       choices,
     };
     if (selectedQuestion != null) {
-      updateQuestion(selectedQuestion, data);
+      if(rate > 0 && rate < 101){
+        updateQuestion(selectedQuestion, data);
+      }else{
+        setLoading(false)
+        toast.error('Rate should be greater than 1 and less than 100.')
+      }
     } else {
-      addQuestion(data);
+      if(rate > 0 && rate < 101){
+        addQuestion(data);
+      }else{
+        setLoading(false)
+        toast.error('Rate should be greater than 1 and less than 100.')
+      }
     }
   };
 

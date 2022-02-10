@@ -16,6 +16,17 @@ export default function ExamParts({
   
   const [selectedId, setSelectedId] = useState(null)
   const [showWarning, setShowWarning] = useState(false)
+
+  const arrageAlphabetical = (data) => {
+    let temp = Object.values(data).sort(function(a, b){
+      let nameA = displayQuestionType(a.questionPart.questionTypeId).toLocaleLowerCase();
+      let nameB = displayQuestionType(b.questionPart.questionTypeId).toLocaleLowerCase();
+      if(nameA < nameB)
+        return -1
+    });
+    return temp;
+  }
+
   return (
     <Accordion defaultActiveKey='0' className='exam-part-creation'>
       <SweetAlert
@@ -34,7 +45,7 @@ export default function ExamParts({
       >
         You will not be able to recover this exam!
       </SweetAlert>
-      {exam.questionPartDto.map((part, index) => (
+      {arrageAlphabetical(exam.questionPartDto).map((part, index) => (
         <Accordion.Item
           style={{ border: "1px solid #f1f1f1", padding: "8px 16px" }}
           eventKey={index}
