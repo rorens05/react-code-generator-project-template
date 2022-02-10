@@ -117,7 +117,6 @@ export default function ExamCreation() {
   }
 
   const deletePart = async(e, part) => {
-    e.preventDefault()
     setLoading(true)
     let response = await new ExamAPI().deletePart(part.questionPart.id)
     if(response.ok){

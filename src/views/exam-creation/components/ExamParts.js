@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Accordion, Button } from "react-bootstrap";
+import SweetAlert from "react-bootstrap-sweetalert";
 import { displayQuestionType } from "../../../utils/displayQuestionType";
 import Questions from "./questions/Questions";
 
@@ -12,8 +13,27 @@ export default function ExamParts({
   setShowModal,
   editable
 }) {
+  
+  const [selectedId, setSelectedId] = useState(null)
+  const [showWarning, setShowWarning] = useState(false)
   return (
     <Accordion defaultActiveKey='0' className='exam-part-creation'>
+      <SweetAlert
+        warning
+        showCancel
+        show={showWarning}
+        confirmBtnText='Yes, delete it!'
+        confirmBtnBsStyle='danger'
+        title='Are you sure?'
+        onConfirm={async (e) => {
+          await deletePart(e, selectedId);
+          setShowWarning(false);
+        }}
+        onCancel={() => setShowWarning(false)}
+        focusCancelBtn
+      >
+        You will not be able to recover this exam!
+      </SweetAlert>
       {exam.questionPartDto.map((part, index) => (
         <Accordion.Item
           style={{ border: "1px solid #f1f1f1", padding: "8px 16px" }}
@@ -40,7 +60,10 @@ export default function ExamParts({
               >
                 <i class='fas fa-edit'></i>
               </a>
-              <a href='#delete-part' onClick={(e) => deletePart(e, part)}>
+              <a href='#delete-part' onClick={(e) => {
+                setShowWarning(true)
+                setSelectedId(part)
+              }}>
                 <i class='fas fa-trash-alt'></i>
               </a>
             </div>

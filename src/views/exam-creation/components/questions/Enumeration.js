@@ -142,7 +142,6 @@ export default function Enumeration({
   const submitQuestion = async (e) => {
     e.preventDefault();
     console.log({ selectedQuestion });
-    setLoading(true);
     const data = {
       question: {
         questionTypeId,
@@ -153,6 +152,26 @@ export default function Enumeration({
       },
       choices,
     };
+
+    if(choices.length == 0){
+      toast.error("Please add at least one answer");
+      return
+    }
+
+    let unique = true
+    choices.forEach((choice) => {
+      if(choices.filter(c => c.testChoices == choice.testChoices).length > 1){
+        unique = false
+      }
+    })
+
+    if(!unique){
+      toast.error("Please add unique answers")
+      return
+    }
+    console.log({choices}, "GO HERE")
+    setLoading(true);
+
     if (selectedQuestion != null) {
       updateQuestion(selectedQuestion, data);
     } else {
