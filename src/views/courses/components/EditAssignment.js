@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form, Modal } from 'react-bootstrap';
 import CoursesAPI from "../../../api/CoursesAPI";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function EditAssignment({openEditAssignmentModal, setOpenEditAssignmentModal, selectedAssignment, setAssignmentInfo}){
 
@@ -26,8 +28,8 @@ export default function EditAssignment({openEditAssignmentModal, setOpenEditAssi
       {assignmentName, instructions}
     )
     if(response.ok){
-      alert("Saved")
 			handleCloseModal(e)
+      notifyUpdateAssignment()
       getAssignmentInfo(sessionModule)
     }else{
       alert(response.data.errorMessage)
@@ -37,7 +39,6 @@ export default function EditAssignment({openEditAssignmentModal, setOpenEditAssi
 
   const getAssignmentInfo = async(e, data) => {
     setLoading(true)
-    sessionStorage.setItem('moduleid', data)
     let response = await new CoursesAPI().getAssignmentInformation(sessionModule)
     setLoading(false)
     if(response.ok){
@@ -69,6 +70,17 @@ export default function EditAssignment({openEditAssignmentModal, setOpenEditAssi
 			setInstructions(selectedAssignment?.instructions)
 		}
   }, [selectedAssignment])
+
+  const notifyUpdateAssignment = () => 
+  toast.success('Assignment Updated!', {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
 
 	return (
 		<div>

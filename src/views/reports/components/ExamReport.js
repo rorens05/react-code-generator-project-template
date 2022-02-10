@@ -3,12 +3,11 @@ import {Accordion, Row, Col} from 'react-bootstrap'
 import ExamReportContent from '../contents/ExamReportContent'
 import ClassesAPI from './../../../api/ClassesAPI'
 
-function ExamReport({classesModules, setClassesModules, selectedClassId, viewTestReport, setViewTestReport, showReportHeader, setShowReportHeader}) {
+function ExamReport({filter, setfilter, classesModules, setClassesModules, selectedClassId, viewTestReport, setViewTestReport, showReportHeader, setShowReportHeader}) {
 
   const [testPerModule, setTestPerModule] = useState([])
   const [testReport, setTestReport] = useState([])
   const [loading, setLoading] = useState(false)
-  
 
   const getClassTestModules = async(e, moduleId) => {
     console.log(selectedClassId)
@@ -40,6 +39,8 @@ function ExamReport({classesModules, setClassesModules, selectedClassId, viewTes
     }
   }
 
+  
+
   if(viewTestReport === true){
   return (
     <div>
@@ -49,7 +50,10 @@ function ExamReport({classesModules, setClassesModules, selectedClassId, viewTes
           <Accordion.Item eventKey={item.id}>
           <Accordion.Header onClick={(e) => getClassTestModules(e, item.id)}><div className='unit-exam'>{item.moduleName} </div></Accordion.Header>
             <Accordion.Body>
-              {testPerModule.map((item, index) => { 
+              {/* {testPerModule.map((item, index) => {  */}
+              {testPerModule.filter(item =>
+                item.test.testName.toLowerCase().includes(filter.toLowerCase())).map
+                ((item, index) => {
               return(
                 item.classTest !== null &&
                 <Row>

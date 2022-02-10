@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form, Modal } from 'react-bootstrap';
 import CoursesAPI from "../../../api/CoursesAPI";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-export default function EditExam({openEditExamModal, setOpenEditExamModal, selectedExam}){
+export default function EditExam({examInfo, setExamInfo, openEditExamModal, setOpenEditExamModal, selectedExam}){
 
 	const [loading, setLoading] = useState(false)
   const [modulePages, setModulePages] = useState([])
@@ -26,12 +28,25 @@ export default function EditExam({openEditExamModal, setOpenEditExamModal, selec
       {testName, testInstructions}
     )
     if(response.ok){
-      alert("Saved")
 			handleCloseModal(e)
+      notifyUpdateExam()
+      getExamInfo(null, sessionModule)
     }else{
       alert(response.data.errorMessage)
     }
     setLoading(false)
+  }
+
+  const getExamInfo = async(e, data) => {
+    setLoading(true)
+    let response = await new CoursesAPI().getExamInformation(data)
+    setLoading(false)
+    if(response.ok){
+      setExamInfo(response.data)
+      console.log(response.data)
+    }else{
+      alert("Something went wrong while fetching all exam")
+    }
   }
 
   const getCourseUnitPages = async(e, data, data1) => {
@@ -55,6 +70,17 @@ export default function EditExam({openEditExamModal, setOpenEditExamModal, selec
 			setTestInstructions(selectedExam?.testInstructions)
 		}
   }, [selectedExam])
+
+  const notifyUpdateExam = () => 
+  toast.success('Exam Updated!', {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
 
 	return (
 		<div>

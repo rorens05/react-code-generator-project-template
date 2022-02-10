@@ -12,16 +12,17 @@ import { Link } from "react-router-dom";
 import Status from "../../../../components/utilities/Status";
 
 
-export default function CoursesExam() {
+export default function CoursesExam({moduleInfo, setModuleInfo, moduleId}) {
 
   const [loading, setLoading] = useState(false)
 
   const [openCreateExamModal, setOpenCreateExamModal] = useState(false)
   const [openEditExamModal, setOpenEditExamModal] = useState(false)
-  const [moduleInfo, setModuleInfo] = useState([])
+  // const [moduleInfo, setModuleInfo] = useState([])
   const [examInfo, setExamInfo] = useState([])
   const [selectedExam, setSelectedExam] = useState(null)
   const [sweetError, setSweetError] = useState(false)
+  const [filter, setFilter] = useState("")
 
   const courseid = sessionStorage.getItem('courseid')
   const moduleid = sessionStorage.getItem('moduleid')
@@ -42,9 +43,8 @@ export default function CoursesExam() {
     setLoading(false)
     if(response.ok){
       setModuleInfo(response.data)
-      console.log(response.data)
     }else{
-      alert("Something went wrong while fetching all a")
+      alert("Something went wrong while fetching all exam")
     }
   }
 
@@ -55,9 +55,8 @@ export default function CoursesExam() {
     setLoading(false)
     if(response.ok){
       setExamInfo(response.data)
-      console.log(response.data)
     }else{
-      alert("Something went wrong while fetching all a")
+      alert("Something went wrong while fetching all exam")
     }
   }
 
@@ -69,6 +68,10 @@ export default function CoursesExam() {
     deleteCourseExam(id)
     setSweetError(false)
   } 
+
+  const onSearch = (text) => {
+    setFilter(text)
+  }
 
   const deleteCourseExam = async(data) => {
     setLoading(true)
@@ -102,15 +105,15 @@ export default function CoursesExam() {
       <span className="content-pane-title">
         Exam 
       </span>
-      <div className="row m-b-20 m-t-30">
+      <div className="row m-b-20 m-t-30" onSearch={onSearch}>
         <div className="col-md-12">
           <InputGroup size="lg">
-            <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Search..." type="search"/>
+            <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Search..." type="search" onChange={(e) => onSearch(e.target.value)} />
             <InputGroup.Text id="basic-addon2" className="search-button"><i className="fas fa-search fa-1x"></i></InputGroup.Text>
           </InputGroup>
         </div>
       </div>
-      <EditExam selectedExam={selectedExam} openEditExamModal={openEditExamModal} setOpenEditExamModal={setOpenEditExamModal}/>
+      <EditExam setExamInfo={setExamInfo} examInfo={examInfo} selectedExam={selectedExam} openEditExamModal={openEditExamModal} setOpenEditExamModal={setOpenEditExamModal}/>
       <CreateExam examInfo={examInfo} setExamInfo={setExamInfo} openCreateExamModal={openCreateExamModal} setOpenCreateExamModal={setOpenCreateExamModal}/>
       <Accordion defaultActiveKey="0">
         {moduleInfo.map((item, index) => {
@@ -121,33 +124,41 @@ export default function CoursesExam() {
                 </span>
               </Accordion.Header>
               <Accordion.Body>
-                {examInfo.map((item, index) => {
+                {examInfo.filter(ei =>
+                  ei.testName.toLowerCase().includes(filter.toLowerCase())).map
+                  ((ei, index) => {
                   return(
+                    <>
                     <Row>
-                      <Col className="lesson-header" md={9}>
-                        <Link className="lesson-header" to={`/exam_creation/${item?.id}`}>
-                          {item?.testName}
-                        </Link><br/>
-                        {/* {examInfo.classId == null ? (<Status>Created in Course</Status>) : (<Status>Created in Class</Status>)} */}
+                      <Col className="" md={9}>
+                        <Link className="lesson-header" to={`/exam_creation/${ei?.id}`}>
+                          {ei?.testName}
+                        </Link>
+                        <div>
+                          {ei?.testInstructions}
+                        </div>
                       </Col>
                       <Col className="align-right-content" md={3}>
-                        <Button className="m-r-5 color-white tficolorbg-button" size="sm"   onClick={(e) => handleOpenEditExamModal(e, item)}><i className="fa fa-edit"></i></Button>
-                        <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i className="fa fa-trash" onClick={() => setSweetError(true)}></i></Button>
+                        <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={(e) => handleOpenEditExamModal(e, ei)}><i className="fa fa-edit"></i></Button>
+                        <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={() => setSweetError(true)}><i className="fa fa-trash" ></i></Button>
                         <SweetAlert
-                              warning
-                              showCancel
-                              show={sweetError}
-                              confirmBtnText="Yes, delete it!"
-                              confirmBtnBsStyle="danger"
-                              title="Are you sure?"
-                              onConfirm={() => confirmSweetError(item.id)}
-                              onCancel={cancelSweetError}
-                              focusCancelBtn
-                            >
-                              You will not be able to recover this imaginary file!
-                            </SweetAlert>
+                          warning
+                          showCancel
+                          show={sweetError}
+                          confirmBtnText="Yes, delete it!"
+                          confirmBtnBsStyle="danger"
+                          title="Are you sure?"
+                          onConfirm={() => confirmSweetError(ei.id)}
+                          onCancel={cancelSweetError}
+                          focusCancelBtn
+                        >
+                          You will not be able to recover this imaginary file!
+                        </SweetAlert>
                       </Col>
+                      {examInfo.length == 0 && !loading && <div className="no-exams">No exam found...</div>}
                     </Row>
+                    <hr></hr>
+                    </>
                   )
                 })}
               </Accordion.Body>

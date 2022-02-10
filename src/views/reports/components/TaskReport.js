@@ -3,7 +3,7 @@ import {Accordion, Row, Col} from 'react-bootstrap'
 import TaskReportContent from '../contents/TaskReportContent'
 import ClassesAPI from './../../../api/ClassesAPI'
 
-function TaskReport({classesModules, setClassesModules, selectedClassId, viewTaskReport, setViewTaskReport, showTaskHeader, setShowTaskHeader}) {
+function TaskReport({filter, setFilter, classesModules, setClassesModules, selectedClassId, viewTaskReport, setViewTaskReport, showTaskHeader, setShowTaskHeader}) {
 
   const [taskPerModule, setTaskPerModule] = useState([])
   const [taskReport, setTaskReport] = useState([])
@@ -53,7 +53,9 @@ function TaskReport({classesModules, setClassesModules, selectedClassId, viewTas
           <Accordion.Item eventKey={item.id}>
           <Accordion.Header onClick={(e) => getClassTaskModules(e, item.id)}><div className='unit-exam'>{item.moduleName} </div></Accordion.Header>
             <Accordion.Body>
-              {taskPerModule.map((item, index) => { 
+              {taskPerModule.filter(item =>
+                item.task.taskName.toLowerCase().includes(filter.toLowerCase())).map
+                ((item, index) => {
               return(
                 item.taskAssignment !== null &&
                 <Row>

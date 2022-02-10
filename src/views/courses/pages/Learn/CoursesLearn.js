@@ -6,12 +6,12 @@ import CreateLesson from "./../../components/CreateLesson";
 import EditLesson from "../../components/EditLesson";
 import CoursesLearnContent from "./CoursesLearnContent";
 import SweetAlert from 'react-bootstrap-sweetalert';
-
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function CourseLearn({viewLesson, setViewLesson, moduleInfo, setModuleInfo}) {
 
   const [loading, setLoading] = useState(false)
-
   const [openCreateUnitModal, setOpenCreateUnitModal] = useState(false)
   const [openCreateLessonModal, setCreateLessonModal] = useState(false)
   const [openEditLessonModal, setOpenEditLessonModal] = useState(false)
@@ -22,7 +22,7 @@ export default function CourseLearn({viewLesson, setViewLesson, moduleInfo, setM
   const [filter, setFilter] = useState("")
 
   const courseid = sessionStorage.getItem('courseid')
-  const moduleid = sessionStorage.getItem('courseid')
+  const moduleid = sessionStorage.getItem('moduleid')
 
   const handleOpenCreateUnitModal = () =>{
     setOpenCreateUnitModal(!openCreateUnitModal)
@@ -44,10 +44,9 @@ export default function CourseLearn({viewLesson, setViewLesson, moduleInfo, setM
   }
 
   const confirmSweetError = (id) => {
-    alert('Deleted')
+    notifyDeleteLesson()
     deleteCourseLesson(id)
     setSweetError(false)
-
   } 
 
   const getCourseLessons = async(e, data, modulename) => {
@@ -69,7 +68,7 @@ export default function CourseLearn({viewLesson, setViewLesson, moduleInfo, setM
     let response = await new CoursesAPI().deleteLesson(data)
     setLoading(false)
     if(response.ok){
-      // setLessonInfo(response.data)
+      getCourseLessons(null, moduleid)
       console.log(response.data)
     }else{
       alert("Something went wrong while fetching all pages")
@@ -95,6 +94,17 @@ export default function CourseLearn({viewLesson, setViewLesson, moduleInfo, setM
 
   useEffect(() => {
   }, [])
+
+  const notifyDeleteLesson= () => 
+  toast.error('Lesson Deleted!', {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
   
   if(viewLesson === false){
     return (
@@ -129,15 +139,17 @@ export default function CourseLearn({viewLesson, setViewLesson, moduleInfo, setM
                     </span>
                   </Accordion.Header>
                   <Accordion.Body>                         
-                    {lessonInfo.map((item, index) => {
+                      {lessonInfo.filter(li =>
+                        li.pageName.toLowerCase().includes(filter.toLowerCase())).map
+                        ((li, index) => {
                       return(
                         <Row>
-                          <Col className="lesson-header" md={9} onClick={(e) => getModuleContent(e, moduleid, item.id)}>
-                            {item?.pageName}
+                          <Col className="lesson-header" md={9} onClick={(e) => getModuleContent(e, moduleid, li.id)}>
+                            {li?.pageName}
                           </Col>
                           <Col className="align-right-content" md={3}>
-                            <Button key={item.id} className="m-r-5 color-white tficolorbg-button" size="sm" onClick={(e) => handleOpenEditLessonModal(e, item)}><i className="fa fa-edit"></i></Button>
-                            <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={() => setSweetError(true)}><i className="fa fa-trash"></i></Button>
+                            <Button key={li.id} className="m-r-5 color-white tficolorbg-button" size="sm" onClick={(e) => handleOpenEditLessonModal(e, li)}><i className="fa fa-edit"></i></Button>
+                            <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={() => {setSweetError(true) }}><i className="fa fa-trash"></i></Button>
                             <SweetAlert
                               warning
                               showCancel
@@ -145,12 +157,11 @@ export default function CourseLearn({viewLesson, setViewLesson, moduleInfo, setM
                               confirmBtnText="Yes, delete it!"  
                               confirmBtnBsStyle="danger"
                               title="Are you sure?"
-                              onConfirm={() => confirmSweetError(item.id)}
+                              onConfirm={() => confirmSweetError(li.id)}
                               onCancel={cancelSweetError}
                               focusCancelBtn
                             >
-                              {item.id}
-                              You will not be able to recover this imaginary file!
+                              You will not be able to recover this Lesson!
                             </SweetAlert>
                           </Col>
                           

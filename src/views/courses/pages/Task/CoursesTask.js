@@ -6,6 +6,8 @@ import CreateTask from "./../../components/CreateTask";
 import EditTask from "./../../components/EditTask";
 import SweetAlert from 'react-bootstrap-sweetalert';
 import ViewTask from "./ViewTask";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function CoursesTask({moduleInfo, showTask, setShowTask}) {
 
@@ -49,8 +51,7 @@ export default function CoursesTask({moduleInfo, showTask, setShowTask}) {
   }
 
   const confirmSweetError = (id) => {
-    alert('Deleted')
-    console.log(taskId)
+    notifyDeleteTask()
     deleteCourseTask(id)
     setSweetError(false)
   } 
@@ -79,6 +80,17 @@ export default function CoursesTask({moduleInfo, showTask, setShowTask}) {
 
   useEffect(() => {
   }, [])
+
+  const notifyDeleteTask= () => 
+  toast.error('Task Deleted!', {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
 
   if(showTask === false){
   return (
@@ -130,7 +142,7 @@ export default function CoursesTask({moduleInfo, showTask, setShowTask}) {
                       onCancel={cancelSweetError}
                       focusCancelBtn
                     >
-                      You will not be able to recover this imaginary file!
+                      You will not be able to recover this Task!
                     </SweetAlert>
               </Accordion.Body>
             </Accordion.Item>

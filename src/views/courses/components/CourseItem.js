@@ -3,7 +3,7 @@ import { Card, Dropdown, Row, Col } from 'react-bootstrap';
 import "../../../../node_modules/@fortawesome/fontawesome-free/css/all.css"
 import { Link } from 'react-router-dom'
 
-export default function CoursesItem({course, setLoading, setOpenEditModal, setSelectedCourse}) {
+export default function CoursesItem({filter, setFilter, course, setLoading, setOpenEditModal, setSelectedCourse}) {
   
   const [openDropdown, setOpenDropdown] = useState(false)
   
@@ -32,10 +32,12 @@ export default function CoursesItem({course, setLoading, setOpenEditModal, setSe
   
   return (
     <React.Fragment>
-      {
-      course.map(item => { 
+        {course.filter(item =>
+          item.courseName.toLowerCase().includes(filter.toLowerCase())).map
+          ((item, index) => {
         return(
           <Col md={3}>
+            <Link to={"coursecontent/"+item.id} onClick={() => setCourseId(item.id)} course={course} setLoading={setLoading} className="active card-title">
             <Card className="card-design b-0px">
               <Card.Header className="card-header-courses">
                 <Row style={{color:"white"}}>
@@ -62,19 +64,20 @@ export default function CoursesItem({course, setLoading, setOpenEditModal, setSe
               </Card.Header>
                 <Card.Body>
                     <Card.Title tag="h5">
-                      <Link to={"coursecontent/"+item.id} onClick={() => setCourseId(item.id)} course={course} setLoading={setLoading} className="active card-title">{item.courseName}</Link>
+                        {item.courseName.substring(0, 20)}...
                     </Card.Title>
                     <Card.Subtitle
                         className="mb-2 text-muted"
                         tag="h6"
                     >
-                        Card subtitle
+                        {item.subjectArea.subjectAreaName}
                     </Card.Subtitle>
                     <Card.Text>
                       {item.description}
                     </Card.Text>
                 </Card.Body>
             </Card>
+            </Link>
           </Col>
         )
         })

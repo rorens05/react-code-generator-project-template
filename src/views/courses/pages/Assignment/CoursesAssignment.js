@@ -6,6 +6,8 @@ import CreateAssignment from "./../../components/CreateAssignment";
 import EditAssignment from "./../../components/EditAssignment";
 import SweetAlert from 'react-bootstrap-sweetalert';
 import ViewAssignment from "./ViewAssignment";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function CoursesAssignment({moduleInfo, setModuleInfo, showAssignment, setShowAssignment}) {
 
@@ -69,8 +71,7 @@ export default function CoursesAssignment({moduleInfo, setModuleInfo, showAssign
   }
 
   const confirmSweetError = (id) => {
-    alert('Deleted')
-    console.log(assignmentId)
+    notifyDeleteAssignment()
     deleteCourseAssignment(id)
     setSweetError(false)
   } 
@@ -98,6 +99,18 @@ export default function CoursesAssignment({moduleInfo, setModuleInfo, showAssign
 
   useEffect(() => {
   }, [])
+
+  const notifyDeleteAssignment= () => 
+  toast.error('Assignment Deleted!', {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+
 
   if(showAssignment === false){
   return (

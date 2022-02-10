@@ -133,9 +133,9 @@ export default class CoursesAPI extends Base {
     });
   };
 
-  editDiscussion = async (moduleid, data) => {
+  editDiscussion = async (discussionid, data) => {
     return this.sendRequest({
-      path: `/api/Discussion/module/${moduleid}`,
+      path: `/api/Discussion/${discussionid}`,
       method: 'PUT',
       data
     });
