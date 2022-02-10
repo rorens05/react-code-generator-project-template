@@ -1,18 +1,9 @@
-<<<<<<< HEAD
-import moment from "moment";
-import React, { useContext, useState } from "react";
-import SweetAlert from "react-bootstrap-sweetalert";
-import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
 import CoursesAPI from "../../../../api/CoursesAPI";
-=======
 import React, { useContext, useState, useEffect } from "react";
 import SweetAlert from "react-bootstrap-sweetalert";
 import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
 import ClassesAPI from "../../../../api/ClassesAPI";
 import Status from "../../../../components/utilities/Status";
->>>>>>> master
 import { UserContext } from "../../../../context/UserContext";
 import getStartAndEndDateFromClassTest from "../../../../utils/getStartAndEndDateFromClassTest";
 import AssignExam from "./AssignExam";
