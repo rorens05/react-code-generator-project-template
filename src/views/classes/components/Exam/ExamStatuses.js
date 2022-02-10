@@ -6,6 +6,7 @@ export default function ExamStatuses({ user, exam, startDate, endDate }) {
 
   return (
     <div className='exam-status'>
+      {exam.test.classId == null ? (<Status>Created in Course</Status>) : (<Status>Created in Class</Status>)}
       {user.isTeacher && exam.classTest == null && <Status>Unassigned</Status>}
       {exam.classTest && (
         <>

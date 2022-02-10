@@ -12,9 +12,15 @@ export default function Status({children}) {
       break
     case "Ongoing":
       color = "#FFC107";
-      break
+    break
     case "Ended":
       color = "#007BFF";
+      break
+    case "Created in Course":
+      color = "#007BFF";
+      break
+    case "Created in Class":
+      color = "#17A2B8";
       break
     case "Upcoming":
       color = "#17A2B8";

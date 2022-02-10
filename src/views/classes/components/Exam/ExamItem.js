@@ -6,7 +6,9 @@ import { Link } from "react-router-dom";
 import { UserContext } from "../../../../context/UserContext";
 import AssignExam from "./AssignExam";
 import EditExam from "./EditExam";
+import ExamItemContent from "./ExamItemContent";
 import ExamStatuses from "./ExamStatuses";
+import TeacherExamActions from "./TeacherExamActions";
 
 export default function ExamItem({ exam, deleteExam, setLoading, fetchExams }) {
   const userContext = useContext(UserContext);
@@ -29,7 +31,6 @@ export default function ExamItem({ exam, deleteExam, setLoading, fetchExams }) {
       exam.classTest.endTime.split(":")[0],
       exam.classTest.endTime.split(":")[1]
     );
-    console.log({ startDate, endDate });
   }
 
   return (
@@ -51,67 +52,27 @@ export default function ExamItem({ exam, deleteExam, setLoading, fetchExams }) {
         You will not be able to recover this exam!
       </SweetAlert>
       <div className='exam-content'>
-        <Link
-          to={user.isStudent ? `/class/${id}/exam/${exam.test.id}` : `/exam_creation/${exam.test.id}`}
-          className='exam-title'
-        >
-          {exam.test.testName}
-        </Link>
-        <p className='exam-course-name'>{exam.module?.moduleName}</p>
-        <p className='exam-instruction '>{exam.test.testInstructions}</p>
-        {startDate && <p className='exam-instruction m-0'><span className="d-inline-block" style={{width: 40}}>Start:</span> <b>{moment(startDate).format('MMMM Do YYYY, h:mm:ss a')}</b></p>}
-        {endDate && <p className='exam-instruction m-0 mb-3'><span className="d-inline-block" style={{width: 40}}>End:</span> <b>{moment(endDate).format('MMMM Do YYYY, h:mm:ss a')}</b></p>}
-        {<p className='exam-instruction m-0 mb-3'><span className="d-inline-block" style={{width: 80}}>Current:</span> <b>{moment(new Date()).format('MMMM Do YYYY, h:mm:ss a')}</b></p>}
-        <ExamStatuses exam={exam} user={user} startDate={startDate} endDate={endDate} />
-        
-        
+        <ExamItemContent
+          id={id}
+          exam={exam}
+          user={user}
+          startDate={startDate}
+          endDate={endDate}
+        />
+        <ExamStatuses
+          exam={exam}
+          user={user}
+          startDate={startDate}
+          endDate={endDate}
+        />
       </div>
       {user.isTeacher && (
-        <div className='exam-actions'>
-          {/* <Link to={`/exam_creation/${exam.test.id}`}>
-            <i class='fas fa-eye'></i>
-          </Link> */}
-          <a href='#assign'>
-            <i
-              class='fas fa-user-clock'
-              onClick={(e) => {
-                e.preventDefault();
-                setShowModal(true);
-              }}
-            ></i>
-          </a>
-          <a href='#edit'>
-            <i
-              class='fas fa-edit'
-              onClick={(e) => {
-                e.preventDefault();
-                setShowEditModal(true);
-              }}
-            ></i>
-          </a>
-          {exam.classTest == null && (
-            <>
-              <a href='#assign'>
-                <i
-                  class='fas fa-user-clock'
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setShowModal(true);
-                  }}
-                ></i>
-              </a>
-              <a
-                href='#delete'
-                onClick={(e) => {
-                  e.preventDefault();
-                  setShowWarning(true);
-                }}
-              >
-                <i class='fas fa-trash-alt'></i>
-              </a>
-            </>
-          )}
-        </div>
+        <TeacherExamActions
+          exam={exam}
+          setShowModal={setShowModal}
+          setShowEditModal={setShowEditModal}
+          setShowWarning={setShowWarning}
+        />
       )}
       <AssignExam
         showModal={showModal}
@@ -120,7 +81,7 @@ export default function ExamItem({ exam, deleteExam, setLoading, fetchExams }) {
         exam={exam}
         setLoading={setLoading}
         fetchExams={fetchExams}
-        closeModal={()=> setShowModal(false)}
+        closeModal={() => setShowModal(false)}
       />
       <EditExam
         showEditModal={showEditModal}

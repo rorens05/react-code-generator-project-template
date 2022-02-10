@@ -9,6 +9,7 @@ import SweetAlert from 'react-bootstrap-sweetalert';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link } from "react-router-dom";
+import Status from "../../../../components/utilities/Status";
 
 
 export default function CoursesExam() {
@@ -126,7 +127,8 @@ export default function CoursesExam() {
                       <Col className="lesson-header" md={9}>
                         <Link className="lesson-header" to={`/exam_creation/${item?.id}`}>
                           {item?.testName}
-                        </Link>
+                        </Link><br/>
+                        {/* {examInfo.classId == null ? (<Status>Created in Course</Status>) : (<Status>Created in Class</Status>)} */}
                       </Col>
                       <Col className="align-right-content" md={3}>
                         <Button className="m-r-5 color-white tficolorbg-button" size="sm"   onClick={(e) => handleOpenEditExamModal(e, item)}><i className="fa fa-edit"></i></Button>
