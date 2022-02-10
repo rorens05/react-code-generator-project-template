@@ -82,6 +82,13 @@ export default class ClassesAPI extends Base {
     });
   };
 
+  getModuleClass = async (classId) => {
+    return this.sendRequest({
+      path: `/api/Module/class/${classId}/item/1`,
+      method: 'GET'
+    })
+  }
+
   getTaskModule = async (id, moduleId ) => {
     return this.sendRequest({
       path: `/api/Class/${id}/module/${moduleId}/task`,
@@ -479,6 +486,13 @@ creatTask = async (mId, cId,  data) => {
   getClassInteractiveModules = async (classid, moduleid) =>{
     return this.sendRequest({
       path: `/api/Class/${classid}/module/${moduleid}/interactive`,
+      method: 'GET'
+    })
+  }
+
+  getInformationExam = async (testId) => {
+    return this.sendRequest({
+      path: `/api/Test/${testId}/information`,
       method: 'GET'
     })
   }

@@ -19,7 +19,6 @@ function CreateAssignment({modal, toggle, module, getAssignmentList, refmoduleId
   const closeNotify = () =>{
     setAddNotity(false)
   }
- console.log(id , '---------------------------------------------')
   const createAssignment = async (e) =>{
     e.preventDefault()
     let response = await new ClassesAPI().createAssignment(moduleId, id, {assignment:{assignmentName, instructions,}, classAssignment:{}} )
@@ -45,10 +44,9 @@ function CreateAssignment({modal, toggle, module, getAssignmentList, refmoduleId
     let response = await new FilesAPI().getClassFiles(id)
     // setLoading(false)
     if(response.ok){
-      console.log(response, '-----------------------')
       setDisplayFiles(response.data)
     }else{
-      alert("Something went wrong while fetching class files ----------.")
+      alert("Something went wrong while fetching class files.")
     }
   } 
 
