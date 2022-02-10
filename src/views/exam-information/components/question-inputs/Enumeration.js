@@ -11,7 +11,7 @@ const Enumeration = ({ number, part, question, onAnswer }) => {
         </div>
         <div className='question-input-content-choices'>
           {(question.studentAnswer || question.choices.map(() => ({answer: ""}))).map((item, index) => {
-            let tempAnswer = [...(question.studentAnswer || [])]
+            let tempAnswer = [...(question.studentAnswer || question.choices.map(() => ({answer: ""})))]
             return (
               <Form.Control
                 key={index}

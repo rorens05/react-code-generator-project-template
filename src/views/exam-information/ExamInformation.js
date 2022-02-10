@@ -79,9 +79,23 @@ export default function ExamInformation() {
   const submitPartsAnswer = async (part) => {
     console.log("SUBMIT PART", { part });
     let payload = [];
+    let unique = true
+    let empty = false
     if (part.questionPart.questionTypeId == 5) {
+
       payload = part.questionDtos.map((question) => {
         let studentAnswers = question.studentAnswer || question.choices.map(() => ({answer: ""}))
+
+        
+        studentAnswers.forEach((choice) => {
+          if(studentAnswers.filter(c => c.answer == choice.answer).length > 1){
+            unique = false
+          }
+          if(choice.answer == ""){
+            empty = true
+          }
+        })
+
         return {
           answer: "",
           questionType: 5,
@@ -100,6 +114,17 @@ export default function ExamInformation() {
         };
       });
     }
+    
+    if(empty){
+      toast.error("Please fill all answers")
+      return
+    }
+    
+    if(!unique){
+      toast.error("Please add unique answers")
+      return
+    }
+
     console.log({ payload });
     setLoading(true);
     let response = await new ExamAPI().submitTestPerPart(
