@@ -7,6 +7,9 @@ function FileHeader(props) {
   const [files, setFiles] = useState([]);
   const [doneUpload, setDoneUpload] = useState(false)
   const [uploadStarted, setUploadStarted] = useState(false)
+  const allUploaded = files.filter(itm => { //check if all items is already 100% uploaded
+    return itm.progress != 100
+  })
 
   const handlefilesUpload = (file) => {
     console.log(file)
@@ -60,9 +63,6 @@ function FileHeader(props) {
           if(response.ok){
             files[index].progress = 100;
             setFiles([...files])
-            let allUploaded = files.filter(itm => { //check if all items is already 100% uploaded
-              return itm.progress != 100
-            })
             setDoneUpload(allUploaded.length == 0 ? true : false)
             setUploadStarted(allUploaded.length == 0 ? false : true)
           }else{
@@ -167,7 +167,7 @@ function FileHeader(props) {
              })}
             </tbody>
           </Table>
-          <Button size="lg" variant="outline-warning" disabled={files.length == 0 || uploadStarted ? true : false} className={"file-library file-button-upload mx-3" } onClick={()=> handleUploadFile()}>{uploadStarted ? 'Uploading...' : 'Upload'}</Button>
+          <Button size="lg" variant="outline-warning" disabled={allUploaded.length == 0 ? true : false} className={"file-library file-button-upload mx-3" } onClick={()=> handleUploadFile()}>{uploadStarted ? 'Uploading...' : 'Upload'}</Button>
           <Button size="lg" variant="outline-warning" className={ doneUpload ? "file-library file-button-upload" : 'd-none'} onClick={()=> handleDoneUpload()}>Done</Button>
         </Modal.Body>
       </Modal>
