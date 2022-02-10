@@ -34,19 +34,19 @@ const EssayForm = ({
               className='custom-input'
               size='lg'
               type='text'
-              placeholder='Enter test instructions'
+              placeholder='Enter test question'
               onChange={(e) => setQuestion(e.target.value)}
             />
           </Form.Group>
           <Form.Group className='m-b-20'>
-            <Form.Label for='question'>Rate</Form.Label>
+            <Form.Label for='question'>Points</Form.Label>
             <Form.Control
               defaultValue={""}
               value={rate}
               className='custom-input'
               size='lg'
               type='number'
-              placeholder='Enter test instructions'
+              placeholder='Enter test points'
               onChange={(e) => setRate(e.target.value)}
             />
           </Form.Group>
@@ -136,7 +136,7 @@ export default function Essay({
             <p className='primary-title'>
               {index + 1}. {question.question.testQuestion}
             </p>
-            <p className=''>Rating: {question.question.rate}</p>
+            <p className=''>Point(s): {question.question.rate}</p>
           </div>
           <QuestionActions onDelete={(e) => deleteQuestion(e, question.question.id)} onEdit={(e) => {
             setSelectedId(question.question.id)

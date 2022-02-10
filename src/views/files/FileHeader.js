@@ -7,20 +7,30 @@ function FileHeader(props) {
   const [files, setFiles] = useState([]);
   const [doneUpload, setDoneUpload] = useState(false)
   const [uploadStarted, setUploadStarted] = useState(false)
+  const allUploaded = files.filter(itm => { //check if all items is already 100% uploaded
+    return itm.progress != 100
+  })
 
   const handlefilesUpload = (file) => {
+    console.log(file)
     if(file != ''){
-      getBase64(file).then(
-        data => {
-          let toAdd = {
-            fileName: file.name,
-            base64String: data,
-            size: file.size,
-            progress: 0
-          };
-          setFiles([...files, toAdd]);
-        }
-      );
+      
+      Object.values(file).map((itm, index) => {
+        console.log(itm, index)
+        let temp = []
+        getBase64(itm).then(
+          data => {
+            let toAdd = {
+              fileName: itm.name,
+              base64String: data,
+              size: itm.size,
+              progress: 0
+            };
+            files.push(toAdd)
+            setFiles([...files]);
+          }
+        );
+      })
     }
   }
 
@@ -38,60 +48,66 @@ function FileHeader(props) {
     //course uploading
     if(props.type == 'Course'){
       files.map( async(item, index) => {
-        let tempData = {
-          fileName: item.fileName,
-          base64String: item.base64String,
-        },
-        toSave = {
-          data: tempData,
-          id: props.id
-        }
-        files[index].progress = 30;
-        setFiles([...files])
-        let response = await new FilesAPI().newCourseFile(toSave)
-        if(response.ok){
-          files[index].progress = 100;
+        if(item.progress == 0){
+          let tempData = {
+            fileName: item.fileName,
+            base64String: item.base64String,
+          },
+          toSave = {
+            data: tempData,
+            id: props.id
+          }
+          files[index].progress = 30;
           setFiles([...files])
-          let allUploaded = files.filter(itm => { //check if all items is already 100% uploaded
-            return itm.progress != 100
-          })
-          setDoneUpload(allUploaded.length == 0 ? true : false)
-        }else{
-          setLgShow(false)
-          setFiles([])
-          setDoneUpload(false)
-          setUploadStarted(false)
-          alert("Something went wrong while creating new file")
+          let response = await new FilesAPI().newCourseFile(toSave)
+          if(response.ok){
+            files[index].progress = 100;
+            setFiles([...files])
+            let allUploaded = files.filter(itm => { //check if all items is already 100% uploaded
+              return itm.progress != 100
+            })
+            setDoneUpload(allUploaded.length == 0 ? true : false)
+            setUploadStarted(allUploaded.length == 0 ? false : true)
+          }else{
+            setLgShow(false)
+            setFiles([])
+            setDoneUpload(false)
+            setUploadStarted(false)
+            alert("Something went wrong while creating new file")
+          }
         }
       })
     }
     // class uploading
     if(props.type == 'Class'){
       files.map( async(item, index) => {
-        let tempData = {
-          fileName: item.fileName,
-          base64String: item.base64String,
-        },
-        toSave = {
-          data: tempData,
-          id: props.id
-        }
-        files[index].progress = 30;
-        setFiles([...files])
-        let response = await new FilesAPI().newClassFile(toSave)
-        if(response.ok){
-          files[index].progress = 100;
+        if(item.progress == 0){
+          let tempData = {
+            fileName: item.fileName,
+            base64String: item.base64String,
+          },
+          toSave = {
+            data: tempData,
+            id: props.id
+          }
+          files[index].progress = 30;
           setFiles([...files])
-          let allUploaded = files.filter(itm => { //check if all items is already 100% uploaded
-            return itm.progress != 100
-          })
-          setDoneUpload(allUploaded.length == 0 ? true : false)
-        }else{
-          setLgShow(false)
-          setFiles([])
-          setDoneUpload(false)
-          setUploadStarted(false)
-          alert("Something went wrong while creating new file")
+          let response = await new FilesAPI().newClassFile(toSave)
+          if(response.ok){
+            files[index].progress = 100;
+            setFiles([...files])
+            let allUploaded = files.filter(itm => { //check if all items is already 100% uploaded
+              return itm.progress != 100
+            })
+            setDoneUpload(allUploaded.length == 0 ? true : false)
+            setUploadStarted(allUploaded.length == 0 ? false : true)
+          }else{
+            setLgShow(false)
+            setFiles([])
+            setDoneUpload(false)
+            setUploadStarted(false)
+            alert("Something went wrong while creating new file")
+          }
         }
       })
     }
@@ -108,6 +124,7 @@ function FileHeader(props) {
     setFiles([])
     props.doneUpload()
     setDoneUpload(false)
+    setUploadStarted(false)
     setUploadStarted(false)
   }
 
@@ -131,7 +148,7 @@ function FileHeader(props) {
               <i class="fas fa-paperclip"></i>
                 Choose Files
               </Button>
-              <input id='inputFile' className='d-none' type='file' placeholder='Choose color' style={{ backgroundColor: 'inherit' }} onChange={(e) => handlefilesUpload(e.target.files[0])} />
+              <input id='inputFile' className='d-none' multiple type='file' placeholder='Choose color' style={{ backgroundColor: 'inherit' }} onChange={(e) => handlefilesUpload(e.target.files)} />
           </div>
           <Table responsive="sm">
             <thead>
@@ -153,7 +170,7 @@ function FileHeader(props) {
              })}
             </tbody>
           </Table>
-          <Button size="lg" variant="outline-warning" disabled={files.length == 0 || uploadStarted ? true : false} className={doneUpload ? 'd-none' : "file-library file-button-upload" } onClick={()=> handleUploadFile()}>{uploadStarted ? 'Uploading...' : 'Upload'}</Button>
+          <Button size="lg" variant="outline-warning" disabled={allUploaded.length == 0 ? true : false} className={"file-library file-button-upload mx-3" } onClick={()=> handleUploadFile()}>{uploadStarted ? 'Uploading...' : 'Upload'}</Button>
           <Button size="lg" variant="outline-warning" className={ doneUpload ? "file-library file-button-upload" : 'd-none'} onClick={()=> handleDoneUpload()}>Done</Button>
         </Modal.Body>
       </Modal>

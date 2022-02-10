@@ -11,6 +11,7 @@ export default function ExamCreationDetails({
   setShowModal,
   deletePart,
 }) {
+  console.log(exam, '---------------')
   return exam != null ? (
     <div className='exam-information-container'>
       <div className='d-flex justify-content-between '>
@@ -21,7 +22,8 @@ export default function ExamCreationDetails({
           <p className='primary-title' style={{ fontSize: 24 }}>
             {exam.test.testName}
           </p>
-          <p className='secondary-title mb-2'>{`${exam.totalItems} Total Item(s)`}</p>
+          <p className='secondary-title mb-2'>{`${exam.rawScore} Total Point(s)`}</p>
+          <p className='secondary-title mb-2'>{`${exam.questionPartDto?.length} Total Part(s)`}</p>
         </div>
       </div>
       <hr />
