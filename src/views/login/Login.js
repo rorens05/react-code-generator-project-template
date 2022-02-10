@@ -74,7 +74,7 @@ export default function Login() {
                 </div>
                 <div className="mx-3">
                   <p className="qr-text mt-3">
-                    Click on the scanner icon to activate the QR code scanner.
+                    Click on the scanner icon to activate the QR code reader.
                   </p>
                   <p className="qr-text d-none">Scan this code with the <a href="https://google.com" target="blank" className="link-orange">TekTeach mobile app</a> to log in instantly</p>
                 </div>
