@@ -86,7 +86,12 @@ export default function Essay({
       rate,
     };
     if(selectedId != null){
-      updateQuestion(selectedId, data)
+      if(rate > 0 && rate < 101){
+        updateQuestion(selectedId, data)
+      }else{
+        setLoading(false)
+        toast.error('Rate should be greater than 1 and less than 100.')
+      }
     }else{
       if(rate > 0 && rate < 101){
         addQuestion(data);
