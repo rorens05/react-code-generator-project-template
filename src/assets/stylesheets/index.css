@@ -1022,8 +1022,8 @@ border-top-right-radius: 0px !important;
 }
 
 .exam-item-container .exam-content .exam-instruction{
-  font-size: 20px;
-  color: #BCBCBC;
+  font-size: 16px;
+  color: #707070;
   text-decoration: none !important;
 }
 
@@ -1164,8 +1164,14 @@ hr{
 }
 
 .status-text{
-  font-size: 20px;
-  font-weight: bold;  
+  display: inline-block;
+  margin: 2px !important;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background-color: gray;
+  color: white !important;
+  font-weight: bold;
+  font-size: 13px;
 }
 
 .exam-part-creation{
@@ -1216,4 +1222,8 @@ hr{
 
 .choice-item.active{
   background-color: #ffd1a3;
+}
+
+.rotate{
+  transform: rotate(180deg); 
 }

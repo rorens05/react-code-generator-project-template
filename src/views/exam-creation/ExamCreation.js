@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import ClassesAPI from "../../api/ClassesAPI";
 import ExamAPI from "../../api/ExamAPI";
 import MainContainer from "../../components/layouts/MainContainer";
 import { UserContext } from "../../context/UserContext";
@@ -16,7 +17,9 @@ export default function ExamCreation() {
   const userContext = useContext(UserContext);
   const { user } = userContext.data;
   const { id } = useParams();
+  const [noAssigned, setNoAssigned] = useState(false)
   const [selectedPart, setSelectedPart] = useState(null);
+  const [editable, setEditable] = useState(true)
 
   const getExamInformation = async () => {
     setLoading(true);
@@ -30,13 +33,48 @@ export default function ExamCreation() {
           tempExam.questionPartDto.push({questionPart: item, questionDtos: []})
         }
       })
-      console.log({tempExam})
+      tempExam = await getClassTest(tempExam)
       setExam(tempExam);
     } else {
       alert("Something went wrong while fetching exam information");
     }
     setLoading(false);
   };
+
+  const getClassTest = async (tempExam) => {
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const params = Object.fromEntries(urlSearchParams.entries());
+    const classId = tempExam.test.classId || params.class_id
+    const not_editable = params.not_editable
+    if(classId){
+      let response = await new ExamAPI().getExams(classId);
+      if (response.ok) {
+        console.log({response})
+        let foundExam = response.data.find(item => item.test.id === tempExam.test.id)
+        if(foundExam){
+          tempExam.classTest = foundExam.classTest
+        }else{
+          alert("Class test not found")
+        }
+        console.log({tempExam})
+        response = await new ClassesAPI().getClassInformation(classId)
+        if(tempExam.classTest){
+          setEditable(false)
+        }
+        if (response.ok) {
+          tempExam.class = response.data
+        }else{
+          alert("Invalid Class")
+        }
+      }
+    }else{
+      setNoAssigned(true)
+    }
+    if(not_editable){
+      setEditable(false)
+    }
+    return tempExam
+  }
   
   const submitPartForm = async (e) => {
     if(selectedPart != null){
@@ -85,8 +123,6 @@ export default function ExamCreation() {
   }
 
   const deletePart = async(e, part) => {
-    e.preventDefault()
-    console.log({part})
     setLoading(true)
     let response = await new ExamAPI().deletePart(part.questionPart.id)
     if(response.ok){
@@ -129,6 +165,8 @@ export default function ExamCreation() {
             deletePart={deletePart}
             selectedPart={selectedPart}
             setSelectedPart={setSelectedPart}
+            noAssigned={noAssigned}
+            editable={editable}
           />
         </div>
       </div>

@@ -76,7 +76,7 @@ export default function CourseContent(course) {
   }, [])
 
   return (
-    <MainContainer loading={loading} fluid>
+    <MainContainer loading={loading} fluid activeHeader={'courses'}>
       <ToastContainer />
       <Row>
         <Col sm={3}>

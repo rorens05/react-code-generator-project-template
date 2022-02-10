@@ -68,6 +68,7 @@ export default function Essay({
   getExamInformation,
   setLoading,
   deleteQuestion,
+  editable,
 }) {
   const [showModal, setShowModal] = useState(false);
   const [question, setQuestion] = useState("");
@@ -77,7 +78,7 @@ export default function Essay({
 
   const submitQuestion = async (e) => {
     e.preventDefault();
-    setLoading(true)
+    setLoading(true);
     const data = {
       questionTypeId,
       questionPartId: part.questionPart.id,
@@ -85,10 +86,10 @@ export default function Essay({
       questionImage: "",
       rate,
     };
-    if(selectedId != null){
-      updateQuestion(selectedId, data)
-    }else{
-      addQuestion(data)
+    if (selectedId != null) {
+      updateQuestion(selectedId, data);
+    } else {
+      addQuestion(data);
     }
   };
 
@@ -97,36 +98,36 @@ export default function Essay({
     if (response.ok) {
       setShowModal(false);
       toast.success("Question updated successfully");
-      getExamInformation()
-      setRate(1)
-      setQuestion("")
-      setSelectedId(null)
+      getExamInformation();
+      setRate(1);
+      setQuestion("");
+      setSelectedId(null);
     } else {
       toast.error(
         response.data?.errorMessage ||
           "Something went wrong while updating the question"
       );
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   const addQuestion = async (data) => {
     let response = await new ExamAPI().addEssay(id, part.questionPart.id, data);
     if (response.ok) {
       setShowModal(false);
       toast.success("Question added successfully");
-      getExamInformation()
-      setRate(1)
-      setQuestion("")
-      setSelectedId(null)
+      getExamInformation();
+      setRate(1);
+      setQuestion("");
+      setSelectedId(null);
     } else {
       toast.error(
         response.data?.errorMessage ||
           "Something went wrong while creating the part"
       );
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <div>
@@ -138,25 +139,32 @@ export default function Essay({
             </p>
             <p className=''>Point(s): {question.question.rate}</p>
           </div>
-          <QuestionActions onDelete={(e) => deleteQuestion(e, question.question.id)} onEdit={(e) => {
-            setSelectedId(question.question.id)
-            setQuestion(question.question.testQuestion)
-            setRate(question.question.rate)
-            setShowModal(true)
-          }}/>
+          {editable && (
+            <QuestionActions
+              onDelete={(e) => deleteQuestion(e, question.question.id)}
+              onEdit={(e) => {
+                setSelectedId(question.question.id);
+                setQuestion(question.question.testQuestion);
+                setRate(question.question.rate);
+                setShowModal(true);
+              }}
+            />
+          )}
         </div>
       ))}
-      <Button
-        className='tficolorbg-button'
-        type='submit'
-        onClick={() => {
-          setQuestion("")
-          setRate("")
-          setShowModal(true)
-        }}
-      >
-        Add question 
-      </Button>
+      {editable && (
+        <Button
+          className='tficolorbg-button'
+          type='submit'
+          onClick={() => {
+            setQuestion("");
+            setRate("");
+            setShowModal(true);
+          }}
+        >
+          Add question
+        </Button>
+      )}
       <EssayForm
         showModal={showModal}
         setShowModal={setShowModal}

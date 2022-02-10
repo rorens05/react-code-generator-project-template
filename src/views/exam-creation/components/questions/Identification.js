@@ -82,6 +82,7 @@ export default function Identification({
   getExamInformation,
   setLoading,
   deleteQuestion,
+  editable,
 }) {
   const [showModal, setShowModal] = useState(false);
   const [question, setQuestion] = useState("");
@@ -92,7 +93,7 @@ export default function Identification({
 
   const submitQuestion = async (e) => {
     e.preventDefault();
-    console.log({selectedQuestion})
+    console.log({ selectedQuestion });
     setLoading(true);
     const data = {
       question: {
@@ -117,10 +118,13 @@ export default function Identification({
       data.question
     );
     if (response.ok) {
-      response = await new ExamAPI().editIdentificationAnswer(selectedQuestion.choices[0].id, {
-        isCorrect: true,
-        testChoices: data.answer,
-      });
+      response = await new ExamAPI().editIdentificationAnswer(
+        selectedQuestion.choices[0].id,
+        {
+          isCorrect: true,
+          testChoices: data.answer,
+        }
+      );
       if (response.ok) {
         setShowModal(false);
         toast.success("Question updated successfully");
@@ -128,7 +132,7 @@ export default function Identification({
         setRate(1);
         setQuestion("");
         setSelectedQuestion(null);
-      }else{
+      } else {
         toast.error(
           response.data?.errorMessage ||
             "Something went wrong while updating the question"
@@ -177,31 +181,36 @@ export default function Identification({
             <p className=''>Answer: {question.answer}</p>
             <p className=''>Point(s): {question.question.rate}</p>
           </div>
-          <QuestionActions
-            onDelete={(e) => deleteQuestion(e, question.question.id)}
-            onEdit={(e) => {
-              setSelectedQuestion(question);
-              setQuestion(question.question.testQuestion);
-              setAnswer(question.answer);
-              setRate(question.question.rate);
-              setShowModal(true);
-            }}
-          />
+
+          {editable && (
+            <QuestionActions
+              onDelete={(e) => deleteQuestion(e, question.question.id)}
+              onEdit={(e) => {
+                setSelectedQuestion(question);
+                setQuestion(question.question.testQuestion);
+                setAnswer(question.answer);
+                setRate(question.question.rate);
+                setShowModal(true);
+              }}
+            />
+          )}
         </div>
       ))}
-      <Button
-        className='tficolorbg-button'
-        type='submit'
-        onClick={() => {
-          setSelectedQuestion(null)
-          setQuestion("");
-          setRate("");
-          setAnswer("");
-          setShowModal(true);
-        }}
-      >
-        Add question
-      </Button>
+      {editable && (
+        <Button
+          className='tficolorbg-button'
+          type='submit'
+          onClick={() => {
+            setSelectedQuestion(null);
+            setQuestion("");
+            setRate("");
+            setAnswer("");
+            setShowModal(true);
+          }}
+        >
+          Add question
+        </Button>
+      )}
       <IdentificationForm
         showModal={showModal}
         setShowModal={setShowModal}

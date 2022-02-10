@@ -18,7 +18,7 @@ export default function Header({activeHeader}) {
       <div className="header-links">
         {user.isTeacher && <Link className={activeHeader === "courses" && 'active'} to="/courses">Courses</Link> }
         <Link className={activeHeader === "classes" && 'active'} to="/classes">Classes</Link>
-        {user.isTeacher && <Link className={activeHeader === "exam" && 'active'} to="/exam">Exam</Link> }
+        {/* {user.isTeacher && <Link className={activeHeader === "exam" && 'active'} to="/exam">Exam</Link> } */}
         {user.isTeacher && <Link className={activeHeader === "files" && 'active'} to="/files">Files</Link> }
         {user.isTeacher && <Link className={activeHeader === "reports" && 'active'} to="/reports">Reports</Link>}
     </div>
