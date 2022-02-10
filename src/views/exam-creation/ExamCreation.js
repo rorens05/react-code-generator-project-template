@@ -42,7 +42,6 @@ export default function ExamCreation() {
   };
 
   const getClassTest = async (tempExam) => {
-    console.log({tempExam})
     const urlSearchParams = new URLSearchParams(window.location.search);
     const params = Object.fromEntries(urlSearchParams.entries());
     const classId = tempExam.test.classId || params.class_id
@@ -53,11 +52,15 @@ export default function ExamCreation() {
         let foundExam = response.data.find(item => item.test.id === tempExam.test.id)
         if(foundExam){
           tempExam.classTest = foundExam.classTest
-          setEditable(false)
+          
         }else{
           alert("Class test not found")
         }
+        console.log({tempExam})
         response = await new ClassesAPI().getClassInformation(classId)
+        if(tempExam.classTest){
+          setEditable(false)
+        }
         if (response.ok) {
           tempExam.class = response.data
         }else{
