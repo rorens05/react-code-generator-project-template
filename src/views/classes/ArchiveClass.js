@@ -9,6 +9,7 @@ export default function Classes() {
   const [loading, setLoading] = useState(true)
   const userContext = useContext(UserContext)
   const {user} = userContext.data
+  const [searchTerm, setSearchTerm] = useState('')
 
   // const getClasses = async() => {
   //   let response = await new ClassesAPI().getClasses(user?.teacher?.id)
@@ -18,6 +19,10 @@ export default function Classes() {
   //     alert("Something went wrong while fetching all courses")
   //   }
   // }
+
+  const onSearch = (text) =>{
+    setSearchTerm(text)
+  }
 
   const getArchive = async() => {
     let response = await new ClassesAPI().getArchive()
@@ -38,9 +43,7 @@ export default function Classes() {
     <MainContainer loading={loading} activeHeader={'classes'}>
       <div className='page-container'>
         <div className='containerpages'>
-
-        <HeaderArchive getArchive={getArchive} archiveItem={archive} />
-
+        <HeaderArchive searchTerm={searchTerm} onSearch={onSearch} getArchive={getArchive} archiveItem={archive} />
         </div>
       </div>
     </MainContainer>

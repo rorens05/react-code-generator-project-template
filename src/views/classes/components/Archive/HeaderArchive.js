@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import ClassesAPI from "../../../../api/ClassesAPI";
 import SweetAlert from 'react-bootstrap-sweetalert';
 
-export default function HeaderArchive({archiveItem, getArchive}) {
+export default function HeaderArchive({archiveItem, getArchive, onSearch, searchTerm}) {
 const [openDropdown, setOpenDropdown] = useState(false)
 const [editNotify, setEditNotity] = useState(false)
 const history = useHistory();
@@ -64,14 +64,20 @@ return (
 			  <div className="row m-b-20">
 				  <div className="col-md-12">
 					  <InputGroup size="lg">
-						  <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Search here for archived classes" type="search"/>
+						  <FormControl onChange={(e) => onSearch(e.target.value)} aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Search here for archived classes" type="search"/>
 					  <InputGroup.Text id="basic-addon2" className="search-button"><i className="fas fa-search fa-1x"></i></InputGroup.Text>
 					  </InputGroup>
 					</div>
 			  </div>
       </div>
       <CardGroup className='card-group2'>
-      {archiveItem.map(item =>{
+      {archiveItem.filter((item) => {
+        if(searchTerm == ''){
+          return item
+        }else if(item.className.toLowerCase().includes(searchTerm.toLowerCase())){
+          return item
+        }
+      }).map(item =>{
         return(
           <div>
           <Card className='class-card' >
