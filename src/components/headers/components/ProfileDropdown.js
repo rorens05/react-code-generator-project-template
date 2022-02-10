@@ -32,12 +32,12 @@ export default function ProfileDropdown({visible}) {
             <p className="sub-title">Help us improve TekTeach LMS</p>
           </div>
         </Link>
-        <Link to="#" className="profile-dropdown-link">
+        <a target="_blank" rel="noreferrer" href="https://support.tekteach.com/" className="profile-dropdown-link">
           <div className="profile-dropdown-link-icon">
             <i class="fas fa-question-circle"></i>
           </div>
           Help & Support
-        </Link>
+        </a>
         <Link to="#" className="profile-dropdown-link">
           <div className="profile-dropdown-link-icon">
             <i class="fas fa-tv"></i>
