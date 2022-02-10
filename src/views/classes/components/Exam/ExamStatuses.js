@@ -1,0 +1,22 @@
+import React from "react";
+import Status from "../../../../components/utilities/Status";
+
+export default function ExamStatuses({ user, exam, startDate, endDate }) {
+  
+
+  return (
+    <div className='exam-status'>
+      {user.isTeacher && exam.classTest == null && <Status>Unassigned</Status>}
+      {exam.classTest && (
+        <>
+          {startDate > new Date() && <Status>Upcoming</Status>}
+          {startDate < new Date() && endDate > new Date() && <Status>Ongoing</Status>}
+          {endDate < new Date() && <Status>Ended</Status>}
+        </>
+      )}
+      {user.isStudent && (
+        <Status>{exam.isLoggedUserDone ? "Completed" : "Not Completed"}</Status>
+      )}
+    </div>
+  );
+}
