@@ -8,6 +8,7 @@ import { useParams } from "react-router-dom";
 import ActivityIndicator from "../../components/loaders/ActivityIndicator";
 import { UserContext } from "../../context/UserContext";
 import { toast } from "react-toastify";
+import ClassesAPI from "../../api/ClassesAPI";
 
 export const ClassExam = () => {
   const [loading, setLoading] = useState(true);
@@ -35,14 +36,28 @@ export const ClassExam = () => {
       });
       // fetch modules by class id
 
-      
-
       setExams(filteredExams);
-      setModules(uniqueModules);
+      
     } else {
       alert("Something went wrong while fetching exams");
     }
   };
+
+ const getModuleClass = async () => {
+    setLoading(true);
+    let response = await new ClassesAPI().getModuleClass(id);
+    setLoading(false);
+    if(response.ok){
+      setModules(response.data)
+    }else{
+      alert("Something went wrong while fetching Modules");
+    }
+  }
+
+  useEffect(() => {
+    getModuleClass()
+  }, [])
+
 
   const deleteExam = async(id) => {
     setLoading(true)
@@ -64,6 +79,8 @@ export const ClassExam = () => {
   useEffect(() => {
     fetchExams();
   }, []);
+
+  console.log('exams:', modules)
 
   return (
     <div className="class-container position-relative">
