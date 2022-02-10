@@ -15,7 +15,7 @@ export default function ExamCreation() {
   const [typeId, setTypeId] = useState(1)
   const userContext = useContext(UserContext);
   const { user } = userContext.data;
-  const { id, class_id } = useParams();
+  const { id } = useParams();
   const [noAssigned, setNoAssigned] = useState(false)
   const [selectedPart, setSelectedPart] = useState(null);
 

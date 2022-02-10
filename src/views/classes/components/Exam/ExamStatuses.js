@@ -1,13 +1,11 @@
 import React from "react";
 import Status from "../../../../components/utilities/Status";
 
-export default function ExamStatuses({ user, exam, startDate, endDate }) {
-  
-
+export default function ExamStatuses({ user, exam, startDate, endDate, noAssigned }) {
   return (
     <div className='exam-status'>
       {exam.test.classId == null ? (<Status>Created in Course</Status>) : (<Status>Created in Class</Status>)}
-      {user.isTeacher && exam.classTest == null && <Status>Unassigned</Status>}
+      {user.isTeacher && exam.classTest == null && !noAssigned && <Status>Unassigned</Status>}
       {exam.classTest && (
         <>
           {startDate > new Date() && <Status>Upcoming</Status>}
