@@ -19,7 +19,7 @@ export default function MainContainer({children, headerVisible = true, fluid, lo
         <div class="footer text-dark">
           <img src={logo} alt="logo"/>
           <p className="m-0">
-            {ENV !== ENV_LIST.PRODUCTION ? `${ENV} build` : ''}  
+            {ENV !== ENV_LIST.PRODUCTION ? `${ENV} BUILD` : ''}  
           </p>
           <p>
             Version: {VERSION_NAME}
