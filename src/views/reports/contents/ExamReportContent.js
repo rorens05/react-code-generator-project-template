@@ -40,11 +40,11 @@ function ExamReportContent({classesModules, setClassesModules, selectedClassId, 
     let isConsider = true
     let response = await new ClassesAPI().retakeExam
     (
-      classid, testid, studentid
+      sessionClass, testid, studentid
     )
     if(response.ok){
       notifyRetakeExam()
-      getTestReport(null, classid, testid)
+      getTestReport(null, sessionClass, testid)
     }else{
       alert(response.data.errorMessage)
     }
