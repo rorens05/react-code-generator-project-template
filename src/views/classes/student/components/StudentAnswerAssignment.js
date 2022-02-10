@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext} from 'react'
-import { Form, Button, Table} from 'react-bootstrap'
+import { Form, Button, Table, ProgressBar} from 'react-bootstrap'
 import Modal from 'react-bootstrap/Modal'
 import { useParams } from 'react-router'
 import ClassesAPI from '../../../../api/ClassesAPI'
@@ -14,20 +14,24 @@ function StudentAnswerAssignment({answerAnswerToggle, answerModal, assignmentId}
   // const [files, setFiles] = useState('')
   const [assignNotify, setAssignNotify] = useState(false)
   const [files, setFiles] = useState([]);
+  const [uploadingFiles, setUploadingFiles] = useState('pending');
 
   const closeNotify = () => {
     setAssignNotify(false)
   }
 
-  console.log("user:", user?.userId)
+  // console.log("user:", user?.userId)
 
   const submitStudentAssignmentAnswer = async (e) => {
     e.preventDefault()
+    setUploadingFiles('uploading');
     let studentId = user?.student?.id
     let response = await new ClassesAPI().submitStudentAssignmentAnswer(studentId, id, assignmentId, {assignmentAnswer, fileDetails: files})
       if(response.data){
         setAssignNotify(true)
-        setAssignmentAnswer('')
+        setAssignmentAnswer('');
+        setUploadingFiles('done');
+        setFiles([]);
         answerAnswerToggle()
       }else{
         alert(response.data.errorMessage)
@@ -36,17 +40,21 @@ function StudentAnswerAssignment({answerAnswerToggle, answerModal, assignmentId}
 
   const handlefilesUpload = (file) => {
     if(file != ''){
-      getBase64(file).then(
-        data => {
-          let toAdd = {
-            fileName: file.name,
-            base64String: data,
-            size: file.size,
-            // progress: 0
-          };
-          setFiles([...files, toAdd]);
-        }
-      );
+      Object.values(file).map((itm, index) => {
+        console.log(itm, index)
+        getBase64(itm).then(
+          data => {
+            let toAdd = {
+              fileName: itm.name,
+              base64String: data,
+              size: itm.size,
+              progress: 0
+            };
+            files.push(toAdd)
+            setFiles([...files]);
+          }
+        );
+      })
     }
   }
 
@@ -63,6 +71,20 @@ function StudentAnswerAssignment({answerAnswerToggle, answerModal, assignmentId}
     let temp = files
     temp.splice(index, 1)
     setFiles([...temp])
+  }
+
+  const uploadStatus = () => {
+    switch (uploadingFiles) {
+      case 'pending':
+        return 0
+      case 'uploading':
+        return 30
+      case 'done':
+        return 100
+      
+    default:
+      break;
+    }
   }
 
   return (
@@ -83,13 +105,13 @@ function StudentAnswerAssignment({answerAnswerToggle, answerModal, assignmentId}
             </Form.Group>
             <Form.Group className="mb-1">
               <Button className='tficolorbg-button' onClick={() => { document.getElementById('attachedFile').click() }}>Attache File</Button>
-              <input id='attachedFile' className='d-none' type='file' placeholder='Choose color' style={{ backgroundColor: 'inherit' }} onChange={(e) => handlefilesUpload(e.target.files[0])} />
+              <input id='attachedFile' className='d-none' multiple type='file' placeholder='Choose color' style={{ backgroundColor: 'inherit' }} onChange={(e) => handlefilesUpload(e.target.files)} />
             </Form.Group>
             <Table responsive="sm" className={files.length == 0 ? 'd-none' : ''}>
               <thead>
                 <tr>
                   <th>File Name</th>
-                  {/* <th>Progress</th> */}
+                  <th>Progress</th>
                   <th>Size</th>
                 </tr>
               </thead>
@@ -98,7 +120,7 @@ function StudentAnswerAssignment({answerAnswerToggle, answerModal, assignmentId}
                 return(
                   <tr key={item.fileName}>
                     <td>{item.fileName}</td>
-                    {/* <td><ProgressBar variant="warning" now={item.progress} /></td> */}
+                    <td><ProgressBar variant="warning" now={uploadStatus()} /></td>
                     <td>{item.size} KB <i class="fas fa-times td-file-page" onClick={()=> handelRemoveSelectedFiles(index)}></i></td>
                   </tr>
                 );

@@ -59,6 +59,7 @@ function AssignmentAnalysis({selectedClassId, assignmentAnalysis, setAssignmentA
     // e.preventDefault()
     let response = await new ClassesAPI().getStudentAssignmentAnswer(studentid, classid, assignmentid)
     if(response.ok){
+      console.log(response)
       setAssignmentAnswer(response.data)
     }else{
       alert(response.data.errorMessage)
