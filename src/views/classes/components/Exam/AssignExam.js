@@ -37,6 +37,23 @@ export default function AssignExam({ showModal, setShowModal, exam, id, setLoadi
     };
     console.log({ data }, exam);
     setLoading(true);
+    console.log(startDate == endDate);
+    let compareDate = startDate == endDate,
+      compareTime = startTime < endTime;
+    if(compareDate){
+      if(compareTime){
+        handleSendRequest(data)
+      }
+      else{
+        setLoading(false);
+        toast.error('Invalid end time.')
+      }
+    }else{
+      handleSendRequest(data)
+    }
+  };
+
+  const handleSendRequest = async(data) => {
     if(exam.classTest){
       let response = await new ExamAPI().reAssignExam(id, exam.test.id, data)
       if(response.ok){
@@ -59,7 +76,7 @@ export default function AssignExam({ showModal, setShowModal, exam, id, setLoadi
         setLoading(false);
       }
     }
-  };
+  }
 
   return (
     <Modal
@@ -105,6 +122,7 @@ export default function AssignExam({ showModal, setShowModal, exam, id, setLoadi
               className='custom-input'
               size='lg'
               type='date'
+              min={startDate}
               placeholder='Enter test name'
               onChange={(e) => setEndDate(e.target.value)}
             />
@@ -117,6 +135,7 @@ export default function AssignExam({ showModal, setShowModal, exam, id, setLoadi
               className='custom-input'
               size='lg'
               type='time'
+              disabled={endDate ? false : true}
               placeholder='Enter test name'
               onChange={(e) => setEndTime(e.target.value)}
             />
