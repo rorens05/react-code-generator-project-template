@@ -3,7 +3,7 @@ import {Accordion, Row, Col} from 'react-bootstrap'
 import InteractiveReportContent from '../contents/InteractiveReportContent'
 import ClassesAPI from './../../../api/ClassesAPI'
 
-function InteractiveReport({classesModules, setClassesModules, selectedClassId, viewInteractiveReport, setViewInteractiveReport, setShowInteractiveHeader, showInteractiveHeader}) {
+function InteractiveReport({filter, setFilter, classesModules, setClassesModules, selectedClassId, viewInteractiveReport, setViewInteractiveReport, setShowInteractiveHeader, showInteractiveHeader}) {
 
   const [interactivePerModule, setInteractivePerModule] = useState([])
   const [interactiveReport, setInteractiveReport] = useState([])
@@ -45,7 +45,9 @@ function InteractiveReport({classesModules, setClassesModules, selectedClassId, 
           <Accordion.Item eventKey={item.id}>
           <Accordion.Header onClick={(e) => getClassInteractiveModules(e, item.id)}><div className='unit-exam'>{item.moduleName} </div></Accordion.Header>
             <Accordion.Body>
-              {interactivePerModule.map((item, index) => { 
+              {interactivePerModule.filter(item =>
+                item.interactive?.interactiveName.toLowerCase().includes(filter.toLowerCase())).map
+                ((item, index) => {
               return(
                 item.classInteractiveAssignment !== null &&
                 <Row>
