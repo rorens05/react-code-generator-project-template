@@ -10,7 +10,9 @@ export default function TeacherExamActions({
 }) {
   return (
     <div className='exam-actions'>
-      <a href='#preview'>
+      <a href='#preview'
+        title={"Preview"}
+      >
         <i
           class='fas fa-eye'
           onClick={(e) => {
