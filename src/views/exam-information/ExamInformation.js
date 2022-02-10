@@ -81,12 +81,13 @@ export default function ExamInformation() {
     let payload = [];
     if (part.questionPart.questionTypeId == 5) {
       payload = part.questionDtos.map((question) => {
+        let studentAnswers = question.studentAnswer || question.choices.map(() => ({answer: ""}))
         return {
           answer: "",
           questionType: 5,
           questionId: question.question.id,
-          enumeration: question.studentAnswer,
-          "webEnumerationAnswers": question.studentAnswer.map(item =>
+          enumeration: studentAnswers,
+          "webEnumerationAnswers": studentAnswers.map(item =>
             item.answer
           )
         };
@@ -103,7 +104,7 @@ export default function ExamInformation() {
     setLoading(true);
     let response = await new ExamAPI().submitTestPerPart(
       user?.student?.id,
-      exam.test.classId,
+      class_id,
       part.questionPart.testId,
       part.questionPart.id,
       payload
