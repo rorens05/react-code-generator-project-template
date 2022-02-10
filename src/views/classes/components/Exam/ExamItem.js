@@ -53,39 +53,35 @@ export default function ExamItem({ exam, deleteExam, setLoading, fetchExams }) {
           <Link to={`/exam_creation/${exam.test.id}`}>
             <i class='fas fa-eye'></i>
           </Link>
+          <a href='#assign'>
+            <i
+              class='fas fa-user-clock'
+              onClick={(e) => {
+                e.preventDefault();
+                setShowModal(true);
+              }}
+            ></i>
+          </a>
+          <a href='#edit'>
+            <i
+              class='fas fa-edit'
+              onClick={(e) => {
+                e.preventDefault();
+                setShowEditModal(true);
+              }}
+            ></i>
+          </a>
 
           {exam.classTest == null && (
-            <>
-              <a href='#edit'>
-                <i
-                  class='fas fa-edit'
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setShowEditModal(true);
-                  }}
-                ></i>
-              </a>
-
-              <a href='#assign'>
-                <i
-                  class='fas fa-user-clock'
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setShowModal(true);
-                  }}
-                ></i>
-              </a>
-
-              <a
-                href='#delete'
-                onClick={(e) => {
-                  e.preventDefault();
-                  setShowWarning(true);
-                }}
-              >
-                <i class='fas fa-trash-alt'></i>
-              </a>
-            </>
+            <a
+              href='#delete'
+              onClick={(e) => {
+                e.preventDefault();
+                setShowWarning(true);
+              }}
+            >
+              <i class='fas fa-trash-alt'></i>
+            </a>
           )}
         </div>
       )}
@@ -96,6 +92,7 @@ export default function ExamItem({ exam, deleteExam, setLoading, fetchExams }) {
         exam={exam}
         setLoading={setLoading}
         fetchExams={fetchExams}
+        closeModal={()=> setShowModal(false)}
       />
       <EditExam
         showEditModal={showEditModal}

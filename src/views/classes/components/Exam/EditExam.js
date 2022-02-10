@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
 import ExamAPI from "../../../../api/ExamAPI";
@@ -15,6 +15,11 @@ export default function EditExam({
   console.log({ exam });
   const [testInstructions, setTestInstructions] = useState(exam.test.testInstructions);
   const [testName, setTestName] = useState(exam.test.testName);
+
+  useEffect(()=> {
+    setTestInstructions(exam.test?.testInstructions)
+    setTestName(exam.test?.testName)
+  }, [])
   
   const updateExam = async(e) => {
     e.preventDefault();
@@ -51,9 +56,9 @@ export default function EditExam({
           <Form.Group className='m-b-20'>
             <Form.Label for='courseName'>Test Name</Form.Label>
             <Form.Control
-              defaultValue={""}
+              // defaultValue={testName}
               className='custom-input'
-              default={testName}
+              value={testName}
               size='lg'
               type='text'
               placeholder='Enter test name'
@@ -63,9 +68,9 @@ export default function EditExam({
           <Form.Group className='m-b-20'>
             <Form.Label for='courseName'>Test Instruction</Form.Label>
             <Form.Control
-              defaultValue={""}
+              // defaultValue={testInstructions}
               className='custom-input'
-              default={testInstructions}
+              value={testInstructions}
               size='lg'
               type='text'
               placeholder='Enter test instruction'
