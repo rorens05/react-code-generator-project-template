@@ -40,17 +40,21 @@ function StudentAnswerAssignment({answerAnswerToggle, answerModal, assignmentId}
 
   const handlefilesUpload = (file) => {
     if(file != ''){
-      getBase64(file).then(
-        data => {
-          let toAdd = {
-            fileName: file.name,
-            base64String: data,
-            size: file.size,
-            // progress: 0
-          };
-          setFiles([...files, toAdd]);
-        }
-      );
+      Object.values(file).map((itm, index) => {
+        console.log(itm, index)
+        getBase64(itm).then(
+          data => {
+            let toAdd = {
+              fileName: itm.name,
+              base64String: data,
+              size: itm.size,
+              progress: 0
+            };
+            files.push(toAdd)
+            setFiles([...files]);
+          }
+        );
+      })
     }
   }
 
@@ -101,7 +105,7 @@ function StudentAnswerAssignment({answerAnswerToggle, answerModal, assignmentId}
             </Form.Group>
             <Form.Group className="mb-1">
               <Button className='tficolorbg-button' onClick={() => { document.getElementById('attachedFile').click() }}>Attache File</Button>
-              <input id='attachedFile' className='d-none' multiple type='file' placeholder='Choose color' style={{ backgroundColor: 'inherit' }} onChange={(e) => handlefilesUpload(e.target.files[0])} />
+              <input id='attachedFile' className='d-none' multiple type='file' placeholder='Choose color' style={{ backgroundColor: 'inherit' }} onChange={(e) => handlefilesUpload(e.target.files)} />
             </Form.Group>
             <Table responsive="sm" className={files.length == 0 ? 'd-none' : ''}>
               <thead>
