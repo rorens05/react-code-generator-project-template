@@ -53,6 +53,15 @@ export default function ExamItem({ exam, deleteExam, setLoading, fetchExams }) {
           {/* <Link to={`/exam_creation/${exam.test.id}`}>
             <i class='fas fa-eye'></i>
           </Link> */}
+          <a href='#assign'>
+            <i
+              class='fas fa-user-clock'
+              onClick={(e) => {
+                e.preventDefault();
+                setShowModal(true);
+              }}
+            ></i>
+          </a>
           <a href='#edit'>
             <i
               class='fas fa-edit'
@@ -64,8 +73,6 @@ export default function ExamItem({ exam, deleteExam, setLoading, fetchExams }) {
           </a>
           {exam.classTest == null && (
             <>
-              
-
               <a href='#assign'>
                 <i
                   class='fas fa-user-clock'
@@ -75,7 +82,6 @@ export default function ExamItem({ exam, deleteExam, setLoading, fetchExams }) {
                   }}
                 ></i>
               </a>
-
               <a
                 href='#delete'
                 onClick={(e) => {
@@ -96,6 +102,7 @@ export default function ExamItem({ exam, deleteExam, setLoading, fetchExams }) {
         exam={exam}
         setLoading={setLoading}
         fetchExams={fetchExams}
+        closeModal={()=> setShowModal(false)}
       />
       <EditExam
         showEditModal={showEditModal}
