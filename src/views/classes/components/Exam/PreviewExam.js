@@ -23,14 +23,15 @@ function PreviewExam({showPreviewExamModal, setShowPreviewExamModal, testItem, q
         {questionPartDto?.map(item1 => {
           return(<>
         
-          <Form.Label ><b>{item1?.questionPart?.instructions}{item1?.questionPart?.questionTypeId}</b></Form.Label>
+          <Form.Label ><b>{item1?.questionPart?.instructions}</b></Form.Label>
       
          {(item1?.questionPart?.questionTypeId == 1)?(
          <>
-         {item1?.questionDtos?.map(item2 =>{
+         {item1?.questionDtos?.map((item2, index) =>{
+            let number = index + 1
           return(<>
           <Form.Group className='m-b-15'>
-          <Form.Label >{item2?.question?.testQuestion}</Form.Label>
+          <Form.Label >{number}. {item2?.question?.testQuestion}</Form.Label>
           </Form.Group>
           {item2.choices?.map(item3 => {
             return(<>
@@ -44,10 +45,11 @@ function PreviewExam({showPreviewExamModal, setShowPreviewExamModal, testItem, q
          )}
         {(item1?.questionPart?.questionTypeId == 2)?(
          <>
-         {item1?.questionDtos?.map(item2 =>{
+         {item1?.questionDtos?.map((item2, index) =>{
+           let number = index + 1
           return(<>
           <Form.Group className='m-b-15'>
-          <Form.Label >{item2?.question?.testQuestion}</Form.Label>
+          <Form.Label >{number}. {item2?.question?.testQuestion}</Form.Label>
           </Form.Group>
           {item2.choices?.map(item3 => {
             return(<>
@@ -62,10 +64,11 @@ function PreviewExam({showPreviewExamModal, setShowPreviewExamModal, testItem, q
 
         {(item1?.questionPart?.questionTypeId == 3)?(
          <>
-         {item1?.questionDtos?.map(item2 =>{
+         {item1?.questionDtos?.map((item2, index) =>{
+           let number = index + 1
           return(<>
           <Form.Group className='m-b-15'>
-          <Form.Label >{item2?.question?.testQuestion}</Form.Label>
+          <Form.Label >{number}. {item2?.question?.testQuestion}</Form.Label>
           </Form.Group>
           {item2.choices?.map(item3 => {
             return(<>
@@ -80,10 +83,11 @@ function PreviewExam({showPreviewExamModal, setShowPreviewExamModal, testItem, q
 
         {(item1?.questionPart?.questionTypeId == 4)?(
          <>
-         {item1?.questionDtos?.map(item2 =>{
+         {item1?.questionDtos?.map((item2, index) =>{
+           let number = index + 1
           return(<>
           <Form.Group className='m-b-15'>
-          <Form.Label >{item2?.question?.testQuestion}</Form.Label>
+          <Form.Label >{number}. {item2?.question?.testQuestion}</Form.Label>
           </Form.Group>
           <Form.Group className="mb-20">
             <Form.Control  as="textarea" rows={4} disabled style={{resize:'none'}} disabled />
@@ -94,10 +98,11 @@ function PreviewExam({showPreviewExamModal, setShowPreviewExamModal, testItem, q
 
         {(item1?.questionPart?.questionTypeId == 5)?(
          <>
-         {item1?.questionDtos?.map(item2 =>{
+         {item1?.questionDtos?.map((item2, index) =>{
+           let number = index + 1
           return(<>
           <Form.Group className='m-b-15'>
-          <Form.Label >{item2?.question?.testQuestion}</Form.Label>
+          <Form.Label >{number}. {item2?.question?.testQuestion}</Form.Label>
           </Form.Group>
           {item2.choices?.map(item3 => {
             return(<>
