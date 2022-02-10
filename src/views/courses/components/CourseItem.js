@@ -3,7 +3,7 @@ import { Card, Dropdown, Row, Col } from 'react-bootstrap';
 import "../../../../node_modules/@fortawesome/fontawesome-free/css/all.css"
 import { Link } from 'react-router-dom'
 
-export default function CoursesItem({course, setLoading, setOpenEditModal, setSelectedCourse}) {
+export default function CoursesItem({filter, setFilter, course, setLoading, setOpenEditModal, setSelectedCourse}) {
   
   const [openDropdown, setOpenDropdown] = useState(false)
   
@@ -32,8 +32,9 @@ export default function CoursesItem({course, setLoading, setOpenEditModal, setSe
   
   return (
     <React.Fragment>
-      {
-      course.map(item => { 
+        {course.filter(item =>
+          item.courseName.toLowerCase().includes(filter.toLowerCase())).map
+          ((item, index) => {
         return(
           <Col md={3}>
             <Card className="card-design b-0px">
@@ -63,7 +64,7 @@ export default function CoursesItem({course, setLoading, setOpenEditModal, setSe
                 <Card.Body>
                     <Card.Title tag="h5">
                       <Link to={"coursecontent/"+item.id} onClick={() => setCourseId(item.id)} course={course} setLoading={setLoading} className="active card-title">
-                        {item.courseName.substring(0, 15)}...
+                        {item.courseName.substring(0, 20)}...
                       </Link>
                     </Card.Title>
                     <Card.Subtitle

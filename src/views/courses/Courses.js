@@ -17,6 +17,11 @@ export default function Courses() {
   const [selectedCourse, setSelectedCourse] = useState(null)
   const [openEditModal, setOpenEditModal] = useState(false)
   const [course, setCourse] = useState([])
+  const [filter, setFilter] = useState("")
+	
+	const onSearch = (text) => {
+    setFilter(text)
+  }
 
   const handleOpenModal = e => {
       e.preventDefault()
@@ -47,16 +52,16 @@ export default function Courses() {
               <div className="col-md-2">
               </div>
           </div>
-          <div className="row m-b-20">
+          <div className="row m-b-20 m-t-30" onSearch={onSearch}>
             <div className="col-md-12">
               <InputGroup size="lg">
-                <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Search..." type="search"/>
+                <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Search..." type="search" onChange={(e) => onSearch(e.target.value)} />
                 <InputGroup.Text id="basic-addon2" className="search-button"><i className="fas fa-search fa-1x"></i></InputGroup.Text>
               </InputGroup>
             </div>
           </div>
           <div className="row m-b-20 justify-content-center">
-            <CoursesItem course={course} setLoading={setLoading} setOpenEditModal={setOpenEditModal} setSelectedCourse={setSelectedCourse}/>
+            <CoursesItem filter={filter} setFilter={setFilter} course={course} setLoading={setLoading} setOpenEditModal={setOpenEditModal} setSelectedCourse={setSelectedCourse}/>
             <CourseCreate setCourse={setCourse} openModal={openModal} setOpenModal={setOpenModal} /> 
             <CourseEdit setCourse={setCourse} openEditModal={openEditModal} setOpenEditModal={setOpenEditModal} selectedCourse={selectedCourse} /> 
           </div>
