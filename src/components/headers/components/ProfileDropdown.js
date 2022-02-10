@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import { UserContext } from '../../../context/UserContext'
 
 export default function ProfileDropdown({visible}) {
@@ -17,7 +18,7 @@ export default function ProfileDropdown({visible}) {
         <div className="user-image-container">
           <i class="fas fa-user"></i>
         </div>
-        <div className="user-name-container">
+        <div className="user-name-container" onClick={() => toast.error("Feature under development")}>
           <p className="user-name">{user?.teacher?.id}</p>
           <Link to="#">See your profile</Link>
         </div>
@@ -27,7 +28,7 @@ export default function ProfileDropdown({visible}) {
           <div className="profile-dropdown-link-icon">
             <i class="fas fa-exclamation-circle"></i>
           </div>
-          <div className="feedback-texts">
+          <div className="feedback-texts" onClick={() => toast.error("Feature under development")}>
             <p className="title">Give feedback</p>
             <p className="sub-title">Help us improve TekTeach LMS</p>
           </div>
@@ -38,7 +39,7 @@ export default function ProfileDropdown({visible}) {
           </div>
           Help & Support
         </a>
-        <Link to="#" className="profile-dropdown-link">
+        <Link to="#" className="profile-dropdown-link" onClick={() => toast.error("Feature under development")}>
           <div className="profile-dropdown-link-icon">
             <i class="fas fa-tv"></i>
           </div>

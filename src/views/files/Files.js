@@ -7,6 +7,7 @@ import CoursesAPI from "../../api/CoursesAPI";
 import ClassesAPI from '../../api/ClassesAPI';
 import FilesAPI from '../../api/FilesApi';
 import { UserContext } from '../../context/UserContext';
+import { toast } from "react-toastify";
 
 export default function Files() {
   const [loading, setLoading] = useState(false)
@@ -88,7 +89,7 @@ export default function Files() {
     <MainContainer loading={loading} activeHeader={'files'}>
         <Row className="row">
           <Col className="col-md-3 file-sidenav">
-            <div style={{textAlign:'center', paddingBottom:'45px', paddingTop:'25px'}}><Button className="file-library" size='lg' variant="outline-warning"><i class="fas fa-folder"></i> File Library</Button></div>
+            <div style={{textAlign:'center', paddingBottom:'45px', paddingTop:'25px'}}><Button onClick={() => toast.error("Feature under development")} className="file-library" size='lg' variant="outline-warning"><i class="fas fa-folder"></i> File Library</Button></div>
           </Col>
           <Col className='mt-5 pt-4'>
             <Row>

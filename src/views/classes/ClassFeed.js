@@ -6,6 +6,7 @@ import SweetAlert from 'react-bootstrap-sweetalert';
 import EditAnnouncement from './components/Feed/EditAnnouncement';
 import moment from 'moment';
 import { UserContext } from '../../context/UserContext'
+import { toast } from 'react-toastify';
 
 function ClassFeed() {
   const [title, setTitle] = useState('Feed')
@@ -178,8 +179,8 @@ function ClassFeed() {
               <div style={{paddingBottom:'10px', color:'#00000029'}} >
                       ____________________________________________________________________________________________________________________________________________________
               </div>
-                <Col style={{textAlign:'center'}}>
-                  <div className='inline-flex'>
+                <Col style={{textAlign:'center'}} onClick={() => toast.error("Feature under development")}>
+                  <div className='inline-flex' >
                     <div style={{color:'#EE9337', fontSize:'25px',}}>
                     <i class="far fa-thumbs-up"></i>&nbsp;
                       </div>
@@ -275,7 +276,7 @@ function ClassFeed() {
                 </Col>
   
                 <Col style={{textAlign:'center'}}>
-                  <div className='inline-flex'>
+                  <div className='inline-flex' onClick={() => toast.error("Feature under development")}>
                     <div style={{color:'#EE9337', fontSize:'25px',}}>
                     <i class="far fa-thumbs-up"></i>&nbsp;
                       </div>
@@ -285,7 +286,7 @@ function ClassFeed() {
                   </div>
                 </Col>
                 <Col style={{textAlign:'center'}}>
-                <div className='inline-flex'>
+                <div className='inline-flex' onClick={() => toast.error("Feature under development")}>
                   <div style={{color:'#EE9337', fontSize:'25px',}}>
                     <i class="far fa-comment-alt"></i>&nbsp;
                     </div>
