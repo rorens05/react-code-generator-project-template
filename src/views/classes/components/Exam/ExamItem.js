@@ -21,14 +21,13 @@ export default function ExamItem({ exam, deleteExam, setLoading, fetchExams }) {
   const [questionPartDto, setQuestionPartDto] = useState([]) 
   
   const getInformationExam = async (e, item) => {
-    let response = await new ClassesAPI().getInformationExam(item);{
-      if(response.ok){
-        setTestItem(response.data)
-        setQuestionPartDto(response.data.questionPartDto)
-        setShowPreviewExamModal(true)
-      }else{
-        alert("Something went wrong while fetching Exam Item");
-      }
+    let response = await new ClassesAPI().getInformationExam(item)
+    if(response.ok){
+      setTestItem(response.data)
+      setQuestionPartDto(response.data.questionPartDto)
+      setShowPreviewExamModal(true)
+    }else{
+      alert("Something went wrong while fetching Exam Item");
     }
   }
 
@@ -70,54 +69,46 @@ export default function ExamItem({ exam, deleteExam, setLoading, fetchExams }) {
       </div>
       {user.isTeacher && (
         <div className='exam-actions'>
-          {/* <Link to={`/exam_creation/${exam.test.id}`}>
-            <i class='fas fa-eye'></i>
-          </Link> */}
-
-              <a href='#preview'>
-                <i
-                  class='fas fa-eye'
-                  onClick={(e) => {
-                    getInformationExam(e, exam?.test?.id)
-                    // e.preventDefault();
-                    // setShowPreviewExamModal(true);
-                    // setTestId(exam?.test?.id)
-                  }}
-                ></i>
-              </a>
+          <a href='#preview'>
+            <i
+              class='fas fa-eye'
+              onClick={(e) => {
+                getInformationExam(e, exam?.test?.id)
+                // e.preventDefault();
+                // setShowPreviewExamModal(true);
+                // setTestId(exam?.test?.id)
+              }}
+            ></i>
+          </a>
+          <a href='#assign'>
+            <i
+              class='fas fa-user-clock'
+              onClick={(e) => {
+                e.preventDefault();
+                setShowModal(true);
+              }}
+            ></i>
+          </a>
+          <a href='#edit'>
+            <i
+              class='fas fa-edit'
+              onClick={(e) => {
+                e.preventDefault();
+                setShowEditModal(true);
+              }}
+            ></i>
+          </a>
 
           {exam.classTest == null && (
-            <>
-              <a href='#edit'>
-                <i
-                  class='fas fa-edit'
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setShowEditModal(true);
-                  }}
-                ></i>
-              </a>
-
-              <a href='#assign'>
-                <i
-                  class='fas fa-user-clock'
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setShowModal(true);
-                  }}
-                ></i>
-              </a>
-
-              <a
-                href='#delete'
-                onClick={(e) => {
-                  e.preventDefault();
-                  setShowWarning(true);
-                }}
-              >
-                <i class='fas fa-trash-alt'></i>
-              </a>
-            </>
+            <a
+              href='#delete'
+              onClick={(e) => {
+                e.preventDefault();
+                setShowWarning(true);
+              }}
+            >
+              <i class='fas fa-trash-alt'></i>
+            </a>
           )}
         </div>
       )}
@@ -128,6 +119,7 @@ export default function ExamItem({ exam, deleteExam, setLoading, fetchExams }) {
         exam={exam}
         setLoading={setLoading}
         fetchExams={fetchExams}
+        closeModal={()=> setShowModal(false)}
       />
       <EditExam
         showEditModal={showEditModal}
