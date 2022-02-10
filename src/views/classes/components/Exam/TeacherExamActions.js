@@ -18,16 +18,18 @@ export default function TeacherExamActions({
           }}
         ></i>
       </a>
-      <a
-        href='#share'
-        title={exam.test.isShared ? "Unshare" : "Share"}
-        onClick={(e) => {
-          e.preventDefault();
-          toggleShare();
-        }}
-      >
-        <i class={`fas fa-share ${exam.test.isShared && "rotate"}`}></i>
-      </a>
+      {exam.test.classId && (
+        <a
+          href='#share'
+          title={exam.test.isShared ? "Unshare" : "Share"}
+          onClick={(e) => {
+            e.preventDefault();
+            toggleShare();
+          }}
+        >
+          <i class={`fas fa-share ${exam.test.isShared && "rotate"}`}></i>
+        </a>
+      ) }
       <a
         href='#assign'
         title='assign'
