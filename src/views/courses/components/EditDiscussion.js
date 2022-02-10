@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form, Modal } from 'react-bootstrap';
 import CoursesAPI from "../../../api/CoursesAPI";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-export default function EditDiscussion({openEditDiscussionModal, setOpenEditDiscussionModal, selectedDiscussion}){
+export default function EditDiscussion({setDiscussionInfo, openEditDiscussionModal, setOpenEditDiscussionModal, selectedDiscussion}){
 
 	const [loading, setLoading] = useState(false)
   const [modulePages, setModulePages] = useState([])
@@ -21,28 +23,28 @@ export default function EditDiscussion({openEditDiscussionModal, setOpenEditDisc
 	const saveEditDiscussion = async(e) => {
     e.preventDefault()
     setLoading(true)
-    let response = await new CoursesAPI().EditDiscussion(
-      sessionModule,
+    let response = await new CoursesAPI().editDiscussion(
+      selectedDiscussion?.discussion.id,
       {discussionName, instructions}
     )
     if(response.ok){
-      alert("Saved")
 			handleCloseModal(e)
+      notifyUpdateDiscussion()
+      getDiscussionInfo(null, sessionModule)
     }else{
       alert(response.data.errorMessage)
     }
     setLoading(false)
   }
 
-  const getCourseUnitPages = async(e, data, data1) => {
+  const getDiscussionInfo = async(e, data) => {
     setLoading(true)
-    let response = await new CoursesAPI().getCourseUnitPages(sessionCourse, sessionModule)
+    let response = await new CoursesAPI().getDiscussionInformation(data)
     setLoading(false)
     if(response.ok){
-      setModulePages(response.data)
-      console.log(response.data)
+      setDiscussionInfo(response.data)
     }else{
-      alert("Something went wrong while fetching all pages")
+      alert("Something went wrong while fetching all discussion")
     }
   }
 
@@ -55,6 +57,17 @@ export default function EditDiscussion({openEditDiscussionModal, setOpenEditDisc
 			setInstructions(selectedDiscussion?.instructions)
 		}
   }, [selectedDiscussion])
+
+  const notifyUpdateDiscussion= () => 
+  toast.success('Discussion Updated!', {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
 
 	return (
 		<div>

@@ -42,9 +42,8 @@ export default function CoursesExam({moduleInfo, setModuleInfo, moduleId}) {
     setLoading(false)
     if(response.ok){
       setModuleInfo(response.data)
-      console.log(response.data)
     }else{
-      alert("Something went wrong while fetching all a")
+      alert("Something went wrong while fetching all exam")
     }
   }
 
@@ -55,9 +54,8 @@ export default function CoursesExam({moduleInfo, setModuleInfo, moduleId}) {
     setLoading(false)
     if(response.ok){
       setExamInfo(response.data)
-      console.log(response.data)
     }else{
-      alert("Something went wrong while fetching all a")
+      alert("Something went wrong while fetching all exam")
     }
   }
 
@@ -114,7 +112,7 @@ export default function CoursesExam({moduleInfo, setModuleInfo, moduleId}) {
           </InputGroup>
         </div>
       </div>
-      <EditExam selectedExam={selectedExam} openEditExamModal={openEditExamModal} setOpenEditExamModal={setOpenEditExamModal}/>
+      <EditExam setExamInfo={setExamInfo} examInfo={examInfo} selectedExam={selectedExam} openEditExamModal={openEditExamModal} setOpenEditExamModal={setOpenEditExamModal}/>
       <CreateExam examInfo={examInfo} setExamInfo={setExamInfo} openCreateExamModal={openCreateExamModal} setOpenCreateExamModal={setOpenCreateExamModal}/>
       <Accordion defaultActiveKey="0">
         {moduleInfo.map((item, index) => {
@@ -125,23 +123,23 @@ export default function CoursesExam({moduleInfo, setModuleInfo, moduleId}) {
                 </span>
               </Accordion.Header>
               <Accordion.Body>
-                {examInfo.filter(item =>
-                  item.testName.toLowerCase().includes(filter.toLowerCase())).map
-                  ((item, index) => {
+                {examInfo.filter(ei =>
+                  ei.testName.toLowerCase().includes(filter.toLowerCase())).map
+                  ((ei, index) => {
                   return(
                     <>
                     <Row>
                       <Col className="" md={9}>
                         <Link className="lesson-header" to={`/exam_creation/${item?.id}`}>
-                          {item?.testName}
+                          {ei?.testName}
                         </Link>
                         <div>
-                          {item?.testInstructions}
+                          {ei?.testInstructions}
                         </div>
                       </Col>
                       <Col className="align-right-content" md={3}>
-                        <Button className="m-r-5 color-white tficolorbg-button" size="sm"   onClick={(e) => handleOpenEditExamModal(e, item)}><i className="fa fa-edit"></i></Button>
-                        <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i className="fa fa-trash" onClick={() => setSweetError(true)}></i></Button>
+                        <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={(e) => handleOpenEditExamModal(e, ei)}><i className="fa fa-edit"></i></Button>
+                        <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={() => setSweetError(true)}><i className="fa fa-trash" ></i></Button>
                         <SweetAlert
                           warning
                           showCancel
@@ -149,7 +147,7 @@ export default function CoursesExam({moduleInfo, setModuleInfo, moduleId}) {
                           confirmBtnText="Yes, delete it!"
                           confirmBtnBsStyle="danger"
                           title="Are you sure?"
-                          onConfirm={() => confirmSweetError(item.id)}
+                          onConfirm={() => confirmSweetError(ei.id)}
                           onCancel={cancelSweetError}
                           focusCancelBtn
                         >

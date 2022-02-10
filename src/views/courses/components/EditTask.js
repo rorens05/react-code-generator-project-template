@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form, Modal } from 'react-bootstrap';
 import CoursesAPI from "../../../api/CoursesAPI";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function EditTask({openEditTaskModal, setOpenEditTaskModal, selectedTask, setTaskInfo}){
 
@@ -26,9 +28,9 @@ export default function EditTask({openEditTaskModal, setOpenEditTaskModal, selec
       {taskName, instructions}
     )
     if(response.ok){
-      alert("Saved")
 			handleCloseModal(e)
-      getTaskInfo(sessionModule)
+      notifyUpdateTask()
+      getTaskInfo(null, sessionModule)
     }else{
       alert(response.data.errorMessage)
     }
@@ -68,6 +70,17 @@ export default function EditTask({openEditTaskModal, setOpenEditTaskModal, selec
 			setInstructions(selectedTask?.instructions)
 		}
   }, [selectedTask])
+
+  const notifyUpdateTask = () => 
+  toast.success('Task Updated!', {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
 
 	return (
 		<div>

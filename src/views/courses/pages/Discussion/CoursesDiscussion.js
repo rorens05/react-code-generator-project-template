@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Tab, Row, Col, Button, InputGroup, FormControl, Accordion } from 'react-bootstrap';
+import { Row, Col, Button, InputGroup, FormControl, Accordion } from 'react-bootstrap';
 import CoursesAPI from "../../../../api/CoursesAPI";
 import CourseCreateUnit from "./../../components/CourseCreateUnit";
 import CreateDiscussion from "./../../components/CreateDiscussion";
 import EditDiscussion from "./../../components/EditDiscussion";
 import ViewDiscussion from "./ViewDiscussion";
 import SweetAlert from 'react-bootstrap-sweetalert';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function CoursesDiscussion({moduleInfo, moduleId, showDiscussion, setShowDiscussion}) {
 
@@ -17,6 +19,7 @@ export default function CoursesDiscussion({moduleInfo, moduleId, showDiscussion,
   const [discussionInfo, setDiscussionInfo] = useState([])
   const [sweetError, setSweetError] = useState(false)
   const [localModuleId, setLocalModuleId] = useState(false)
+  const [discussionId, setDiscussionId] = useState("")
 
   const courseid = sessionStorage.getItem('courseid')
   const moduleid = sessionStorage.getItem('moduleid')
@@ -49,15 +52,15 @@ export default function CoursesDiscussion({moduleInfo, moduleId, showDiscussion,
     setSweetError(false)
   }
 
-  const confirmSweetError = (id, mid) => {
-    alert('Deleted')
-    deleteCourseDiscussion(id)
+  const confirmSweetError = (id) => {
+    notifyDeleteDiscussion()
+    deleteCourseDiscussion(discussionId)
     setSweetError(false)
   } 
 
   const deleteCourseDiscussion = async(data, mid) => {
     setLoading(true)
-    let response = await new CoursesAPI().deleteDiscussion(data)
+    let response = await new CoursesAPI().deleteDiscussion(discussionId)
     setLoading(false)
     if(response.ok){
       getDiscussionInfo(null, localModuleId)
@@ -80,6 +83,17 @@ export default function CoursesDiscussion({moduleInfo, moduleId, showDiscussion,
   useEffect(() => {
     console.log(moduleId)
   }, [])
+
+  const notifyDeleteDiscussion= () => 
+  toast.error('Discussion Deleted!', {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
 
   if(showDiscussion === false){
   return (
@@ -108,8 +122,8 @@ export default function CoursesDiscussion({moduleInfo, moduleId, showDiscussion,
               </Accordion.Header>
               <Accordion.Body>
                 
-                {discussionInfo.filter(item => 
-                  item.discussion.discussionName.toLowerCase().includes(filter.toLowerCase())
+                {discussionInfo.filter(di => 
+                  di.discussion?.discussionName?.toLowerCase().includes(filter.toLowerCase())
                 ).map((di, index) => (
                   <Row>
                     <Col className="lesson-header" md={9}>
@@ -117,7 +131,7 @@ export default function CoursesDiscussion({moduleInfo, moduleId, showDiscussion,
                     </Col>
                     <Col className="align-right-content" md={3}>
                       <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={(e) => handleOpenEditDiscussionModal(e, di)}><i className="fa fa-edit"></i></Button>
-                      <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i className="fa fa-trash"  onClick={() => {setSweetError(true); setLocalModuleId(moduleid)}}></i></Button>
+                      <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={() => {setSweetError(true); setDiscussionId(di.discussion.id)}}><i className="fa fa-trash"></i></Button>
                     </Col>
                   </Row>
                 ))}
@@ -128,11 +142,11 @@ export default function CoursesDiscussion({moduleInfo, moduleId, showDiscussion,
                   confirmBtnText="Yes, delete it!"
                   confirmBtnBsStyle="danger"
                   title="Are you sure?"
-                  onConfirm={() => confirmSweetError(item.discussion.id, moduleid)}
+                  onConfirm={() => confirmSweetError(item.id, moduleid)}
                   onCancel={cancelSweetError}
                   focusCancelBtn
                 >
-                  You will not be able to recover this imaginary file!
+                  You will not be able to recover this Discussion!
                 </SweetAlert>
               </Accordion.Body>
             </Accordion.Item>
