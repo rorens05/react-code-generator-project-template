@@ -5,7 +5,7 @@ import { Link, useHistory } from 'react-router-dom'
 import Auth from '../../api/Auth'
 import MainContainer from '../../components/layouts/MainContainer'
 import { UserContext } from '../../context/UserContext'
-
+import qrScanner from '../../assets/images/qr.png'
 export default function Login() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -64,17 +64,19 @@ export default function Login() {
                       onChange={(e) => setPassword(e.target.value)}
                     />
                   </Form.Group>
-                  <Link className="link-orange font-24" to="/forgot_password" >Forgot Password</Link>
+                  <Link className="link-orange font-24 d-none" to="/forgot_password" >Forgot Password</Link>
                   <Button className="btn btn-lg btn-primary btn-auth w-100 d-block mt-5 mb-4" size="lg" variant="primary" type="submit">Log In</Button>
                 </Form>
               </Col>
               <Col size="md" className="login-with-qr-container">
                 <div className="qr-container ">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/QR_code_for_mobile_English_Wikipedia.svg" alt="qr-code"/>
+                  <img src={qrScanner} alt="qr-code"/>
                 </div>
                 <div className="mx-3">
-                  <p className="qr-text mt-3">Log in with QR code</p>
-                  <p className="qr-text">Scan this code with the <a href="https://google.com" target="blank" className="link-orange">TekTeach mobile app</a> to log in instantly</p>
+                  <p className="qr-text mt-3">
+                    Click on the scanner icon to activate the QR code scanner.
+                  </p>
+                  <p className="qr-text d-none">Scan this code with the <a href="https://google.com" target="blank" className="link-orange">TekTeach mobile app</a> to log in instantly</p>
                 </div>
               </Col>
             </Row>
