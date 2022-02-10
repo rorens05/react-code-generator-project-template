@@ -34,8 +34,9 @@ export default function ExamDetails({ exam, loading, remainingTime, startExam, e
           <p className='secondary-title mb-2'>{`${exam.totalItems} Total Item(s)`}</p>
           {!examStarted && (<Status>{isDoneTest ? "Completed" : "Not Started"}</Status>)}
           {examStarted && (<Status>{"Test is Ongoing.."}</Status>)}
+          <br/>
           {!examStarted && !isDoneTest && <Button
-            className='btn btn-primary my-4 mx-3'
+            className='btn btn-primary my-4 '
             variant='primary'
             size='lg'
             onClick={() => startExam()}

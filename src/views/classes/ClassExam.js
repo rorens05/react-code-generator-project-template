@@ -27,6 +27,15 @@ export const ClassExam = () => {
       const filteredExams = response.data.filter(
         (item) => user.isTeacher || item.classTest != null
       );
+      const filteredModules = filteredExams.map((item) => item.module);
+      const uniqueModules = [];
+      filteredModules.forEach((item, index) => {
+        if (!uniqueModules.map((item) => item.id).includes(item.id)) {
+          uniqueModules.push(item);
+        }
+      });
+      // fetch modules by class id
+
       setExams(filteredExams);
       
     } else {

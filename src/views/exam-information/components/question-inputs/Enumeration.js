@@ -10,8 +10,8 @@ const Enumeration = ({ number, part, question, onAnswer }) => {
           {question.question.testQuestion}
         </div>
         <div className='question-input-content-choices'>
-          {(question.studentAnswer || []).map((item, index) => {
-            let tempAnswer = [...(question.studentAnswer || [])]
+          {(question.studentAnswer || question.choices.map(() => ({answer: ""}))).map((item, index) => {
+            let tempAnswer = [...(question.studentAnswer || question.choices.map(() => ({answer: ""})))]
             return (
               <Form.Control
                 key={index}
@@ -27,7 +27,7 @@ const Enumeration = ({ number, part, question, onAnswer }) => {
               />
             );
           })}
-          {!part.isDone && (
+          {/* {!part.isDone && (
             <Button
               className='btn btn-primary '
               variant='primary'
@@ -41,7 +41,7 @@ const Enumeration = ({ number, part, question, onAnswer }) => {
             >
               Add answer
             </Button>
-          )}
+          )} */}
           
         </div>
       </div>

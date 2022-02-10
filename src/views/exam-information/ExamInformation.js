@@ -79,14 +79,29 @@ export default function ExamInformation() {
   const submitPartsAnswer = async (part) => {
     console.log("SUBMIT PART", { part });
     let payload = [];
+    let unique = true
+    let empty = false
     if (part.questionPart.questionTypeId == 5) {
+
       payload = part.questionDtos.map((question) => {
+        let studentAnswers = question.studentAnswer || question.choices.map(() => ({answer: ""}))
+
+        
+        studentAnswers.forEach((choice) => {
+          if(studentAnswers.filter(c => c.answer == choice.answer).length > 1){
+            unique = false
+          }
+          if(choice.answer == ""){
+            empty = true
+          }
+        })
+
         return {
           answer: "",
           questionType: 5,
           questionId: question.question.id,
-          enumeration: question.studentAnswer,
-          "webEnumerationAnswers": question.studentAnswer.map(item =>
+          enumeration: studentAnswers,
+          "webEnumerationAnswers": studentAnswers.map(item =>
             item.answer
           )
         };
@@ -99,11 +114,22 @@ export default function ExamInformation() {
         };
       });
     }
+    
+    if(empty){
+      toast.error("Please answer all questions")
+      return
+    }
+    
+    if(!unique){
+      toast.error("Please add unique answers")
+      return
+    }
+
     console.log({ payload });
     setLoading(true);
     let response = await new ExamAPI().submitTestPerPart(
       user?.student?.id,
-      exam.test.classId,
+      class_id,
       part.questionPart.testId,
       part.questionPart.id,
       payload
