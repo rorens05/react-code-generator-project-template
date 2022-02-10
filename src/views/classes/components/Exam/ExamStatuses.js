@@ -16,7 +16,7 @@ export default function ExamStatuses({ user, exam, startDate, endDate, noAssigne
       {user.isStudent && (
         <Status>{exam.isLoggedUserDone ? "Completed" : "Not Completed"}</Status>
       )}
-      {user.isTeacher && exam.test.isShared && <Status>Shared</Status>}
+      {user.isTeacher && exam.test.classId && exam.test.isShared && <Status>Shared</Status>}
     </div>
   );
 }
