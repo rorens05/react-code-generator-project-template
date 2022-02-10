@@ -7,7 +7,7 @@ import Identification from "./Identification";
 import MultipleChoice from "./MultipleChoice";
 import TrueOrFalse from "./TrueOrFalse";
 
-export default function Questions({ part, getExamInformation, setLoading }) {
+export default function Questions({ part, getExamInformation, setLoading, editable }) {
 
   const deleteQuestion = async (e, id) => {
     e.preventDefault();
@@ -21,6 +21,7 @@ export default function Questions({ part, getExamInformation, setLoading }) {
     case 1:
       return (
         <MultipleChoice
+          editable={editable}
           part={part}
           questionTypeId={part.questionPart.questionTypeId}
           getExamInformation={getExamInformation}
@@ -31,6 +32,7 @@ export default function Questions({ part, getExamInformation, setLoading }) {
     case 2:
       return (
         <TrueOrFalse
+          editable={editable}
           part={part}
           questionTypeId={part.questionPart.questionTypeId}
           getExamInformation={getExamInformation}
@@ -41,6 +43,7 @@ export default function Questions({ part, getExamInformation, setLoading }) {
     case 3:
       return (
         <Identification
+          editable={editable}
           part={part}
           questionTypeId={part.questionPart.questionTypeId}
           getExamInformation={getExamInformation}
@@ -51,6 +54,7 @@ export default function Questions({ part, getExamInformation, setLoading }) {
     case 4:
       return (
         <Essay
+          editable={editable}
           part={part}
           questionTypeId={part.questionPart.questionTypeId}
           getExamInformation={getExamInformation}
@@ -61,6 +65,7 @@ export default function Questions({ part, getExamInformation, setLoading }) {
     case 5:
       return (
         <Enumeration
+          editable={editable}
           part={part}
           questionTypeId={part.questionPart.questionTypeId}
           getExamInformation={getExamInformation}

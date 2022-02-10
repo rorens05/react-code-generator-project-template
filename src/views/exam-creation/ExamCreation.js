@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import ClassesAPI from "../../api/ClassesAPI";
 import ExamAPI from "../../api/ExamAPI";
 import MainContainer from "../../components/layouts/MainContainer";
 import { UserContext } from "../../context/UserContext";
@@ -18,6 +19,7 @@ export default function ExamCreation() {
   const { id } = useParams();
   const [noAssigned, setNoAssigned] = useState(false)
   const [selectedPart, setSelectedPart] = useState(null);
+  const [editable, setEditable] = useState(true)
 
   const getExamInformation = async () => {
     setLoading(true);
@@ -51,8 +53,15 @@ export default function ExamCreation() {
         let foundExam = response.data.find(item => item.test.id === tempExam.test.id)
         if(foundExam){
           tempExam.classTest = foundExam.classTest
+          setEditable(false)
         }else{
           alert("Class test not found")
+        }
+        response = await new ClassesAPI().getClassInformation(classId)
+        if (response.ok) {
+          tempExam.class = response.data
+        }else{
+          alert("Invalid Class")
         }
       }
     }else{
@@ -152,6 +161,7 @@ export default function ExamCreation() {
             selectedPart={selectedPart}
             setSelectedPart={setSelectedPart}
             noAssigned={noAssigned}
+            editable={editable}
           />
         </div>
       </div>

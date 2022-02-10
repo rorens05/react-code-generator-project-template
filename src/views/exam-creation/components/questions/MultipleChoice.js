@@ -58,9 +58,8 @@ const MultipleChoiceForm = ({
             <Form.Label for='question'>Choices</Form.Label>
             <div>
               {choices.map((choice, index) => {
-
                 const onChoiceTextChange = (key, value) => {
-                  console.log({key, value})
+                  console.log({ key, value });
                   const tempChoices = choices.map((choice, i) => {
                     if (i === key) {
                       return {
@@ -69,12 +68,12 @@ const MultipleChoiceForm = ({
                       };
                     }
                     return choice;
-                  })
-                  setChoices([...tempChoices])
-                }
+                  });
+                  setChoices([...tempChoices]);
+                };
 
                 const onChoiceAnswerChange = (key) => {
-                  console.log({key})
+                  console.log({ key });
                   const tempChoices = choices.map((choice, i) => {
                     if (i === key) {
                       return {
@@ -86,10 +85,9 @@ const MultipleChoiceForm = ({
                       ...choice,
                       isCorrect: false,
                     };
-                  })
-                  setChoices([...tempChoices])
-                }
-
+                  });
+                  setChoices([...tempChoices]);
+                };
 
                 return (
                   <div
@@ -111,7 +109,9 @@ const MultipleChoiceForm = ({
                       size='lg'
                       type='text'
                       placeholder='Enter Choice'
-                      onChange={(e) => onChoiceTextChange(index, e.target.value)}
+                      onChange={(e) =>
+                        onChoiceTextChange(index, e.target.value)
+                      }
                     />
                   </div>
                 );
@@ -135,6 +135,7 @@ export default function MultipleChoice({
   getExamInformation,
   setLoading,
   deleteQuestion,
+  editable,
 }) {
   const [showModal, setShowModal] = useState(false);
   const [question, setQuestion] = useState("");
@@ -234,34 +235,38 @@ export default function MultipleChoice({
             <h5 className='font-weight-bold mt-3'>Answer: {question.answer}</h5>
             <p className=''>Ratings: {question.question.rate}</p>
           </div>
-          <QuestionActions
-            onDelete={(e) => deleteQuestion(e, question.question.id)}
-            onEdit={(e) => {
-              console.log({question})
-              setChoices(question.choices);
-              setSelectedQuestion(question);
-              setQuestion(question.question.testQuestion);
-              setAnswer(question.answer);
-              setRate(question.question.rate);
-              setShowModal(true);
-            }}
-          />
+          {editable && (
+            <QuestionActions
+              onDelete={(e) => deleteQuestion(e, question.question.id)}
+              onEdit={(e) => {
+                console.log({ question });
+                setChoices(question.choices);
+                setSelectedQuestion(question);
+                setQuestion(question.question.testQuestion);
+                setAnswer(question.answer);
+                setRate(question.question.rate);
+                setShowModal(true);
+              }}
+            />
+          )}
         </div>
       ))}
-      <Button
-        className='tficolorbg-button'
-        type='submit'
-        onClick={() => {
-          setSelectedQuestion(null);
-          setQuestion("");
-          setRate("");
-          setAnswer("");
-          setChoices(DEFAULT_CHOICES);
-          setShowModal(true);
-        }}
-      >
-        Add question
-      </Button>
+      {editable && (
+        <Button
+          className='tficolorbg-button'
+          type='submit'
+          onClick={() => {
+            setSelectedQuestion(null);
+            setQuestion("");
+            setRate("");
+            setAnswer("");
+            setChoices(DEFAULT_CHOICES);
+            setShowModal(true);
+          }}
+        >
+          Add question
+        </Button>
+      )}
       <MultipleChoiceForm
         showModal={showModal}
         setShowModal={setShowModal}

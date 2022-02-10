@@ -29,6 +29,14 @@ export default class ClassesAPI extends Base {
       data
     });
   };
+
+  getClassInformation = async (id) => {
+    return this.sendRequest({
+      path: `/api/Class/${id}`,
+      method: 'GET'
+    });
+  };
+
   editClasses = async (id, data) => {
     return this.sendRequest({
       path: `/api/Class/${id}`,

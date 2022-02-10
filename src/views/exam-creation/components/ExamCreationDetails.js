@@ -14,13 +14,13 @@ export default function ExamCreationDetails({
   setLoading,
   setShowModal,
   deletePart,
-  noAssigned
+  noAssigned,
+  editable
 }) {
+  const userContext = useContext(UserContext);
+  const { user } = userContext.data;
 
-  const userContext = useContext(UserContext)
-  const {user} = userContext.data
-
-  const {startDate, endDate} = getStartAndEndDateFromClassTest(exam)
+  const { startDate, endDate } = getStartAndEndDateFromClassTest(exam);
 
   return exam != null ? (
     <div className='exam-information-container'>
@@ -32,23 +32,37 @@ export default function ExamCreationDetails({
           <p className='primary-title' style={{ fontSize: 24 }}>
             {exam.test.testName}
           </p>
-          <p className='secondary-title mb-2'>{`${exam.totalItems} Total Item(s)`}</p>
-          <ExamStatuses user={user} exam={exam} startDate={startDate} endDate={endDate} noAssigned={noAssigned}/>
+          <p className='primary-title' style={{ fontSize: 16 }}>
+            {exam.class?.className}
+          </p>
+          <p className='secondary-title'>{`${exam.totalItems} Total Item(s)`}</p>
+          {exam.classTest && (
+            <p className='secondary-title mb-2'>{`Time limit: ${exam.classTest?.timeLimit} minute(s)`}</p>
+          )}
+          <ExamStatuses
+            user={user}
+            exam={exam}
+            startDate={startDate}
+            endDate={endDate}
+            noAssigned={noAssigned}
+          />
         </div>
       </div>
       <hr />
       <p className='secondary-title mt-4'>Exam Parts</p>
-      <Button
-        className='btn btn-primary my-4'
-        variant='primary'
-        size='lg'
-        onClick={() => {
-          setSelectedPart(null)
-          setShowModal(true)
-        }}
-      >
-        Add Part
-      </Button>
+      {editable && (
+        <Button
+          className='btn btn-primary my-4'
+          variant='primary'
+          size='lg'
+          onClick={() => {
+            setSelectedPart(null);
+            setShowModal(true);
+          }}
+        >
+          Add Part
+        </Button>
+      )}
       <ExamParts
         selectedPart={selectedPart}
         setSelectedPart={setSelectedPart}
@@ -57,6 +71,7 @@ export default function ExamCreationDetails({
         getExamInformation={getExamInformation}
         setLoading={setLoading}
         setShowModal={setShowModal}
+        editable={editable}
       />
     </div>
   ) : (

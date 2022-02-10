@@ -10,6 +10,7 @@ export default function ExamParts({
   setLoading,
   setSelectedPart,
   setShowModal,
+  editable
 }) {
   return (
     <Accordion defaultActiveKey='0' className='exam-part-creation'>
@@ -28,25 +29,28 @@ export default function ExamParts({
               </div>
             </div>
           </Accordion.Header>
-          <div className='exam-actions exam-absolute-actions'>
-            <a
-              href='#edit-part'
-              onClick={(e) => {
-                setShowModal(true);
-                setSelectedPart(part);
-              }}
-            >
-              <i class='fas fa-edit'></i>
-            </a>
-            <a href='#delete-part' onClick={(e) => deletePart(e, part)}>
-              <i class='fas fa-trash-alt'></i>
-            </a>
-          </div>
+          {editable && (
+            <div className='exam-actions exam-absolute-actions'>
+              <a
+                href='#edit-part'
+                onClick={(e) => {
+                  setShowModal(true);
+                  setSelectedPart(part);
+                }}
+              >
+                <i class='fas fa-edit'></i>
+              </a>
+              <a href='#delete-part' onClick={(e) => deletePart(e, part)}>
+                <i class='fas fa-trash-alt'></i>
+              </a>
+            </div>
+          )}
           <Accordion.Body>
             <Questions
               part={part}
               getExamInformation={getExamInformation}
               setLoading={setLoading}
+              editable={editable}
             />
           </Accordion.Body>
         </Accordion.Item>
