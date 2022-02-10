@@ -63,6 +63,9 @@ function FileHeader(props) {
           if(response.ok){
             files[index].progress = 100;
             setFiles([...files])
+            let allUploaded = files.filter(itm => { //check if all items is already 100% uploaded
+              return itm.progress != 100
+            })
             setDoneUpload(allUploaded.length == 0 ? true : false)
             setUploadStarted(allUploaded.length == 0 ? false : true)
           }else{
