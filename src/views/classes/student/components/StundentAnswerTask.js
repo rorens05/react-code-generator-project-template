@@ -1,5 +1,5 @@
 import React, { useState, useContext,useEffect} from 'react'
-import { Form, Button, Table} from 'react-bootstrap'
+import { Form, Button, Table, ProgressBar} from 'react-bootstrap'
 import Modal from 'react-bootstrap/Modal'
 import ClassesAPI from '../../../../api/ClassesAPI'
 import { useParams } from 'react-router'
@@ -14,6 +14,7 @@ function StundentAnswerTask({answerTaskToggle, answerTaskModal, taskId}) {
   // const [files, setFiles] = useState('')
   const [assignNotify, setAssignNotify] = useState(false);
   const [files, setFiles] = useState([]);
+  const [uploadingFiles, setUploadingFiles] = useState('pending');
 
   console.log('taskId:', taskId)
 
@@ -23,11 +24,14 @@ function StundentAnswerTask({answerTaskToggle, answerTaskModal, taskId}) {
 
   const submitStudentTaskAnswer = async (e) =>{
     e.preventDefault()
+    setUploadingFiles('uploading');
     let studentId = user?.student?.id
     let response = await new ClassesAPI().submitStudentTaskAnswer(studentId, id, taskId, {taskAnswer, fileDetails: files})
       if(response.ok){
         setTaskAnswer('')
         setAssignNotify(true)
+        setUploadingFiles('done');
+        setFiles([]);
         answerTaskToggle(false)
         setFiles([])
       }else{
@@ -66,6 +70,20 @@ function StundentAnswerTask({answerTaskToggle, answerTaskModal, taskId}) {
     setFiles([...temp])
   }
 
+  const uploadStatus = () => {
+    switch (uploadingFiles) {
+      case 'pending':
+        return 0
+      case 'uploading':
+        return 30
+      case 'done':
+        return 100
+      
+    default:
+      break;
+    }
+  }
+
   return (
     <div>
        <Modal  size="lg" show={answerTaskModal} onHide={answerTaskToggle} aria-labelledby="example-modal-sizes-title-lg">
@@ -90,7 +108,7 @@ function StundentAnswerTask({answerTaskToggle, answerTaskModal, taskId}) {
               <thead>
                 <tr>
                   <th>File Name</th>
-                  {/* <th>Progress</th> */}
+                  <th>Progress</th>
                   <th>Size</th>
                 </tr>
               </thead>
@@ -99,7 +117,7 @@ function StundentAnswerTask({answerTaskToggle, answerTaskModal, taskId}) {
                 return(
                   <tr key={item.fileName}>
                     <td>{item.fileName}</td>
-                    {/* <td><ProgressBar variant="warning" now={item.progress} /></td> */}
+                    <td><ProgressBar variant="warning" now={uploadStatus()} /></td>
                     <td>{item.size} KB <i class="fas fa-times td-file-page" onClick={()=> handelRemoveSelectedFiles(index)}></i></td>
                   </tr>
                 );
