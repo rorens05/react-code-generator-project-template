@@ -116,7 +116,7 @@ export default function ExamInformation() {
     }
     
     if(empty){
-      toast.error("Please fill all answers")
+      toast.error("Please answer all questions")
       return
     }
     

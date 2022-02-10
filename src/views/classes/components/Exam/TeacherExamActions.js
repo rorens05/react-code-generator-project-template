@@ -5,10 +5,19 @@ export default function TeacherExamActions({
   setShowModal,
   setShowEditModal,
   setShowWarning,
-  toggleShare
+  toggleShare,
+  getInformationExam
 }) {
   return (
     <div className='exam-actions'>
+      <a href='#preview'>
+        <i
+          class='fas fa-eye'
+          onClick={(e) => {
+            getInformationExam(e, exam?.test?.id)
+          }}
+        ></i>
+      </a>
       <a
         href='#share'
         title={exam.test.isShared ? "Unshare" : "Share"}

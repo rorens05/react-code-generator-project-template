@@ -19,7 +19,6 @@ export default function ExamCreationDetails({
 }) {
   const userContext = useContext(UserContext);
   const { user } = userContext.data;
-
   const { startDate, endDate } = getStartAndEndDateFromClassTest(exam);
 
   return exam != null ? (
@@ -46,6 +45,8 @@ export default function ExamCreationDetails({
             endDate={endDate}
             noAssigned={noAssigned}
           />
+          <p className='secondary-title mb-2'>{`${exam.rawScore} Total Point(s)`}</p>
+          <p className='secondary-title mb-2'>{`${exam.questionPartDto?.length} Total Part(s)`}</p>
         </div>
       </div>
       <hr />

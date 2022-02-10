@@ -498,6 +498,13 @@ creatTask = async (mId, cId,  data) => {
     })
   }
 
+  getInformationExam = async (testId) => {
+    return this.sendRequest({
+      path: `/api/Test/${testId}/information`,
+      method: 'GET'
+    })
+  }
+
   getInteractiveReport = async (classid, interactiveid) =>{
     return this.sendRequest({
       // path: `/api/Class/${classid}/task/report`,

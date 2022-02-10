@@ -1,9 +1,18 @@
+<<<<<<< HEAD
 import moment from "moment";
 import React, { useContext, useState } from "react";
 import SweetAlert from "react-bootstrap-sweetalert";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import CoursesAPI from "../../../../api/CoursesAPI";
+=======
+import React, { useContext, useState, useEffect } from "react";
+import SweetAlert from "react-bootstrap-sweetalert";
+import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
+import ClassesAPI from "../../../../api/ClassesAPI";
+import Status from "../../../../components/utilities/Status";
+>>>>>>> master
 import { UserContext } from "../../../../context/UserContext";
 import getStartAndEndDateFromClassTest from "../../../../utils/getStartAndEndDateFromClassTest";
 import AssignExam from "./AssignExam";
@@ -11,6 +20,7 @@ import EditExam from "./EditExam";
 import ExamItemContent from "./ExamItemContent";
 import ExamStatuses from "./ExamStatuses";
 import TeacherExamActions from "./TeacherExamActions";
+import PreviewExam from "./PreviewExam";
 
 export default function ExamItem({ exam, deleteExam, setLoading, fetchExams }) {
   const userContext = useContext(UserContext);
@@ -35,6 +45,22 @@ export default function ExamItem({ exam, deleteExam, setLoading, fetchExams }) {
       alert(response.data.errorMessage);
     }
   };
+  const [showPreviewExamModal, setShowPreviewExamModal] = useState(false)
+  const [testItem, setTestItem] = useState([])
+  const [questionPartDto, setQuestionPartDto] = useState([]) 
+  
+  const getInformationExam = async (e, item) => {
+    let response = await new ClassesAPI().getInformationExam(item)
+    if(response.ok){
+      setTestItem(response.data)
+      setQuestionPartDto(response.data.questionPartDto)
+      setShowPreviewExamModal(true)
+    }else{
+      alert("Something went wrong while fetching Exam Item");
+    }
+  }
+
+  console.log('questionPartDto:', questionPartDto)
 
   return (
     <div className='exam-item-container'>
@@ -76,8 +102,10 @@ export default function ExamItem({ exam, deleteExam, setLoading, fetchExams }) {
           setShowModal={setShowModal}
           setShowEditModal={setShowEditModal}
           setShowWarning={setShowWarning}
-        />
-      )}
+          getInformationExam={getInformationExam}
+        />)
+      }
+        
       <AssignExam
         showModal={showModal}
         setShowModal={setShowModal}
@@ -94,6 +122,12 @@ export default function ExamItem({ exam, deleteExam, setLoading, fetchExams }) {
         exam={exam}
         setLoading={setLoading}
         fetchExams={fetchExams}
+      />
+      <PreviewExam 
+      showPreviewExamModal={showPreviewExamModal}
+      setShowPreviewExamModal={setShowPreviewExamModal}
+      testItem={testItem}
+      questionPartDto={questionPartDto}
       />
     </div>
   );
