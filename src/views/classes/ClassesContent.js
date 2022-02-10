@@ -9,8 +9,8 @@ function ClassesContent() {
   const [loading, setLoading] = useState(true)
   return (
     <div>
-      <MainContainer loading={loading} fluid>
-            <ClassBreedCrumbs />
+      <MainContainer activeHeader={'classes'} loading={loading} fluid>
+        <ClassBreedCrumbs />
         <ClassSideNavigation setLoading={setLoading}/>
       </MainContainer>
     </div>

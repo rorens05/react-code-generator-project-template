@@ -11,7 +11,6 @@ export default function AddPartModal({
   addPart,
   selectedPart
 }) {
-  console.log({typeId})
   return (
     <Modal
       size='lg'

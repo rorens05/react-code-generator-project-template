@@ -15,11 +15,11 @@ const EnumerationForm = ({
   setRate,
   choices,
   setChoices,
-  selectedQuestion
+  selectedQuestion,
 }) => {
   const addAnswer = () => {
-    setChoices([...choices, { testChoices: "", choicesImage: "" }])
-  }
+    setChoices([...choices, { testChoices: "", choicesImage: "" }]);
+  };
   return (
     <Modal
       size='lg'
@@ -61,9 +61,8 @@ const EnumerationForm = ({
             <Form.Label for='question'>Answers</Form.Label>
             <div>
               {choices.map((choice, index) => {
-
                 const onChoiceTextChange = (key, value) => {
-                  console.log({key, value})
+                  console.log({ key, value });
                   const tempChoices = choices.map((choice, i) => {
                     if (i === key) {
                       return {
@@ -72,22 +71,19 @@ const EnumerationForm = ({
                       };
                     }
                     return choice;
-                  })
-                  setChoices([...tempChoices])
-                }
+                  });
+                  setChoices([...tempChoices]);
+                };
 
                 const onDelete = (key) => {
                   const tempChoices = choices.filter((choice, i) => {
-                    return i !== key
-                  })
-                  setChoices([...tempChoices])
-                }
+                    return i !== key;
+                  });
+                  setChoices([...tempChoices]);
+                };
 
                 return (
-                  <div
-                    key={index}
-                    className={`choice-item`}
-                  >
+                  <div key={index} className={`choice-item`}>
                     <Form.Control
                       defaultValue={""}
                       value={choice.testChoices}
@@ -95,7 +91,9 @@ const EnumerationForm = ({
                       size='lg'
                       type='text'
                       placeholder='Enter Answer'
-                      onChange={(e) => onChoiceTextChange(index, e.target.value)}
+                      onChange={(e) =>
+                        onChoiceTextChange(index, e.target.value)
+                      }
                     />
                     {selectedQuestion == null && (
                       <div className='exam-actions '>
@@ -104,7 +102,6 @@ const EnumerationForm = ({
                         </a>
                       </div>
                     )}
-                    
                   </div>
                 );
               })}
@@ -132,6 +129,7 @@ export default function Enumeration({
   getExamInformation,
   setLoading,
   deleteQuestion,
+  editable,
 }) {
   const [showModal, setShowModal] = useState(false);
   const [question, setQuestion] = useState("");
@@ -144,7 +142,6 @@ export default function Enumeration({
   const submitQuestion = async (e) => {
     e.preventDefault();
     console.log({ selectedQuestion });
-    setLoading(true);
     const data = {
       question: {
         questionTypeId,
@@ -155,6 +152,26 @@ export default function Enumeration({
       },
       choices,
     };
+
+    if(choices.length == 0){
+      toast.error("Please add at least one answer");
+      return
+    }
+
+    let unique = true
+    choices.forEach((choice) => {
+      if(choices.filter(c => c.testChoices == choice.testChoices).length > 1){
+        unique = false
+      }
+    })
+
+    if(!unique){
+      toast.error("Please add unique answers")
+      return
+    }
+    console.log({choices}, "GO HERE")
+    setLoading(true);
+
     if (selectedQuestion != null) {
       if(rate > 0 && rate < 101){
         updateQuestion(selectedQuestion, data);
@@ -239,36 +256,40 @@ export default function Enumeration({
               ))}
             </table>
             <hr/>
-            <p className=''>Ratings: {question.question.rate}</p>
+            <p className=''>Point(s): {question.question.rate}</p>
           </div>
-          <QuestionActions
-            onDelete={(e) => deleteQuestion(e, question.question.id)}
-            onEdit={(e) => {
-              console.log({question})
-              setChoices(question.choices);
-              setSelectedQuestion(question);
-              setQuestion(question.question.testQuestion);
-              setAnswer(question.answer);
-              setRate(question.question.rate);
-              setShowModal(true);
-            }}
-          />
+          {editable && (
+            <QuestionActions
+              onDelete={(e) => deleteQuestion(e, question.question.id)}
+              onEdit={(e) => {
+                console.log({ question });
+                setChoices(question.choices);
+                setSelectedQuestion(question);
+                setQuestion(question.question.testQuestion);
+                setAnswer(question.answer);
+                setRate(question.question.rate);
+                setShowModal(true);
+              }}
+            />
+          )}
         </div>
       ))}
-      <Button
-        className='tficolorbg-button'
-        type='submit'
-        onClick={() => {
-          setSelectedQuestion(null);
-          setQuestion("");
-          setRate("");
-          setAnswer("");
-          setChoices([]);
-          setShowModal(true);
-        }}
-      >
-        Add question
-      </Button>
+      {editable && (
+        <Button
+          className='tficolorbg-button'
+          type='submit'
+          onClick={() => {
+            setSelectedQuestion(null);
+            setQuestion("");
+            setRate("");
+            setAnswer("");
+            setChoices([]);
+            setShowModal(true);
+          }}
+        >
+          Add question
+        </Button>
+      )}
       <EnumerationForm
         showModal={showModal}
         setShowModal={setShowModal}

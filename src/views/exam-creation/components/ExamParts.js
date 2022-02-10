@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Accordion, Button } from "react-bootstrap";
+import SweetAlert from "react-bootstrap-sweetalert";
 import { displayQuestionType } from "../../../utils/displayQuestionType";
 import Questions from "./questions/Questions";
 
@@ -10,8 +11,11 @@ export default function ExamParts({
   setLoading,
   setSelectedPart,
   setShowModal,
+  editable
 }) {
-  console.log(exam.questionPartDto)
+  
+  const [selectedId, setSelectedId] = useState(null)
+  const [showWarning, setShowWarning] = useState(false)
 
   const arrageAlphabetical = (data) => {
     let temp = Object.values(data).sort(function(a, b){
@@ -22,8 +26,25 @@ export default function ExamParts({
     });
     return temp;
   }
+
   return (
     <Accordion defaultActiveKey='0' className='exam-part-creation'>
+      <SweetAlert
+        warning
+        showCancel
+        show={showWarning}
+        confirmBtnText='Yes, delete it!'
+        confirmBtnBsStyle='danger'
+        title='Are you sure?'
+        onConfirm={async (e) => {
+          await deletePart(e, selectedId);
+          setShowWarning(false);
+        }}
+        onCancel={() => setShowWarning(false)}
+        focusCancelBtn
+      >
+        You will not be able to recover this exam!
+      </SweetAlert>
       {arrageAlphabetical(exam.questionPartDto).map((part, index) => (
         <Accordion.Item
           style={{ border: "1px solid #f1f1f1", padding: "8px 16px" }}
@@ -39,25 +60,31 @@ export default function ExamParts({
               </div>
             </div>
           </Accordion.Header>
-          <div className='exam-actions exam-absolute-actions'>
-            <a
-              href='#edit-part'
-              onClick={(e) => {
-                setShowModal(true);
-                setSelectedPart(part);
-              }}
-            >
-              <i class='fas fa-edit'></i>
-            </a>
-            <a href='#delete-part' onClick={(e) => deletePart(e, part)}>
-              <i class='fas fa-trash-alt'></i>
-            </a>
-          </div>
+          {editable && (
+            <div className='exam-actions exam-absolute-actions'>
+              <a
+                href='#edit-part'
+                onClick={(e) => {
+                  setShowModal(true);
+                  setSelectedPart(part);
+                }}
+              >
+                <i class='fas fa-edit'></i>
+              </a>
+              <a href='#delete-part' onClick={(e) => {
+                setShowWarning(true)
+                setSelectedId(part)
+              }}>
+                <i class='fas fa-trash-alt'></i>
+              </a>
+            </div>
+          )}
           <Accordion.Body>
             <Questions
               part={part}
               getExamInformation={getExamInformation}
               setLoading={setLoading}
+              editable={editable}
             />
           </Accordion.Body>
         </Accordion.Item>

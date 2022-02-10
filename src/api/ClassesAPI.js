@@ -29,6 +29,14 @@ export default class ClassesAPI extends Base {
       data
     });
   };
+
+  getClassInformation = async (id) => {
+    return this.sendRequest({
+      path: `/api/Class/${id}`,
+      method: 'GET'
+    });
+  };
+
   editClasses = async (id, data) => {
     return this.sendRequest({
       path: `/api/Class/${id}`,
@@ -81,6 +89,13 @@ export default class ClassesAPI extends Base {
       method: 'GET'
     });
   };
+
+  getModuleClass = async (classId) => {
+    return this.sendRequest({
+      path: `/api/Module/class/${classId}/item/1`,
+      method: 'GET'
+    })
+  }
 
   getTaskModule = async (id, moduleId ) => {
     return this.sendRequest({
@@ -479,6 +494,13 @@ creatTask = async (mId, cId,  data) => {
   getClassInteractiveModules = async (classid, moduleid) =>{
     return this.sendRequest({
       path: `/api/Class/${classid}/module/${moduleid}/interactive`,
+      method: 'GET'
+    })
+  }
+
+  getInformationExam = async (testId) => {
+    return this.sendRequest({
+      path: `/api/Test/${testId}/information`,
       method: 'GET'
     })
   }

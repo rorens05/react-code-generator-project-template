@@ -64,9 +64,13 @@ const TrueOrFalseForm = ({
               placeholder='Enter test instructions'
               onChange={(e) => setAnswer(e.target.value)}
             /> */}
-            <Form.Select aria-label="Default select example" value={answer} onChange={(e) => setAnswer(e.target.value)}>
-              <option value="true">True</option>
-              <option value="false">False</option>
+            <Form.Select
+              aria-label='Default select example'
+              value={answer}
+              onChange={(e) => setAnswer(e.target.value)}
+            >
+              <option value='true'>True</option>
+              <option value='false'>False</option>
             </Form.Select>
           </Form.Group>
           <span style={{ float: "right" }}>
@@ -86,6 +90,7 @@ export default function TrueOrFalse({
   getExamInformation,
   setLoading,
   deleteQuestion,
+  editable,
 }) {
   const [showModal, setShowModal] = useState(false);
   const [question, setQuestion] = useState("");
@@ -96,7 +101,7 @@ export default function TrueOrFalse({
 
   const submitQuestion = async (e) => {
     e.preventDefault();
-    console.log({selectedQuestion})
+    console.log({ selectedQuestion });
     setLoading(true);
     const data = {
       question: {
@@ -128,10 +133,13 @@ export default function TrueOrFalse({
       data.question
     );
     if (response.ok) {
-      response = await new ExamAPI().editTrueOrFalseAnswer(selectedQuestion.choices[0].id, {
-        isCorrect: true,
-        testChoices: data.answer,
-      });
+      response = await new ExamAPI().editTrueOrFalseAnswer(
+        selectedQuestion.choices[0].id,
+        {
+          isCorrect: true,
+          testChoices: data.answer,
+        }
+      );
       if (response.ok) {
         setShowModal(false);
         toast.success("Question updated successfully");
@@ -140,7 +148,7 @@ export default function TrueOrFalse({
         setQuestion("");
         setAnswer("true");
         setSelectedQuestion(null);
-      }else{
+      } else {
         toast.error(
           response.data?.errorMessage ||
             "Something went wrong while updating the question"
@@ -187,7 +195,7 @@ export default function TrueOrFalse({
               {index + 1}. {question.question.testQuestion}
             </p>
             <p className=''>Answer: {question.answer}</p>
-            <p className=''>Rating: {question.question.rate}</p>
+            <p className=''>Point(s): {question.question.rate}</p>
           </div>
           <QuestionActions
             onDelete={(e) => deleteQuestion(e, question.question.id)}
@@ -201,19 +209,21 @@ export default function TrueOrFalse({
           />
         </div>
       ))}
-      <Button
-        className='tficolorbg-button'
-        type='submit'
-        onClick={() => {
-          setSelectedQuestion(null)
-          setQuestion("");
-          setRate("");
-          setAnswer("true");
-          setShowModal(true);
-        }}
-      >
-        Add question
-      </Button>
+      {editable && (
+        <Button
+          className='tficolorbg-button'
+          type='submit'
+          onClick={() => {
+            setSelectedQuestion(null);
+            setQuestion("");
+            setRate("");
+            setAnswer("true");
+            setShowModal(true);
+          }}
+        >
+          Add question
+        </Button>
+      )}
       <TrueOrFalseForm
         showModal={showModal}
         setShowModal={setShowModal}
