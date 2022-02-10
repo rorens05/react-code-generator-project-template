@@ -3,6 +3,7 @@ import React, { useContext, useState } from "react";
 import SweetAlert from "react-bootstrap-sweetalert";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import CoursesAPI from "../../../../api/CoursesAPI";
 import { UserContext } from "../../../../context/UserContext";
 import getStartAndEndDateFromClassTest from "../../../../utils/getStartAndEndDateFromClassTest";
 import AssignExam from "./AssignExam";
@@ -18,7 +19,22 @@ export default function ExamItem({ exam, deleteExam, setLoading, fetchExams }) {
   const [showWarning, setShowWarning] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
-  const {startDate, endDate} = getStartAndEndDateFromClassTest(exam)
+  const { startDate, endDate } = getStartAndEndDateFromClassTest(exam);
+
+  const toggleShare = async () => {
+    console.log({exam})
+    setLoading(true);
+    let response = await new CoursesAPI().editExam(exam.test?.id, {
+      isShared: !exam.test?.isShared,
+      testName: exam.test?.testName,
+      testInstructions: exam.test?.testInstructions
+    });
+    if (response.ok) {
+      fetchExams()
+    } else {
+      alert(response.data.errorMessage);
+    }
+  };
 
   return (
     <div className='exam-item-container'>
@@ -55,6 +71,7 @@ export default function ExamItem({ exam, deleteExam, setLoading, fetchExams }) {
       </div>
       {user.isTeacher && (
         <TeacherExamActions
+          toggleShare={toggleShare}
           exam={exam}
           setShowModal={setShowModal}
           setShowEditModal={setShowEditModal}

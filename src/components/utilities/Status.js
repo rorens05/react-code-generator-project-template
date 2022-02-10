@@ -25,6 +25,12 @@ export default function Status({children}) {
     case "Upcoming":
       color = "#17A2B8";
       break
+    case "Shared":
+      color = "#28A745";
+      break
+    case "Not Shared":
+      color = "#007BFF";
+      break
     default:
       break;
   }

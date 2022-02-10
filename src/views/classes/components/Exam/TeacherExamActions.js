@@ -5,11 +5,23 @@ export default function TeacherExamActions({
   setShowModal,
   setShowEditModal,
   setShowWarning,
+  toggleShare
 }) {
   return (
     <div className='exam-actions'>
       <a
+        href='#share'
+        title={exam.test.isShared ? "Unshare" : "Share"}
+        onClick={(e) => {
+          e.preventDefault();
+          toggleShare();
+        }}
+      >
+        <i class={`fas fa-share ${exam.test.isShared && "rotate"}`}></i>
+      </a>
+      <a
         href='#assign'
+        title='assign'
         onClick={(e) => {
           e.preventDefault();
           setShowModal(true);
@@ -17,9 +29,10 @@ export default function TeacherExamActions({
       >
         <i class='fas fa-user-clock'></i>
       </a>
-      {exam.test.classId != null && (
+      {exam.test.classId != null && !exam.test.isShared && (
         <a
           href='#edit'
+          title="Edit"
           onClick={(e) => {
             e.preventDefault();
             setShowEditModal(true);
@@ -30,9 +43,10 @@ export default function TeacherExamActions({
       )}
       {exam.classTest == null && (
         <>
-          {exam.test.classId != null && (
+          {exam.test.classId != null && !exam.test.isShared && (
             <a
               href='#delete'
+              title="Delete"
               onClick={(e) => {
                 e.preventDefault();
                 setShowWarning(true);
