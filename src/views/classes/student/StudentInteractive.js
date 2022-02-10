@@ -1,11 +1,24 @@
 import React, { useContext, useState, useEffect } from 'react'
 import {Row, Col, Button} from 'react-bootstrap'
 import moment from 'moment'
+import { UserContext } from '../../../context/UserContext'
+import { useParams } from 'react-router'
 
 function StudentInteractive({interactive, searchTerm}) {
   const dateCompareNow = moment().format("YYYY-MM-DD")
   const timeNow = moment().format('HH:mm');
   const dateTimeNow = dateCompareNow + ' ' + '00:00:00';
+  const userContext = useContext(UserContext)
+  const {user} = userContext.data
+  const {id} = useParams()
+  let dev = 'dev'
+
+  const getInteractiveLink = (e, path, userId, gameId, classId, dev) => {
+    e.preventDefault()
+    window.open(path + '?sid=' + userId + '&gid=' + gameId + '&cid=' + classId + '#' + dev) 
+  }
+
+  console.log('id:', id)
 
   console.log('interactive:', interactive)
   return (
@@ -29,6 +42,9 @@ function StudentInteractive({interactive, searchTerm}) {
                     </Col>
                       {(item.isLoggedUserDone === true)?(
                     <>
+                    <Col sm={3} className='icon-exam'>
+                    <Button onClick={(e) => getInteractiveLink(e, item?.interactive?.path, user?.student?.id, item?.interactive?.id, id, dev)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-play" ></i></Button>  
+                    </Col>
                     </>
                   ):
                   <>
@@ -36,15 +52,15 @@ function StudentInteractive({interactive, searchTerm}) {
                       moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isAfter(moment(item?.classInteractiveAssignment?.startDate + ' ' + item?.classInteractiveAssignment?.startTime, 'YYYY-MM-DD HH:mm')) &&
                       moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isBefore(moment(item?.classInteractiveAssignment?.endDate + ' ' + item?.classInteractiveAssignment?.endTime, 'YYYY-MM-DD HH:mm')) &&
                       <Col sm={3} className='icon-exam'>
-                      <a target="_blank" style={{textDecoration:'none'}} className="btn btn-primary m-r-5 color-white tficolorbg-button" size="sm" href={item?.interactive?.path} role="button"><i class="fas fa-play" ></i></a>
+                      <Button onClick={(e) => getInteractiveLink(e, item?.interactive?.path, user?.student?.id, item?.interactive?.id, id, dev)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-play" ></i></Button>
                       </Col>
                     }
-                      {
-                        moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isAfter(moment(item?.classInteractiveAssignment?.endDate + ' ' + item?.classInteractiveAssignment?.endTime, 'YYYY-MM-DD HH:mm')) &&
-                        <Col sm={3} className='icon-exam'>
-                        
-                        </Col>
-                      }
+                    {
+                      moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isAfter(moment(item?.classInteractiveAssignment?.endDate + ' ' + item?.classInteractiveAssignment?.endTime, 'YYYY-MM-DD HH:mm')) &&
+                      <Col sm={3} className='icon-exam'>
+                      
+                      </Col>
+                    }
                     </>
                     }
                     {
