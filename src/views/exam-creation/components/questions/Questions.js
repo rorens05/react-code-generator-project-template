@@ -8,7 +8,6 @@ import MultipleChoice from "./MultipleChoice";
 import TrueOrFalse from "./TrueOrFalse";
 
 export default function Questions({ part, getExamInformation, setLoading }) {
-  console.log({ part });
 
   const deleteQuestion = async (e, id) => {
     e.preventDefault();
