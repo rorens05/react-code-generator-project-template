@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Button, Form, FormControl, Modal, FloatingLabel } from 'react-bootstrap';
+import React, { useState, useEffect } from "react";
+import { Button, Form, FormControl, Modal } from 'react-bootstrap';
 import SubjectAreaAPI from "../../../api/SubjectAreaAPI";
 import CoursesAPI from "../../../api/CoursesAPI";
 
@@ -115,20 +115,6 @@ export default function CourseEdit({setCourse, openEditModal, setOpenEditModal, 
 										<Form.Label for="subjectArea">
 												Subject Area
 										</Form.Label>
-										{/* <Form.Select size="lg" onChange={(e) => setSubjectArea(e.target.value)}>
-											<option value={selectedCourse?.subjectAreaId}>
-												{selectedCourse?.subjectAreaId}
-											</option>
-											{
-												sarea.map(item => {
-													return(
-														<option value={item.id}>
-															{item.subjectAreaName}
-														</option>
-													)
-												})
-											}
-										</Form.Select> */}
 										<Form.Select size="lg" onChange={(e) => setSubjectArea(e.target.value)}>
 											{
 												sarea.map(item => {
@@ -155,17 +141,6 @@ export default function CourseEdit({setCourse, openEditModal, setOpenEditModal, 
 												Inactive
 											</option>
 										</Form.Select>
-										{/* <Form.Select size="lg" onChange={(e) => setStatus(e.target.value)}>
-											<option>
-												{selectedCourse?.status === true ? 'Active' : 'Inactive'}
-											</option>
-											<option value={true}>
-												Active
-											</option>
-											<option value={false}> 
-												Inactive
-											</option>
-										</Form.Select> */}
 								</Form.Group>
 								{' '}
 
