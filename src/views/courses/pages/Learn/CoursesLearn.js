@@ -139,7 +139,9 @@ export default function CourseLearn({viewLesson, setViewLesson, moduleInfo, setM
                     </span>
                   </Accordion.Header>
                   <Accordion.Body>                         
-                    {lessonInfo.map((li, index) => {
+                      {lessonInfo.filter(li =>
+                        li.pageName.toLowerCase().includes(filter.toLowerCase())).map
+                        ((li, index) => {
                       return(
                         <Row>
                           <Col className="lesson-header" md={9} onClick={(e) => getModuleContent(e, moduleid, li.id)}>

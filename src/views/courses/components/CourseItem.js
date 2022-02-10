@@ -37,6 +37,7 @@ export default function CoursesItem({filter, setFilter, course, setLoading, setO
           ((item, index) => {
         return(
           <Col md={3}>
+            <Link to={"coursecontent/"+item.id} onClick={() => setCourseId(item.id)} course={course} setLoading={setLoading} className="active card-title">
             <Card className="card-design b-0px">
               <Card.Header className="card-header-courses">
                 <Row style={{color:"white"}}>
@@ -63,9 +64,7 @@ export default function CoursesItem({filter, setFilter, course, setLoading, setO
               </Card.Header>
                 <Card.Body>
                     <Card.Title tag="h5">
-                      <Link to={"coursecontent/"+item.id} onClick={() => setCourseId(item.id)} course={course} setLoading={setLoading} className="active card-title">
                         {item.courseName.substring(0, 20)}...
-                      </Link>
                     </Card.Title>
                     <Card.Subtitle
                         className="mb-2 text-muted"
@@ -78,6 +77,7 @@ export default function CoursesItem({filter, setFilter, course, setLoading, setO
                     </Card.Text>
                 </Card.Body>
             </Card>
+            </Link>
           </Col>
         )
         })
