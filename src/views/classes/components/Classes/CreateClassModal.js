@@ -82,6 +82,7 @@ function CreateClassModal({modal, toggle,getClasses}) {
       setAddNotity(true)
       toggle(e)
       getClasses()
+      setGetCode('')
 
     }else{
       alert(response.data.errorMessage)
@@ -155,7 +156,7 @@ function CreateClassModal({modal, toggle,getClasses}) {
                 	</Button>
               </Form.Group>
               <Form.Group className="mb-4">
-                <Form.Control value={classCode} type="text" placeholder='Enter class Code here'/>
+                <Form.Control value={classCode} onChange={(e) => setGetCode(e.target.value) } type="text" placeholder='Enter class Code here'/>
             </Form.Group>
             <Form.Group className='right-btn'>
 							<Button className='tficolorbg-button' type='submit'>Save</Button>
