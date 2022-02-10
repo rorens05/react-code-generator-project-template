@@ -130,7 +130,7 @@ export default function CoursesExam({moduleInfo, setModuleInfo, moduleId}) {
                     <>
                     <Row>
                       <Col className="" md={9}>
-                        <Link className="lesson-header" to={`/exam_creation/${item?.id}`}>
+                        <Link className="lesson-header" to={`/exam_creation/${ei?.id}`}>
                           {ei?.testName}
                         </Link>
                         <div>
