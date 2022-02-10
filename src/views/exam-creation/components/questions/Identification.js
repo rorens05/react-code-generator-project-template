@@ -36,19 +36,19 @@ const IdentificationForm = ({
               className='custom-input'
               size='lg'
               type='text'
-              placeholder='Enter test instructions'
+              placeholder='Enter test question'
               onChange={(e) => setQuestion(e.target.value)}
             />
           </Form.Group>
           <Form.Group className='m-b-20'>
-            <Form.Label for='question'>Rate</Form.Label>
+            <Form.Label for='question'>Points</Form.Label>
             <Form.Control
               defaultValue={""}
               value={rate}
               className='custom-input'
               size='lg'
               type='number'
-              placeholder='Enter test instructions'
+              placeholder='Enter test points'
               onChange={(e) => setRate(e.target.value)}
             />
           </Form.Group>
@@ -61,7 +61,7 @@ const IdentificationForm = ({
               className='custom-input'
               size='lg'
               type='text'
-              placeholder='Enter test instructions'
+              placeholder='Enter test answer'
               onChange={(e) => setAnswer(e.target.value)}
             />
           </Form.Group>
@@ -107,7 +107,12 @@ export default function Identification({
     if (selectedQuestion != null) {
       updateQuestion(selectedQuestion, data);
     } else {
-      addQuestion(data);
+      if(rate > 0 && rate < 101){
+        addQuestion(data);
+      }else{
+        setLoading(false)
+        toast.error('Rate should be greater than 1 and less than 100.')
+      }
     }
   };
 
