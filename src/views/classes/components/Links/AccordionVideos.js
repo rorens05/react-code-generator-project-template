@@ -7,7 +7,7 @@ import SweetAlert from 'react-bootstrap-sweetalert';
 import moment from 'moment';
 import { UserContext } from '../../../../context/UserContext'
 
-function AccordionVideos({videos, getVideos, setOpenEditModal, setEditLinks}) {
+function AccordionVideos({videos, getVideos, setOpenEditModal, setEditLinks, searchTerm}) {
   const [deleteNotify, setDeleteNotify] = useState(false)
   const [itemId, setItemId] = useState('')
   const {id} = useParams()
@@ -66,7 +66,13 @@ function AccordionVideos({videos, getVideos, setOpenEditModal, setEditLinks}) {
           </div>
         </Accordion.Header>
         <Accordion.Body>
-          {videos.map(item =>{
+          {videos?.filter((item) => {
+            if(searchTerm == ''){
+              return item
+            } else if(item?.description.toLowerCase().includes(searchTerm.toLowerCase())){
+              return item
+            }
+          }).map(item =>{
             return(
             <Row>
               <Col sm={9}>

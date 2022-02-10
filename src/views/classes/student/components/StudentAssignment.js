@@ -6,8 +6,9 @@ import { UserContext } from '../../../../context/UserContext'
 import StudentAnswerAssignment from './StudentAnswerAssignment'
 import StudentSubmittedAssigment from './StudentSubmittedAssigment'
 import ClassesAPI from '../../../../api/ClassesAPI'
+import StudentViewAssignment from './StudentViewAssignment'
 
-function StudentAssignment({assignment}) {
+function StudentAssignment({assignment, searchTerm}) {
   const [answerModal, setAnswerModal] = useState(false)
   const [submittedAssignment, setSubmittedAssignment] = useState(false)
   const [studentAnswer, setStudentAnswer] = useState()
@@ -18,7 +19,21 @@ function StudentAssignment({assignment}) {
   const dateCompareNow = moment().format("YYYY-MM-DD")
   const timeNow = moment().format('HH:mm');
   const dateTimeNow = dateCompareNow + ' ' + '00:00:00';
-  console.log('Assingment:', assignment)
+  const [viewAssignmentModal, setViewAssignmentModal] = useState(false)
+  const [viewAssignmentItem, setViewAssignmentItem] = useState([])
+  const [startDate, setStartDate] = useState()
+  const [startTime, setStartTime] = useState()
+  const [endDate, setEndDate] = useState()
+  const [endTime, setEndTime] = useState()
+
+  const viewAssignmentToggle = (item, item1, item2, item3, item4) => {
+    setViewAssignmentItem(item)
+    setStartDate(item1)
+    setStartTime(item2)
+    setEndDate(item3)
+    setEndTime(item4)
+    setViewAssignmentModal(!viewAssignmentModal)
+    }
 
   const answerAnswerToggle = (item) => {
     setAssignmentId(item)
@@ -50,9 +65,17 @@ function StudentAssignment({assignment}) {
     
   }, [])
 
+  console.log('assignmentassignmentassignment:', assignment)
+
   return (
     <div>
-      {assignment.map(item =>{
+      {assignment.filter((item)=>{
+        if(searchTerm == ''){
+          return item
+        }else if(item?.assignment?.assignmentName.toLowerCase().includes(searchTerm.toLowerCase())){
+          return item
+        }
+      }).map(item =>{
         return(
           <>
             {(item?.isScheduled === true)?(
@@ -77,6 +100,7 @@ function StudentAssignment({assignment}) {
                     <>
                       <Col sm={3} className='icon-exam'>
                       <Button onClick={() => getStudentAssignmentAnswer(item?.assignment?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button>
+                      <Button onClick={() => viewAssignmentToggle(item?.assignment, item?.classAssignment?.startDate, item?.classAssignment?.startTime, item?.classAssignment?.endDate, item?.classAssignment?.endTime)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-book-reader"></i></Button>
                     </Col>
                       {
                         moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isAfter(moment(item?.classAssignment?.endDate + ' ' + item?.classAssignment?.endTime, 'YYYY-MM-DD HH:mm')) &&
@@ -90,14 +114,22 @@ function StudentAssignment({assignment}) {
                       moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isBefore(moment(item?.classAssignment?.endDate + ' ' + item?.classAssignment?.endTime, 'YYYY-MM-DD HH:mm')) &&
                       <Col sm={3} className='icon-exam'>
                       <Button onClick={() => answerAnswerToggle(item?.assignment?.id)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-user-edit"></i></Button>
+                      <Button onClick={() => viewAssignmentToggle(item?.assignment, item?.classAssignment?.startDate, item?.classAssignment?.startTime, item?.classAssignment?.endDate, item?.classAssignment?.endTime)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-book-reader"></i></Button>
                       </Col>
                     }
                       {
                         moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isAfter(moment(item?.classAssignment?.endDate + ' ' + item?.classAssignment?.endTime, 'YYYY-MM-DD HH:mm')) &&
                         <Col sm={3} className='icon-exam'>
                         <Button  className="m-r-5 color-white tficolorbg-button" size="sm">Not Submitted</Button>
+                        <Button onClick={() => viewAssignmentToggle(item?.assignment, item?.classAssignment?.startDate, item?.classAssignment?.startTime, item?.classAssignment?.endDate, item?.classAssignment?.endTime)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-book-reader"></i></Button>
                         </Col>
                       }
+                          {
+                      moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isBefore(moment(item?.classAssignment?.startDate + ' ' + item?.classAssignment?.startTime, 'YYYY-MM-DD HH:mm')) &&
+                      <Col sm={3} className='icon-exam'>
+                        <Button onClick={() => viewAssignmentToggle(item?.assignment, item?.classAssignment?.startDate, item?.classAssignment?.startTime, item?.classAssignment?.endDate, item?.classAssignment?.endTime)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-book-reader"></i></Button>
+                      </Col>
+                    }
                     </>
                     }
                     {
@@ -108,6 +140,14 @@ function StudentAssignment({assignment}) {
                     {
                       moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isAfter(moment(item?.classAssignment?.endDate + ' ' + item?.classAssignment?.endTime, 'YYYY-MM-DD HH:mm')) &&
                       <div style={{color:'#EE9337', fontSize:'15px'}}><b>Ended</b>&nbsp;</div>  
+                    }
+                    {
+                      moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isBefore(moment(item?.classAssignment?.startDate + ' ' + item?.classAssignment?.startTime, 'YYYY-MM-DD HH:mm')) &&
+                      <div style={{color:'#EE9337', fontSize:'15px'}}><b>Upcoming</b></div>
+                    }
+                    {
+                      moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isSame(moment(item?.classAssignment?.startDate + ' ' + item?.classAssignment?.startTime, 'YYYY-MM-DD HH:mm')) &&
+                      <div style={{color:'#EE9337', fontSize:'15px'}}><b>Ongoing</b></div>
                     }
                     <Col sm={7} className='due-date-discusstion' >
                         <div className='inline-flex'>
@@ -153,6 +193,7 @@ function StudentAssignment({assignment}) {
         )
       })}
       <StudentAnswerAssignment assignmentId={assignmentId} answerAnswerToggle={answerAnswerToggle} answerModal={answerModal} />
+      <StudentViewAssignment startDate={startDate} startTime={startTime} endDate={endDate} endTime={endTime} viewAssignmentItem={viewAssignmentItem} viewAssignmentToggle={viewAssignmentToggle} viewAssignmentModal={viewAssignmentModal} />
       <StudentSubmittedAssigment studentAnswer={studentAnswer} submittedAssignmentToggle={submittedAssignmentToggle} submittedAssignment={submittedAssignment} />
     </div>
   )

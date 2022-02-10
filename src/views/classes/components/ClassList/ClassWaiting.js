@@ -5,7 +5,7 @@ import { useParams} from 'react-router'
 import SweetAlert from 'react-bootstrap-sweetalert';
 
 
-function ClassWaiting({waitingStudent, getStudentEnrolled, getStudentWaiting}) {
+function ClassWaiting({waitingStudent, getStudentEnrolled, getStudentWaiting, searchTerm}) {
   const [addNotify, setAddNotify] = useState(false)
   const [deleteNotify, setDeleteNotify] = useState(false)
   const [itemId, setItemId] = useState('')
@@ -60,7 +60,13 @@ function ClassWaiting({waitingStudent, getStudentEnrolled, getStudentWaiting}) {
           </tr>
         </thead>
         <tbody>
-        {waitingStudent.students.map(item => {
+        {waitingStudent?.students?.filter((item) => {
+          if(searchTerm == ''){
+            return item
+          }else if(item.lname.toLowerCase().includes(searchTerm.toLowerCase())){
+            return item
+          }
+        }).map(item => {
           return (         
             <tr>
               <td>

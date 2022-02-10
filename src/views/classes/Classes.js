@@ -23,6 +23,11 @@ export default function Classes() {
   const userContext = useContext(UserContext)
   const {user} = userContext.data
   let studentId = user?.student?.id
+  const [searchTerm, setSearchTerm] = useState('')
+
+  const onSearch = (text) =>{
+    setSearchTerm(text)
+  }
 
   const joinClassesToggle = () => {
     setJoinClassesModal(!joinClassestModal)
@@ -76,45 +81,63 @@ export default function Classes() {
    
   }, [])
 
+  console.log('searchTerm:', searchTerm)
+
   return (
     <MainContainer activeHeader={'classes'} loading={loading}>
       <div className='page-container'>
         <div className='containerpages'>
-          {(user?.teacher === null)?(
+          {user.isStudent &&
           <>
-          <StudentClassListHeader getPendingClasses={getPendingClasses}  joinClassesToggle={joinClassesToggle} joinClassestModal={joinClassestModal} />
+          <StudentClassListHeader onSearch={onSearch} getPendingClasses={getPendingClasses}  joinClassesToggle={joinClassesToggle} joinClassestModal={joinClassestModal} />
           <CardGroup className='card-group2'>
           {studentClasses.length?
-            studentClasses.map(item => {
+            studentClasses.filter((item) => {
+              if(searchTerm == ''){
+                return item
+              }else if (item.className.toLowerCase().includes(searchTerm.toLocaleLowerCase())){
+                return item
+              }
+            }).map(item => {
               return( 
               <StudentClasslist item={item} />
               )
             }):<></>  
-            
           } 
           {pendingClasses.length?
-            pendingClasses.map(item =>{
+            pendingClasses.filter((item) => {
+              if(searchTerm == ''){
+                return item
+              } else if (item.className.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase())){
+                return item
+              }
+            }).map(item =>{
               return(
                 <StudentClassListPending item={item} />
               )
             }):<></>
-          }
-        
-            
+          } 
           </CardGroup>
           </>
-          ):
+          }
+        {user?.teacher && 
           <>
-          <ClassHeader getClasses={getClasses} />
+          <ClassHeader onSearch={onSearch} getClasses={getClasses} />
           <CardGroup className='card-group2'>
             {classes.length?
-              classes.map(item => {
+              classes.filter((item) => {
+                if(searchTerm == '') {
+                  return item
+                } else if (item?.className.toLowerCase().includes(searchTerm.toLowerCase())){
+                  return item
+                }
+              }).map(item => {
                 return(<ClassCard getClasses={getClasses}  item={item} setOpenEditModal={setOpenEditModal} setSeletedClass={setSeletedClass} />)
                   }):<span></span>
                 }
           </CardGroup>
           </>
-          }
+        }
         </div>
       </div>
       <EditClassModal getClasses={getClasses} seletedClass={seletedClass} openEditModal={openEditModal} setOpenEditModal={setOpenEditModal} />

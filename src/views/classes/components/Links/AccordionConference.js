@@ -8,7 +8,7 @@ import moment from 'moment';
 import { UserContext } from '../../../../context/UserContext'
 
 
-function AccordionConference({conference, getConfe, setOpenEditModal, setEditLinks}) {
+function AccordionConference({conference, getConfe, setOpenEditModal, setEditLinks, searchTerm}) {
   const [deleteNotify, setDeleteNotify] = useState(false)
   const [itemId, setItemId] = useState('')
   const {id} = useParams()
@@ -66,7 +66,13 @@ function AccordionConference({conference, getConfe, setOpenEditModal, setEditLin
           </div>
         </Accordion.Header>
         <Accordion.Body>
-        {conference.map(item => {
+        {conference?.filter((item) => {
+          if(searchTerm == ''){
+            return item
+          }else if(item?.description.toLowerCase().includes(searchTerm.toLowerCase())){
+            return item
+          }
+        }).map(item => {
           return ( 
             <Row>
               <Col sm={9}>

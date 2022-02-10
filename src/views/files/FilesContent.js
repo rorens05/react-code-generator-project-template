@@ -3,6 +3,25 @@ import {Table, Button} from 'react-bootstrap'
 import moment from 'moment';
 
 function FilesContent(props) {
+
+
+  const  downloadImage = (url) => {
+    fetch(url, {
+      mode : 'no-cors',
+    })
+      .then(response => response.blob())
+      .then(blob => {
+      let blobUrl = window.URL.createObjectURL(blob);
+      let a = document.createElement('a');
+      a.download = url.replace(/^.*[\\\/]/, '');
+      a.href = blobUrl;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    })
+  }
+
+
   return (
     <Table responsive="sm">
       <thead>
@@ -28,8 +47,16 @@ function FilesContent(props) {
                     :
                   <td>{moment(item.createdDate).format('L')}</td>
                 }
-                <td><i class="fas fa-edit td-file-page"></i>
-                  <i class="fas fa-arrow-down td-file-page"></i>
+                <td>
+                  {/* {
+                    item.path_Base.match(/.(jpg|jpeg|png|gif|pdf)$/i)
+                    ?
+                    <i class="fas fa-arrow-down td-file-page" onClick={() => downloadImage(item.path_Base)}></i>
+                    : */}
+                    <a href={item.path_Base} download={true} target='_blank'>
+                      <i class="fas fa-arrow-down td-file-page"></i>
+                    </a> 
+                  {/* } */}
                   <i class="fas fa-trash-alt td-file-page"></i></td>
               </tr>
             )
