@@ -45,6 +45,7 @@ export default function ExamCreation() {
     const urlSearchParams = new URLSearchParams(window.location.search);
     const params = Object.fromEntries(urlSearchParams.entries());
     const classId = tempExam.test.classId || params.class_id
+    const not_editable = params.not_editable
     if(classId){
       let response = await new ExamAPI().getExams(classId);
       if (response.ok) {
@@ -52,7 +53,6 @@ export default function ExamCreation() {
         let foundExam = response.data.find(item => item.test.id === tempExam.test.id)
         if(foundExam){
           tempExam.classTest = foundExam.classTest
-          
         }else{
           alert("Class test not found")
         }
@@ -69,6 +69,9 @@ export default function ExamCreation() {
       }
     }else{
       setNoAssigned(true)
+    }
+    if(not_editable){
+      setEditable(false)
     }
     return tempExam
   }
