@@ -33,6 +33,8 @@ export default function Classes() {
     setJoinClassesModal(!joinClassestModal)
   }
 
+  console.log('classesclassesclasses:', classes)
+
   const getClasses = async() => {
     setLoading(true)
     let response = await new ClassesAPI().getClasses(user.isTeacher ? user?.teacher?.id : user?.student?.id)
