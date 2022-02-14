@@ -110,7 +110,7 @@ export default function ClassSideNavigation({setLoading}) {
                <ClassFeed />
                </Col>
                <Col md="auto">
-               <ClassCalendar />
+               {/* <ClassCalendar /> */}
                </Col>
              </Row>
               </Tab.Pane>
