@@ -50,7 +50,7 @@ export default function ClassSideNavigation({setLoading}) {
               <ListGroup.Item className="list-group-item-o">
                 <Row>
                   <Col className="" sm={9} >
-                    <div className="class-subtitle-code" > <i class="fas fa-expand"></i> {classInfo?.classInformation?.classCode}</div>
+                    <div className="class-subtitle-code" > {classInfo?.classInformation?.classCode}</div>
                     <div className="class-subtitle-section">{classInfo?.classInformation?.className}</div>
                     <div className="class-subtitle-subject">{classInfo?.classInformation?.gradeName}</div>
                     <div className="class-subtitle-name">{classInfo?.classInformation?.teacherName}</div>
