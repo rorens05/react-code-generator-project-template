@@ -95,9 +95,6 @@ return (
                     <Dropdown.Item onClick={() => retrieveArchive(item.id)} >
                       Restore 
                     </Dropdown.Item>
-                    <Dropdown.Item >
-                      Delete 
-                    </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
               </Col>
