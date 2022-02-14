@@ -82,7 +82,7 @@ function CreateTask({modal, toggle, module, getTaskModule, classId, refModuleId}
             <Form.Select onChange={(e) => setModuleId(e.target.value)}>
               <option>-- Select Unit Here -- </option>
                 {module.map(item => {
-                  return(<option value={item.id}>{item.moduleName} {item.id}</option>)
+                  return(<option value={item.id}>{item.moduleName}</option>)
                 })}
             </Form.Select>
             <div>
