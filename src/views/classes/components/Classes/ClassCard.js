@@ -11,6 +11,8 @@ function ClassCard({item, setOpenEditModal, setSeletedClass, getClasses}) {
   const [itemId, setItemId] = useState('')
   const [loading, setLoading] = useState(false)
 
+  console.log('ClassCard:', item)
+
   const cancelSweetAlert = () => {
     setDeleteNotify(false)
   }
@@ -109,7 +111,7 @@ function ClassCard({item, setOpenEditModal, setSeletedClass, getClasses}) {
               </Col>
               <Col ms={22} style={{fontSize:'15px', textAlign:'right',}}>
               <br />
-                <i className="fas fa-user"></i> 30
+                <i className="fas fa-user"></i> {item?.classEnrolledCount}
                 <br />
                 <br />
              </Col>
