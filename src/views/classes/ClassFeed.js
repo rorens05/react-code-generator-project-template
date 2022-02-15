@@ -148,7 +148,7 @@ function ClassFeed() {
                 <>
                 </>):(
                 <>
-                  <div className='inline-flex' style={{paddingTop:'20px', paddingTop:'6px', float:'right', paddingLeft:'650px'}}>
+                  <div className='inline-flex' style={{paddingTop:'20px', paddingTop:'6px', float:'right', paddingLeft:'685px'}}>
                     <div style={{color:'#EE9337', fontSize:'18px',paddingTop:'4px'}}>            
                       <Button onClick={() => openEditAnnouncementToggle(feedItem)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-pencil-alt"></i>&nbsp; Edit Post</Button>
                       </div>
