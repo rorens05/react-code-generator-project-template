@@ -56,7 +56,7 @@ function ClassWaiting({waitingStudent, getStudentEnrolled, getStudentWaiting, se
       <Table>
         <thead>
           <tr> 
-          <th><div className='class-waiting-header'> Student{' '} <i class="fas fa-sort-alpha-down" style={{color:'#EE9337',fontSize:'32px'}}></i></div></th>  
+          <th><div className='class-waiting-header'> Student{' '}</div></th>  
           </tr>
         </thead>
         <tbody>
