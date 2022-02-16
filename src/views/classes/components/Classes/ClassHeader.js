@@ -14,7 +14,7 @@ function ClassHeader({getClasses, onSearch}) {
 		history.push('/archive')
 	}
 
-	const handleHistoryList = ({}) => {
+	const handleHistoryList = () => {
 		history.push('/classes')
 	}
 
