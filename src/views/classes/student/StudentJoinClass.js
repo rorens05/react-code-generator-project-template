@@ -8,6 +8,7 @@ function StudentJoinClass({joinClassesToggle, joinClassestModal, getPendingClass
   const [code, setCode] = useState('')
   const [addNotify, setAddNotity] = useState(false)
   const [wrongCodeNotify, setWrongCodeNotify] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
 
   const submitRequest = async (e) => {
     e.preventDefault()
@@ -19,6 +20,7 @@ function StudentJoinClass({joinClassesToggle, joinClassestModal, getPendingClass
         setAddNotity(true)
       }else{
         setWrongCodeNotify(true)
+        setErrorMessage(response.data.errorMessage)
       }
   }
 
@@ -58,7 +60,7 @@ function StudentJoinClass({joinClassesToggle, joinClassestModal, getPendingClass
         <SweetAlert 
           warning
           show={wrongCodeNotify} 
-          title="Wrong Class Code!" 
+          title={errorMessage} 
           onConfirm={closeWrongNotify}>
         </SweetAlert>
     </div>
