@@ -56,7 +56,6 @@ export default function ClassSideNavigation({setLoading}) {
                     <div className="class-subtitle-name">{classInfo?.classInformation?.teacherName}</div>
                   </Col>
                   <Col className="ellipsis-top-right" sm={3}>
-                    <i className="fa fa-ellipsis-v fa-1x cursor-pointer"></i>
                     <div className='fa-user-size'>
                     <i className="fas fa-user"></i> {classInfo?.students?.length}
                     </div>
