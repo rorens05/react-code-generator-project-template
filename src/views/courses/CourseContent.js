@@ -23,6 +23,7 @@ export default function CourseContent(course) {
   const [showAssignment, setShowAssignment] = useState(false)
   const [showTask, setShowTask] = useState(false)
   const [showDiscussion, setShowDiscussion] = useState(false)
+  const [collapseSide, setCollapseSide] = useState(true)
   const courseid = sessionStorage.getItem('courseid')
 
   const getCourseUnitInformation = async(e) => {
@@ -76,7 +77,7 @@ export default function CourseContent(course) {
   }, [])
 
   return (
-    <MainContainer loading={loading} fluid activeHeader={'courses'}>
+    <MainContainer loading={loading} fluid activeHeader={'courses'} style='not-scrollable'>
       <ToastContainer />
       <Row>
         <Col sm={3}>
@@ -87,7 +88,7 @@ export default function CourseContent(course) {
       </Row>
       <Tab.Container className="course-widget-font" id="list-group-tabs-example " defaultActiveKey="#link1">
         <Row>
-          <Col className="row-course-bg course-widget-font" sm={3}>
+          {collapseSide ? <Col className="row-course-bg course-widget-font" sm={3}>
             <ListGroup.Item className="list-group-item-o">
               <Row>
                 <Col className="" sm={9} >
@@ -96,7 +97,9 @@ export default function CourseContent(course) {
                   {/* <div className="course-subtitle">{courseInfo.subjectArea.subjectAreaName}</div> */}
                 </Col>
                 <Col className="t-a-r" sm={3}>
-                  <i className="fa fa-ellipsis-v s"></i>
+                  <Col className="text-align-right">
+                    <i className="fas fa-chevron-left cursor-pointer" style={{color: '#EE9337'}} onClick={()=> setCollapseSide(false)}/>
+                  </Col>
                 </Col>
               </Row>
             </ListGroup.Item> 
@@ -124,7 +127,37 @@ export default function CourseContent(course) {
               </ListGroup.Item> */}
             </ListGroup>
           </Col>
-          <Col sm={9}>
+          :
+          <Col className="row-course-bg course-widget-font pt-2" sm={1}>
+            <Col className="text-align-right mb-2">
+              <i className="fas fa-chevron-right" style={{color: '#EE9337'}} onClick={()=> setCollapseSide(true)}/>
+            </Col>
+            <ListGroup>
+              <ListGroup.Item className="list-group-item-o" action href="#link1" onClick={(e) => contentDisplay(e)}>
+                <i className="fas fa-book" title="Learn"/>
+              </ListGroup.Item>
+              <ListGroup.Item className="list-group-item-o "action href="#link2" onClick={(e) => setBread(e, "Exam")}>
+                <i className="fas fa-file-alt" title="Exam"/>
+              </ListGroup.Item>
+              <ListGroup.Item  className="list-group-item-o "action href="#link3" onClick={(e) => setBread(e, "Discussion")}>
+                <i className="fas fa-comment-alt" title="Discussion"/>
+              </ListGroup.Item>
+              <ListGroup.Item className="list-group-item-o " action href="#link4" onClick={(e) => setBread(e, "Assignment")}>
+                <i className="fas fa-sticky-note" title="Assignment"/>
+              </ListGroup.Item>
+              <ListGroup.Item className="list-group-item-o " action href="#link5" onClick={(e) => setBread(e, "Task")}>
+                <i className="fas fa-edit" title="Task"/>
+              </ListGroup.Item>
+              <ListGroup.Item className="list-group-item-o " action href="#link6" onClick={(e) => setBread(e, "Files")}>
+                <i className="fas fa-folder-open" title="Files"/>
+              </ListGroup.Item>
+              {/* <ListGroup.Item className="list-group-item-o " action href="#link6">
+              Links
+              </ListGroup.Item> */}
+            </ListGroup>
+          </Col>
+          }
+          <Col sm={ collapseSide ? 9 : 11} className='scrollable vh-85 pb-5'>
             <Tab.Content className="content-pane">
               <Tab.Pane eventKey="#link1">
                 <CoursesLearn viewLesson={viewLesson} setViewLesson={setViewLesson} moduleInfo={moduleInfo} setModuleInfo={setModuleInfo}/>

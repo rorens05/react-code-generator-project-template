@@ -20,6 +20,7 @@ export default function ClassSideNavigation({setLoading}) {
   const [classInfo, setClassInfo] = useState(null)
   const {id} = useParams()
   const {user} = userContext.data
+  const [collapseSide, setCollapseSide] = useState(true)
 
   const getClassInfo = async() => {
     setLoading(true)
@@ -46,7 +47,7 @@ export default function ClassSideNavigation({setLoading}) {
   return (
     <Tab.Container style={{position:'relative'}} className="course-widget-font" id="list-group-tabs-example " defaultActiveKey="#link1">
         <div style={{position:'relative'}} className="row">
-          <div className="row-course-bg course-widget-font col-md-3">
+          {collapseSide ? <div className="row-course-bg course-widget-font col-md-3">
               <ListGroup.Item className="list-group-item-o">
                 <Row>
                   <Col className="" sm={9} >
@@ -56,14 +57,15 @@ export default function ClassSideNavigation({setLoading}) {
                     <div className="class-subtitle-name">{classInfo?.classInformation?.teacherName}</div>
                   </Col>
                   <Col className="ellipsis-top-right" sm={3}>
-                    <i className="fa fa-ellipsis-v fa-1x cursor-pointer"></i>
+                    {/* <i className="fa fa-ellipsis-v fa-1x cursor-pointer"></i> */}
+                    <i className="fas fa-chevron-left cursor-pointer color-black" onClick={()=> setCollapseSide(false)}/>
                     <div className='fa-user-size'>
                     <i className="fas fa-user"></i> {classInfo?.students?.length}
                     </div>
                   </Col>
                 </Row>
               </ListGroup.Item>
-            <ListGroup style={{paddingLeft:'15px'}}>
+            <ListGroup>
               <ListGroup.Item  className="list-group-item-o " action href="#link1">
                 Feed
               </ListGroup.Item>
@@ -102,7 +104,52 @@ export default function ClassSideNavigation({setLoading}) {
               </>}
             </ListGroup>
           </div>
-          <Col sm={9}>
+          :
+          <Col className='row-course-bg course-widget-font' sm={1}>
+            <Col className="text-align-right mb-2">
+              <i className="fas fa-chevron-right" style={{color: '#EE9337'}} onClick={()=> setCollapseSide(true)}/>
+            </Col>
+            <ListGroup>
+              <ListGroup.Item  className="list-group-item-o " action href="#link1">
+                <i className='fas fa-comment' title='Feed'/>
+              </ListGroup.Item>
+              <ListGroup.Item style={{position:'relative'}} className="list-group-item-o "action href="#link2">
+                <i className="fas fa-book" title="Learn"/>
+              </ListGroup.Item>
+              <ListGroup.Item  className="list-group-item-o "action href="#link3">
+                <i className="fas fa-file-alt" title="Exam"/>
+              </ListGroup.Item>
+              <ListGroup.Item className="list-group-item-o " action href="#link4">
+                <i className="fas fa-comment-alt" title="Discussion"/>
+              </ListGroup.Item>
+              <ListGroup.Item className="list-group-item-o " action href="#link5">
+               <i className="fas fa-sticky-note" title="Assignment"/>
+              </ListGroup.Item>
+              <ListGroup.Item className="list-group-item-o " action href="#link6">
+                <i className="fas fa-edit" title="Task"/>
+              </ListGroup.Item>
+              <ListGroup.Item className="list-group-item-o " action href="#link7">
+                <i className='fas fa-chalkboard-teacher' title='Interactive Exercises'/>
+              </ListGroup.Item>
+              <ListGroup.Item className="list-group-item-o " action href="#link8">
+                <i className='fa fa-link' title='Links'/>
+              </ListGroup.Item>
+              {(user?.teacher === null)?(
+              <>
+              </>
+              ):
+              <>
+                <ListGroup.Item className="list-group-item-o " action href="#link9">
+                  <i className="fas fa-users" title="Class List"/>
+                </ListGroup.Item>
+                <ListGroup.Item className="list-group-item-o " action href="#link10">
+                  <i className="fas fa-folder-open" title="Files"/>
+                </ListGroup.Item>
+              </>}
+            </ListGroup>
+          </Col>
+          }
+          <Col sm={collapseSide ? 9 : 11} className='scrollable vh-85 pb-5'>
             <Tab.Content>
               <Tab.Pane eventKey="#link1">
               <Row>

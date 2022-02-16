@@ -54,7 +54,7 @@ return (
 				</div>
 				<div className='inline-flex' style={{textAlign:'right', marginLeft:'auto', paddingRight:'10px'}}>				
 					{/* <Link to="/archive" className="class-archive"><h1><i class="fas fa-archive"></i></h1></Link>
-					<Link to="/classes" className="class-archive"><h1><i class="fas fa-th-list"></i></h1></Link> */}
+					<Link to="/classes" className="class-archive"><h1><i class="th-list"></i></h1></Link> */}
 					<Button onClick={() => handleHistoryList()} className='btn-list' size='sm' variant="outline-warning"><i class="fas fa-th-list"></i></Button>
         	<Button onClick={() => handleHistoryArchive()}  className='btn-archive' size='sm' variant="outline-warning"><i class="fas fa-archive"></i></Button>
 				</div>

@@ -130,7 +130,7 @@ function SideReport() {
   return (
     <Tab.Container className="course-widget-font" id="list-group-tabs-example " defaultActiveKey="#link1">
         <div className="row">
-          <div className="report-sidenav col-md-3">
+          {false ? <div className="report-sidenav col-md-3">
               <ListGroup.Item className="list-group-item-o">
                 <Row>
 								<Form.Select onChange={onShowClassModules}>
@@ -156,7 +156,12 @@ function SideReport() {
               </ListGroup.Item>
             </ListGroup>
           </div>
-					<Col sm={9}>
+          :
+          <div className="report-sidenav">
+            sample
+          </div>  
+        }
+					<Col sm={9} className='scrollable vh-90 pb-5'>
             <Tab.Content>
               <Tab.Pane eventKey="#link1">
               </Tab.Pane>
