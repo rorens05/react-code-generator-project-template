@@ -131,7 +131,7 @@ function FileHeader(props) {
   return (
     <div>
       <div className="row m-b-20">
-        <div className="col-md-10 pages-header file-content"><h1>Files<i onClick={() => setShowUploadModal(true)} class="fas fa-folder-plus file-upload-content td-file-page"></i></h1>
+        <div className="col-md-10 pages-header file-content"><h1>Files<i onClick={() => setShowUploadModal(true)} class="fas fa-folder-plus file-upload-content td-file-page cursor-pointer" title='Upload Files'></i></h1>
             {/* <h1 className="file-upload-content"><Button size="sm" variant="outline-warning"><i class="fas fa-folder file-upload-content "></i> New Folder</Button></h1> <h5 className="fileupload"> OR </h5> */}
             {/* <h1 className="file-upload-content"><Button className="file-upload-content" size='sm' variant="outline-warning" onClick={() => setShowUploadModal(true)}> +Upload File</Button></h1> */}
         </div>
