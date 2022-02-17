@@ -1,5 +1,5 @@
 import React, {useState,} from 'react'
-import { Button, InputGroup, FormControl,} from 'react-bootstrap';
+import { Button, InputGroup, FormControl, Row, Col} from 'react-bootstrap';
 import CreateClassModal from './CreateClassModal'
 import { BrowserRouter as Router, useHistory } from 'react-router-dom'
 
@@ -14,25 +14,22 @@ function ClassHeader({getClasses, onSearch}) {
 		history.push('/archive')
 	}
 
-	const handleHistoryList = ({}) => {
+	const handleHistoryList = () => {
 		history.push('/classes')
 	}
 
 	return (
 		<div>
-			<div className="row m-b-20" >
-				<div style={{display:'inline-flex'}}>
-				<div className="col-md-10 pages-header">
-					<p className='title-header' >Classes <Button className='btn-create-class' Button variant="link" onClick={() => setModal(true) }> <i className="fa fa-plus"></i>  Create Class  </Button></p>
-				</div>
-				<div className='inline-flex' style={{textAlign:'right', marginLeft:'auto', paddingRight:'10px'}}>				
-					{/* <Link to="/archive" className="class-archive"><h1><i class="fas fa-archive"></i></h1></Link>
-					<Link to="/classes" className="class-archive"><h1><i class="fas fa-th-list"></i></h1></Link> */}
-					<Button onClick={() => handleHistoryList()} className='btn-list' size='sm' variant="outline-warning"><i class="fas fa-th-list"></i></Button>
-        	<Button onClick={() => handleHistoryArchive()}  className='btn-archive' size='sm' variant="outline-warning"><i class="fas fa-archive"></i></Button>
-				</div>
-				</div>
-			</div>
+			<Row style={{paddingTop:'15px'}}>
+      <Col className='title-header' >
+      <p className='title-header' >Classes <Button className='btn-create-class' Button variant="link" onClick={() => setModal(true) }> <i className="fa fa-plus"></i>  Create Class  </Button></p> 
+      </Col>
+      <Col style={{textAlign:'right'}}>
+        <Button className='btn-Enrolled' onClick={() => handleHistoryList()} size='lg' variant="outline-warning"><b>Active</b></Button>
+        <Button  className='btn-Enrolled' onClick={() => handleHistoryArchive()}  size='lg' variant="outline-warning"><b>Archive</b></Button>
+      </Col>
+    </Row>
+
 			<div className="row m-b-20">
 				<div className="col-md-12">
 					<InputGroup size="lg">
