@@ -66,7 +66,7 @@ function ClassCard({item, setOpenEditModal, setSeletedClass, getClasses}) {
           <Card.Header className='class-header-card' >
             <Row>
               <Col sm={10}>
-                <i class="fas fa-expand"></i>&nbsp; {item.classCode}
+               {item.classCode}
               </Col>
               <Col sm={2} style={{textAlign:'right'}}>
                 <Dropdown isOpen={openDropdown} toggle={()=> setOpenDropdown(!openDropdown)}>

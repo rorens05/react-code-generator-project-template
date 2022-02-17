@@ -7,21 +7,29 @@ import SweetAlert from 'react-bootstrap-sweetalert';
 function StudentJoinClass({joinClassesToggle, joinClassestModal, getPendingClasses}) {
   const [code, setCode] = useState('')
   const [addNotify, setAddNotity] = useState(false)
+  const [wrongCodeNotify, setWrongCodeNotify] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
 
   const submitRequest = async (e) => {
     e.preventDefault()
     let response = await new ClassesAPI().submitRequest(code, {code})
       if(response.ok){
-        alert('done')
         getPendingClasses()
         setCode('')
+        joinClassesToggle()
+        setAddNotity(true)
       }else{
-        alert('Wrong Code')
+        setWrongCodeNotify(true)
+        setErrorMessage(response.data.errorMessage)
       }
   }
 
   const closeNotify = () =>{
     setAddNotity(false)
+  }
+
+  const closeWrongNotify = () => {
+    setWrongCodeNotify(false)
   }
 
   return (
@@ -48,6 +56,12 @@ function StudentJoinClass({joinClassesToggle, joinClassestModal, getPendingClass
           show={addNotify} 
           title="Done!" 
           onConfirm={closeNotify}>
+        </SweetAlert>
+        <SweetAlert 
+          warning
+          show={wrongCodeNotify} 
+          title={errorMessage} 
+          onConfirm={closeWrongNotify}>
         </SweetAlert>
     </div>
   )

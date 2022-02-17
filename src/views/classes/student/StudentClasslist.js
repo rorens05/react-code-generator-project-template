@@ -11,7 +11,7 @@ function StudentClasslist({item}) {
           <Card.Header className='class-header-card' >
             <Row>
               <Col sm={10}>
-                <i class="fas fa-expand"></i>&nbsp; {item.classCode}
+                {item.classCode}
               </Col>
               <Col sm={2} style={{textAlign:'right'}}>
               </Col>
