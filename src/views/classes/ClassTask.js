@@ -119,6 +119,8 @@ function ClassTask({classInfo}) {
     }
   }
 
+  console.log('setTaskModulesetTaskModule:', taskModule)
+
   return (
     <>
       <HeaderTask onSearch={onSearch} module={module} getTaskModule={getTaskModule} classId={classId} refModuleId={moduleId} />
@@ -188,11 +190,28 @@ function ClassTask({classInfo}) {
                         <Button onClick={() => handleDeleteNotify(moduleitem?.task?.id, item?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-trash-alt"></i></Button>
                       </Col>
                       ):
+                 
+                      <>
+                      {moduleitem.taskAssignment?.startDate?(
+                      <>
                       <Col sm={3} className='icon-exam'>
+                        {/* <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button> */}
+                        <Button onClick={() => viewTaskTaggle(moduleitem?.task, moduleitem?.taskAssignment)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button>
+                        <Button onClick={(e) => editAssignTaskToggle(e,moduleitem)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-clock"></i></Button>
+                      </Col>
+                      </>
+                      ):
+                      <>
+                      <Col sm={3} className='icon-exam'>
+                        {/* <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button> */}
                         <Button onClick={() => viewTaskTaggle(moduleitem?.task, moduleitem?.taskAssignment)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button>
                         <Button onClick={(e) => assignTaskToggle(e, moduleitem?.task.id)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-user-clock"></i></Button>
                       </Col>
+                      </>
+                      }
+                      </>
                     }
+               
                     {moduleitem?.taskAssignment?(
                     <>
                       {
