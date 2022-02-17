@@ -137,16 +137,50 @@ function ClassFeed() {
           <>
           <Card className='post-card'>
             <Card.Body>
-            <div className='inline-flex'>
+            {/* <div className='inline-flex'>
               <div>
               <InputGroup.Text id="basic-addon2" className="feed-logo"><i class="fas fa-user-circle fas-1x" ></i></InputGroup.Text>
               </div>
               <div className='inline-flex' style={{paddingTop:'12px', fontSize:'18px', color: "#7D7D7D"}}>
               <b>{feedItem?.updatedBy}</b> &nbsp; has Post an <div style={{color:'#EE9337'}} > &nbsp; <b>Announcement </b> </div>
               </div>
-            </div>
+              {(user?.teacher === null)?(
+                <>
+                </>):(
+                <>
+                  <div className='inline-flex' style={{paddingTop:'20px', paddingTop:'6px', float:'right', paddingLeft:'685px'}}>
+                    <div style={{color:'#EE9337', fontSize:'18px',paddingTop:'4px'}}>            
+                      <Button onClick={() => openEditAnnouncementToggle(feedItem)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-pencil-alt"></i>&nbsp; Edit Post</Button>
+                      </div>
+                      <div style={{color:'#EE9337', fontSize:'18px',paddingTop:'4px'}}> 
+                      <Button onClick={() => handleDeleteNotify(feedItem?.referenceId)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="far fa-trash-alt"></i>&nbsp; Remove Post</Button>
+                    </div> 
+                  </div>
+                </>)}
+            </div> */}
+            <Row>  
+                <Col className='icon-post'>
+                  <div className='inline-flex' >
+                  <InputGroup.Text id="basic-addon2" className="feed-logo"><i class="fas fa-user-circle fas-1x" ></i></InputGroup.Text>
+                 </div>
+                 <div className='inline-flex' style={{paddingTop:'1px', fontSize:'18px', color: "#7D7D7D"}}>
+              <b>{feedItem?.updatedBy}</b> &nbsp; has Post an <div style={{color:'#EE9337'}} > &nbsp; <b>Announcement </b> </div>
+              </div>
+            
+              {(user?.teacher === null)?(<></>):(<>
+                <div className='inline-flex' style={{paddingTop:'20px', paddingTop:'6px', float:'right', }}>
+                    <div style={{color:'#EE9337', fontSize:'18px',paddingTop:'4px'}}>            
+                      <Button onClick={() => openEditAnnouncementToggle(feedItem)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-pencil-alt"></i>&nbsp; Edit Post</Button>
+                      </div>
+                      <div style={{color:'#EE9337', fontSize:'18px',paddingTop:'4px'}}> 
+                      <Button onClick={() => handleDeleteNotify(feedItem?.referenceId)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="far fa-trash-alt"></i>&nbsp; Remove Post</Button>
+                    </div> 
+                  </div>
+              </>)}
+              </Col>
+              </Row>
             <div style={{paddingBottom:'20px', color:'#00000029'}} >
-                      ____________________________________________________________________________________________________________________________________________________
+                _____________________________________________________________________________________________________________________________________________________________________________________________________________
               </div>
               <Row>  
                 <Col className='icon-post' sm={1}>
@@ -155,29 +189,10 @@ function ClassFeed() {
                 <Col sm={11} style={{fontSize:'20px', color:'#707070'}}>
                  <p>{feedItem.description}</p>
                 </Col>
-                {(user?.teacher === null)?(
-                <>
-
-                </>):(
-                <>
-                                    <Row>
-                  <Col >
-                <div className='inline-flex' style={{paddingTop:'20px'}}>
-                <div style={{color:'#EE9337', fontSize:'18px',paddingTop:'4px'}}>            
-                <Button onClick={() => openEditAnnouncementToggle(feedItem)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-pencil-alt"></i>&nbsp; Edit Post</Button>
-                </div>
-                   <div style={{color:'#EE9337', fontSize:'18px',paddingTop:'4px'}}> 
-               <Button onClick={() => handleDeleteNotify(feedItem?.referenceId)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="far fa-trash-alt"></i>&nbsp; Remove Post</Button>
-                </div> 
-              </div>
-                </Col>
-
-                  </Row>
-                </>)}
               </Row>
               <Row>
               <div style={{paddingBottom:'10px', color:'#00000029'}} >
-                      ____________________________________________________________________________________________________________________________________________________
+              _____________________________________________________________________________________________________________________________________________________________________________________________________________
               </div>
                 <Col style={{textAlign:'center'}} onClick={() => toast.error("Feature under development")}>
                   <div className='inline-flex' >
@@ -222,7 +237,7 @@ function ClassFeed() {
               </div>
             </div>
             <div style={{paddingBottom:'20px', color:'#00000029'}} >
-                      ____________________________________________________________________________________________________________________________________________________
+                      _____________________________________________________________________________________________________________________________________________________________________________________________________________
               </div>
               <Row>  
                 <Col className='icon-post' sm={1}>
@@ -271,7 +286,7 @@ function ClassFeed() {
               <Row>
                 <Col>
                 <div style={{paddingBottom:'10px', color:'#00000029'}} >
-                      ____________________________________________________________________________________________________________________________________________________
+                _____________________________________________________________________________________________________________________________________________________________________________________________________________
               </div>
                 </Col>
   

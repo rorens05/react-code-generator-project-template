@@ -84,7 +84,7 @@ return (
           <Card.Header className='class-header-card' >
             <Row>
               <Col sm={10}>
-                <i class="fas fa-expand"></i>&nbsp; {item.classCode}
+               {item.classCode}
               </Col>
               <Col sm={2} style={{textAlign:'right'}}>
                 <Dropdown isOpen={openDropdown} toggle={()=> setOpenDropdown(!openDropdown)}>
@@ -94,9 +94,6 @@ return (
                   <Dropdown.Menu >
                     <Dropdown.Item onClick={() => retrieveArchive(item.id)} >
                       Restore 
-                    </Dropdown.Item>
-                    <Dropdown.Item >
-                      Delete 
                     </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>

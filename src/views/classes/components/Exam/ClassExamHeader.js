@@ -55,10 +55,10 @@ function ClassExamHeader({ onSearch, modules = [],fetchExams}, ) {
               >
                 <i className="fa fa-plus"></i> Create Exam
               </Button>
-              <h4 className="exam-or">OR</h4>
+              {/* <h4 className="exam-or">OR</h4>
               <Button className="btn-create-exam" Button variant="link" onClick={() => toast.error("Feature under development")}>
-                <i className="fa fa-plus"></i> Import Exam
-              </Button>
+                <i className="fa fa-plus"></i> Import Exam --
+              </Button> */}
             </>
           )}
         </div>

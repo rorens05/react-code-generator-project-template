@@ -11,15 +11,6 @@ export default function Classes() {
   const {user} = userContext.data
   const [searchTerm, setSearchTerm] = useState('')
 
-  // const getClasses = async() => {
-  //   let response = await new ClassesAPI().getClasses(user?.teacher?.id)
-  //   if(response.ok){
-  //     setClasses(response.data)
-  //   }else{
-  //     alert("Something went wrong while fetching all courses")
-  //   }
-  // }
-
   const onSearch = (text) =>{
     setSearchTerm(text)
   }

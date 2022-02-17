@@ -3,7 +3,7 @@ import {Button, Modal,Table, ProgressBar, Form } from 'react-bootstrap';
 import FilesAPI from '../../api/FilesApi';
 
 function FileHeader(props) {
-  const [lgShow, setLgShow] = useState(false);
+  const [showUploadModal, setShowUploadModal] = useState(false);
   const [files, setFiles] = useState([]);
   const [doneUpload, setDoneUpload] = useState(false)
   const [uploadStarted, setUploadStarted] = useState(false)
@@ -69,7 +69,7 @@ function FileHeader(props) {
             setDoneUpload(allUploaded.length == 0 ? true : false)
             setUploadStarted(allUploaded.length == 0 ? false : true)
           }else{
-            setLgShow(false)
+            setShowUploadModal(false)
             setFiles([])
             setDoneUpload(false)
             setUploadStarted(false)
@@ -102,7 +102,7 @@ function FileHeader(props) {
             setDoneUpload(allUploaded.length == 0 ? true : false)
             setUploadStarted(allUploaded.length == 0 ? false : true)
           }else{
-            setLgShow(false)
+            setShowUploadModal(false)
             setFiles([])
             setDoneUpload(false)
             setUploadStarted(false)
@@ -120,7 +120,7 @@ function FileHeader(props) {
   }
 
   const handleDoneUpload = () => {
-    setLgShow(false)
+    setShowUploadModal(false)
     setFiles([])
     props.doneUpload()
     setDoneUpload(false)
@@ -131,12 +131,12 @@ function FileHeader(props) {
   return (
     <div>
       <div className="row m-b-20">
-        <div className="col-md-10 pages-header file-content"><h1>Files<i class="fas fa-folder-plus file-upload-content td-file-page"></i></h1>
+        <div className="col-md-10 pages-header file-content"><h1>Files<i onClick={() => setShowUploadModal(true)} class="fas fa-folder-plus file-upload-content td-file-page cursor-pointer" title='Upload Files'></i></h1>
             {/* <h1 className="file-upload-content"><Button size="sm" variant="outline-warning"><i class="fas fa-folder file-upload-content "></i> New Folder</Button></h1> <h5 className="fileupload"> OR </h5> */}
-            <h1 className="file-upload-content"><Button className="file-upload-content" size='sm' variant="outline-warning" onClick={() => setLgShow(true)}> +Upload File</Button></h1>
+            {/* <h1 className="file-upload-content"><Button className="file-upload-content" size='sm' variant="outline-warning" onClick={() => setShowUploadModal(true)}> +Upload File</Button></h1> */}
         </div>
       </div>
-      <Modal size="lg" show={lgShow} onHide={() => setLgShow(false)} aria-labelledby="example-modal-sizes-title-lg">
+      <Modal size="lg" show={showUploadModal} onHide={() => setShowUploadModal(false)} aria-labelledby="example-modal-sizes-title-lg">
         <Modal.Header closeButton>
           <Modal.Title id="example-modal-sizes-title-lg">
             Upload File
