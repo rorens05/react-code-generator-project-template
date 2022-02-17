@@ -26,8 +26,8 @@ function FilesContent(props) {
     <Table responsive="sm">
       <thead>
         <tr>
-          <th>Name <i class="fas fa-sort-alpha-down td-file-page"></i></th>
-          <th>Date Modified <i class="fas fa-sort-numeric-down td-file-page"></i></th>
+          <th>Name</th>  {/* icon for sorting <i class="fas fa-sort-alpha-down td-file-page"></i> */}
+          <th>Date Modified</th>  {/* icon for sorting <i class="fas fa-sort-numeric-down td-file-page"></i> */}
           <th>Actions</th>
         </tr>
       </thead>
@@ -54,7 +54,7 @@ function FilesContent(props) {
                     <i class="fas fa-arrow-down td-file-page" onClick={() => downloadImage(item.path_Base)}></i>
                     : */}
                     <a href={item.path_Base} download={true} target='_blank'>
-                      <i class="fas fa-arrow-down td-file-page"></i>
+                      <i class={`${item.path_Base.match(/.(jpg|jpeg|png|gif|pdf)$/i) ? 'fa-eye' : 'fa-arrow-down'} fas td-file-page`}></i>
                     </a> 
                   {/* } */}
                   <i class="fas fa-trash-alt td-file-page"></i></td>
