@@ -244,6 +244,15 @@ code {
   color: #707070;
 }
 
+.active-file-tab{
+  background-color: #EE9337;
+  color: white;
+  border-radius: 5px;
+}
+
+.inactive-file-tab{
+  color: black;
+}
 
 @media only screen and (max-width: 1280px) {
   .header .floating-options{

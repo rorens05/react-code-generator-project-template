@@ -7,6 +7,7 @@ import CoursesAPI from "../../api/CoursesAPI";
 import ClassesAPI from '../../api/ClassesAPI';
 import FilesAPI from '../../api/FilesApi';
 import { UserContext } from '../../context/UserContext';
+import FileItem from './components/FileItems';
 import { toast } from "react-toastify";
 
 export default function Files() {
@@ -16,7 +17,12 @@ export default function Files() {
   const [optionsDisplayed, setOptionsDisplayed] = useState([]);
   const [filesToDisplay, setFilesToDisplay] = useState([]);
   const userContext = useContext(UserContext)
-  const {user} = userContext.data
+  const {user} = userContext.data;
+  const [active, setActive] = useState('course');
+  const [allCourse, setAllCourse] = useState([])
+  const [allClass, setAllClass] = useState([])
+  const [courseFiles, setCourseFiles] = useState([]);
+  const [classFiles, setClassFiles] = useState([]);
 
   const HandleSelected = (selectedType) => {
     setSelectedFile(selectedType);
@@ -31,11 +37,17 @@ export default function Files() {
     }
   }
   const getCourses = async() => {
+    let datata = await new FilesAPI().getAllCourseFiles();
+    // let data1 = Object.entries(datata.data)
+    let dataaaa = await new FilesAPI().getAllClassFiles();
+    console.log(datata.data, dataaaa.data, '----------------------------')
+    setCourseFiles(datata.data);
+    setClassFiles(dataaaa.data);
     setLoading(true)
     let response = await new CoursesAPI().getCourses()
     setLoading(false)
     if(response.ok){
-      setOptionsDisplayed(response.data)
+      setAllCourse(response.data)
     }else{
       alert("Something went wrong while fetching all courses")
     }
@@ -46,7 +58,7 @@ export default function Files() {
     let response = await new ClassesAPI().getClasses(user?.teacher?.id)
     setLoading(false)
     if(response.ok){
-      setOptionsDisplayed(response.data)
+      setAllClass(response.data)
     }else{
       alert("Something went wrong while fetching all classes")
     }
@@ -85,14 +97,53 @@ export default function Files() {
     }
   }
 
+  useEffect(()=>{
+    getClasses(); 
+    getCourses();
+  }, [])
+
   return (
-    <MainContainer loading={loading} activeHeader={'files'}>
+    <MainContainer loading={loading} fluid activeHeader={'files'}>
         <Row className="row">
-          <Col className="col-md-3 file-sidenav">
-            <div style={{textAlign:'center', paddingBottom:'45px', paddingTop:'25px'}}><Button onClick={() => toast.error("Feature under development")} className="file-library" size='lg' variant="outline-warning"><i class="fas fa-folder"></i> File Library</Button></div>
+          <Col className="col-md-1 file-sidenav">
+            <Col className={`${active == 'course' ? 'active-file-tab' : 'inactive-file-tab'} p-2`} onClick={()=> setActive('course')}>
+              Course
+            </Col>
+            <Col className={`${active == 'class' ? 'active-file-tab' : 'inactive-file-tab'} p-2`} onClick={()=> setActive('class')}>
+              Class
+            </Col>
+            {/* <div style={{textAlign:'center', paddingBottom:'45px', paddingTop:'25px'}}><Button onClick={() => toast.error("Feature under development")} className="file-library" size='lg' variant="outline-warning"><i class="fas fa-folder"></i> File Library</Button></div> */}
           </Col>
           <Col className='mt-5 pt-4'>
-            <Row>
+            {
+              active == 'course' ?
+              <Col>
+                {allCourse.map((item, index) => {
+                  // console.log(item)
+                  let data = courseFiles.filter(x => x.courseId === item.id);
+                  return(
+                    <>
+                      <FileItem key={index+item.courseName} id={item.id} name={item.courseName} data={data}/>
+                      {/* <p>{item.courseName}</p> */}
+                    </>
+                  )
+                })}
+              </Col>
+              :
+              <Col>
+                {allClass.map((item, index) => {
+                  console.log(item, '------------')
+                  let data = classFiles.filter(x => x.classFiles.classId === item.id);
+                  return(
+                    <>
+                      <FileItem key={index+item.className} id={item.id} name={item.className} data={data}/>
+                      {/* <p>{item.courseName}</p> */}
+                    </>
+                  )
+                })}
+              </Col>
+            }
+            {/* <Row>
               <Col>
                 <Form.Select onChange={(e) => HandleSelected(e.target.value)}>
                   <option value=''>-- Select Here --</option>
@@ -118,7 +169,7 @@ export default function Files() {
                   })}
                 </Form.Select>
               </Col>
-            </Row>
+            </Row> */}
             <div className={selected ? 'd-block' : 'd-none'}>
               <div className="row m-b-20 file-content">
                 <FileHeader type={selectedFile} id={selected} doneUpload={()=> handleRefetch()}/>
