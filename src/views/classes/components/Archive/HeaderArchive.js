@@ -47,15 +47,19 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
 return (
 <div>
   <div>
-      <Row style={{paddingTop:'15px'}}>
-      <Col className='title-header' >
-      <p className='title-header' >Archive Classes </p>
-      </Col>
-      <Col style={{textAlign:'right'}}>
-        <Button className='btn-Enrolled' onClick={() => handleHistoryList()} size='lg' variant="outline-warning"><b>Active</b></Button>
-        <Button  className='btn-Enrolled' onClick={() => handleHistoryArchive()}  size='lg' variant="outline-warning"><b>Archive</b></Button>
-      </Col>
-    </Row>
+  <div className="row m-b-20" >
+				<div style={{display:'inline-flex'}}>
+				<div className="col-md-10 pages-header">
+					<p className='title-header' >Archive Classes </p>
+				</div>
+				<div className='inline-flex' style={{textAlign:'right', marginLeft:'auto', paddingRight:'10px'}}>				
+					{/* <Link to="/archive" className="class-archive"><h1><i class="fas fa-archive"></i></h1></Link>
+					<Link to="/classes" className="class-archive"><h1><i class="th-list"></i></h1></Link> */}
+					<Button onClick={() => handleHistoryList()} className='btn-list' size='sm' variant="outline-warning"><i class="fas fa-th-list"></i></Button>
+        	<Button onClick={() => handleHistoryArchive()}  className='btn-archive' size='sm' variant="outline-warning"><i class="fas fa-archive"></i></Button>
+				</div>
+				</div>
+			</div>
 
 			  <div className="row m-b-20">
 				  <div className="col-md-12">
