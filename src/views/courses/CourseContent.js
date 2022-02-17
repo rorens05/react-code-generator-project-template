@@ -96,7 +96,7 @@ export default function CourseContent(course) {
                   {/* <div className="course-subtitle">{courseInfo.subjectArea.subjectAreaName}</div> */}
                 </Col>
                 <Col className="t-a-r" sm={3}>
-                  <i className="fa fa-ellipsis-v s"></i>
+                  {/* <i className="fa fa-ellipsis-v s"></i> */}
                 </Col>
               </Row>
             </ListGroup.Item> 
