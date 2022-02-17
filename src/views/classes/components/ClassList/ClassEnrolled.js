@@ -52,7 +52,7 @@ function ClassEnrolled({enrolledStudent, getStudentEnrolled, getStudentWaiting, 
       <Table>
         <thead>
           <tr> 
-            <th><div className='class-enrolled-header'> Student{' '} <i class="fas fa-sort-alpha-down" style={{color:'#EE9337',fontSize:'32px'}}></i></div></th>
+            <th><div className='class-enrolled-header'> Student{' '}</div></th>
           </tr>
         </thead>
         <tbody>
