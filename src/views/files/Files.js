@@ -86,7 +86,7 @@ export default function Files() {
   }, [])
 
   return (
-    <MainContainer loading={loading} fluid activeHeader={'files'}>
+    <MainContainer loading={loading} fluid activeHeader={'files'} style='not-scrollable'>
         <Row className="row">
           <Col className="col-md-1 file-sidenav">
             <Col className={`${active == 'course' ? 'active-file-tab' : 'inactive-file-tab'} p-2`} onClick={()=> setActive('course')}>
@@ -96,7 +96,7 @@ export default function Files() {
               Class
             </Col>
           </Col>
-          <Col className='mt-5'>
+          <Col className='mt-5 scrollable pb-3 vh-85'>
             {
               active == 'course' ?
               <Col>

@@ -49,7 +49,7 @@ function CreateDiscussion({modal, toggle, classInfo, module, getDiscussionUnit})
             <Form.Select onChange={(e) => setModuleId(e.target.value)}>
               <option>Select Unit Here </option>
                 {module.map(item => {
-                  return(<option value={item.id}>{item.moduleName} {item.id}</option>)
+                  return(<option value={item.id}>{item.moduleName}</option>)
                 })}
             </Form.Select>
               </Form.Group>

@@ -8,7 +8,7 @@ export default function Reports() {
   const {user} = userContext.data
 
   return (
-    <MainContainer activeHeader={'reports'}> 
+    <MainContainer activeHeader={'reports'} fluid style='not-scrollable'> 
       <SideReport/>
     </MainContainer>
   )

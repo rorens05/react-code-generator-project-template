@@ -39,7 +39,7 @@ function ClassWaiting({waitingStudent, getStudentEnrolled, getStudentWaiting, se
     }
   }
 
-  const removeStudent = async (e, item) =>{
+  const removeStudent = async (item) =>{
     let response = await new ClassesAPI().removeStudentWaitingList(id, [item])
     if(response.ok){
       // alert('Remove Student from ClassList')
@@ -56,7 +56,7 @@ function ClassWaiting({waitingStudent, getStudentEnrolled, getStudentWaiting, se
       <Table>
         <thead>
           <tr> 
-          <th><div className='class-waiting-header'> Student{' '} <i class="fas fa-sort-alpha-down" style={{color:'#EE9337',fontSize:'32px'}}></i></div></th>  
+          <th><div className='class-waiting-header'> Student{' '}</div></th>  
           </tr>
         </thead>
         <tbody>

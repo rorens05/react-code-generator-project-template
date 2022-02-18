@@ -54,7 +54,7 @@ return (
 				</div>
 				<div className='inline-flex' style={{textAlign:'right', marginLeft:'auto', paddingRight:'10px'}}>				
 					{/* <Link to="/archive" className="class-archive"><h1><i class="fas fa-archive"></i></h1></Link>
-					<Link to="/classes" className="class-archive"><h1><i class="fas fa-th-list"></i></h1></Link> */}
+					<Link to="/classes" className="class-archive"><h1><i class="th-list"></i></h1></Link> */}
 					<Button onClick={() => handleHistoryList()} className='btn-list' size='sm' variant="outline-warning"><i class="fas fa-th-list"></i></Button>
         	<Button onClick={() => handleHistoryArchive()}  className='btn-archive' size='sm' variant="outline-warning"><i class="fas fa-archive"></i></Button>
 				</div>
@@ -84,7 +84,7 @@ return (
           <Card.Header className='class-header-card' >
             <Row>
               <Col sm={10}>
-                <i class="fas fa-expand"></i>&nbsp; {item.classCode}
+               {item.classCode}
               </Col>
               <Col sm={2} style={{textAlign:'right'}}>
                 <Dropdown isOpen={openDropdown} toggle={()=> setOpenDropdown(!openDropdown)}>
@@ -94,9 +94,6 @@ return (
                   <Dropdown.Menu >
                     <Dropdown.Item onClick={() => retrieveArchive(item.id)} >
                       Restore 
-                    </Dropdown.Item>
-                    <Dropdown.Item >
-                      Delete 
                     </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>

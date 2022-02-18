@@ -7,7 +7,7 @@ export default function Files(props) {
 
   return (
     <Col className="card p-3 my-3 border-radius-15">
-      <p>{props.name} <i className={` ${show ? 'fa fa-angle-up' : 'fa fa-angle-down' } px-3`} onClick={()=> setShow(!show)}/></p>
+      <p className="mb-0">{props.name} <i className={` ${show ? 'fa fa-angle-up' : 'fa fa-angle-down' } px-3 float-right`} onClick={()=> setShow(!show)}/></p>
       {
         show && <div className="row m-b-20 file-content m-4">
           <FileHeader type={props.type} id={props.id} doneUpload={()=> props.refetch()}/>
