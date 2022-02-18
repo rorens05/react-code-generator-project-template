@@ -7,7 +7,7 @@ import FileHeader from '../../../files/FileHeader';
 import { useParams } from 'react-router'
 import SweetAlert from 'react-bootstrap-sweetalert';
 
-function CreateTask({modal, toggle, module, getTaskModule, classId, refModuleId}) {
+function CreateTask({modal, toggle, module, getTaskModule, classId}) {
   const [moduleId, setModuleId] = useState('')
   const [taskName, setTaskName] = useState('')
   const [instructions, setInstructions] = useState('')
@@ -45,14 +45,12 @@ function CreateTask({modal, toggle, module, getTaskModule, classId, refModuleId}
       setModuleId("")
       setTaskName("")
       setInstructions("")
-      getTaskModule(null, refModuleId)
+      getTaskModule(null, moduleId)
       toggle(e)
     }else{
       alert(response.data.errorMessage)
     }
   }
-
-  console.log('ModuleId:', refModuleId)
 
 	return (
     <div>

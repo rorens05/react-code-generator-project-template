@@ -121,7 +121,7 @@ function ClassTask({classInfo}) {
 
   return (
     <>
-      <HeaderTask onSearch={onSearch} module={module} getTaskModule={getTaskModule} classId={classId} refModuleId={moduleId} />
+      <HeaderTask onSearch={onSearch} module={module} getTaskModule={getTaskModule} classId={classId} />
         <Accordion>
           <SweetAlert
             warning
