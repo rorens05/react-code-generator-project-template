@@ -37,12 +37,6 @@ export default function Files() {
     }
   }
   const getCourses = async() => {
-    let datata = await new FilesAPI().getAllCourseFiles();
-    // let data1 = Object.entries(datata.data)
-    let dataaaa = await new FilesAPI().getAllClassFiles();
-    console.log(datata.data, dataaaa.data, '----------------------------')
-    setCourseFiles(datata.data);
-    setClassFiles(dataaaa.data);
     setLoading(true)
     let response = await new CoursesAPI().getCourses()
     setLoading(false)
@@ -50,6 +44,28 @@ export default function Files() {
       setAllCourse(response.data)
     }else{
       alert("Something went wrong while fetching all courses")
+    }
+  }
+
+  const getCourseAllFiles = async() => {
+    setLoading(true)
+    let response = await new FilesAPI().getAllCourseFiles()
+    setLoading(false)
+    if(response.ok){
+      setCourseFiles(response.data)
+    }else{
+      alert("Something went wrong while fetching all course files")
+    }
+  }
+
+  const getClassAllFiles = async() => {
+    setLoading(true)
+    let response = await new FilesAPI().getAllClassFiles()
+    setLoading(false)
+    if(response.ok){
+      setClassFiles(response.data)
+    }else{
+      alert("Something went wrong while fetching all class files")
     }
   }
 
@@ -64,42 +80,20 @@ export default function Files() {
     }
   }
 
-  const handleGetCourseFiles = async(id) => {
-    setSelected(id)
-    setLoading(true)
-    let response = await new FilesAPI().getCourseFiles(id)
-    setLoading(false)
-    if(response.ok){
-      setFilesToDisplay(response.data)
-    }else{
-      alert("Something went wrong while fetching course files.")
-    }
-  }
-
-  const handleGetClassFiles = async(id) => {
-    setSelected(id)
-    setLoading(true)
-    let response = await new FilesAPI().getClassFiles(id)
-    setLoading(false)
-    if(response.ok){
-      setFilesToDisplay(response.data)
-    }else{
-      alert("Something went wrong while fetching class files.")
-    }
-  }
-
   const handleRefetch = () => {
     if(selectedFile == 'Course'){
-      handleGetCourseFiles(selected)
+      getCourseAllFiles();
     }
     if(selectedFile == 'Class'){
-      handleGetClassFiles(selected)
+      getClassAllFiles();
     }
   }
 
   useEffect(()=>{
-    getClasses(); 
+    getClasses();
+    getClassAllFiles();
     getCourses();
+    getCourseAllFiles();
   }, [])
 
   return (
@@ -112,70 +106,29 @@ export default function Files() {
             <Col className={`${active == 'class' ? 'active-file-tab' : 'inactive-file-tab'} p-2`} onClick={()=> setActive('class')}>
               Class
             </Col>
-            {/* <div style={{textAlign:'center', paddingBottom:'45px', paddingTop:'25px'}}><Button onClick={() => toast.error("Feature under development")} className="file-library" size='lg' variant="outline-warning"><i class="fas fa-folder"></i> File Library</Button></div> */}
           </Col>
-          <Col className='mt-5 pt-4'>
+          <Col className='mt-5'>
             {
               active == 'course' ?
               <Col>
                 {allCourse.map((item, index) => {
-                  // console.log(item)
                   let data = courseFiles.filter(x => x.courseId === item.id);
                   return(
-                    <>
-                      <FileItem key={index+item.courseName} id={item.id} name={item.courseName} data={data}/>
-                      {/* <p>{item.courseName}</p> */}
-                    </>
+                    <FileItem key={index+item.courseName} type='Course' id={item.id} name={item.courseName} data={data} refetch={() => handleRefetch('Course')} />
                   )
                 })}
               </Col>
               :
               <Col>
                 {allClass.map((item, index) => {
-                  console.log(item, '------------')
-                  let data = classFiles.filter(x => x.classFiles.classId === item.id);
+                  let filteredCourseFiles = classFiles.filter(x => x.courseFiles?.courseId === item.course.id); //courses files inside class
+                  let data = classFiles.filter(x => x.classFiles?.classId === item.classId);
                   return(
-                    <>
-                      <FileItem key={index+item.className} id={item.id} name={item.className} data={data}/>
-                      {/* <p>{item.courseName}</p> */}
-                    </>
+                    <FileItem key={index+item.className} type='Class' id={item.id} name={item.className} data={[...data, ...filteredCourseFiles]} refetch={() => handleRefetch('Class')} />
                   )
                 })}
               </Col>
             }
-            {/* <Row>
-              <Col>
-                <Form.Select onChange={(e) => HandleSelected(e.target.value)}>
-                  <option value=''>-- Select Here --</option>
-                  <option value='Class'>Class</option>
-                  <option value='Course'>Course</option>
-                </Form.Select>
-              </Col>
-              <Col>
-                <Form.Select className={selectedFile == 'Class' ? 'd-block' : 'd-none'} onChange={(e) => handleGetClassFiles(e.target.value)}>
-                  <option>-- Select {selectedFile} Here --</option>
-                  {optionsDisplayed.map(item => {
-                    return(
-                      <option key={item.classId} value={item.classId}>{item.className}</option>
-                    )
-                  })}
-                </Form.Select>
-                <Form.Select onChange={(e) => handleGetCourseFiles(e.target.value)} className={selectedFile == 'Course' ? 'd-block' : 'd-none'}>
-                  <option>-- Select {selectedFile} Here --</option>
-                  {optionsDisplayed.map(item => {
-                    return(
-                      <option value={item.id}>{item.courseName}</option>
-                    )
-                  })}
-                </Form.Select>
-              </Col>
-            </Row> */}
-            <div className={selected ? 'd-block' : 'd-none'}>
-              <div className="row m-b-20 file-content">
-                <FileHeader type={selectedFile} id={selected} doneUpload={()=> handleRefetch()}/>
-                <FilesContent data={filesToDisplay} type={selectedFile} id={selected}/>
-              </div>
-            </div>
           </Col>
         </Row>
     </MainContainer>

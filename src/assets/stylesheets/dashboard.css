@@ -254,6 +254,10 @@ code {
   color: black;
 }
 
+.border-radius-15{
+  border-radius: 15px !important;
+}
+
 @media only screen and (max-width: 1280px) {
   .header .floating-options{
     transform: scale(0.7);

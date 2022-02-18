@@ -1,22 +1,17 @@
-import React, { useState, useEffect, useContext } from "react";
-import {Button, Row, Col, Accordion, Form} from 'react-bootstrap'
-// import FilesContent from './FilesContent';
-// import FileHeader from './FileHeader'
-// import CoursesAPI from "../../api/CoursesAPI";
-// import ClassesAPI from '../../api/ClassesAPI';
-// import FilesAPI from '../../api/FilesApi';
-// import { UserContext } from '../../context/UserContext';
-// import { toast } from "react-toastify";
-
+import React, { useState } from "react";
+import {Col} from 'react-bootstrap'
+import FilesContent from '../FilesContent';
+import FileHeader from '../FileHeader'
 export default function Files(props) {
- 
+  const [show, setShow] = useState(false)
 
-  useEffect(()=>{
-  }, [])
-  // console.log(props.data, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaasss')
   return (
-    <Col>
-      <p>{props.name} <i className="fa fa-angle-down px-3" /></p>
+    <Col className="card p-3 my-3 border-radius-15">
+      <p>{props.name} <i className={` ${show ? 'fa fa-angle-up' : 'fa fa-angle-down' } px-3`} onClick={()=> setShow(!show)}/></p>
+      {show && <div className="row m-b-20 file-content m-4">
+        <FileHeader type={props.type} id={props.id} doneUpload={()=> props.refetch()}/>
+        <FilesContent data={props.data} type={props.type} id={props.id}/>
+      </div>}
     </Col>
   )
 }
