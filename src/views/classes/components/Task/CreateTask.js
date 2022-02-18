@@ -41,7 +41,6 @@ function CreateTask({modal, toggle, module, getTaskModule, classId, refModuleId}
     e.preventDefault()
     let response = await new ClassesAPI().creatTask(moduleId, id, {task:{taskName, instructions,}, taskAssignment:{allowLate}} )
     if(response.ok){
-      // alert('Save Task')
       setAddNotity(true)
       setModuleId("")
       setTaskName("")
@@ -55,8 +54,6 @@ function CreateTask({modal, toggle, module, getTaskModule, classId, refModuleId}
 
   console.log('ModuleId:', refModuleId)
 
-
-  console.log('this is modules:', module)
 	return (
     <div>
     	<Modal size="lg" show={modal} onHide={toggle} aria-labelledby="example-modal-sizes-title-lg">
