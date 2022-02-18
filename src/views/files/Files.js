@@ -24,18 +24,7 @@ export default function Files() {
   const [courseFiles, setCourseFiles] = useState([]);
   const [classFiles, setClassFiles] = useState([]);
 
-  const HandleSelected = (selectedType) => {
-    setSelectedFile(selectedType);
-    setSelected('')
-    if(selectedType){
-      if(selectedType === 'Class'){
-        getClasses()
-      }
-      if(selectedType === 'Course'){
-        getCourses();
-      }
-    }
-  }
+  
   const getCourses = async() => {
     setLoading(true)
     let response = await new CoursesAPI().getCourses()
