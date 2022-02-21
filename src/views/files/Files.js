@@ -23,6 +23,8 @@ export default function Files() {
   const [allClass, setAllClass] = useState([])
   const [courseFiles, setCourseFiles] = useState([]);
   const [classFiles, setClassFiles] = useState([]);
+  const [openIndexCourse, setOpenIndexCourse] = useState(null)
+  const [openIndexClass, setOpenIndexClass] = useState(null)
 
   
   const getCourses = async() => {
@@ -69,11 +71,11 @@ export default function Files() {
     }
   }
 
-  const handleRefetch = () => {
-    if(selectedFile == 'Course'){
+  const handleRefetch = (type) => {
+    if(type == 'Course'){
       getCourseAllFiles();
     }
-    if(selectedFile == 'Class'){
+    if(type == 'Class'){
       getClassAllFiles();
     }
   }
@@ -103,7 +105,7 @@ export default function Files() {
                 {allCourse.map((item, index) => {
                   let data = courseFiles.filter(x => x.courseId === item.id);
                   return(
-                    <FileItem key={index+item.courseName} type='Course' id={item.id} name={item.courseName} data={data} refetch={() => handleRefetch('Course')} />
+                    <FileItem key={index+item.courseName} type='Course' show={openIndexCourse == index ? true : false} id={item.id} name={item.courseName} data={data} refetch={() => handleRefetch('Course')} clicked={() => setOpenIndexCourse(openIndexCourse == index ? null : index)}/>
                   )
                 })}
               </Col>
@@ -113,7 +115,7 @@ export default function Files() {
                   let filteredCourseFiles = classFiles.filter(x => x.courseFiles?.courseId === item.course.id); //courses files inside class
                   let data = classFiles.filter(x => x.classFiles?.classId === item.classId);
                   return(
-                    <FileItem key={index+item.className} type='Class' id={item.id} name={item.className} data={[...data, ...filteredCourseFiles]} refetch={() => handleRefetch('Class')} />
+                    <FileItem key={index+item.className} type='Class' show={openIndexClass == index ? true : false} id={item.id} name={item.className} data={[...data, ...filteredCourseFiles]} refetch={() => handleRefetch('Class')} clicked={() => setOpenIndexClass(openIndexClass == index ? null : index)}/>
                   )
                 })}
               </Col>
