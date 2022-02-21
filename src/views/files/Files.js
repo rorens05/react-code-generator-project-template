@@ -115,7 +115,7 @@ export default function Files() {
                   let filteredCourseFiles = classFiles.filter(x => x.courseFiles?.courseId === item.course.id); //courses files inside class
                   let data = classFiles.filter(x => x.classFiles?.classId === item.classId);
                   return(
-                    <FileItem key={index+item.className} type='Class' show={openIndexClass == index ? true : false} id={item.id} name={item.className} data={[...data, ...filteredCourseFiles]} refetch={() => handleRefetch('Class')} clicked={() => setOpenIndexClass(openIndexClass == index ? null : index)}/>
+                    <FileItem key={index+item.className} type='Class' show={openIndexClass == index ? true : false} id={item.classId} name={item.className} data={[...data, ...filteredCourseFiles]} refetch={() => handleRefetch('Class')} clicked={() => setOpenIndexClass(openIndexClass == index ? null : index)}/>
                   )
                 })}
               </Col>
