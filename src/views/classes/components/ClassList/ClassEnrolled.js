@@ -3,14 +3,20 @@ import { Table, Button } from 'react-bootstrap'
 import ClassesAPI from '../../../../api/ClassesAPI'
 import { useParams } from 'react-router'
 import SweetAlert from 'react-bootstrap-sweetalert';
+import StudentPortfolio from './StudentPortfolio';
 
 function ClassEnrolled({enrolledStudent, getStudentEnrolled, getStudentWaiting, searchTerm}) {
   const [deleteNotify, setDeleteNotify] = useState(false)
   const [itemId, setItemId] = useState('')
+  const [openPortfolioModal, setOpenPortfolioModal] = useState(false)
   const {id} = useParams()
 
   const cancelSweetAlert = () => {
     setDeleteNotify(false)
+  }
+
+  const openPortfolioToggle = () => {
+    setOpenPortfolioModal(!openPortfolioModal)
   }
 
   const handleDeleteNotify = (item) =>{
@@ -32,6 +38,10 @@ function ClassEnrolled({enrolledStudent, getStudentEnrolled, getStudentWaiting, 
     }else{
       alert("Something went wrong while fetching all Add Student")
     }
+  }
+
+  const testClick = () => {
+    alert('test')
   }
 
 
@@ -67,8 +77,8 @@ function ClassEnrolled({enrolledStudent, getStudentEnrolled, getStudentWaiting, 
             <tr>
               <td>
                 <div className='class-waiting-list' style={{fontSize:'24px', color:'#707070', }} >
-                  <i class="fas fa-user-circle fas-1x" style={{color:'#EE9337',fontSize:'36px',}}></i>&nbsp;
-                    {item.fname} {item.lname}
+                  <i class="fas fa-user-circle fas-1x" style={{color:'#EE9337',fontSize:'36px'}}></i>&nbsp;
+                    <Button className='btn-student-portfolio' onClick={() => openPortfolioToggle()} variant="link">{item.fname} {item.lname}</Button>
                 </div>
               </td>
               <td className='class-waiting-icon'>
@@ -78,6 +88,7 @@ function ClassEnrolled({enrolledStudent, getStudentEnrolled, getStudentWaiting, 
             })}
         </tbody>
       </Table>
+      <StudentPortfolio openPortfolioModal={openPortfolioModal} openPortfolioToggle={openPortfolioToggle} />
     </div>
   )
 }

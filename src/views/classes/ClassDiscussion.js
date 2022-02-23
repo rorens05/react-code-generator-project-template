@@ -168,7 +168,7 @@ function ClassDiscussion({classInfo}) {
                   <Row>
                     <Col sm={8}>
                       <div className='title-exam'>
-                        {moduleitem?.discussion?.discussionName}
+                        {moduleitem?.discussion?.discussionName}1
                       </div>
                     </Col>
                     <Col sm={9} className='instruction-exam' >
