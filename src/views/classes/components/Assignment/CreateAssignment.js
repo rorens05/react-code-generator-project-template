@@ -7,7 +7,7 @@ import SweetAlert from 'react-bootstrap-sweetalert';
 import FilesAPI from '../../../../api/FilesApi';
 import FileHeader from '../../../files/FileHeader';
 
-function CreateAssignment({modal, toggle, module, getAssignmentList, refmoduleId}) {
+function CreateAssignment({modal, toggle, module, getAssignmentList}) {
   const [moduleId, setModuleId] = useState('')
   const [assignmentName, setAssignmentName] = useState('')
   const [instructions, setInstructions] = useState('')
@@ -28,16 +28,19 @@ function CreateAssignment({modal, toggle, module, getAssignmentList, refmoduleId
       setInstructions('')
       // alert('Save Assingment')
       setAddNotity(true)
-      getAssignmentList(null, refmoduleId)
+      getAssignmentList(null, moduleId)
       toggle(e)
     }else{
       alert(response.data.errorMessage)
     }
   }
 
+
   useEffect(() => {
     handleGetClassFiles()
   }, [])
+
+
 
   const handleGetClassFiles = async() => {
     // setLoading(true)

@@ -29,7 +29,7 @@ function ClassAssignment({classInfo}) {
   const {id} = useParams()
   const [deleteNotify, setDeleteNotify] = useState(false)
   const [itemId, setItemId] = useState('')
-  const [moduleId, setModuleId] = useState()
+  const [moduleId, setModuleId] = useState(null)
   const dateCompareNow = moment().format("YYYY-MM-DD")
   const timeNow = moment().format('HH:mm');
   const dateTimeNow = dateCompareNow + ' ' + '00:00:00';
@@ -120,9 +120,17 @@ function ClassAssignment({classInfo}) {
     }
   }
 
+  useEffect(() => {
+    if(moduleId !== null){
+      return(
+        getAssignmentList() 
+      )
+    }  
+  }, [])
+
   return (
     <div>
-      <AssignmentHeader onSearch={onSearch} module={module} getAssignmentList={getAssignmentList} refmoduleId={moduleId} />
+      <AssignmentHeader onSearch={onSearch} module={module} getAssignmentList={getAssignmentList} />
       <Accordion>
         <SweetAlert
           warning

@@ -1,5 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react'
 import {Button, Modal,Table, ProgressBar, Form } from 'react-bootstrap';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import FilesAPI from '../../api/FilesApi';
 
 function FileHeader(props) {
@@ -33,6 +35,17 @@ function FileHeader(props) {
       })
     }
   }
+
+  const notifyErrorFile = (message) => 
+  toast.error(message, {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
 
   const getBase64 = (file) => {
     return new Promise((resolve, reject) => {
@@ -73,7 +86,7 @@ function FileHeader(props) {
             setFiles([])
             setDoneUpload(false)
             setUploadStarted(false)
-            alert("Something went wrong while creating new file")
+            notifyErrorFile(response.data?.errorMessage ? response.data.errorMessage : "Something went wrong while creating new file")
           }
         }
       })
@@ -137,7 +150,7 @@ function FileHeader(props) {
         </div>
       </div>
       <Modal size="lg" show={showUploadModal} onHide={() => setShowUploadModal(false)} aria-labelledby="example-modal-sizes-title-lg">
-        <Modal.Header closeButton>
+        <Modal.Header closeButton={files.length == 0 ? true : false}>
           <Modal.Title id="example-modal-sizes-title-lg">
             Upload File
           </Modal.Title>
