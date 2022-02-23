@@ -32,4 +32,17 @@ export default class GradeAPI extends Base {
     });
   };
 
+  getAllClassFiles = async() => {
+    return this.sendRequest({
+      path: `/api/Class/files`,
+      method: 'GET',
+    });
+  }
+
+  getAllCourseFiles = async() => {
+    return this.sendRequest({
+      path: `/api/Course/files`,
+      method: 'GET',
+    });
+  }
 }

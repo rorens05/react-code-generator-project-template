@@ -244,6 +244,20 @@ code {
   color: #707070;
 }
 
+.active-file-tab{
+  background-color: #EE9337;
+  color: white;
+  border-radius: 5px;
+}
+
+.inactive-file-tab{
+  color: black;
+}
+
+.border-radius-15{
+  border-radius: 15px !important;
+}
+
 .not-scrollable{
   overflow: hidden !important;
 }
