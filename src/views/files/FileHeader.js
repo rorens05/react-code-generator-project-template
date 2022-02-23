@@ -73,7 +73,7 @@ function FileHeader(props) {
             setFiles([])
             setDoneUpload(false)
             setUploadStarted(false)
-            alert("Something went wrong while creating new file")
+            alert(response.data?.errorMessage ? response.data.errorMessage : "Something went wrong while creating new file")
           }
         }
       })
