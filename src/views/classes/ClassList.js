@@ -76,7 +76,8 @@ function ClassList() {
     );
   }
 
-  const handleUploadFile = async() => {
+  const handleUploadFile = async(e) => {
+    e.preventDefault();
     let response = await new ClassesAPI().uploadClassList(filesToUpload)
     if(response.ok){
       setShowUploadModal(false);
@@ -104,7 +105,7 @@ function ClassList() {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={() => handleUploadFile()} >  
+          <Form onSubmit={(e) => handleUploadFile(e)} >  
             <Form.Group className="mb-3">
               <Form.Control type="file" accept=".xls,.xlsx," onChange={(e) => handleGetUploadedFile(e.target.files[0])} />
             </Form.Group>
