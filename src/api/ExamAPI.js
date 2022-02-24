@@ -194,4 +194,12 @@ export default class ExamAPI extends Base {
       method: "PUT",
       data,
     });
+
+  uploadTestPart = async (testId, typeId, data) =>
+    this.sendRequest({
+      path: `/api/Test/${testId}/part/${typeId}/question/upload`,
+      method: 'POST',
+      data
+    });
+  
 }

@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { toast } from "react-toastify";
 import ExamAPI from "../../../../api/ExamAPI";
 import QuestionActions from "./QuestionActions";
+import UploadQuestions from "../UploadQuestion";
 
 const EssayForm = ({
   showModal,
@@ -163,17 +164,20 @@ export default function Essay({
         </div>
       ))}
       {editable && (
-        <Button
-          className='tficolorbg-button'
-          type='submit'
-          onClick={() => {
-            setQuestion("");
-            setRate("");
-            setShowModal(true);
-          }}
-        >
-          Add question
-        </Button>
+        <div>
+          <Button
+            className='tficolorbg-button m-r-5'
+            type='submit'
+            onClick={() => {
+              setQuestion("");
+              setRate("");
+              setShowModal(true);
+            }}
+          >
+            Add question
+          </Button>
+          <UploadQuestions/>
+        </div>
       )}
       <EssayForm
         showModal={showModal}

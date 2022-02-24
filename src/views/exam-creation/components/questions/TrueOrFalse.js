@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { toast } from "react-toastify";
 import ExamAPI from "../../../../api/ExamAPI";
 import QuestionActions from "./QuestionActions";
+import UploadQuestions from "../UploadQuestion";
 
 const TrueOrFalseForm = ({
   showModal,
@@ -210,8 +211,9 @@ export default function TrueOrFalse({
         </div>
       ))}
       {editable && (
+        <div>
         <Button
-          className='tficolorbg-button'
+          className='tficolorbg-button m-r-5'
           type='submit'
           onClick={() => {
             setSelectedQuestion(null);
@@ -223,6 +225,8 @@ export default function TrueOrFalse({
         >
           Add question
         </Button>
+        <UploadQuestions />
+        </div>
       )}
       <TrueOrFalseForm
         showModal={showModal}

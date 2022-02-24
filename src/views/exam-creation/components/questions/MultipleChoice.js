@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import ExamAPI from "../../../../api/ExamAPI";
 import DEFAULT_CHOICES from "../../../../contants/default-choices";
 import QuestionActions from "./QuestionActions";
+import UploadQuestions from "../UploadQuestion";
 
 const MultipleChoiceForm = ({
   showModal,
@@ -262,20 +263,23 @@ export default function MultipleChoice({
         </div>
       ))}
       {editable && (
-        <Button
-          className='tficolorbg-button'
-          type='submit'
-          onClick={() => {
-            setSelectedQuestion(null);
-            setQuestion("");
-            setRate("");
-            setAnswer("");
-            setChoices(DEFAULT_CHOICES);
-            setShowModal(true);
-          }}
-        >
-          Add question
-        </Button>
+        <div>
+          <Button
+            className='tficolorbg-button m-r-5'
+            type='submit'
+            onClick={() => {
+              setSelectedQuestion(null);
+              setQuestion("");
+              setRate("");
+              setAnswer("");
+              setChoices(DEFAULT_CHOICES);
+              setShowModal(true);
+            }}
+          >
+            Add question
+          </Button>
+          <UploadQuestions />
+        </div>
       )}
       <MultipleChoiceForm
         showModal={showModal}

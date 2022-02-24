@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { toast } from "react-toastify";
 import ExamAPI from "../../../../api/ExamAPI";
 import QuestionActions from "./QuestionActions";
+import UploadQuestions from '../UploadQuestion';
 
 const EnumerationForm = ({
   showModal,
@@ -124,6 +125,7 @@ const EnumerationForm = ({
 };
 
 export default function Enumeration({
+  exam,
   part,
   questionTypeId,
   getExamInformation,
@@ -275,20 +277,23 @@ export default function Enumeration({
         </div>
       ))}
       {editable && (
-        <Button
-          className='tficolorbg-button'
-          type='submit'
-          onClick={() => {
-            setSelectedQuestion(null);
-            setQuestion("");
-            setRate("");
-            setAnswer("");
-            setChoices([]);
-            setShowModal(true);
-          }}
-        >
-          Add question
-        </Button>
+        <div>
+          <Button
+            className='tficolorbg-button m-r-5'
+            type='submit'
+            onClick={() => {
+              setSelectedQuestion(null);
+              setQuestion("");
+              setRate("");
+              setAnswer("");
+              setChoices([]);
+              setShowModal(true);
+            }}
+          >
+            Add question
+          </Button>
+          <UploadQuestions/>
+        </div>
       )}
       <EnumerationForm
         showModal={showModal}
