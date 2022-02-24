@@ -11,6 +11,16 @@ export default class ExamAPI extends Base {
       path: `/api/Test/${id}/information`,
     });
 
+  getExamStatus = async (id, classId, testId) => 
+  this.sendRequest({
+    path: `/api/Student/${id}/class/${classId}/test/${testId}/answer/status`,
+  });
+
+  getExamPartStatuses = async (id, classId, testId) =>
+    this.sendRequest({
+      path: `/api/Student/${id}/class/${classId}/test/${testId}/score/analysis`,
+    });
+
   startTest = async (id, classId, testId) =>
     this.sendRequest({
       path: `/api/Student/${id}/class/${classId}/test/${testId}/answer/start`,

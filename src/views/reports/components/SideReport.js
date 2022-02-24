@@ -130,7 +130,7 @@ function SideReport() {
   return (
     <Tab.Container className="course-widget-font" id="list-group-tabs-example " defaultActiveKey="#link1">
         <div className="row">
-          {false ? <div className="report-sidenav col-md-3">
+          {true ? <div className="report-sidenav col-md-3">
               <ListGroup.Item className="list-group-item-o">
                 <Row>
 								<Form.Select onChange={onShowClassModules}>

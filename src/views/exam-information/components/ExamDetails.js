@@ -29,7 +29,7 @@ export default function ExamDetails({ exam, loading, remainingTime, startExam, e
             Exam Information
           </p>
           <p className='primary-title' style={{ fontSize: 24 }}>
-            {exam.test.testName}
+            {exam.test?.testName}
           </p>
           <p className='secondary-title mb-2'>{`${exam.totalItems} Total Item(s)`}</p>
           {!examStarted && (<Status>{isDoneTest ? "Completed" : "Not Started"}</Status>)}

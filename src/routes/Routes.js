@@ -38,7 +38,7 @@ export default function Routes() {
     <div className="content">
       {loading ? <PageLoader/> : 
         (<Router>
-          
+          {/* TODO Fix routes here, redirect to login is not working if the user is not valid */}
           {user?.isTeacher && 
             <>
               <PrivateRoute path='/courses' exact component={Courses}/>

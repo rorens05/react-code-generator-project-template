@@ -24,7 +24,6 @@ export default class Base {
     if (method != 'GET') {
       config.body = JSON.stringify(data);
     }
-
     let response = await fetch(url, config)
       .then(async function(res) {
         return res;
@@ -36,7 +35,7 @@ export default class Base {
           return {network_error: true, ok: false};
         }
         return error;
-      });
+      })
     if (response.network_error) {
       return response;
     }
