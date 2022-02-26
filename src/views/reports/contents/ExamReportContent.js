@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react'
-import {Accordion, Row, Col, Table, Button} from 'react-bootstrap'
+import {Badge, Table, Button} from 'react-bootstrap'
 import ClassesAPI from '../../../api/ClassesAPI'
 import ExamAnalysis from './ExamAnalysis'
 import { ToastContainer, toast } from 'react-toastify';
@@ -8,7 +8,7 @@ import SweetAlert from 'react-bootstrap-sweetalert';
 import { UserContext } from './../../../context/UserContext'
 
 
-function ExamReportContent({classesModules, setClassesModules, selectedClassId, viewTestReport, setViewTestReport, testReport, setTestReport, showReportHeader, setShowReportHeader}) {
+function ExamReportContent({ selectedClassId, testReport, setTestReport, showReportHeader, setShowReportHeader}) {
   
   const [examAnalysis, setExamAnalysis] = useState([])
   const [showExamAnalysis, setShowExamAnalysis] = useState(false)
@@ -68,7 +68,7 @@ function ExamReportContent({classesModules, setClassesModules, selectedClassId, 
   }
 
   const confirmSweetError = (classid, testid, studentid) => {
-    retakeExam(classid, testid, studentid)
+    retakeExam(sessionClass, testid, studentid)
     setSweetError(false)
   } 
 
@@ -112,22 +112,23 @@ function ExamReportContent({classesModules, setClassesModules, selectedClassId, 
                       { item.student.lname, item.student.fname} 
                       </span> 
                   </td>
-                  <td>{st.score}</td>
+                  <td>{st.isSubmitted === false ? <Badge bg="warning">Not Submitted</Badge>: st.score}</td>
+                  {/* <td>{st.score}</td> */}
                   <td>
                     {/* <Button variant="outline-warning" size="sm" onClick={(e) => retakeExam(e, st.test.classId, st.test.id, item.student.id)}><i class="fas fa-redo"style={{paddingRight:'10px'}} ></i>Retake</Button> */}
-                    <Button variant="outline-warning" size="sm" onClick={() => setSweetError(true)}><i class="fas fa-redo"style={{paddingRight:'10px'}} ></i>Retake</Button>
+                    <Button style={{color:"white"}} variant="warning" size="sm" onClick={() => setSweetError(true)}><i class="fas fa-redo"style={{paddingRight:'10px'}} ></i>Retake</Button>
                     <SweetAlert
                           warning
                           showCancel
                           show={sweetError}
-                          confirmBtnText="Yes, delete it!"
+                          confirmBtnText="Yes!"
                           confirmBtnBsStyle="danger"
                           title="Are you sure?"
                           onConfirm={() => confirmSweetError(st.test.classId, st.test.id, item.student.id)}
                           onCancel={cancelSweetError}
                           focusCancelBtn
                         >
-                          You will not be able to recover this imaginary file!
+                          Retake the exam?
                       </SweetAlert>
                   </td>
                 </tr>
