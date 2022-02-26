@@ -9,7 +9,7 @@ import SweetAlert from 'react-bootstrap-sweetalert';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export default function CourseLearn({viewLesson, setViewLesson, moduleInfo, setModuleInfo}) {
+export default function CourseLearn({courseInfo, setCourseInfo, viewLesson, setViewLesson, moduleInfo, setModuleInfo}) {
 
   const [loading, setLoading] = useState(false)
   const [openCreateUnitModal, setOpenCreateUnitModal] = useState(false)
@@ -182,7 +182,7 @@ export default function CourseLearn({viewLesson, setViewLesson, moduleInfo, setM
     )
   }else{
     return (
-    <CoursesLearnContent setLessonContent={setLessonContent} lessonContent={lessonContent}/>
+    <CoursesLearnContent courseInfo={courseInfo} setCourseInfo={setCourseInfo} setLessonContent={setLessonContent} lessonContent={lessonContent}/>
     )
   }
 }
