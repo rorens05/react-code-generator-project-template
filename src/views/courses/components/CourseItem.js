@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 export default function CoursesItem({filter, setFilter, course, setLoading, setOpenEditModal, setSelectedCourse}) {
   
   const [openDropdown, setOpenDropdown] = useState(false)
+  const [data, setData] = useState([])
   
   const handleOpeEditModal = (e, item) => {
     e.preventDefault()
@@ -13,6 +14,7 @@ export default function CoursesItem({filter, setFilter, course, setLoading, setO
     setSelectedCourse(item)
     setOpenEditModal(true)
   }
+
 
   const setCourseId = (item) => {
     sessionStorage.setItem('courseid', item)
@@ -34,7 +36,7 @@ export default function CoursesItem({filter, setFilter, course, setLoading, setO
     <React.Fragment>
         {course.filter(item =>
           item.courseName.toLowerCase().includes(filter.toLowerCase())).map
-          ((item, index) => {
+          ((item, index) => {  
         return(
           <Col md={3}>
             <Link to={"coursecontent/"+item.id} onClick={() => setCourseId(item.id)} course={course} setLoading={setLoading} className="active card-title">
