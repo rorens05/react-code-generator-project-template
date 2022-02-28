@@ -33,7 +33,8 @@ export default function Courses() {
     let response = await new CoursesAPI().getCourses()
     setLoading(false)
     if(response.ok){
-      setCourse(response.data)
+      const sorted = response.data.sort((a, b) => a.subjectArea.subjectAreaName > b.subjectArea.subjectAreaName ? 1:-1);
+      setCourse(sorted);
     }else{
       alert("Something went wrong while fetching all courses")
     }

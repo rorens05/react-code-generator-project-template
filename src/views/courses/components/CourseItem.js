@@ -15,14 +15,6 @@ export default function CoursesItem({filter, setFilter, course, setLoading, setO
     setOpenEditModal(true)
   }
 
-  useEffect(() => {
-    const sorted = course.sort((a, b) => a.subjectArea.subjectAreaName > b.subjectArea.subjectAreaName ? 1:-1);
-    setData(sorted);
-  }, [])
-
-  const array = ['mozzarella', 'gouda', 'cheddar'];
-    array.sort();
-  console.log('test:', array) // ['cheddar', 'gouda', 'mozzarella']
 
   const setCourseId = (item) => {
     sessionStorage.setItem('courseid', item)
@@ -42,7 +34,7 @@ export default function CoursesItem({filter, setFilter, course, setLoading, setO
   
   return (
     <React.Fragment>
-        {data.filter(item =>
+        {course.filter(item =>
           item.courseName.toLowerCase().includes(filter.toLowerCase())).map
           ((item, index) => {  
         return(
