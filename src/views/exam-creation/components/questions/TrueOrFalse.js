@@ -197,16 +197,19 @@ export default function TrueOrFalse({
             <p className=''>Answer: {question.answer}</p>
             <p className=''>Point(s): {question.question.rate}</p>
           </div>
-          <QuestionActions
-            onDelete={(e) => deleteQuestion(e, question.question.id)}
-            onEdit={(e) => {
-              setSelectedQuestion(question);
-              setQuestion(question.question.testQuestion);
-              setAnswer(question.answer);
-              setRate(question.question.rate);
-              setShowModal(true);
-            }}
-          />
+          {editable && (
+            <QuestionActions
+              onDelete={(e) => deleteQuestion(e, question.question.id)}
+              onEdit={(e) => {
+                setSelectedQuestion(question);
+                setQuestion(question.question.testQuestion);
+                setAnswer(question.answer);
+                setRate(question.question.rate);
+                setShowModal(true);
+              }}
+            />
+          )}
+          
         </div>
       ))}
       {editable && (
