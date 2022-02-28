@@ -551,4 +551,13 @@ creatTask = async (mId, cId,  data) => {
       method: 'DELETE',
     });
   };
+
+  uploadClassList = async(data) => {
+    return this.sendRequest({
+      path:`/api/Class/${data.classId}/student/excel`,
+      method: 'POST',
+      data: data.data
+    });
+  }
+
 }
