@@ -4,6 +4,8 @@ import ClassWaiting from './components/ClassList/ClassWaiting'
 import {Button, InputGroup, FormControl, Row, Col, Modal, Form} from 'react-bootstrap'
 import ClassesAPI from '../../api/ClassesAPI';
 import { toast } from "react-toastify";
+import FullScreenLoader from '../../components/loaders/FullScreenLoader';
+
 import { useParams } from 'react-router'
 
 function ClassList() {
@@ -13,7 +15,8 @@ function ClassList() {
   const {id} = useParams()
   const [searchTerm, setSearchTerm] = useState('');
   const [showUploadModal, setShowUploadModal] = useState(false);
-  const [filesToUpload, setFilesToUpload] = useState({})
+  const [filesToUpload, setFilesToUpload] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const onSearch = (text) => {
     setSearchTerm(text)
@@ -78,11 +81,15 @@ function ClassList() {
 
   const handleUploadFile = async(e) => {
     e.preventDefault();
+    setShowUploadModal(false);
+    setLoading(true);
     let response = await new ClassesAPI().uploadClassList(filesToUpload)
     if(response.ok){
-      setShowUploadModal(false);
+      setLoading(false);
+      getStudentEnrolled();
       toast.success("Class list was successfully uploaded.")
     }else{
+      setLoading(false);
       alert("Something went wrong while uploading class list")
     }
   }
@@ -143,6 +150,7 @@ function ClassList() {
       </div>
         {openClass === false?(<ClassEnrolled searchTerm={searchTerm} getStudentWaiting={getStudentWaiting} getStudentEnrolled={getStudentEnrolled} enrolledStudent={enrolledStudent}  />):<ClassWaiting searchTerm={searchTerm} getStudentEnrolled={getStudentEnrolled} getStudentWaiting={getStudentWaiting} waitingStudent={waitingStudent} />}
     {handleShowUploadModal()}
+    {loading && <FullScreenLoader /> }
     </div>
   )
 }
