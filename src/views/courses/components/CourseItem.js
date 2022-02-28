@@ -44,7 +44,8 @@ export default function CoursesItem({filter, setFilter, course, setLoading, setO
               <Card.Header className="card-header-courses">
                 <Row style={{color:"white"}}>
                     <Col md={12}>
-                      <i className="fa fa-lock fa-2x"></i>
+                      {/* <i className="fa fa-lock fa-2x"></i> */}
+                      {item.authorName !== "Techfactors Inc." &&
                         <Dropdown className="float-right" isOpen={openDropdown} toggle={()=> setOpenDropdown(!openDropdown)}>
                           <Dropdown.Toggle data-toggle="dropdown" as={CustomToggle} >
                             <i className="fa fa-ellipsis-v fa-2x"></i>
@@ -58,6 +59,7 @@ export default function CoursesItem({filter, setFilter, course, setLoading, setO
                           </Dropdown.Item>
                           </Dropdown.Menu>
                         </Dropdown>
+                      }
                     </Col>
                     <Col md={12} className="t-a-c m-t-20">
                       <i className="fa fa-book-open fa-7x"></i>
@@ -76,6 +78,9 @@ export default function CoursesItem({filter, setFilter, course, setLoading, setO
                     </Card.Subtitle>
                     <Card.Text>
                       {item.description}
+                    </Card.Text>
+                    <Card.Text>
+                      {item.authorName}
                     </Card.Text>
                 </Card.Body>
             </Card>

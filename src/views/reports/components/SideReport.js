@@ -156,6 +156,7 @@ function SideReport() {
               </ListGroup.Item>
             </ListGroup>
           </div>
+          
 					<Col sm={9} className='scrollable vh-90 pb-5'>
             <Tab.Content>
               <Tab.Pane eventKey="#link1">
