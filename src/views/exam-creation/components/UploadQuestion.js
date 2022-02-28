@@ -11,7 +11,7 @@ function UploadQuestion() {
   const { id } = useParams();
 
   useEffect( async()=>{
-    let response = await new ExamAPI().getParts(id);
+    let response = await new ExamAPI().getPartInfo(id);
     if(response.ok){
       console.log(response)
       setExamPart(response.data);
@@ -35,7 +35,7 @@ function UploadQuestion() {
   
   const handleUploadFile = async(e) => {
     e.preventDefault();
-    let tempData = examPart[0];
+    let tempData = examPart[2];
       let data = {
         questionPart: tempData,
         excelFile: filesToUpload
@@ -92,6 +92,7 @@ function UploadQuestion() {
         type='submit'
         onClick={() => {
           setShowUploadModal(true)
+          console.log(examPart)
         }}
       >
           Upload Excel

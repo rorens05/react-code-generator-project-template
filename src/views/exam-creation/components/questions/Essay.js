@@ -176,7 +176,7 @@ export default function Essay({
           >
             Add question
           </Button>
-          <UploadQuestions/>
+          <UploadQuestions questionTypeId={questionTypeId}/>
         </div>
       )}
       <EssayForm

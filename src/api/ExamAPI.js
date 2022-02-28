@@ -201,5 +201,11 @@ export default class ExamAPI extends Base {
       method: 'POST',
       data
     });
+
+  getPartInfo = async(id, partId) => 
+    this.sendRequest({
+      path: `/api/Test/${id}/part/${partId}/question`,
+      method: 'GET',
+    });
   
 }
