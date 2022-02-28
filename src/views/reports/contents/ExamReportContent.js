@@ -14,6 +14,7 @@ function ExamReportContent({ selectedClassId, testReport, setTestReport, showRep
   const [showExamAnalysis, setShowExamAnalysis] = useState(false)
   const [loading, setLoading] = useState(false)
   const [sweetError, setSweetError] = useState(false)
+  const [studentId, setStudentId] = useState(false)
   const userContext = useContext(UserContext)
   const {user} = userContext.data
   let sessionClass = sessionStorage.getItem("classId")
@@ -68,7 +69,7 @@ function ExamReportContent({ selectedClassId, testReport, setTestReport, showRep
   }
 
   const confirmSweetError = (classid, testid, studentid) => {
-    retakeExam(sessionClass, testid, studentid)
+    retakeExam(classid, testid, studentid)
     setSweetError(false)
   } 
 
@@ -116,7 +117,7 @@ function ExamReportContent({ selectedClassId, testReport, setTestReport, showRep
                   {/* <td>{st.score}</td> */}
                   <td>
                     {/* <Button variant="outline-warning" size="sm" onClick={(e) => retakeExam(e, st.test.classId, st.test.id, item.student.id)}><i class="fas fa-redo"style={{paddingRight:'10px'}} ></i>Retake</Button> */}
-                    <Button style={{color:"white"}} variant="warning" size="sm" onClick={() => setSweetError(true)}><i class="fas fa-redo"style={{paddingRight:'10px'}} ></i>Retake</Button>
+                    <Button style={{color:"white"}} variant="warning" size="sm" onClick={() => {setSweetError(true); setStudentId(item.student.id)}}><i class="fas fa-redo"style={{paddingRight:'10px'}} ></i>Retake</Button>
                     <SweetAlert
                           warning
                           showCancel
