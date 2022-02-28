@@ -1,9 +1,10 @@
 import React, {useState} from 'react'
-import {Table, Button, Form} from 'react-bootstrap'
+import {Table, Button, Form, InputGroup} from 'react-bootstrap'
 import SweetAlert from 'react-bootstrap-sweetalert';
 import { toast } from 'react-toastify';
 import FilesAPI from '../../api/FilesApi';
 import Modal from 'react-bootstrap/Modal'
+
 
 import moment from 'moment';
 
@@ -14,6 +15,7 @@ function FilesContent(props) {
   const [modal, showModal] = useState(false);
   const [itemToEdit, setItemToEdit] = useState({});
   const [newFileName, setNewFilename] = useState('');
+  const [extFilename, setExtFilename] = useState('');
 
   const  downloadImage = (url) => {
     fetch(url, {
@@ -78,8 +80,13 @@ function FilesContent(props) {
   }
 
   const handleEdit = (item) => {
+    let temp =  item.fileName.split('.');
+    let tempName = temp.slice(0, -1).join('.');
+    let extName = temp.pop();
+    setExtFilename(extName);
     showModal(true);
-    setItemToEdit(item)
+    setItemToEdit(item);
+    setNewFilename(tempName);
   }
 
   const handleSaveNewCourseFileName = async() => {
@@ -140,10 +147,11 @@ function FilesContent(props) {
         <Modal.Body>
         <Form>
           <p>Current filename: <span>{itemToEdit.fileName}</span></p>
-          <Form.Group className="mb-4">
             <Form.Label>New Filename</Form.Label>
-            <Form.Control defaultValue={''} value={newFileName} type="text" onChange={(e) => setNewFilename(e.target.value)} />
-          </Form.Group>
+          <InputGroup className="mb-4">
+            <Form.Control defaultValue={newFileName} value={newFileName} type="text" onChange={(e) => setNewFilename(e.target.value)} />
+            <InputGroup.Text>.{extFilename}</InputGroup.Text>
+          </InputGroup>
           <Form.Group className='right-btn'>
             <Button className='tficolorbg-button' onClick={()=> handleSaveNewFilename()} >Save</Button>
           </Form.Group>
