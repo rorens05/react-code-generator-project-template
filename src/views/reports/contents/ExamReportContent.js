@@ -41,7 +41,7 @@ function ExamReportContent({ selectedClassId, testReport, setTestReport, showRep
     let isConsider = true
     let response = await new ClassesAPI().retakeExam
     (
-      sessionClass, testid, studentid
+      sessionClass, testid, studentId
     )
     if(response.ok){
       notifyRetakeExam()
@@ -69,7 +69,7 @@ function ExamReportContent({ selectedClassId, testReport, setTestReport, showRep
   }
 
   const confirmSweetError = (classid, testid, studentid) => {
-    retakeExam(classid, testid, studentid)
+    retakeExam(classid, testid, studentId)
     setSweetError(false)
   } 
 
