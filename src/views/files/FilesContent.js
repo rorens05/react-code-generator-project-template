@@ -4,8 +4,6 @@ import SweetAlert from 'react-bootstrap-sweetalert';
 import { toast } from 'react-toastify';
 import FilesAPI from '../../api/FilesApi';
 import Modal from 'react-bootstrap/Modal'
-
-
 import moment from 'moment';
 
 function FilesContent(props) {
@@ -53,7 +51,7 @@ function FilesContent(props) {
       props.deleted()
       toast.success("File deleted successfully");
     }else{
-      alert(response.data?.errorMessage ? response.data?.errorMessage : 'Something went wrong while deleting course file.') 
+      toast.error(response.data?.errorMessage.replace('distributor', 'contributor')) 
     }
   }
 
@@ -68,7 +66,7 @@ function FilesContent(props) {
       props.deleted()
       toast.success("File deleted successfully");
     }else{
-      alert(response.data?.errorMessage ? response.data?.errorMessage : 'Something went wrong while deleting course file.') 
+      toast.error(response.data?.errorMessage.replace('distributor', 'contributor')) 
     }
   }
 
@@ -101,25 +99,29 @@ function FilesContent(props) {
       toast.success("Filename updated successfully");
       setNewFilename('');
     }else{
-      alert(response.data?.errorMessage ? response.data?.errorMessage : 'Something went wrong while renaming course file.') 
+      toast.error(response.data?.errorMessage.replace('distributor', 'contributor')); 
     }
   }
 
   const handleSaveNewClassFileName = async() => {
-    let tempFilename = newFileName.includes(extFilename) ? newFileName : newFileName+extFilename;
-    let data = {
-      fileData: {...itemToEdit, fileName: tempFilename, classFiles: {...itemToEdit.classFiles, fileName: tempFilename}},
-      classId: itemToEdit.classFiles.classId,
-      fileId: itemToEdit.classFiles.id
-    }
-    let response = await new FilesAPI().editClassFile(data)
-    if(response.ok){
-      showModal(false)
-      props.deleted(); //to refetch data
-      toast.success("Filename updated successfully");
-      setNewFilename('');
+    if(newFileName != ''){
+      let tempFilename = newFileName.includes(extFilename) ? newFileName : newFileName+extFilename;
+      let data = {
+        fileData: {...itemToEdit, fileName: tempFilename, classFiles: {...itemToEdit.classFiles, fileName: tempFilename}},
+        classId: itemToEdit.classFiles.classId,
+        fileId: itemToEdit.classFiles.id
+      }
+      let response = await new FilesAPI().editClassFile(data)
+      if(response.ok){
+        showModal(false)
+        props.deleted(); //to refetch data
+        toast.success("Filename updated successfully");
+        setNewFilename('');
+      }else{
+        alert(response.data?.errorMessage ? response.data?.errorMessage : 'Something went wrong while renaming class file.') 
+      }
     }else{
-      alert(response.data?.errorMessage ? response.data?.errorMessage : 'Something went wrong while renaming class file.') 
+      toast.error("Please enter filename.");
     }
   }
 
