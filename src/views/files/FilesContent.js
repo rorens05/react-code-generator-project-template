@@ -51,6 +51,7 @@ function FilesContent(props) {
       props.deleted()
       toast.success("File deleted successfully");
     }else{
+      setDeleteNotify(false)
       toast.error(response.data?.errorMessage.replace('distributor', 'contributor')) 
     }
   }
@@ -66,6 +67,7 @@ function FilesContent(props) {
       props.deleted()
       toast.success("File deleted successfully");
     }else{
+      setDeleteNotify(false)
       toast.error(response.data?.errorMessage.replace('distributor', 'contributor')) 
     }
   }
@@ -99,6 +101,7 @@ function FilesContent(props) {
       toast.success("Filename updated successfully");
       setNewFilename('');
     }else{
+      showModal(false);
       toast.error(response.data?.errorMessage.replace('distributor', 'contributor')); 
     }
   }
@@ -118,6 +121,7 @@ function FilesContent(props) {
         toast.success("Filename updated successfully");
         setNewFilename('');
       }else{
+        showModal(false);
         toast.error(response.data?.errorMessage.replace('distributor', 'contributor')); 
       }
     }else{

@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react'
 import {Button, Modal,Table, ProgressBar, Form } from 'react-bootstrap';
 import FilesAPI from '../../api/FilesApi';
+import { toast } from 'react-toastify';
 
 function FileHeader(props) {
   const [showUploadModal, setShowUploadModal] = useState(false);
@@ -73,7 +74,7 @@ function FileHeader(props) {
             setFiles([])
             setDoneUpload(false)
             setUploadStarted(false)
-            alert(response.data?.errorMessage ? response.data.errorMessage : "Something went wrong while creating new file")
+            toast.error(response.data?.errorMessage.replace('distributor', 'contributor')); 
           }
         }
       })
@@ -106,7 +107,7 @@ function FileHeader(props) {
             setFiles([])
             setDoneUpload(false)
             setUploadStarted(false)
-            alert("Something went wrong while creating new file")
+            toast.error(response.data?.errorMessage.replace('distributor', 'contributor'));
           }
         }
       })
