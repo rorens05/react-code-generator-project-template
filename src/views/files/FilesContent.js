@@ -48,7 +48,6 @@ function FilesContent(props) {
       fileId: itemToDelete.classFiles?.id
     }
     let response = await new FilesAPI().deleteClassFile(data)
-    console.log(response)
     if(response.ok){
       setDeleteNotify(false)
       props.deleted()
@@ -64,7 +63,6 @@ function FilesContent(props) {
       fileId: itemToDelete.id
     }
     let response = await new FilesAPI().deleteCourseFile(data)
-    console.log(response)
     if(response.ok){
       setDeleteNotify(false)
       props.deleted()
@@ -80,23 +78,22 @@ function FilesContent(props) {
   }
 
   const handleEdit = (item) => {
-    let temp =  item.fileName.split('.');
-    let tempName = temp.slice(0, -1).join('.');
-    let extName = temp.pop();
-    setExtFilename(extName);
+    let extName = item.fileName.split('.').pop(),
+    tempName = item.fileName.replace(`.${extName}`, '');
+    setExtFilename(`.${extName}`);
     showModal(true);
     setItemToEdit(item);
     setNewFilename(tempName);
   }
 
   const handleSaveNewCourseFileName = async() => {
+    let tempFilename = newFileName.includes(extFilename) ? newFileName : newFileName+extFilename;
     let data = {
-      fileData: {...itemToEdit, fileName: newFileName},
+      fileData: {...itemToEdit, fileName: tempFilename},
       courseId: itemToEdit.courseId,
       fileId: itemToEdit.id
     }
     let response = await new FilesAPI().editCourseFile(data)
-    console.log(response)
     if(response.ok){
       showModal(false)
       props.deleted(); //to refetch data
@@ -108,15 +105,12 @@ function FilesContent(props) {
   }
 
   const handleSaveNewClassFileName = async() => {
-    console.log(itemToEdit)
     let data = {
       fileData: {...itemToEdit, fileName: newFileName, classFiles: {...itemToEdit.classFiles, fileName: newFileName}},
       classId: itemToEdit.classFiles.classId,
       fileId: itemToEdit.classFiles.id
     }
-    // console.log(data)
     let response = await new FilesAPI().editClassFile(data)
-    console.log(response)
     if(response.ok){
       showModal(false)
       props.deleted(); //to refetch data
@@ -149,8 +143,8 @@ function FilesContent(props) {
           <p>Current filename: <span>{itemToEdit.fileName}</span></p>
             <Form.Label>New Filename</Form.Label>
           <InputGroup className="mb-4">
-            <Form.Control defaultValue={newFileName} value={newFileName} type="text" onChange={(e) => setNewFilename(e.target.value)} />
-            <InputGroup.Text>.{extFilename}</InputGroup.Text>
+            <Form.Control defaultValue={newFileName} value={newFileName} type="text" onChange={(e) => setNewFilename(e.target.value.replace('.', ''))} />
+            <InputGroup.Text>{extFilename}</InputGroup.Text>
           </InputGroup>
           <Form.Group className='right-btn'>
             <Button className='tficolorbg-button' onClick={()=> handleSaveNewFilename()} >Save</Button>
