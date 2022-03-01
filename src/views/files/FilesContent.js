@@ -118,7 +118,7 @@ function FilesContent(props) {
         toast.success("Filename updated successfully");
         setNewFilename('');
       }else{
-        alert(response.data?.errorMessage ? response.data?.errorMessage : 'Something went wrong while renaming class file.') 
+        toast.error(response.data?.errorMessage.replace('distributor', 'contributor')); 
       }
     }else{
       toast.error("Please enter filename.");
