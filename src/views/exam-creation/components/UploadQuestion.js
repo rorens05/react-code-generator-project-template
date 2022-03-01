@@ -4,21 +4,21 @@ import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import ExamAPI from '../../../api/ExamAPI';
 import { toast } from 'react-toastify'
 
-function UploadQuestion() {
+function UploadQuestion({partId}) {
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [filesToUpload, setFilesToUpload] = useState({});
   const [examPart, setExamPart] = useState({})
   const { id } = useParams();
 
-  useEffect( async()=>{
-    let response = await new ExamAPI().getPartInfo(id);
-    if(response.ok){
-      console.log(response)
-      setExamPart(response.data);
-    }else{
-      alert("Something went wrong while fetching exam info");
-    }
-  }, [])
+  // useEffect( async()=>{
+  //   let response = await new ExamAPI().getPartInfo(id, 500001844);
+  //   if(response.ok){
+  //     console.log(response, '??????????????????????????')
+  //     setExamPart(response.data);
+  //   }else{
+  //     alert("Something went wrong while fetching exam info...");
+  //   }
+  // }, [])
 
   const handleGetUploadedFile = (file) => {
     getBase64(file).then(
@@ -26,7 +26,7 @@ function UploadQuestion() {
         console.log(file.name)
         let toUpload = {
           "base64String": data,
-          "fileName": 'file.xlsx'
+          "fileName": file.name
         };
         setFilesToUpload(toUpload)
       }
@@ -35,13 +35,21 @@ function UploadQuestion() {
   
   const handleUploadFile = async(e) => {
     e.preventDefault();
-    let tempData = examPart[2];
+    // let tempData = examPart[2];
       let data = {
-        questionPart: tempData,
+        questionPart: {
+          createdBy: 21,
+          createdDate: "2022-03-01T00:00:00",
+          deleted: null,
+          deletedBy: null,
+          deletedDate: null,
+          instructions: "sample instruction",
+          questionTypeId: 2,
+          testId: 56384
+        },
         excelFile: filesToUpload
       }
-      console.log(data)
-      let response = await new ExamAPI().uploadTestPart(id, tempData.questionTypeId, data)
+      let response = await new ExamAPI().uploadTestPart(56384, 2, data)
       console.log(response, '----------');
       if(response.ok){
         setShowUploadModal(false);
@@ -60,8 +68,6 @@ function UploadQuestion() {
       reader.onerror = error => reject(error);
     });
   }
-
-  console.log(id, '--------------------')
 
   const handleShowUploadModal = () => {
     return (

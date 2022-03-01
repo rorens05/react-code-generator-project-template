@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { toast } from "react-toastify";
 import ExamAPI from "../../../../api/ExamAPI";
 import QuestionActions from "./QuestionActions";
-import UploadQuestions from "../UploadQuestion";
 
 const TrueOrFalseForm = ({
   showModal,
@@ -99,7 +98,7 @@ export default function TrueOrFalse({
   const [selectedQuestion, setSelectedQuestion] = useState(null);
   const [answer, setAnswer] = useState("true");
   const { id } = useParams();
-
+  console.log(part, '..................');
   const submitQuestion = async (e) => {
     e.preventDefault();
     console.log({ selectedQuestion });
@@ -166,6 +165,9 @@ export default function TrueOrFalse({
   };
 
   const addQuestion = async (data) => {
+    console.log(id,
+      part.questionPart.id,
+      data)
     let response = await new ExamAPI().addTrueOrFalse(
       id,
       part.questionPart.id,
@@ -211,7 +213,6 @@ export default function TrueOrFalse({
         </div>
       ))}
       {editable && (
-        <div>
         <Button
           className='tficolorbg-button m-r-5'
           type='submit'
@@ -225,8 +226,6 @@ export default function TrueOrFalse({
         >
           Add question
         </Button>
-        <UploadQuestions />
-        </div>
       )}
       <TrueOrFalseForm
         showModal={showModal}
