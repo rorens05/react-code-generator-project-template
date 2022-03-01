@@ -88,21 +88,25 @@ function FilesContent(props) {
   }
 
   const handleSaveNewCourseFileName = async() => {
-    let tempFilename = newFileName.includes(extFilename) ? newFileName : newFileName+extFilename;
-    let data = {
-      fileData: {...itemToEdit, fileName: tempFilename},
-      courseId: itemToEdit.courseId,
-      fileId: itemToEdit.id
-    }
-    let response = await new FilesAPI().editCourseFile(data)
-    if(response.ok){
-      showModal(false)
-      props.deleted(); //to refetch data
-      toast.success("Filename updated successfully");
-      setNewFilename('');
+    if(newFileName != ''){
+      let tempFilename = newFileName.includes(extFilename) ? newFileName : newFileName+extFilename;
+      let data = {
+        fileData: {...itemToEdit, fileName: tempFilename},
+        courseId: itemToEdit.courseId,
+        fileId: itemToEdit.id
+      }
+      let response = await new FilesAPI().editCourseFile(data)
+      if(response.ok){
+        showModal(false)
+        props.deleted(); //to refetch data
+        toast.success("Filename updated successfully");
+        setNewFilename('');
+      }else{
+        showModal(false);
+        toast.error(response.data?.errorMessage.replace('distributor', 'contributor')); 
+      }
     }else{
-      showModal(false);
-      toast.error(response.data?.errorMessage.replace('distributor', 'contributor')); 
+      toast.error("Please enter filename.");
     }
   }
 
