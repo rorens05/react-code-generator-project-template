@@ -78,6 +78,7 @@ function FilesContent(props) {
   }
 
   const handleEdit = (item) => {
+    console.log(item);
     let extName = item.fileName.split('.').pop(),
     tempName = item.fileName.replace(`.${extName}`, '');
     setExtFilename(`.${extName}`);
@@ -105,8 +106,9 @@ function FilesContent(props) {
   }
 
   const handleSaveNewClassFileName = async() => {
+    let tempFilename = newFileName.includes(extFilename) ? newFileName : newFileName+extFilename;
     let data = {
-      fileData: {...itemToEdit, fileName: newFileName, classFiles: {...itemToEdit.classFiles, fileName: newFileName}},
+      fileData: {...itemToEdit, fileName: tempFilename, classFiles: {...itemToEdit.classFiles, fileName: tempFilename}},
       classId: itemToEdit.classFiles.classId,
       fileId: itemToEdit.classFiles.id
     }
