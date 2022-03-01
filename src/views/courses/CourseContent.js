@@ -76,17 +76,20 @@ export default function CourseContent(course) {
     getCourseInformation()
   }, [])
 
+  const Authors = courseInfo.authorName;
+
   return (
     <MainContainer loading={loading} fluid activeHeader={'courses'} style='not-scrollable'>
       <ToastContainer />
       <Row>
         <Col sm={3}>
-        </Col>
-        <Col sm={9}>
           <CourseBreadcrumbs setShowAssignment={setShowAssignment} setShowTask={setShowTask} setShowDiscussion={setShowDiscussion} />
         </Col>
+        <Col sm={9}>
+          
+        </Col>
       </Row>
-      <Tab.Container className="course-widget-font" id="list-group-tabs-example " defaultActiveKey="#link1">
+      <Tab.Container className="course-widget-font" id="list-group-tabs-example " defaultActiveKey="#link1" >
         <Row>
           {collapseSide ? <Col className="row-course-bg course-widget-font" sm={3}>
             <ListGroup.Item className="list-group-item-o">
@@ -97,6 +100,7 @@ export default function CourseContent(course) {
                   {/* <div className="course-subtitle">{courseInfo.subjectArea.subjectAreaName}</div> */}
                 </Col>
                 <Col className="t-a-r" sm={3}>
+                  {/* <i className="fa fa-ellipsis-v s"></i> */}
                   <Col className="text-align-right">
                     <i className="fas fa-chevron-left cursor-pointer" style={{color: '#EE9337'}} onClick={()=> setCollapseSide(false)}/>
                   </Col>
@@ -158,9 +162,9 @@ export default function CourseContent(course) {
           </Col>
           }
           <Col sm={ collapseSide ? 9 : 11} className='scrollable vh-85 pb-5'>
-            <Tab.Content className="content-pane">
-              <Tab.Pane eventKey="#link1">
-                <CoursesLearn viewLesson={viewLesson} setViewLesson={setViewLesson} moduleInfo={moduleInfo} setModuleInfo={setModuleInfo}/>
+            <Tab.Content className={Authors === "Techfactors Inc." ? "" : "content-pane"} >
+              <Tab.Pane eventKey="#link1" style={{backgroundColor:""}}>
+                <CoursesLearn courseInfo={courseInfo} setCourseInfo={setCourseInfo} viewLesson={viewLesson} setViewLesson={setViewLesson} moduleInfo={moduleInfo} setModuleInfo={setModuleInfo}/>
               </Tab.Pane>
               <Tab.Pane eventKey="#link2">
                 <CoursesExam moduleInfo={moduleInfo} setModuleInfo={setModuleInfo} moduleId={moduleId()}/>
@@ -181,7 +185,7 @@ export default function CourseContent(course) {
                 <CourseLinks moduleInfo={moduleInfo} setModuleInfo={setModuleInfo} />
               </Tab.Pane> */}
             </Tab.Content> 
-          </Col> 
+          </Col>
         </Row>
       </Tab.Container>
     </MainContainer>

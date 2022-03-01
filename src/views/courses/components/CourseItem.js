@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 export default function CoursesItem({filter, setFilter, course, setLoading, setOpenEditModal, setSelectedCourse}) {
   
   const [openDropdown, setOpenDropdown] = useState(false)
+  const [data, setData] = useState([])
   
   const handleOpeEditModal = (e, item) => {
     e.preventDefault()
@@ -13,6 +14,7 @@ export default function CoursesItem({filter, setFilter, course, setLoading, setO
     setSelectedCourse(item)
     setOpenEditModal(true)
   }
+
 
   const setCourseId = (item) => {
     sessionStorage.setItem('courseid', item)
@@ -34,7 +36,7 @@ export default function CoursesItem({filter, setFilter, course, setLoading, setO
     <React.Fragment>
         {course.filter(item =>
           item.courseName.toLowerCase().includes(filter.toLowerCase())).map
-          ((item, index) => {
+          ((item, index) => {  
         return(
           <Col md={3}>
             <Link to={"coursecontent/"+item.id} onClick={() => setCourseId(item.id)} course={course} setLoading={setLoading} className="active card-title">
@@ -42,7 +44,8 @@ export default function CoursesItem({filter, setFilter, course, setLoading, setO
               <Card.Header className="card-header-courses">
                 <Row style={{color:"white"}}>
                     <Col md={12}>
-                      <i className="fa fa-lock fa-2x"></i>
+                      {/* <i className="fa fa-lock fa-2x"></i> */}
+                      {item.authorName !== "Techfactors Inc." &&
                         <Dropdown className="float-right" isOpen={openDropdown} toggle={()=> setOpenDropdown(!openDropdown)}>
                           <Dropdown.Toggle data-toggle="dropdown" as={CustomToggle} >
                             <i className="fa fa-ellipsis-v fa-2x"></i>
@@ -56,6 +59,7 @@ export default function CoursesItem({filter, setFilter, course, setLoading, setO
                           </Dropdown.Item>
                           </Dropdown.Menu>
                         </Dropdown>
+                      }
                     </Col>
                     <Col md={12} className="t-a-c m-t-20">
                       <i className="fa fa-book-open fa-7x"></i>
@@ -74,6 +78,9 @@ export default function CoursesItem({filter, setFilter, course, setLoading, setO
                     </Card.Subtitle>
                     <Card.Text>
                       {item.description}
+                    </Card.Text>
+                    <Card.Text>
+                      {item.authorName}
                     </Card.Text>
                 </Card.Body>
             </Card>

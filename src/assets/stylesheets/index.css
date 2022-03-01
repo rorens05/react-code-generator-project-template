@@ -465,6 +465,28 @@ border-top-right-radius: 0px !important;
   color: #eeeeee!important;
 }
 
+.btn-portfolio{
+  border: none !important;
+  outline: none !important;
+  padding: 10px 16px !important;
+  cursor: pointer !important;
+  font-size: 24px !important;
+  color: #BCBCBC !important;
+  font-style: 'normal normal normal 20px/27px Segoe UI' !important;
+}
+
+.btn-portfolio:hover{
+  background-color: #EE9337 !important;
+  color: white !important;
+}
+
+.btn-portfolio:active{
+  background-color: #EE9337 !important;
+  color: white !important;
+  border: none !important;
+  outline: none !important;
+}
+
 .btn-Enrolled{
   border: '1px';
   border-color: '#EE9337';
@@ -901,6 +923,12 @@ border-top-right-radius: 0px !important;
   font-size: 18px!important;
   text-decoration: none!important
 }
+.btn-student-portfolio{
+  color: #7D7D7D!important;
+  font-size: 18px!important;
+  text-decoration: none!important;
+  padding-bottom: 20px;
+}
 .btn-create-link{
   color: #EE9337!important;
   font-size: 18px!important;
@@ -1226,4 +1254,14 @@ hr{
 
 .rotate{
   transform: rotate(180deg); 
+}
+.portfolio-profile{
+  font-size: 160px;
+  text-align: center;
+  color: #BCBCBC;
+}
+.portfolio-name{
+  text-align: center;
+  color: #7D7D7D;
+  font: normal normal normal 36px Segoe UI;
 }

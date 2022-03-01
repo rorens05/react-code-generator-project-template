@@ -13,7 +13,7 @@ export default function CourseBreadcrumbs({setShowAssignment, setShowTask, setSh
 
   return (
   <div className="row bread-m-t-b">
-		<div className="col-md-3 bread-margin">
+		<div className="bread-margin">
       <span>Courses <i class="fas fa-chevron-right m-l-10 m-r-10"></i></span>
       <span className="tfi-font-color" onClick={backToActivities}>{bread} </span>
 		</div>

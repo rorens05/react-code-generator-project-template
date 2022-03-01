@@ -7,7 +7,7 @@ import FileHeader from '../../../files/FileHeader';
 import { useParams } from 'react-router'
 import SweetAlert from 'react-bootstrap-sweetalert';
 
-function CreateTask({modal, toggle, module, getTaskModule, classId, refModuleId}) {
+function CreateTask({modal, toggle, module, getTaskModule, classId}) {
   const [moduleId, setModuleId] = useState('')
   const [taskName, setTaskName] = useState('')
   const [instructions, setInstructions] = useState('')
@@ -41,22 +41,17 @@ function CreateTask({modal, toggle, module, getTaskModule, classId, refModuleId}
     e.preventDefault()
     let response = await new ClassesAPI().creatTask(moduleId, id, {task:{taskName, instructions,}, taskAssignment:{allowLate}} )
     if(response.ok){
-      // alert('Save Task')
       setAddNotity(true)
       setModuleId("")
       setTaskName("")
       setInstructions("")
-      getTaskModule(null, refModuleId)
+      getTaskModule(null, moduleId)
       toggle(e)
     }else{
       alert(response.data.errorMessage)
     }
   }
 
-  console.log('ModuleId:', refModuleId)
-
-
-  console.log('this is modules:', module)
 	return (
     <div>
     	<Modal size="lg" show={modal} onHide={toggle} aria-labelledby="example-modal-sizes-title-lg">

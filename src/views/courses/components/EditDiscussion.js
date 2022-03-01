@@ -53,8 +53,8 @@ export default function EditDiscussion({setDiscussionInfo, openEditDiscussionMod
 
   useEffect(() => {
     if(selectedDiscussion !== null) {
-			setDiscussionName(selectedDiscussion?.discussionName)
-			setInstructions(selectedDiscussion?.instructions)
+			setDiscussionName(selectedDiscussion?.discussion.discussionName)
+			setInstructions(selectedDiscussion?.discussion.instructions)
 		}
   }, [selectedDiscussion])
 
