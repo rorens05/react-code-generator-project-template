@@ -27,8 +27,8 @@ function FilesContent(props) {
       <thead>
         <tr>
           <th>Name</th>  {/* icon for sorting <i class="fas fa-sort-alpha-down td-file-page"></i> */}
-          <th>Date Modified</th>  {/* icon for sorting <i class="fas fa-sort-numeric-down td-file-page"></i> */}
-          <th>Actions</th>
+          <th >Date Modified</th>  {/* icon for sorting <i class="fas fa-sort-numeric-down td-file-page"></i> */}
+          <th >Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -41,13 +41,13 @@ function FilesContent(props) {
           props.data?.map((item, index) => {
             return(
               <tr key={item.fileName+index}>
-                <td className='ellipsis w-25'>{item.fileName}</td>
+                <td className='ellipsis w-50' style={{color:'#EE9337', fontSize:'20px'}}>{item.fileName}</td>
                 {
-                  props.type == 'Class' ? <td>{item.classFiles ? moment(item.classFiles?.createdDate).format('L') : moment(item.courseFiles?.createdDate).format('L')}</td> 
+                  props.type == 'Class' ? <td className='ellipsis w-50' style={{fontSize:'20px'}}>{item.classFiles ? moment(item.classFiles?.createdDate).format('LL') : moment(item.courseFiles?.createdDate).format('LL')}</td> 
                     :
-                  <td>{moment(item.createdDate).format('L')}</td>
+                  <td className='ellipsis w-50' style={{fontSize:'20px'}} >{moment(item.createdDate).format('LL')}</td>
                 }
-                <td>
+                <td  >
                   {/* {
                     item.path_Base.match(/.(jpg|jpeg|png|gif|pdf)$/i)
                     ?
