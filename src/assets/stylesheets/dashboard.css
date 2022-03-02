@@ -274,6 +274,22 @@ code {
   height: 90vh;
 }
 
+.font-size-30{
+  font-size: 30px;
+}
+
+.bg-gray{
+  background-color: #BCBCBC;
+}
+
+.height-80px{
+  height: 80px;
+}
+
+.br-5px{
+  border-radius: 5px;
+}
+
 @media only screen and (max-width: 1280px) {
   .header .floating-options{
     transform: scale(0.7);
