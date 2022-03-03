@@ -164,7 +164,7 @@ export default function Essay({
       ))}
       {editable && (
         <Button
-          className='tficolorbg-button'
+          className='tficolorbg-button m-r-5'
           type='submit'
           onClick={() => {
             setQuestion("");
@@ -174,6 +174,7 @@ export default function Essay({
         >
           Add question
         </Button>
+          
       )}
       <EssayForm
         showModal={showModal}

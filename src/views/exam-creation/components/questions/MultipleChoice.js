@@ -263,7 +263,7 @@ export default function MultipleChoice({
       ))}
       {editable && (
         <Button
-          className='tficolorbg-button'
+          className='tficolorbg-button m-r-5'
           type='submit'
           onClick={() => {
             setSelectedQuestion(null);

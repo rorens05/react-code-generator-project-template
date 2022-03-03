@@ -124,6 +124,7 @@ const EnumerationForm = ({
 };
 
 export default function Enumeration({
+  exam,
   part,
   questionTypeId,
   getExamInformation,
@@ -276,7 +277,7 @@ export default function Enumeration({
       ))}
       {editable && (
         <Button
-          className='tficolorbg-button'
+          className='tficolorbg-button m-r-5'
           type='submit'
           onClick={() => {
             setSelectedQuestion(null);
