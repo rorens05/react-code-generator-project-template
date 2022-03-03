@@ -559,5 +559,12 @@ creatTask = async (mId, cId,  data) => {
       data: data.data
     });
   }
+  getStudentInformation = async(id, classId) => {
+    return this.sendRequest({
+      path:`/api/Student/${id}/class/information/status?classId=${classId}`,
+      method: 'GET'
+    })
+  }
+
 
 }
