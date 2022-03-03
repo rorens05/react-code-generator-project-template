@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import ClassEnrolled from './components/ClassList/ClassEnrolled'
 import ClassWaiting from './components/ClassList/ClassWaiting'
-import {Button, InputGroup, FormControl, Row, Col} from 'react-bootstrap'
-import ClassesAPI from '../../api/ClassesAPI'
+import {Button, InputGroup, FormControl, Row, Col, Modal, Form} from 'react-bootstrap'
+import ClassesAPI from '../../api/ClassesAPI';
+import { toast } from "react-toastify";
+import FullScreenLoader from '../../components/loaders/FullScreenLoader';
+
 import { useParams } from 'react-router'
 
 function ClassList() {
@@ -10,7 +13,10 @@ function ClassList() {
   const [waitingStudent, setWaitingStudent] = useState([])
   const [enrolledStudent, setEnrolledStudent] = useState([{}])
   const {id} = useParams()
-  const [searchTerm, setSearchTerm] = useState('')
+  const [searchTerm, setSearchTerm] = useState('');
+  const [showUploadModal, setShowUploadModal] = useState(false);
+  const [filesToUpload, setFilesToUpload] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const onSearch = (text) => {
     setSearchTerm(text)
@@ -59,7 +65,67 @@ function ClassList() {
     
   }, [])
 
-  console.log('this is Enrolled Student', enrolledStudent)
+  const handleGetUploadedFile = (file) => {
+    getBase64(file).then(
+      data => {
+        console.log(file.name)
+        let toUpload = {
+          classId: id,
+          data: {"base64String": data,
+          "fileName": file.name}
+        };
+        setFilesToUpload(toUpload)
+      }
+    );
+  }
+
+  const handleUploadFile = async(e) => {
+    e.preventDefault();
+    setShowUploadModal(false);
+    setLoading(true);
+    let response = await new ClassesAPI().uploadClassList(filesToUpload)
+    if(response.ok){
+      setLoading(false);
+      getStudentEnrolled();
+      toast.success("Class list was successfully uploaded.")
+    }else{
+      setLoading(false);
+      alert("Something went wrong while uploading class list")
+    }
+  }
+
+  const getBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
+  }
+
+  const handleShowUploadModal = () => {
+    return(
+      <Modal  size="lg" show={showUploadModal} onHide={()=> setShowUploadModal(false)} aria-labelledby="example-modal-sizes-title-lg">
+        <Modal.Header className='class-modal-header' closeButton>
+          <Modal.Title id="example-modal-sizes-title-lg" >
+            Upload Class List
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={(e) => handleUploadFile(e)} >  
+            <Form.Group className="mb-3">
+              <Form.Control type="file" accept=".xls,.xlsx," onChange={(e) => handleGetUploadedFile(e.target.files[0])} />
+            </Form.Group>
+            <Form.Group className='right-btn'>
+              <Button className='tficolorbg-button' type='submit'>Upload</Button>
+            </Form.Group>
+          </Form> 
+        </Modal.Body>
+      </Modal>
+    )
+  }
+
+  // console.log('this is Enrolled Student', enrolledStudent)
 
   return (
     <div>
@@ -69,7 +135,8 @@ function ClassList() {
       </Col>
       <Col style={{textAlign:'right'}}>
         <Button className='btn-Enrolled' onClick={handleOpenClassEnrolled} size='lg' variant="outline-warning"><b>Enrolled</b></Button>
-        <Button  className='btn-Enrolled'  onClick={handleOpenClassWaiting} size='lg' variant="outline-warning"><b>Waiting List</b></Button>
+        <Button className='btn-Enrolled' onClick={handleOpenClassWaiting} size='lg' variant="outline-warning"><b>Waiting List</b></Button>
+        <Button className='btn-Enrolled' onClick={() => setShowUploadModal(true)} size='lg' variant="outline-warning"><b>Upload List</b></Button>
       </Col>
     </Row>
     <div className="row m-b-20" style={{marginTop:'30px'}}>
@@ -82,6 +149,8 @@ function ClassList() {
         </div>
       </div>
         {openClass === false?(<ClassEnrolled searchTerm={searchTerm} getStudentWaiting={getStudentWaiting} getStudentEnrolled={getStudentEnrolled} enrolledStudent={enrolledStudent}  />):<ClassWaiting searchTerm={searchTerm} getStudentEnrolled={getStudentEnrolled} getStudentWaiting={getStudentWaiting} waitingStudent={waitingStudent} />}
+    {handleShowUploadModal()}
+    {loading && <FullScreenLoader /> }
     </div>
   )
 }

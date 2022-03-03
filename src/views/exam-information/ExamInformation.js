@@ -290,7 +290,9 @@ export default function ExamInformation() {
             startExam={startExam}
             remainingTime={remainingTime}
             examStarted={examStarted}
+            additionalExamInfo={additionalExamInfo}
             isDoneTest={additionalExamInfo.isLoggedUserDone}
+            
           />
           <ExamForm
             exam={exam}

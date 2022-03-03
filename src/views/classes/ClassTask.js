@@ -95,18 +95,16 @@ function ClassTask({classInfo}) {
       setTaskModule(response.data)
       setModuleId(item)
     }else{
-      alert("Something went wrong while Deleting a getTaskModule")
+      alert("Something went wrong while Deleting Deleting a getTaskModule")
     }
   }
-
-  // useEffect(() => {
-  //   if(moduleId === null){
-  //     return(
-  //       getTaskModule(null, moduleId)
-  //     )
-  //   }
-    
-  // }, [])
+  useEffect(() => {
+    if(moduleId !== null){
+      return(
+        getTaskModule() 
+      )
+    }  
+  }, [])
 
   const removeTask = async (e, item, item1) => {
     let response = await new ClassesAPI().deleteTasks(item)
@@ -123,7 +121,7 @@ function ClassTask({classInfo}) {
 
   return (
     <>
-      <HeaderTask onSearch={onSearch} module={module} getTaskModule={getTaskModule} classId={classId} refModuleId={moduleId} />
+      <HeaderTask onSearch={onSearch} module={module} getTaskModule={getTaskModule} classId={classId} />
         <Accordion>
           <SweetAlert
             warning
