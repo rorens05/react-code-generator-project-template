@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import { Route } from 'react-router'
+import TakingExamPage from '../../components/error_pages/TakingExamPage'
 import { UserContext } from '../../context/UserContext'
 import { onExamRoute } from '../../utils/windowLocationHelper'
 
@@ -22,7 +23,7 @@ export default function PrivateRoute(props) {
 
 
   if(user?.isStudent && takingExam && !onExamRoute()){
-    return (<div>You are taking exam</div>)
+    return <TakingExamPage/>
   }
 
   if(user != null) return (
