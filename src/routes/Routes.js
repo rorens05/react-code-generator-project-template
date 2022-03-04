@@ -38,37 +38,28 @@ export default function Routes() {
     <div className="content">
       {loading ? <PageLoader/> : 
         (<Router>
-          {/* TODO Fix routes here, redirect to login is not working if the user is not valid */}
-          {user?.isTeacher && 
-            <>
-              <PrivateRoute path='/courses' exact component={Courses}/>
-              <PrivateRoute path='/coursecontent/:id' exact component={CourseContent}/>
-              <PrivateRoute path='/exam' exact component={Exam}/>
-              <PrivateRoute path='/files' exact component={Files}/>
-              <PrivateRoute path='/reports' exact component={Reports}/>
-              <PrivateRoute path='/classes' exact component={Classes}/>
-              <PrivateRoute path='/classlist' exact component={ClassList}/>
-              <PrivateRoute path='/classescontent/:id' exact component={ClassesContent}/>
-              <PrivateRoute path='/archive' exact component={ArchiveClass}/>
-              <PrivateRoute path='/class/:class_id/exam/:id' exact component={ExamInformation}/>
-              <PrivateRoute path='/' exact component={Home}/>
-            </>
-          }
-          {user?.isStudent &&
-            <>
+          <Switch>
+            <PrivateRoute path='/courses' exact component={Courses}/>
+            <PrivateRoute path='/coursecontent/:id' exact component={CourseContent}/>
+            <PrivateRoute path='/exam' exact component={Exam}/>
+            <PrivateRoute path='/files' exact component={Files}/>
+            <PrivateRoute path='/reports' exact component={Reports}/>
+            <PrivateRoute path='/classes' exact component={Classes}/>
+            <PrivateRoute path='/classlist' exact component={ClassList}/>
+            <PrivateRoute path='/classescontent/:id' exact component={ClassesContent}/>
+            <PrivateRoute path='/archive' exact component={ArchiveClass}/>
+            <PrivateRoute path='/class/:class_id/exam/:id' exact component={ExamInformation}/>
+            <PrivateRoute path='/' exact component={Home}/>
             <PrivateRoute path='/classescontent/:id' exact component={ClassesContent}/>
             <PrivateRoute path='/class/:class_id/exam/:id' exact component={ExamInformation}/>
             <PrivateRoute path='/classes' exact component={Classes}/>
             <PrivateRoute path='/' exact component={Home}/>
-            </>
-          }
-          <Switch>
             <PrivateRoute path='/exam_creation/:id' exact component={ExamCreation}/>
             <AuthRoute path='/login' exact component={Login}/>
             <AuthRoute path='/forgot_password' exact component={ForgotPassword}/>
             <PublicRoute path='/404' exact component={PageNotFound}/>
             <PrivateRoute path='/' exact component={Home}/>
-            {/* <Redirect to="/404"/> */}
+            <Redirect to="/404"/>
           </Switch>
         </Router>)
       }
