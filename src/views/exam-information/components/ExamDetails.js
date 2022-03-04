@@ -53,8 +53,8 @@ export default function ExamDetails({
             />
           )}
 
-          {!examStarted && (
-            <Status>{isDoneTest ? "Completed" : "Not Started"}</Status>
+          {!examStarted && !isDoneTest && (
+            <Status>Not Started</Status>
           )}
           {examStarted && <Status>{"Test is Ongoing.."}</Status>}
           <br />
