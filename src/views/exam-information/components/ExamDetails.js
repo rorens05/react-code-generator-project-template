@@ -41,7 +41,7 @@ export default function ExamDetails({
             Exam Information
           </p>
           <p className='primary-title' style={{ fontSize: 24 }}>
-            {exam.test.testName}
+            {exam.test?.testName}
           </p>
           <p className='secondary-title mb-2'>{`${exam.totalItems} Total Item(s)`}</p>
           {additionalExamInfo && (
@@ -53,8 +53,8 @@ export default function ExamDetails({
             />
           )}
 
-          {!examStarted && (
-            <Status>{isDoneTest ? "Completed" : "Not Started"}</Status>
+          {!examStarted && !isDoneTest && (
+            <Status>Not Started</Status>
           )}
           {examStarted && <Status>{"Test is Ongoing.."}</Status>}
           <br />
