@@ -14,7 +14,7 @@ function CreateAssignment({modal, toggle, module, getAssignmentList}) {
   const [addNotify, setAddNotity] = useState(false)
   const [displayFiles, setDisplayFiles] = useState([]);
   const [showFiles, setShowFiles] = useState(false)
-  const {id} = useParams()
+  const id = window.location.pathname.split('/')[2];
 
   const closeNotify = () =>{
     setAddNotity(false)

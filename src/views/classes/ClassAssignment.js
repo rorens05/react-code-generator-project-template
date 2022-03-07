@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext} from 'react'
 import AssignmentHeader from './components/Assignment/AssignmentHeader'
 import {Accordion, Row, Col, Button} from 'react-bootstrap'
 import ClassesAPI from '../../api/ClassesAPI'
-import { useParams } from 'react-router'
+import DiscussionAPI from '../../api/DiscussionAPI'
 import EditAssignment from './components/Assignment/EditAssignment'
 import SweetAlert from 'react-bootstrap-sweetalert';
 import moment from 'moment'
@@ -14,7 +14,7 @@ import StudentAnswerAssignment from './student/components/StudentAnswerAssignmen
 import StudentSubmittedAssigment from './student/components/StudentSubmittedAssigment'
 import ViewAssignment from './components/Assignment/ViewAssignment'
 
-function ClassAssignment({classInfo}) {
+function ClassAssignment() {
   const [submittedAssignment, setSubmittedAssignment] = useState(false)
   const [answerModal, setAnswerModal] = useState(false)
   const [modal, setModal] = useState(false)
@@ -25,14 +25,13 @@ function ClassAssignment({classInfo}) {
   const [module, setModule] = useState([])
   const [assignment, setAssignment] = useState([])
   const [editAssignment, setEditAssignment] = useState()
-  const courseId = classInfo?.classInformation?.courseId
-  const {id} = useParams()
+  const id = window.location.pathname.split('/')[2];
   const [deleteNotify, setDeleteNotify] = useState(false)
   const [itemId, setItemId] = useState('')
   const [moduleId, setModuleId] = useState(null)
   const dateCompareNow = moment().format("YYYY-MM-DD")
   const timeNow = moment().format('HH:mm');
-  const dateTimeNow = dateCompareNow + ' ' + '00:00:00';
+  // const dateTimeNow = dateCompareNow + ' ' + '00:00:00';
   const userContext = useContext(UserContext)
   const {user} = userContext.data
   const [viewAssignmentModal, setViewAssigmentModal] = useState(false)
@@ -42,6 +41,24 @@ function ClassAssignment({classInfo}) {
 
   const onSearch = (text) => {
     setSearchTerm(text)
+  }
+
+  useEffect(() => {
+    getClassInfo(); 
+  }, [])
+
+  const getClassInfo = async() => {
+    // setLoading(true)
+    let response = await new DiscussionAPI().getClassInfo(id)
+    if(response.ok){
+      console.log({response})
+      getModule(response.data.classInformation?.courseId)
+      // setClassInfo(response.data)
+      console.log(response.data)
+    }else{
+      alert("Something went wrong while fetching all courses")
+    }
+    // setLoading(false)
   }
 
   console.log('this is assignment:', assignment)
@@ -86,8 +103,8 @@ function ClassAssignment({classInfo}) {
     setModuleId(item1)
   }
 
-  const getModule = async () =>{
-    let response = await new ClassesAPI().getModule(courseId)
+  const getModule = async (courseID) =>{
+    let response = await new ClassesAPI().getModule(courseID)
     if(response.ok){
         setModule(response.data)
     }else{
@@ -95,9 +112,6 @@ function ClassAssignment({classInfo}) {
     }
   }
 
-  useEffect(() => {
-    getModule() 
-  }, [])
 
   const getAssignmentList = async (e, item) => {
     let response = await new ClassesAPI().getAssignment(id, item)

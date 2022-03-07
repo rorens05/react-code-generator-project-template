@@ -1,22 +1,34 @@
 import React, {useState, useEffect} from 'react'
 import ClassLearnHeader from './components/Learn/ClassLearnHeader'
 import {  Col, Row, Card, Form, Button } from 'react-bootstrap';
-import ClassCalendar from './components/ClassCalendar';
+// import ClassCalendar from './components/ClassCalendar';
 import ClassesAPI from '../../api/ClassesAPI'
-import { useParams } from 'react-router'
+import DiscussionAPI from '../../api/DiscussionAPI'
 
-
-
-function ClassLearn({classInfo}) {
-  const courseId = classInfo?.classInformation?.courseId
+function ClassLearn() {
   const [selectedModuleId, setSelectedModuleId] = useState(null)
   const [modules, setModules] = useState([])
   const [Pages, setPages] = useState([])
-  const [content, setContent] = useState([])
-  const {id} = useParams()
+  const [content, setContent] = useState([]);
+  const [classInfo, setClassInfo] = useState({});
+  const id = window.location.pathname.split('/')[2];
 
-  const getModules = async() => {
-    let response = await new ClassesAPI().getModule(courseId)
+  const getClassInfo = async() => {
+    // setLoading(true)
+    let response = await new DiscussionAPI().getClassInfo(id)
+    if(response.ok){
+      console.log({response})
+      getModules(response.data.classInformation?.courseId)
+      setClassInfo(response.data)
+      console.log(response.data)
+    }else{
+      alert("Something went wrong while fetching all courses")
+    }
+    // setLoading(false)
+  }
+
+  const getModules = async(id) => {
+    let response = await new ClassesAPI().getModule(id)
     if(response.ok){
       setModules(response.data)
     }else{
@@ -25,7 +37,7 @@ function ClassLearn({classInfo}) {
   }
 
   useEffect(() => {
-    getModules()
+    getClassInfo()
   }, [])
 
   const onModuleChange = (e) => {
@@ -62,7 +74,7 @@ function ClassLearn({classInfo}) {
   return (
     <div style={{position:'relative'}}>
       <Row>
-        <Col className='' style={{marginLeft:'15px'}} >
+        <Col className='scrollable vh-80 pb-5' style={{marginLeft:'15px'}} >
           <ClassLearnHeader content={content}  classInfo={classInfo}/>
         </Col>
         <Col md='3'>

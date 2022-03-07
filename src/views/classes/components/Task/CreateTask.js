@@ -15,7 +15,7 @@ function CreateTask({modal, toggle, module, getTaskModule, classId}) {
   const [displayFiles, setDisplayFiles] = useState([]);
   const [showFiles, setShowFiles] = useState(false)
   const allowLate = true
-  const {id} = useParams()
+  const id = window.location.pathname.split('/')[2];
 
   const closeNotify = () =>{
     setAddNotity(false)
@@ -24,8 +24,8 @@ function CreateTask({modal, toggle, module, getTaskModule, classId}) {
   useEffect(() => {
     handleGetClassFiles()
   }, [])
-
   const handleGetClassFiles = async() => {
+    console.log(classId, 'clasaaaaa')
     // setLoading(true)
     let response = await new FilesAPI().getClassFiles(classId)
     // setLoading(false)
@@ -33,7 +33,7 @@ function CreateTask({modal, toggle, module, getTaskModule, classId}) {
       console.log(response, '-----------------------')
       setDisplayFiles(response.data)
     }else{
-      alert("Something went wrong while fetching class files ----------.")
+      alert("Something went wrong while fetching class files ;;.")
     }
   } 
 

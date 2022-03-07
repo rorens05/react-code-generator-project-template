@@ -9,7 +9,8 @@ function ClassEnrolled({enrolledStudent, getStudentEnrolled, getStudentWaiting, 
   const [deleteNotify, setDeleteNotify] = useState(false)
   const [itemId, setItemId] = useState('')
   const [openPortfolioModal, setOpenPortfolioModal] = useState(false)
-  const {id} = useParams()
+  // const {id} = useParams()
+  const id = window.location.pathname.split('/')[2];
 
   const cancelSweetAlert = () => {
     setDeleteNotify(false)

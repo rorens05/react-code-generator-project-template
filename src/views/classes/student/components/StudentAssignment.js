@@ -15,7 +15,8 @@ function StudentAssignment({assignment, searchTerm}) {
   const [assignmentId, setAssignmentId] = useState(null)
   const userContext = useContext(UserContext)
   const {user} = userContext.data
-  const {id} = useParams()
+  // const {id} = useParams()
+  const id = window.location.pathname.split('/')[2];
   const dateCompareNow = moment().format("YYYY-MM-DD")
   const timeNow = moment().format('HH:mm');
   const dateTimeNow = dateCompareNow + ' ' + '00:00:00';

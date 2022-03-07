@@ -3,6 +3,7 @@ import {Row, Col, Accordion, Button, InputGroup, FormControl} from 'react-bootst
 import HeaderDiscussion from './components/Discussion/HeaderDiscussion'
 import { useParams } from 'react-router'
 import ClassesAPI from '../../api/ClassesAPI'
+import DiscussionAPI from '../../api/DiscussionAPI'
 import EditDiscussion from './components/Discussion/EditDiscussion'
 import SweetAlert from 'react-bootstrap-sweetalert';
 import AssignedDiscussion from './components/Discussion/AssignedDiscussion'
@@ -12,7 +13,7 @@ import { UserContext } from '../../context/UserContext'
 import StudentDiscussion from './student/StudentDiscussion'
 import DiscussionComments from './components/Discussion/DiscussionComments'
 
-function ClassDiscussion({classInfo}) {
+function ClassDiscussion() {
   const [discussionCommentModal, setDiscussionCommentModal] = useState(false)
   const [comments, setComments] = useState([])
   const [modal, setModal] = useState(false)
@@ -21,8 +22,8 @@ function ClassDiscussion({classInfo}) {
   const [editDiscussionItem, setEditDiscussionItem] = useState()
   const [moduleId, setModuleId] = useState(null)
   const [deleteNotify, setDeleteNotify] = useState(false)
-  const {id} = useParams()
-  const courseId = classInfo?.classInformation?.courseId
+  const id = window.location.pathname.split('/')[2];
+  // const courseId = classInfo?.classInformation?.courseId
   const [itemId, setItemId] = useState('')
   const [assignModal, setAssignModal] = useState(false)
   const [editAssignDiscussionItem, setEditAssignDiscussionItem] = useState()
@@ -39,6 +40,26 @@ function ClassDiscussion({classInfo}) {
   const {user} = userContext.data
   const [getComments, setGetComments] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
+  const [classInfo, setClassInfo] = useState({});
+
+  const getClassInfo = async() => {
+    // setLoading(true)
+    let response = await new DiscussionAPI().getClassInfo(id)
+    if(response.ok){
+      console.log({response})
+      getModule(response.data.classInformation?.courseId)
+      setClassInfo(response.data)
+      console.log(response.data)
+    }else{
+      alert("Something went wrong while fetching all courses")
+    }
+    // setLoading(false)
+  }
+
+
+  useEffect(() => {
+    getClassInfo()
+  }, [])
   
   const onSearch = (text) => {
     setSearchTerm(text)
@@ -73,17 +94,13 @@ function ClassDiscussion({classInfo}) {
     setItemId(item)
   }
 
-  const getModule = async() =>{
-    let response = await new ClassesAPI().getModule(courseId)
+  const getModule = async(courseID) =>{
+    let response = await new ClassesAPI().getModule(courseID)
     if(response.ok){
         setModule(response.data)
     }else{
     }
   }
-
-  useEffect(() => {
-    getModule() 
-  }, [])
 
   const getDiscussionUnit = async(e, item) =>{
     let response = await new ClassesAPI().getDiscussionUnit(id,item)

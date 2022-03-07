@@ -3,15 +3,14 @@ import { Button, InputGroup, FormControl } from 'react-bootstrap';
 import CreateTask from './CreateTask';
 import { UserContext } from '../../../../context/UserContext'
 
-function HeaderTask({module, getTaskModule, classId, refModuleId, onSearch}) {
+function HeaderTask({module, getTaskModule, refModuleId, onSearch}) {
 const [modal, setModal] = useState(false)
 const userContext = useContext(UserContext)
 const {user} = userContext.data
-
+const classId = window.location.pathname.split('/')[2];
 const toggle = () =>{
     setModal(!modal)
   }
-
 	return (
 		<div>
 			<div className="row m-b-20" style={{paddingTop:'15px'}}>

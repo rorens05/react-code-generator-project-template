@@ -7,6 +7,7 @@ import MainContainer from "../../components/layouts/MainContainer";
 import { UserContext } from "../../context/UserContext";
 import AddPartModal from "./components/AddPartModal";
 import ExamCreationDetails from "./components/ExamCreationDetails";
+import { Container } from "react-bootstrap";
 
 export default function ExamCreation() {
   const [loading, setLoading] = useState(true);
@@ -153,7 +154,7 @@ export default function ExamCreation() {
   
 
   return (
-    <MainContainer title='Exam Information' loading={loading}>
+    <Container title='Exam Information' loading={loading} fluid className='x-0'>
       <div className='page-container exam-information-container'>
         <div className='containerpages'>
           <ExamCreationDetails
@@ -179,6 +180,6 @@ export default function ExamCreation() {
         instructions={instructions}
         selectedPart={selectedPart}
         addPart={submitPartForm}/>
-    </MainContainer>
+    </Container>
   );
 }

@@ -4,17 +4,15 @@ import AccordionConference from './components/Links/AccordionConference'
 import AccordionLinks from './components/Links/AccordionLinks'
 import AccordionVideos from './components/Links/AccordionVideos'
 import HeaderLinks from './components/Links/HeaderLinks'
-import { useParams } from 'react-router'
 import AccordionEdit from './components/Links/AccordionEdit'
 
-
-function ClassLinks({classInfo}) {
+function ClassLinks() {
   const [openEditModal, setOpenEditModal] = useState(false)
   const [conference, setConference] = useState([])
   const [videos, setVidoes] = useState([])
   const [links, setLinks] = useState([])
   const [editLinks, setEditLinks] = useState()
-  const {id} = useParams()
+  const id = window.location.pathname.split('/')[2];
   const [searchTerm, setSearchTerm] = useState('')
 
   const onSearch = (text) => {

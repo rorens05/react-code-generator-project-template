@@ -14,14 +14,18 @@ import ClassFiles from '../ClassFiles'
 import DiscussionAPI from '../../../api/DiscussionAPI'
 import { useParams } from 'react-router'
 import { UserContext } from '../../../context/UserContext'
+import { Route, HashRouter } from 'react-router-dom';
+import PrivateRoute from "../../../routes/components/PrivateRoute";
+
+import ExamCreation from "../../../views/exam-creation/ExamCreation";
 
 export default function ClassSideNavigation({setLoading}) {
   const userContext = useContext(UserContext)
   const [classInfo, setClassInfo] = useState(null)
   const {id} = useParams()
   const {user} = userContext.data
+  const currentLoc = window.location.hash;
   const [collapseSide, setCollapseSide] = useState(true)
-
   const getClassInfo = async() => {
     setLoading(true)
     let response = await new DiscussionAPI().getClassInfo(id)
@@ -32,12 +36,12 @@ export default function ClassSideNavigation({setLoading}) {
       alert("Something went wrong while fetching all courses")
     }
     setLoading(false)
-
   }
 
   useEffect(() => {
-    getClassInfo()
-  }, [])
+    console.log(window.location.hash, '---------------- heeeeeeeerrrrrrreeee')
+    getClassInfo();
+  }, [window.location.pathname])
 
   if(classInfo == null){
     return (<div/>)
@@ -45,7 +49,7 @@ export default function ClassSideNavigation({setLoading}) {
   if(classInfo == null) return <div/>
 
   return (
-    <Tab.Container style={{position:'relative'}} className="course-widget-font" id="list-group-tabs-example " defaultActiveKey="#link1">
+    // <Tab.Container style={{position:'relative'}} className="course-widget-font" id="list-group-tabs-example " defaultActiveKey="#link1">
         <div style={{position:'relative'}} className="row">
           {collapseSide ? <div className="row-course-bg course-widget-font col-md-3">
               <ListGroup.Item className="list-group-item-o">
@@ -66,41 +70,36 @@ export default function ClassSideNavigation({setLoading}) {
                 </Row>
               </ListGroup.Item>
             <ListGroup>
-              <ListGroup.Item  className="list-group-item-o " action href="#link1">
+              <a className={currentLoc == '#/feed' || currentLoc == '#/' ? "active-nav-item" : 'nav-item'} href="#/">
                 Feed
-              </ListGroup.Item>
-              <ListGroup.Item style={{position:'relative'}} className="list-group-item-o "action href="#link2">
+              </a>
+              <a className={currentLoc == '#/learn' ? "active-nav-item" : 'nav-item'} href="#/learn">
                 Learn
-              </ListGroup.Item>
-              <ListGroup.Item  className="list-group-item-o "action href="#link3">
+              </a>
+              <a className={currentLoc == '#/exam' || currentLoc.includes('exam_creation') ? "active-nav-item" : 'nav-item'} href="#exam">
                 Exam
-              </ListGroup.Item>
-              <ListGroup.Item className="list-group-item-o " action href="#link4">
-               Discussion
-              </ListGroup.Item>
-              <ListGroup.Item className="list-group-item-o " action href="#link5">
+              </a>
+              <a className={currentLoc == '#/discussion' ? "active-nav-item" : 'nav-item'} href="#/discussion">
+                Discussion
+              </a>
+              <a className={currentLoc == '#/assignment' ? "active-nav-item" : 'nav-item'} href="#/assignment">
                 Assignment
-              </ListGroup.Item>
-              <ListGroup.Item className="list-group-item-o " action href="#link6">
+              </a>
+              <a className={currentLoc == '#/task' ? "active-nav-item" : 'nav-item'} href="#/task">
                 Task
-              </ListGroup.Item>
-              <ListGroup.Item className="list-group-item-o " action href="#link7">
-                Interactive Exercises
-              </ListGroup.Item>
-              <ListGroup.Item className="list-group-item-o " action href="#link8">
-                Links
-              </ListGroup.Item>
-              {(user?.teacher === null)?(
+              </a>
+              <a className={currentLoc == '#/links' ? "active-nav-item" : 'nav-item'} href="#/links">
+               Links
+              </a>
+              {
+              (user?.teacher === null) && 
               <>
-              </>
-              ):
-              <>
-                <ListGroup.Item className="list-group-item-o " action href="#link9">
+                <a className={currentLoc == '#/list' ? "active-nav-item" : 'nav-item'} href="#/list">
                   Class List
-                </ListGroup.Item>
-                <ListGroup.Item className="list-group-item-o " action href="#link10">
-                  Files
-                </ListGroup.Item>
+                </a>
+                <a className={currentLoc == '#/files' ? "active-nav-item" : 'nav-item'} href="#/files">
+                  Class Files
+                </a>
               </>}
             </ListGroup>
           </div>
@@ -150,47 +149,22 @@ export default function ClassSideNavigation({setLoading}) {
           </Col>
           }
           <Col sm={collapseSide ? 9 : 11} className='scrollable vh-85 pb-5'>
-            <Tab.Content>
-              <Tab.Pane eventKey="#link1">
-              <Row>
-                <Col>
-               <ClassFeed />
-               </Col>
-               <Col md="auto">
-               {/* <ClassCalendar /> */}
-               </Col>
-             </Row>
-              </Tab.Pane>
-              <Tab.Pane  eventKey="#link2">
-                  <ClassLearn classInfo={classInfo} />
-              </Tab.Pane>
-              <Tab.Pane className='content-pane' eventKey="#link3">
-                <ClassExam />
-              </Tab.Pane>
-              <Tab.Pane className='content-pane' eventKey="#link4">
-                <ClassDiscussion classInfo={classInfo} />
-              </Tab.Pane>
-              <Tab.Pane className='content-pane' eventKey="#link5">
-                <ClassAssignment classInfo={classInfo} />
-              </Tab.Pane>
-              <Tab.Pane className='content-pane' eventKey="#link6">
-                <ClassTask classInfo={classInfo} />
-              </Tab.Pane>
-              <Tab.Pane className='content-pane' eventKey="#link7">
-                <ClassInteractive classInfo={classInfo} />
-              </Tab.Pane>
-              <Tab.Pane className='content-pane' eventKey="#link8">
-                <ClassLinks classInfo={classInfo}  />
-              </Tab.Pane>
-              <Tab.Pane className='content-pane' eventKey="#link9">
-                <ClassList />
-              </Tab.Pane>
-              <Tab.Pane className='content-pane' eventKey="#link10">
-                <ClassFiles id={id}/>
-              </Tab.Pane>
-            </Tab.Content> 
+            <HashRouter basename='/'>
+              <PrivateRoute path='/' exact component={ClassFeed} />
+              <PrivateRoute path='/learn' exact component={ClassLearn} />
+              <PrivateRoute path='/exam' exact component={ClassExam} />
+              <PrivateRoute path='/exam_creation/:id' exact component={ExamCreation} />
+              <PrivateRoute path='/discussion' exact component={ClassDiscussion} />
+              <PrivateRoute path='/assignment' exact component={ClassAssignment} />
+              <PrivateRoute path='/task' exact component={ClassTask} />
+              <PrivateRoute path='/interactives' exact component={ClassInteractive} />
+              <PrivateRoute path='/links' exact component={ClassLinks} />
+              <PrivateRoute path='/list' exact component={ClassList} />
+              <PrivateRoute path='/files' exact component={ClassFiles} />
+
+            </HashRouter>
           </Col> 
         </div>
-      </Tab.Container>
+      // {/* </Tab.Container> */}
   )
 }

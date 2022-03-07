@@ -266,12 +266,32 @@ code {
   overflow: auto;
 }
 
+.vh-80{
+  height: 80vh;
+}
+
 .vh-85{
   height: 85vh;
 }
 
 .vh-90{
   height: 90vh;
+}
+
+.active-nav-item{
+  background-color: #EE9337 !important;
+  border: 0 !important;
+  color: white !important;
+  border-radius: 10px !important;
+  text-decoration: none !important;
+  padding: 10px;
+}
+
+.nav-item{
+  color: gray !important;
+  border-radius: 10px !important;
+  text-decoration: none !important;
+  padding: 10px;
 }
 
 @media only screen and (max-width: 1280px) {

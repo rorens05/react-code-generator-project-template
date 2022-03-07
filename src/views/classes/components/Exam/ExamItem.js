@@ -16,7 +16,7 @@ import PreviewExam from "./PreviewExam";
 export default function ExamItem({ exam, deleteExam, setLoading, fetchExams }) {
   const userContext = useContext(UserContext);
   const { user } = userContext.data;
-  const { id } = useParams();
+  const id = window.location.pathname.split('/')[2]
   const [showWarning, setShowWarning] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);

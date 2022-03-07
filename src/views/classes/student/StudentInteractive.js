@@ -1,16 +1,16 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext } from 'react'
 import {Row, Col, Button} from 'react-bootstrap'
 import moment from 'moment'
 import { UserContext } from '../../../context/UserContext'
-import { useParams } from 'react-router'
 
 function StudentInteractive({interactive, searchTerm}) {
   const dateCompareNow = moment().format("YYYY-MM-DD")
   const timeNow = moment().format('HH:mm');
-  const dateTimeNow = dateCompareNow + ' ' + '00:00:00';
+  // const dateTimeNow = dateCompareNow + ' ' + '00:00:00';
   const userContext = useContext(UserContext)
   const {user} = userContext.data
-  const {id} = useParams()
+  // const {id} = useParams()
+  const id = window.location.pathname.split('/')[2];
   let dev = 'dev'
 
   const getInteractiveLink = (e, path, userId, gameId, classId, dev) => {

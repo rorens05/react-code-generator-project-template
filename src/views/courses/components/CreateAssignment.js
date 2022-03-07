@@ -87,7 +87,7 @@ export default function CreateAssignment({openCreateAssignmentModal, setOpenCrea
       console.log(response, '-----------------------')
       setDisplayFiles(response.data)
     }else{
-      alert("Something went wrong while fetching class files ----------.")
+      alert("Something went wrong while fetching class files.")
     }
   } 
 

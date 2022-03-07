@@ -8,7 +8,8 @@ import { UserContext } from '../../../../context/UserContext'
 import SweetAlert from 'react-bootstrap-sweetalert';
 
 function DiscussionComments({getDiscussionComments, getComments, discussionCommentToggle, discussionCommentModal, comments, discussionId, moduleId, getDiscussionUnit, startDate, startTime, endDate, endTime}) {
-  const {id} = useParams()
+  // const {id} = useParams()
+  const id = window.location.pathname.split('/')[2];
   const userContext = useContext(UserContext)
   const [commentAlert, setCommentAlert] = useState(false)
   const {user} = userContext.data

@@ -9,8 +9,8 @@ function AccordionEdit({openEditModal, setOpenEditModal, editLinks, getConfe, ge
   const [description, setEditDescription] = useState('')
   const [editNotufy, setEditNotify] = useState(false)
   const [url, setEditUrl] = useState('')
-  const {id} = useParams()
-
+  // const {id} = useParams()
+  const id = window.location.pathname.split('/')[2];
   const handleCloseModal = (e) =>{
     e.preventDefault()
     setOpenEditModal(false)

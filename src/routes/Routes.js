@@ -63,7 +63,7 @@ export default function Routes() {
             </>
           }
           <Switch>
-            <PrivateRoute path='/exam_creation/:id' exact component={ExamCreation}/>
+            {/* <PrivateRoute path='/exam_creation/:id' exact component={ExamCreation}/> */}
             <AuthRoute path='/login' exact component={Login}/>
             <AuthRoute path='/forgot_password' exact component={ForgotPassword}/>
             <PublicRoute path='/404' exact component={PageNotFound}/>

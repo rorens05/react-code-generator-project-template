@@ -1,9 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react'
-import {Row, Col, Accordion, Button} from 'react-bootstrap'
+import {Row, Col, Button} from 'react-bootstrap'
 import moment from 'moment'
 import StundentAnswerTask from './components/StundentAnswerTask';
 import StudentSubmittedTask from './components/StudentSubmittedTask';
-import { useParams } from 'react-router'
+// import { useParams } from 'react-router'
 import { UserContext } from '../../../context/UserContext'
 import ClassesAPI from '../../../api/ClassesAPI';
 import StudentViewTask from './components/StudentViewTask';
@@ -15,10 +15,9 @@ function StudentTask({taskModule, searchTerm}) {
   const [submittedTaskModal, setSubmittedTaskModal] = useState(false)
   const [taskId, setTaskId] = useState(null)
   const [taskAnswerItem, setTaskAnswerItem] = useState()
-  const {id} = useParams()
+  const id = window.location.pathname.split('/')[2];
   const dateCompareNow = moment().format("YYYY-MM-DD")
   const timeNow = moment().format('HH:mm');
-  const dateTimeNow = dateCompareNow + ' ' + '00:00:00';
   const [viewTaskMotal, setViewTaskModal] = useState()
   const [viewTaskItem, setViewTaskItem] = useState([])
   const [startDate, setStartDate] = useState()

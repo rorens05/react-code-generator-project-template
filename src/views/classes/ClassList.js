@@ -6,13 +6,12 @@ import ClassesAPI from '../../api/ClassesAPI';
 import { toast } from "react-toastify";
 import FullScreenLoader from '../../components/loaders/FullScreenLoader';
 
-import { useParams } from 'react-router'
-
 function ClassList() {
   const [openClass, setOpenClass] = useState(false)
   const [waitingStudent, setWaitingStudent] = useState([])
   const [enrolledStudent, setEnrolledStudent] = useState([{}])
-  const {id} = useParams()
+  // const {id} = useParams()
+  const id = window.location.pathname.split('/')[2];
   const [searchTerm, setSearchTerm] = useState('');
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [filesToUpload, setFilesToUpload] = useState({});

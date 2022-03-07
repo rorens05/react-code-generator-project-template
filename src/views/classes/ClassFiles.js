@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from 'react'
-import ClassExamHeader from './components/Exam/ClassExamHeader'
-import {Accordion, Row, Col} from 'react-bootstrap'
 import FilesContent from '../files/FilesContent';
 import FileHeader from '../files/FileHeader'
 import FilesAPI from '../../api/FilesApi';
+const id = window.location.pathname.split('/')[2];
 
-function ClassFiles({id}) {
+function ClassFiles() {
   const [filesToDisplay, setFilesToDisplay] = useState([]);
 
   useEffect(() => {
@@ -23,7 +22,7 @@ function ClassFiles({id}) {
     if(response.ok){
       setFilesToDisplay(response.data)
     }else{
-      alert("Something went wrong while fetching class files.")
+      alert("Something went wrong while fetching class files ---.")
     }
   }
 

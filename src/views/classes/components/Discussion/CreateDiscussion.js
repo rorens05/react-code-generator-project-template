@@ -12,7 +12,7 @@ function CreateDiscussion({modal, toggle, classInfo, module, getDiscussionUnit})
   const [addNotify, setAddNotity] = useState(false)
   const courseId = classInfo?.classInformation?.courseId
   const allowLate = true
-  const {id} = useParams()
+  const id = window.location.pathname.split('/')[2];
 
   const closeNotify = () =>{
     setAddNotity(false)

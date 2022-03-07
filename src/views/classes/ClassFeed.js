@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import {Card, InputGroup, FormControl, Row, Col,Button, Form} from 'react-bootstrap'
 import ClassesAPI from '../../api/ClassesAPI'
-import { useParams } from 'react-router'
 import SweetAlert from 'react-bootstrap-sweetalert';
 import EditAnnouncement from './components/Feed/EditAnnouncement';
 import moment from 'moment';
@@ -12,7 +11,7 @@ function ClassFeed() {
   const [title, setTitle] = useState('Feed')
   const [content, setContent] = useState('')
   const [announcementItem, setAnnouncementItem] = useState([])
-  const {id} = useParams()
+  const id = window.location.pathname.split('/')[2];
   const [referenceIds, setReferenceIds] = useState([id])
   const [deleteNotify, setDeleteNotify] = useState(false)
   const [itemId, setItemId] = useState('')
@@ -31,8 +30,8 @@ function ClassFeed() {
     setEditAssignAssignmentItem(item)
     setEditAnnouncementModal(!editAnnouncementModal)
   }
-
-  console.log('openedit:', editAnnouncementModal)
+ const params = window.location.pathname.split('/')[2];
+  console.log('openedit:', id, params.split('/')[2], params, '//////////////')
   
   const createAnnouncementClass = async (e) => {
     e.preventDefault()
@@ -53,6 +52,7 @@ function ClassFeed() {
 
 
   const getFeedClass = async () => {
+    console.log(id, 'classssssssss')
     let response = await new ClassesAPI().getFeedClass(id)
     if(response.ok){
     setFeedClass(response.data)
@@ -61,7 +61,7 @@ function ClassFeed() {
    }
   }
   useEffect(() => {
-    getFeedClass()
+    getFeedClass();
   }, [])
 
   console.log('feed:', feedClass)

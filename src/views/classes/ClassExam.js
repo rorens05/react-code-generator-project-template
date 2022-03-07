@@ -1,10 +1,9 @@
 import React, { useState, useContext } from "react";
 import ClassExamHeader from "./components/Exam/ClassExamHeader";
-import { Row, Col, Accordion } from "react-bootstrap";
+import { Accordion } from "react-bootstrap";
 import { useEffect } from "react";
 import ExamItem from "./components/Exam/ExamItem";
 import ExamAPI from "../../api/ExamAPI";
-import { useParams } from "react-router-dom";
 import ActivityIndicator from "../../components/loaders/ActivityIndicator";
 import { UserContext } from "../../context/UserContext";
 import { toast } from "react-toastify";
@@ -13,7 +12,7 @@ import ClassesAPI from "../../api/ClassesAPI";
 export const ClassExam = () => {
   const [loading, setLoading] = useState(true);
   const [exams, setExams] = useState([]);
-  const { id } = useParams();
+  const id = window.location.pathname.split('/')[2];
   const [filter, setFilter] = useState("");
   const [modules, setModules] = useState([]);
   const { data } = useContext(UserContext);
