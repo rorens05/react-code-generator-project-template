@@ -1,4 +1,5 @@
 import React from "react";
+import { Tooltip, OverlayTrigger } from 'react-bootstrap'
 
 export default function TeacherExamActions({
   exam,
@@ -8,6 +9,8 @@ export default function TeacherExamActions({
   toggleShare,
   getInformationExam
 }) {
+  
+
   return (
     <div className='exam-actions'>
       <a href='#preview'

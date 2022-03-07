@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { Accordion, Row, Col, Button } from 'react-bootstrap'
+import { Accordion, Row, Col, Button, Tooltip, OverlayTrigger } from 'react-bootstrap'
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router'
 import ClassesAPI from '../../../../api/ClassesAPI'
@@ -42,6 +42,18 @@ function AccordionLinks({links, getLinks, setOpenEditModal, setEditLinks, search
       
     }
   }
+
+  const renderTooltipEdit = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Edit
+    </Tooltip>
+  )
+
+  const renderTooltipDelete = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Delete
+    </Tooltip>
+  )
 
   return (
     <div>
@@ -86,8 +98,18 @@ function AccordionLinks({links, getLinks, setOpenEditModal, setEditLinks, search
               ):(
               <>
                 <Col sm={3} className='icon-exam'>
+                <OverlayTrigger
+                    placement="right"
+                    delay={{ show: 10, hide: 25 }}
+                    overlay={renderTooltipEdit}>
                   <Button onClick={(e) => handleOpeEditModal(e, item)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i className="fa fa-edit"></i></Button>
+                 </OverlayTrigger> 
+                 <OverlayTrigger
+                    placement="right"
+                    delay={{ show: 10, hide: 25 }}
+                    overlay={renderTooltipDelete}>
                   <Button onClick={() => handleDeleteNotify(item?.classLink.id)} className="m-r-5 color-white tficolorbg-button" size="sm"> <i class="fas fa-trash-alt"></i> </Button>
+                </OverlayTrigger>
                 </Col>
               </>
               )}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
-import {Row, Col, Accordion, Button, InputGroup, FormControl} from 'react-bootstrap'
+import {Row, Col, Accordion, Button, InputGroup, FormControl, Tooltip, OverlayTrigger} from 'react-bootstrap'
 import HeaderDiscussion from './components/Discussion/HeaderDiscussion'
 import { useParams } from 'react-router'
 import ClassesAPI from '../../api/ClassesAPI'
@@ -129,6 +129,27 @@ function ClassDiscussion({classInfo}) {
     }
   }
 
+  const renderTooltipEdit = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Edit
+    </Tooltip>
+  )
+  const renderTooltipReasign = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Reasign
+    </Tooltip>
+  )
+  const renderTooltipAsign= (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Asign
+    </Tooltip>
+  )
+  const renderTooltipDelete= (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Delete
+    </Tooltip>
+  )
+
   return (
     <>
       <HeaderDiscussion onSearch={onSearch} getDiscussionUnit={getDiscussionUnit} module={module} />
@@ -184,17 +205,37 @@ function ClassDiscussion({classInfo}) {
                     {moduleitem.discussion?.classId?(
                     <Col sm={3} className='icon-exam'>
                         {/* <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button> */}
-                        <Button onClick={(e)=> toggle(e, moduleitem)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-edit"></i></Button>
+                        <OverlayTrigger
+                          placement="right"
+                          delay={{ show: 10, hide: 25 }}
+                          overlay={renderTooltipEdit}>
+                          <Button onClick={(e)=> toggle(e, moduleitem)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-edit"></i></Button>
+                        </OverlayTrigger>
                         {moduleitem.discussionAssignment?.startDate?(
                           <>
-                            <Button onClick={(e) => editAssignToggle(e, moduleitem)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-clock"></i></Button>
+                          <OverlayTrigger
+                            placement="right"
+                            delay={{ show: 10, hide: 25 }}
+                            overlay={renderTooltipReasign}>
+                              <Button onClick={(e) => editAssignToggle(e, moduleitem)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-clock"></i></Button>
+                          </OverlayTrigger>
                           </>
                         ):
                           <>
+                            <OverlayTrigger
+                              placement="right"
+                              delay={{ show: 10, hide: 25 }}
+                              overlay={renderTooltipAsign}>
                             <Button onClick={(e) => assignToggle(e, moduleitem?.discussion?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-user-clock"></i></Button>
+                            </OverlayTrigger>
                           </>
                         }
+                        <OverlayTrigger
+                          placement="right"
+                          delay={{ show: 10, hide: 25 }}
+                          overlay={renderTooltipDelete}>
                         <Button onClick={() => handleDeleteNotify(moduleitem.discussion?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-trash-alt"></i></Button>
+                        </OverlayTrigger>
                       </Col>
                       ):
                       <>
@@ -202,14 +243,24 @@ function ClassDiscussion({classInfo}) {
                       <>
                       <Col sm={3} className='icon-exam'>
                         {/* <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button> */}
+                        <OverlayTrigger
+                          placement="right"
+                          delay={{ show: 10, hide: 25 }}
+                          overlay={renderTooltipReasign}>
                         <Button onClick={(e) => editAssignToggle(e, moduleitem)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-clock"></i></Button>
+                        </OverlayTrigger>
                       </Col>
                       </>
                       ):
                       <>
                       <Col sm={3} className='icon-exam'>
                         {/* <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button> */}
+                        <OverlayTrigger
+                          placement="right"
+                          delay={{ show: 10, hide: 25 }}
+                          overlay={renderTooltipAsign}>
                         <Button onClick={(e) => assignToggle(e, moduleitem?.discussion?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-user-clock"></i></Button>
+                        </OverlayTrigger>
                       </Col>
                       </>
                       }
@@ -228,7 +279,6 @@ function ClassDiscussion({classInfo}) {
                       <div className='inline-flex'>
                       <div style={{color:'#EE9337', fontSize:'15px'}}><b>Ended&nbsp;</b></div>
                       <div style={{paddingBottom:'5px'}} >
-                        
                         <Button onClick={(e) => getDiscussionComments(e, moduleitem.discussion?.id)} className="m-r-5 color-white tficolorbg-button" size="sm">Comments&nbsp;{moduleitem.responseCount}</Button>
                       </div>
                       </div>
@@ -245,7 +295,7 @@ function ClassDiscussion({classInfo}) {
                       <div className='inline-flex'>
                       <div style={{color:'#EE9337', fontSize:'15px'}}><b>Ongoing &nbsp; </b></div>
                       <div style={{paddingBottom:'5px'}} >
-                      <Button onClick={(e) => getDiscussionComments(e, moduleitem.discussion?.id, moduleitem?.discussionAssignment?.startDate, moduleitem?.discussionAssignment?.startTime, moduleitem?.discussionAssignment?.endDate, moduleitem?.discussionAssignment?.endTime)} className="m-r-5 color-white tficolorbg-button" size="sm">Comments&nbsp;{moduleitem.responseCount}</Button>
+                        <Button onClick={(e) => getDiscussionComments(e, moduleitem.discussion?.id, moduleitem?.discussionAssignment?.startDate, moduleitem?.discussionAssignment?.startTime, moduleitem?.discussionAssignment?.endDate, moduleitem?.discussionAssignment?.endTime)} className="m-r-5 color-white tficolorbg-button" size="sm">Comments&nbsp;{moduleitem.responseCount}</Button>
                       </div>
                       </div>
                       <>

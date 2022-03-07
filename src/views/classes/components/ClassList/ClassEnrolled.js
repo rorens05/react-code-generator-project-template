@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Table, Button } from 'react-bootstrap'
+import { Table, Button, Tooltip, OverlayTrigger } from 'react-bootstrap'
 import ClassesAPI from '../../../../api/ClassesAPI'
 import { useParams } from 'react-router'
 import SweetAlert from 'react-bootstrap-sweetalert';
@@ -40,10 +40,11 @@ function ClassEnrolled({enrolledStudent, getStudentEnrolled, getStudentWaiting, 
     }
   }
 
-  const testClick = () => {
-    alert('test')
-  }
-
+  const renderTooltipDelete = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Delete
+    </Tooltip>
+  )
 
   return (
     <div>
@@ -82,7 +83,12 @@ function ClassEnrolled({enrolledStudent, getStudentEnrolled, getStudentWaiting, 
                 </div>
               </td>
               <td className='class-waiting-icon'>
+              <OverlayTrigger
+                placement="right"
+                delay={{ show: 10, hide: 25 }}
+                overlay={renderTooltipDelete}>
                 <Button onClick={() => handleDeleteNotify(item.id)} className="m-r-5 color-white tficolorbg-button" size="sm"> <i class="fas fa-trash-alt"></i></Button>
+              </OverlayTrigger>
               </td> 
             </tr>)
             })}

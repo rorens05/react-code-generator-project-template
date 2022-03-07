@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Tab, Row, Col, Button, InputGroup, FormControl, Accordion } from 'react-bootstrap';
+import { Tab, Row, Col, Button, InputGroup, FormControl, Accordion, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import CoursesAPI from "../../../../api/CoursesAPI";
 import CourseCreateUnit from "./../../components/CourseCreateUnit";
 import CreateTask from "./../../components/CreateTask";
@@ -92,6 +92,18 @@ export default function CoursesTask({moduleInfo, showTask, setShowTask}) {
     progress: undefined,
   });
 
+  const renderTooltipEdit = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Edit
+    </Tooltip>
+  )
+
+  const renderTooltipDelete = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Delete
+    </Tooltip>
+  )
+
   if(showTask === false){
   return (
     <>
@@ -126,8 +138,18 @@ export default function CoursesTask({moduleInfo, showTask, setShowTask}) {
                       <span onClick={(e) => {viewTas(ti)}}>{ti?.taskName}</span>
                     </Col>
                     <Col className="align-right-content" md={3}>
-                      <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={(e) => handleOpenEditTaskModal(e, ti)}><i className="fa fa-edit"></i></Button>
+                      <OverlayTrigger
+                        placement="right"
+                        delay={{ show: 10, hide: 25 }}
+                        overlay={renderTooltipEdit}>
+                        <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={(e) => handleOpenEditTaskModal(e, ti)}><i className="fa fa-edit"></i></Button>
+                     </OverlayTrigger>
+                     <OverlayTrigger
+                        placement="right"
+                        delay={{ show: 10, hide: 25 }}
+                        overlay={renderTooltipDelete}>
                       <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i className="fa fa-trash"  onClick={() => {setSweetError(true); setTaskId(ti.id)}}></i></Button>
+                    </OverlayTrigger>
                     </Col>
                   </Row>
                 ))}

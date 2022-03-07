@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Table, Button } from 'react-bootstrap'
+import { Table, Button, Tooltip, OverlayTrigger } from 'react-bootstrap'
 import ClassesAPI from '../../../../api/ClassesAPI'
 import { useParams} from 'react-router'
 import SweetAlert from 'react-bootstrap-sweetalert';
@@ -51,6 +51,18 @@ function ClassWaiting({waitingStudent, getStudentEnrolled, getStudentWaiting, se
     }
   }
 
+  const renderTooltipDelete = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Delete
+    </Tooltip>
+  )
+
+  const renderTooltipAdd = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Add
+    </Tooltip>
+  )
+
   return (
     <div>
       <Table>
@@ -76,8 +88,18 @@ function ClassWaiting({waitingStudent, getStudentEnrolled, getStudentWaiting, se
                 </div>
               </td>
               <td className='class-waiting-icon'> 
-               <Button onClick={(e) => addStudent(e, item.id)} className="m-r-5 color-white tficolorbg-button" size="sm"> <i class="fas fa-user-plus"></i> </Button>
-               <Button onClick={() => handleDeleteNotify(item.id)} className="m-r-5 color-white tficolorbg-button" size="sm"> <i class="fas fa-trash-alt"></i></Button>
+              <OverlayTrigger
+                placement="right"
+                delay={{ show: 10, hide: 25 }}
+                overlay={renderTooltipAdd}>
+                  <Button onClick={(e) => addStudent(e, item.id)} className="m-r-5 color-white tficolorbg-button" size="sm"> <i class="fas fa-user-plus"></i> </Button>
+               </OverlayTrigger>
+               <OverlayTrigger
+                placement="right"
+                delay={{ show: 10, hide: 25 }}
+                overlay={renderTooltipDelete}>
+                <Button onClick={() => handleDeleteNotify(item.id)} className="m-r-5 color-white tficolorbg-button" size="sm"> <i class="fas fa-trash-alt"></i></Button>
+              </OverlayTrigger>
               </td>
             </tr>)
             })}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Button, InputGroup, FormControl, Accordion } from 'react-bootstrap';
+import { Row, Col, Button, InputGroup, FormControl, Accordion, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import CoursesAPI from "../../../../api/CoursesAPI";
 import CourseCreateUnit from "./../../components/CourseCreateUnit";
 import CreateDiscussion from "./../../components/CreateDiscussion";
@@ -95,6 +95,18 @@ export default function CoursesDiscussion({moduleInfo, moduleId, showDiscussion,
     progress: undefined,
   });
 
+  const renderTooltipEdit = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Edit
+    </Tooltip>
+  )
+
+  const renderTooltipDelete = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Delete
+    </Tooltip>
+  )
+
   if(showDiscussion === false){
   return (
     <>
@@ -130,8 +142,18 @@ export default function CoursesDiscussion({moduleInfo, moduleId, showDiscussion,
                     <span onClick={(e) => {viewDis(di)}}>{di?.discussion.discussionName}</span>
                     </Col>
                     <Col className="align-right-content" md={3}>
-                      <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={(e) => handleOpenEditDiscussionModal(e, di)}><i className="fa fa-edit"></i></Button>
+                    <OverlayTrigger
+                      placement="right"
+                      delay={{ show: 10, hide: 25 }}
+                      overlay={renderTooltipEdit}>
+                           <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={(e) => handleOpenEditDiscussionModal(e, di)}><i className="fa fa-edit"></i></Button>
+                    </OverlayTrigger>
+                    <OverlayTrigger
+                      placement="right"
+                      delay={{ show: 10, hide: 25 }}
+                      overlay={renderTooltipDelete}>
                       <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={() => {setSweetError(true); setDiscussionId(di.discussion.id)}}><i className="fa fa-trash"></i></Button>
+                    </OverlayTrigger>
                     </Col>
                   </Row>
                 ))}
