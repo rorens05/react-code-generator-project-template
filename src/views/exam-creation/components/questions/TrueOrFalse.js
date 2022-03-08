@@ -98,7 +98,7 @@ export default function TrueOrFalse({
   const [selectedQuestion, setSelectedQuestion] = useState(null);
   const [answer, setAnswer] = useState("true");
   const { id } = useParams();
-
+  console.log(part, '..................');
   const submitQuestion = async (e) => {
     e.preventDefault();
     console.log({ selectedQuestion });
@@ -165,6 +165,9 @@ export default function TrueOrFalse({
   };
 
   const addQuestion = async (data) => {
+    console.log(id,
+      part.questionPart.id,
+      data)
     let response = await new ExamAPI().addTrueOrFalse(
       id,
       part.questionPart.id,
@@ -214,7 +217,7 @@ export default function TrueOrFalse({
       ))}
       {editable && (
         <Button
-          className='tficolorbg-button'
+          className='tficolorbg-button m-r-5'
           type='submit'
           onClick={() => {
             setSelectedQuestion(null);

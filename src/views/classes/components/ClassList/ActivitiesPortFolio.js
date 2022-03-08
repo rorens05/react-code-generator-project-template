@@ -1,7 +1,7 @@
 import React from 'react'
 import { Row, Col, Accordion } from "react-bootstrap";
 
-function ActivitiesPortFolio() {
+function ActivitiesPortFolio({studentInformation}) {
   return (
     <div>
 <Accordion>
@@ -21,31 +21,13 @@ function ActivitiesPortFolio() {
         <Col sm={11} >
           <div className='inline-flex' >
             <div style={{fontSize:'20px', color:'#EE9337'}}>
-            <p><b>Exam Quarter Exam</b> </p>
-            </div>
-            <div style={{fontSize:'20px', color:'#C5C5C5'}}>
-              / EQF1
+            <p><b>Total Done Exam</b> </p>
             </div>
           </div>
         </Col>
         <Col sm={1}>
           <div style={{fontSize:'20px'}}>
-           <p><b>10/5</b></p>
-          </div>
-        </Col>
-        <Col sm={11} >
-          <div className='inline-flex' >
-            <div style={{fontSize:'20px', color:'#EE9337'}}>
-            <p><b>Exam Quarter Exam</b> </p>
-            </div>
-            <div style={{fontSize:'20px', color:'#C5C5C5'}}>
-              / EQF1
-            </div>
-          </div>
-        </Col>
-        <Col sm={1}>
-          <div style={{fontSize:'20px'}}>
-           <p><b>10/5</b></p>
+           <p><b>{studentInformation?.noOfTotalDoneTests}/{studentInformation?.noOfTotalAssignedTests}</b></p>
           </div>
         </Col>
       </Row>
@@ -67,25 +49,13 @@ function ActivitiesPortFolio() {
         <Col sm={11} >
           <div className='inline-flex' >
             <div style={{fontSize:'20px', color:'#EE9337'}}>
-            <p><b>Assignment 1</b> </p>
+            <p><b>Total Done Assignment</b> </p>
             </div>
           </div>
         </Col>
         <Col sm={1}>
           <div style={{fontSize:'20px'}}>
-           <p><b>10/5</b></p>
-          </div>
-        </Col>
-        <Col sm={11} >
-          <div className='inline-flex' >
-            <div style={{fontSize:'20px', color:'#EE9337'}}>
-            <p><b>Assignment 2</b> </p>
-            </div>
-          </div>
-        </Col>
-        <Col sm={1}>
-          <div style={{fontSize:'20px'}}>
-           <p><b>10/5</b></p>
+           <p><b>{studentInformation?.noOfTotalDoneAssignments}/{studentInformation?.noOfTotalAssignedAssignments}</b></p>
           </div>
         </Col>
       </Row>
@@ -105,25 +75,13 @@ function ActivitiesPortFolio() {
         <Col sm={11} >
             <div className='inline-flex' >
               <div style={{fontSize:'20px', color:'#EE9337'}}>
-              <p><b>Task 1</b> </p>
+              <p><b>Total Done Task</b> </p>
               </div>
             </div>
           </Col>
           <Col sm={1}>
             <div style={{fontSize:'20px'}}>
-            <p><b>10/5</b></p>
-            </div>
-          </Col>
-          <Col sm={11} >
-            <div className='inline-flex' >
-              <div style={{fontSize:'20px', color:'#EE9337'}}>
-              <p><b>Task 2</b> </p>
-              </div>
-            </div>
-          </Col>
-          <Col sm={1}>
-            <div style={{fontSize:'20px'}}>
-            <p><b>10/5</b></p>
+            <p><b>{studentInformation?.noOfTotalDoneTasks}/{studentInformation?.noOfTotalAssignedTasks}</b></p>
             </div>
           </Col>
       </Row>
@@ -145,25 +103,13 @@ function ActivitiesPortFolio() {
         <Col sm={11} >
             <div className='inline-flex' >
               <div style={{fontSize:'20px', color:'#EE9337'}}>
-              <p><b>Interactive 1</b> </p>
+              <p><b>Total Done Interactive</b> </p>
               </div>
             </div>
           </Col>
           <Col sm={1}>
             <div style={{fontSize:'20px'}}>
-            <p><b>10/5</b></p>
-            </div>
-          </Col>
-          <Col sm={11} >
-            <div className='inline-flex' >
-              <div style={{fontSize:'20px', color:'#EE9337'}}>
-              <p><b>Interactive 2</b> </p>
-              </div>
-            </div>
-          </Col>
-          <Col sm={1}>
-            <div style={{fontSize:'20px'}}>
-            <p><b>10/5</b></p>
+            <p><b>{studentInformation?.noOfTotalDoneInteractives}/{studentInformation?.noOfTotalAssignedInteractives}</b></p>
             </div>
           </Col>
       </Row>

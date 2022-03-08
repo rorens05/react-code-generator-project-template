@@ -45,4 +45,34 @@ export default class GradeAPI extends Base {
       method: 'GET',
     });
   }
+  deleteClassFile = async(data) => {
+    return this.sendRequest({
+      path: `/api/Class/${data.classId}/files/${data.fileId}`,
+      method: 'DELETE'
+    });
+  };
+
+  deleteCourseFile = async(data) => {
+    return this.sendRequest({
+      path: `/api/Course/${data.courseId}/files/${data.fileId}`,
+      method: 'DELETE'
+    });
+  };
+
+  editClassFile = async(data) => {
+    return this.sendRequest({
+      path: `/api/class/${data.classId}/files/${data.fileId}`,
+      method: 'PUT',
+      data: data.fileData
+    });
+  };
+
+  editCourseFile = async(data) => {
+    return this.sendRequest({
+      path: `/api/course/${data.courseId}/files/${data.fileId}`,
+      method: 'PUT',
+      data: data.fileData
+    });
+  }
+
 }

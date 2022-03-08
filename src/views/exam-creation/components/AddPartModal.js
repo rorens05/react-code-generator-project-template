@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 
 export default function AddPartModal({
@@ -9,8 +9,31 @@ export default function AddPartModal({
   setInstructions,
   instructions,
   addPart,
-  selectedPart
+  selectedPart,
+  setFilesToUpload
 }) {
+
+  const handleGetUploadedFile = (file) => {
+    getBase64(file).then(
+      data => {
+        let toUpload = {
+          "base64String": data,
+          "fileName": file.name
+        };
+        setFilesToUpload(toUpload)
+      }
+    );
+  }
+
+  const getBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
+  }
+
   return (
     <Modal
       size='lg'
@@ -48,6 +71,10 @@ export default function AddPartModal({
               onChange={(e) => setInstructions(e.target.value)}
             />
           </Form.Group>
+          {selectedPart == null &&<Form.Group className="mb-3">
+            <Form.Label for='description'>Upload Excel File</Form.Label>
+            <Form.Control type="file" accept=".xls,.xlsx," onChange={(e) => handleGetUploadedFile(e.target.files[0])} />
+          </Form.Group>}
           <span style={{ float: "right" }}>
             <Button className='tficolorbg-button' type='submit'>
               Save
