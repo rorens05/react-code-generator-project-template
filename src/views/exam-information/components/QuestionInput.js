@@ -9,7 +9,6 @@ export default function QuestionInput({
   number,
   part,
   question,
-  key,
   onAnswer = () => {},
   onSubmit = () => {},
 }) {

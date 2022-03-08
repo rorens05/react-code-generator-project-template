@@ -1,3 +1,4 @@
+import { ConsoleLogger } from "@microsoft/signalr/dist/esm/Utils";
 import React, { useEffect, useState, useContext } from "react";
 import { Button } from "react-bootstrap";
 import { Redirect, useParams } from "react-router-dom";
@@ -6,6 +7,8 @@ import ClassesAPI from "../../api/ClassesAPI";
 import ExamAPI from "../../api/ExamAPI";
 import MainContainer from "../../components/layouts/MainContainer";
 import { UserContext } from "../../context/UserContext";
+import { getDifferenceOfTwoDatesInSeconds } from "../../utils/dateHelpers";
+import Logger from "../../utils/logger";
 import ExamDetails from "./components/ExamDetails";
 import ExamForm from "./components/ExamForm";
 
@@ -17,14 +20,17 @@ export default function ExamInformation() {
   const [additionalExamInfo, setAdditionalExamInfo] = useState({});
 
   const userContext = useContext(UserContext);
-  const { user } = userContext.data;
+  const { user, takeExam, endExam } = userContext.data;
   const { class_id, id } = useParams();
 
   const getExamInformation = async () => {
+    Logger.info("Getting exam information");
     setLoading(true);
     let response = await new ExamAPI().getExamInformation(id);
+    let examInformation = null
     if (response.ok) {
-      setExam(response.data);
+      examInformation = response.data;
+      setExam(examInformation);
     } else {
       alert("Something went wrong while fetching exam information");
     }
@@ -34,13 +40,78 @@ export default function ExamInformation() {
       const examInfo = response.data.find(
         (item) => item.test.id.toString() === id.toString()
       );
+      const duration = (examInfo.classTest?.timeLimit || 0) * 60
+      console.log(duration)
       console.log({ examInfo });
       setAdditionalExamInfo(examInfo);
-      setRemainingTime((examInfo.classTest?.timeLimit || 0) * 60);
+      getExamStatus(duration, examInformation)
     } else {
       alert("Something went wrong while fetching exams");
     }
   };
+
+  const getExamStatus = async(duration, exam) => {
+    setLoading(true)
+    Logger.info("Getting exam status");
+    let response = await new ExamAPI().getExamStatus(user.student?.id, class_id, id);
+    setLoading(false)
+    if(response?.data?.id){
+      if(response?.data?.isDone){
+        Logger.info("Exam is done");
+        setRemainingTime(duration)
+      }else{
+        Logger.info("Exam is ongoing")
+        console.log({duration})
+        const differenceInSeconds = getDifferenceOfTwoDatesInSeconds(new Date(), new Date(response?.data?.createdDate))
+        const remainingSeconds = duration - differenceInSeconds
+        console.log({differenceInSeconds, remainingSeconds, duration})
+        if(remainingSeconds <= 0){
+          endTest()
+          setRemainingTime(duration)
+        }else{
+          await updatePartsStatus(exam)
+          setRemainingTime(remainingSeconds)
+          setExamStarted(true);
+        }
+      }
+    }else{
+      Logger.info("Exam has not started")
+      setRemainingTime(duration)
+    }
+  }
+
+  const updatePartsStatus = async (tempExam) => {
+    setLoading(true)
+    Logger.info("Updating exam parts status");
+    let response = await new ExamAPI().getExamPartStatuses(user.student?.id, class_id, id);
+    setLoading(false)
+    console.log({tempExam})
+    if (response.ok) {
+
+      response.data?.testPartAnswers.forEach(async (part) => {
+        if(part.isDone){
+          Logger.info("Part is done");
+          let questionPartDto = [...tempExam.questionPartDto];
+          questionPartDto = questionPartDto.map((tempPart) => {
+            if (tempPart.questionPart.id === part.testPart.id) {
+              tempPart.isDone = true;
+              tempPart.hidden = true
+            }
+            return tempPart;
+          });
+          let newExam = { ...exam };
+          newExam.questionPartDto = questionPartDto;
+          setExam(newExam);
+          console.log({ newExam });
+        }else{
+          Logger.info("Part is ongoing");
+        }
+      })
+      Logger.info("Exam parts status updated");
+    }else{
+      alert("Something went wrong while updating exam parts status")
+    }
+  }
 
   const onAnswer = (partId, questionId, answer) => {
     let questionPartDto = [...exam.questionPartDto];
@@ -79,31 +150,31 @@ export default function ExamInformation() {
   const submitPartsAnswer = async (part) => {
     console.log("SUBMIT PART", { part });
     let payload = [];
-    let unique = true
-    let empty = false
+    let unique = true;
+    let empty = false;
     if (part.questionPart.questionTypeId == 5) {
-
       payload = part.questionDtos.map((question) => {
-        let studentAnswers = question.studentAnswer || question.choices.map(() => ({answer: ""}))
+        let studentAnswers =
+          question.studentAnswer ||
+          question.choices.map(() => ({ answer: "" }));
 
-        
         studentAnswers.forEach((choice) => {
-          if(studentAnswers.filter(c => c.answer == choice.answer).length > 1){
-            unique = false
+          if (
+            studentAnswers.filter((c) => c.answer == choice.answer).length > 1
+          ) {
+            unique = false;
           }
-          if(choice.answer == ""){
-            empty = true
+          if (choice.answer == "") {
+            empty = true;
           }
-        })
+        });
 
         return {
           answer: "",
           questionType: 5,
           questionId: question.question.id,
           enumeration: studentAnswers,
-          "webEnumerationAnswers": studentAnswers.map(item =>
-            item.answer
-          )
+          webEnumerationAnswers: studentAnswers.map((item) => item.answer),
         };
       });
     } else {
@@ -114,15 +185,15 @@ export default function ExamInformation() {
         };
       });
     }
-    
-    if(empty){
-      toast.error("Please answer all questions")
-      return
+
+    if (empty) {
+      toast.error("Please answer all questions");
+      return;
     }
-    
-    if(!unique){
-      toast.error("Please add unique answers")
-      return
+
+    if (!unique) {
+      toast.error("Please add unique answers");
+      return;
     }
 
     console.log({ payload });
@@ -143,17 +214,13 @@ export default function ExamInformation() {
   };
 
   const endTest = async (e) => {
-    window.onbeforeunload = undefined;
     setLoading(true);
-    let response = await new ExamAPI().endTest(
-      user.student?.id,
-      class_id,
-      id
-    );
+    let response = await new ExamAPI().endTest(user.student?.id, class_id, id);
     setLoading(false);
     if (!response.ok) {
       // alert("Something went wrong in ending test");
     }
+    endExam();
     window.location.reload();
   };
 
@@ -167,12 +234,12 @@ export default function ExamInformation() {
     setLoading(false);
 
     if (response.ok) {
+      takeExam(window.location.pathname)
       setExamStarted(true);
       setRemainingTime((additionalExamInfo.classTest?.timeLimit || 0) * 60);
     } else {
       if (response.statusMessage === "Bad Request") {
         alert("This test has already been ended");
-        endTest();
         getExamInformation();
       } else {
         alert("Something went wrong in starting test");
@@ -181,21 +248,9 @@ export default function ExamInformation() {
   };
 
   useEffect(() => {
-    if (examStarted) {
-      window.onbeforeunload = async (e) => {
-        e.preventDefault();
-        await endTest();
-        return "";
-      };
-    }
-  }, [examStarted]);
-
-  useEffect(() => {
     if (user.isTeacher) return (window.location.href = "/404");
     getExamInformation();
-    return () => {
-      endTest();
-    };
+    
   }, []);
 
   useEffect(() => {
@@ -218,6 +273,8 @@ export default function ExamInformation() {
       }, 1000);
     } else {
       if (!examStarted) return;
+      Logger.info("Exam is done");
+      console.log({examStarted, remainingTime})
       endTest();
       setExamStarted(false);
     }

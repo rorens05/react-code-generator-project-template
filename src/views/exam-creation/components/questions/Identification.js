@@ -208,7 +208,7 @@ export default function Identification({
       ))}
       {editable && (
         <Button
-          className='tficolorbg-button'
+          className='tficolorbg-button m-r-5'
           type='submit'
           onClick={() => {
             setSelectedQuestion(null);

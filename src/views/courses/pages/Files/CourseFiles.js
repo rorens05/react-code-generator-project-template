@@ -30,7 +30,7 @@ function CourseFiles({id}) {
     <div>
       <div className="row m-b-20 file-content">
         <FileHeader type='Course' id={id} doneUpload={()=> handleRefetch()}/>
-        <FilesContent data={filesToDisplay} type='Course' id={id}/>
+        <FilesContent data={filesToDisplay} type='Course' id={id} deleted={()=> handleRefetch()}/>
       </div>
     </div>
   )
