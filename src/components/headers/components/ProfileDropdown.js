@@ -2,15 +2,19 @@ import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { UserContext } from '../../../context/UserContext'
+import { useParams } from "react-router-dom";
 
 export default function ProfileDropdown({visible}) {
   const userContext = useContext(UserContext)
   const {user} = userContext.data
+  const { id } = useParams();
 
   const logout = async() => {
     await window.localStorage.clear()
     window.location.href = "/login"
   }
+
+ console.log('userID:', user)
 
   return (
     <div className={`profile-dropdown-container dropdown-menu shadow ${visible && 'show'}`}>
@@ -18,9 +22,19 @@ export default function ProfileDropdown({visible}) {
         <div className="user-image-container">
           <i class="fas fa-user"></i>
         </div>
-        <div className="user-name-container" onClick={() => toast.error("Feature under development")}>
-          <p className="user-name">{user?.teacher?.id}</p>
-          <Link to="#">See your profile</Link>
+        <div className="user-name-container">
+          <p className="user-name">{user?.name}</p>
+          {user.isStudent && 
+          <>
+          <Link to={`/profile/${user?.student?.id}`}>See your profile</Link>
+          </>
+          }
+          {user.isTeacher && 
+          <>
+          <Link to={`/profile/${user?.teacher?.id}`}>See your profile</Link>
+          </>
+          }
+          
         </div>
       </div>
       <div className="profile-dropdown-links">
