@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Tab, ListGroup, Row, Col, Button, InputGroup, FormControl, Accordion } from 'react-bootstrap';
 import MainContainer from '../../components/layouts/MainContainer'
 import CourseBreadcrumbs from "./components/CourseBreadcrumbs";
@@ -12,6 +12,7 @@ import CourseLinks from "./pages/Links/CourseLinks";
 import CourseFiles from "./pages/Files/CourseFiles";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { UserContext } from '../../context/UserContext';
 
 export default function CourseContent(course) {
   console.log(course, '//////////////////')
@@ -25,6 +26,8 @@ export default function CourseContent(course) {
   const [showDiscussion, setShowDiscussion] = useState(false)
   const [collapseSide, setCollapseSide] = useState(true)
   const courseid = sessionStorage.getItem('courseid')
+  const userContext = useContext(UserContext)
+  const {user} = userContext.data
 
   const getCourseUnitInformation = async(e) => {
     setLoading(true)
@@ -75,6 +78,11 @@ export default function CourseContent(course) {
     getCourseUnitInformation()
     getCourseInformation()
   }, [])
+
+  useEffect(() => {
+    if (user.isStudent) return (window.location.href = "/404");
+  }, []);
+  
 
   const Authors = courseInfo.authorName;
 

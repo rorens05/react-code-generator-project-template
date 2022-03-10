@@ -14,6 +14,8 @@ const ProfileEdit = ({openUserInfoModal, openUserInfoToggle, userInfo, getStuden
   const [bday, setBday] = useState('')
   const [sex, setSex] = useState('')
   const [emailAdd, setemailAdd] = useState('')
+  const [warningModal, setWarningModal] = useState(false)
+  const [errorMessag, setErrorMessag] = useState('')
   let studentNo = userInfo?.studentNo
   const { id } = useParams()
   const [editNotufy, setEditNotify] = useState(false)
@@ -21,6 +23,11 @@ const ProfileEdit = ({openUserInfoModal, openUserInfoToggle, userInfo, getStuden
   const closeNotify = () =>{
     setEditNotify(false)
   }
+
+  const closeWarningModal = () =>{
+    setWarningModal(!warningModal)
+  } 
+  
 
   const updateStudentInfo = async(e) => {
     e.preventDefault()
@@ -30,7 +37,8 @@ const ProfileEdit = ({openUserInfoModal, openUserInfoToggle, userInfo, getStuden
         openUserInfoToggle(e)
         setEditNotify(true)
       }else{
-        alert("Something went wrong while Updating Student Information")
+        closeWarningModal()
+        setErrorMessag(response.data.errorMessag)
       }
   }
 
@@ -47,6 +55,36 @@ const ProfileEdit = ({openUserInfoModal, openUserInfoToggle, userInfo, getStuden
     }
   }, [userInfo])
 
+  useEffect(() => {
+    if(fname === '') {
+      setFname(userInfo?.fname)
+    }
+  }, [fname])
+
+  useEffect(() => {
+    if(lname === '') {
+      setLname(userInfo?.lname)
+    }
+  }, [lname])
+
+  useEffect(() => {
+    if(contactNo === '') {
+      setContactNo(userInfo?.contactNo)
+    }
+  }, [contactNo])
+
+  useEffect(() => {
+    if(emailAdd === '') {
+      setemailAdd(userInfo?.emailAdd)
+    }
+  }, [emailAdd])
+
+  useEffect(() => {
+    if(permanentAddress === '') {
+      setPermanentAddress(userInfo?.permanentAddress)
+    }
+  }, [permanentAddress])
+
 
   return (
     <div><Modal  size="lg" show={openUserInfoModal} onHide={openUserInfoToggle} aria-labelledby="example-modal-sizes-title-lg">
@@ -62,7 +100,7 @@ const ProfileEdit = ({openUserInfoModal, openUserInfoToggle, userInfo, getStuden
           <div style={{fontSize:'24px', color:'#BCBCBC'}}>
           <Form.Group className="mb-4">
             <Form.Label>First Name</Form.Label>
-          <Form.Control defaultValue={userInfo?.fname} onChange={(e) => setFname(e.target.value)} />
+          <Form.Control required  defaultValue={userInfo?.fname} onChange={(e) => setFname(e.target.value)} />
             </Form.Group>
           </div>
         </Col>
@@ -70,7 +108,7 @@ const ProfileEdit = ({openUserInfoModal, openUserInfoToggle, userInfo, getStuden
           <div style={{fontSize:'24px', color:'#BCBCBC'}}>
           <Form.Group className="mb-4">
             <Form.Label>Last Name</Form.Label>
-          <Form.Control defaultValue={userInfo?.lname} onChange={(e) => setLname(e.target.value)}/>
+          <Form.Control required defaultValue={userInfo?.lname} onChange={(e) => setLname(e.target.value)}/>
             </Form.Group>
           </div>
         </Col>
@@ -86,7 +124,7 @@ const ProfileEdit = ({openUserInfoModal, openUserInfoToggle, userInfo, getStuden
           <div style={{fontSize:'24px', color:'#BCBCBC'}}>
             <Form.Group className="mb-4">
             <Form.Label>Contact Number</Form.Label>
-          <Form.Control defaultValue={userInfo?.contactNo} onChange={(e) => setContactNo(e.target.value)}/>
+          <Form.Control required defaultValue={userInfo?.contactNo} onChange={(e) => setContactNo(e.target.value)}/>
             </Form.Group>
           </div>
         </Col>
@@ -94,7 +132,7 @@ const ProfileEdit = ({openUserInfoModal, openUserInfoToggle, userInfo, getStuden
           <div style={{fontSize:'24px', color:'#BCBCBC'}}>
             <Form.Group className="mb-4">
             <Form.Label>Birthday</Form.Label>
-          <Form.Control type="date" defaultValue={moment(userInfo?.bday).format('YYYY-MM-DD')} onChange={(e) => setBday(e.target.value)}/>
+          <Form.Control required type="date" defaultValue={moment(userInfo?.bday).format('YYYY-MM-DD')} onChange={(e) => setBday(e.target.value)}/>
             </Form.Group>
           </div>
         </Col>
@@ -102,8 +140,7 @@ const ProfileEdit = ({openUserInfoModal, openUserInfoToggle, userInfo, getStuden
           <div style={{fontSize:'24px', color:'#BCBCBC'}}>
             <Form.Group className="mb-4">
             <Form.Label>Gender</Form.Label>
-            <Form.Select onChange={(e) => setSex(e.target.value)}>
-                <option>{userInfo?.sex}</option>
+            <Form.Select defaultValue={userInfo?.sex} onChange={(e) => setSex(e.target.value)}>
                 <option value='Male'>Male</option>
                 <option value='Female'>Female</option>
               </Form.Select>
@@ -114,7 +151,7 @@ const ProfileEdit = ({openUserInfoModal, openUserInfoToggle, userInfo, getStuden
           <div style={{fontSize:'24px', color:'#BCBCBC'}}>
             <Form.Group className="mb-4">
             <Form.Label>E-mail Address</Form.Label>
-          <Form.Control defaultValue={userInfo?.emailAdd} onChange={(e) => setemailAdd(e.target.value)}/>
+          <Form.Control required defaultValue={userInfo?.emailAdd} onChange={(e) => setemailAdd(e.target.value)}/>
             </Form.Group>
           </div>
         </Col>
@@ -122,7 +159,7 @@ const ProfileEdit = ({openUserInfoModal, openUserInfoToggle, userInfo, getStuden
           <div style={{fontSize:'24px', color:'#BCBCBC'}}>
             <Form.Group className="mb-4">
             <Form.Label>Address</Form.Label>
-          <Form.Control defaultValue={userInfo?.permanentAddress} onChange={(e) => setPermanentAddress(e.target.value)}/>
+          <Form.Control required defaultValue={userInfo?.permanentAddress} onChange={(e) => setPermanentAddress(e.target.value)}/>
             </Form.Group>
           </div>
         </Col>
@@ -138,6 +175,12 @@ const ProfileEdit = ({openUserInfoModal, openUserInfoToggle, userInfo, getStuden
     show={editNotufy} 
     title="Done!" 
     onConfirm={closeNotify}>
+  </SweetAlert>
+  <SweetAlert 
+    warning
+    show={warningModal} 
+    title={errorMessag} 
+    onConfirm={closeWarningModal}>
   </SweetAlert>
   </div>
   )

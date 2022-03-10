@@ -20,7 +20,11 @@ function StudentJoinClass({joinClassesToggle, joinClassestModal, getPendingClass
         setAddNotity(true)
       }else{
         setWrongCodeNotify(true)
-        setErrorMessage(response.data.errorMessage)
+        if(errorMessage === ''){
+          setErrorMessage('Please enter the classcode')
+        }else{
+          setErrorMessage(response.data.errorMessage)
+        } 
       }
   }
 
