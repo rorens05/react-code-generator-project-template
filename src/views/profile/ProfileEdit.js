@@ -61,7 +61,7 @@ const ProfileEdit = ({openUserInfoModal, openUserInfoToggle, userInfo, getStuden
         <Col sm={6}>
           <div style={{fontSize:'24px', color:'#BCBCBC'}}>
           <Form.Group className="mb-4">
-            <Form.Label>Fist Name</Form.Label>
+            <Form.Label>First Name</Form.Label>
           <Form.Control defaultValue={userInfo?.fname} onChange={(e) => setFname(e.target.value)} />
             </Form.Group>
           </div>
@@ -105,7 +105,7 @@ const ProfileEdit = ({openUserInfoModal, openUserInfoToggle, userInfo, getStuden
             <Form.Select onChange={(e) => setSex(e.target.value)}>
                 <option>{userInfo?.sex}</option>
                 <option value='Male'>Male</option>
-                <option value='Famale'>Famale</option>
+                <option value='Female'>Female</option>
               </Form.Select>
             </Form.Group>
           </div>
