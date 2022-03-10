@@ -53,11 +53,12 @@ function FilesContent(props) {
                     ?
                     <i class="fas fa-arrow-down td-file-page" onClick={() => downloadImage(item.path_Base)}></i>
                     : */}
-                    <a href={item.path_Base} download={true} target='_blank'>
+                    <a href={item.path_Base} download={true} target='_blank' title={`${item.path_Base.match(/.(jpg|jpeg|png|gif|pdf)$/i) ? 'View' : 'Download'}`}>
                       <i class={`${item.path_Base.match(/.(jpg|jpeg|png|gif|pdf)$/i) ? 'fa-eye' : 'fa-arrow-down'} fas td-file-page`}></i>
                     </a> 
                   {/* } */}
-                  <i class="fas fa-trash-alt td-file-page"></i></td>
+                  <a title='Delete' >
+                  <i class="fas fa-trash-alt td-file-page"></i> </a></td>
               </tr>
             )
           })

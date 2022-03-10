@@ -37,7 +37,7 @@ export default function TeacherExamActions({
       ) }
       <a
         href='#assign'
-        title='assign'
+        title='Assign'
         onClick={(e) => {
           e.preventDefault();
           setShowModal(true);

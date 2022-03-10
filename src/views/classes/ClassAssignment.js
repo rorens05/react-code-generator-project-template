@@ -13,6 +13,7 @@ import StudentAssignment from './student/components/StudentAssignment'
 import StudentAnswerAssignment from './student/components/StudentAnswerAssignment'
 import StudentSubmittedAssigment from './student/components/StudentSubmittedAssigment'
 import ViewAssignment from './components/Assignment/ViewAssignment'
+import Status from '../../components/utilities/Status'
 
 function ClassAssignment({classInfo}) {
   const [submittedAssignment, setSubmittedAssignment] = useState(false)
@@ -193,7 +194,8 @@ function ClassAssignment({classInfo}) {
                 return assigItem
               }
             }).map(assigItem => {
-          return( <Row>
+          return( 
+          <Row style={{margin:'5px'}}>
             <Col sm={8}>
               <div className='title-exam'>
                 {assigItem?.assignment?.assignmentName}
@@ -217,34 +219,34 @@ function ClassAssignment({classInfo}) {
                 Student Modal Answers */}
               <OverlayTrigger
                 placement="right"
-                delay={{ show: 10, hide: 25 }}
+                delay={{ show: 1500, hide: 0 }}
                 overlay={renderTooltipView}>
                   <Button onClick={() => viewAssignmentToggle(assigItem?.assignment, assigItem?.classAssignment)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button>
                 </OverlayTrigger>
                 <OverlayTrigger
                   placement="right"
-                  delay={{ show: 10, hide: 25 }}
+                  delay={{ show: 1500, hide: 0 }}
                   overlay={renderTooltipEdit}>
                 <Button onClick={(e) => toggle(e, assigItem)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-edit"></i></Button>
                 </OverlayTrigger>
                 {assigItem?.classAssignment?(
                   <OverlayTrigger
                     placement="right"
-                    delay={{ show: 10, hide: 25 }}
+                    delay={{ show: 1500, hide: 0 }}
                     overlay={renderTooltipReasign}>
                       <Button onClick={(e) => editAssignedAssignmentToggle(e, assigItem)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-clock"></i></Button>
                   </OverlayTrigger>
                 ):
                 <OverlayTrigger
                   placement="right"
-                  delay={{ show: 10, hide: 25 }}
+                  delay={{ show: 1500, hide: 0 }}
                   overlay={renderTooltipAsign}>
                     <Button onClick={(e) => assignAssignmentToggle(e, assigItem?.assignment?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-user-clock"></i></Button>
                 </OverlayTrigger>
                 } 
                 <OverlayTrigger
                   placement="right"
-                  delay={{ show: 10, hide: 25 }}
+                  delay={{ show: 1500, hide: 0 }}
                   overlay={renderTooltipDelete}>
                     <Button onClick={() => handleDeleteNotify(assigItem?.assignment?.id, item?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-trash-alt"></i></Button>
                 </OverlayTrigger>
@@ -266,13 +268,13 @@ function ClassAssignment({classInfo}) {
               <Col sm={3} className='icon-exam'>
               <OverlayTrigger
                 placement="right"
-                delay={{ show: 10, hide: 25 }}
+                delay={{ show: 1500, hide: 0 }}
                 overlay={renderTooltipView}>
                 <Button onClick={() => viewAssignmentToggle(assigItem?.assignment, assigItem?.classAssignment)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button>
               </OverlayTrigger>
               <OverlayTrigger
                 placement="right"
-                delay={{ show: 10, hide: 25 }}
+                delay={{ show: 1500, hide: 0 }}
                 overlay={renderTooltipReasign}> 
                 <Button onClick={(e) => editAssignedAssignmentToggle(e, assigItem)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-clock"></i></Button>
               </OverlayTrigger>
@@ -283,13 +285,13 @@ function ClassAssignment({classInfo}) {
                 <Col sm={3} className='icon-exam'>
                 <OverlayTrigger
                   placement="right"
-                  delay={{ show: 10, hide: 25 }}
+                  delay={{ show: 1500, hide: 0 }}
                   overlay={renderTooltipView}>
                   <Button onClick={() => viewAssignmentToggle(assigItem?.assignment, assigItem?.classAssignment)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button>
                 </OverlayTrigger>
                 <OverlayTrigger
                   placement="right"
-                  delay={{ show: 10, hide: 25 }}
+                  delay={{ show: 1500, hide: 0 }}
                   overlay={renderTooltipAsign}>  
                   <Button onClick={(e) => assignAssignmentToggle(e, assigItem?.assignment?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-user-clock"></i></Button>
                 </OverlayTrigger>
@@ -358,7 +360,7 @@ function ClassAssignment({classInfo}) {
                 </div>
               </Col>
               <div className='text-color-bcbcbc' >
-                ___________________________________________________________________________________________________________________________________________________________________________________________________________
+              <hr></hr>
               </div>
             </Row>):
               <div>                      
@@ -366,7 +368,7 @@ function ClassAssignment({classInfo}) {
                     <b>Not Assigned</b>
                 </div>
               <div className='text-color-bcbcbc' >
-                ___________________________________________________________________________________________________________________________________________________________________________________________________________
+              <hr></hr>
               </div>
             </div>
             }

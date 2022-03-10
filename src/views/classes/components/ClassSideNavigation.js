@@ -163,7 +163,7 @@ export default function ClassSideNavigation({setLoading}) {
             <ListGroup>
             <OverlayTrigger
                 placement="right"
-                delay={{ show: 10, hide: 25 }}
+                delay={{ show: 500, hide: 25 }}
                 overlay={renderTooltipFeed}>
               <ListGroup.Item  className="list-group-item-o " action href="#link1">
                 <i className='fas fa-comment' title='Feed'/>
@@ -171,7 +171,7 @@ export default function ClassSideNavigation({setLoading}) {
               </OverlayTrigger>
               <OverlayTrigger
                 placement="right"
-                delay={{ show: 10, hide: 25 }}
+                delay={{ show: 500, hide: 25 }}
                 overlay={renderTooltipLearn}>
               <ListGroup.Item style={{position:'relative'}} className="list-group-item-o "action href="#link2">
                 <i className="fas fa-book" title="Learn"/>
@@ -179,7 +179,7 @@ export default function ClassSideNavigation({setLoading}) {
               </OverlayTrigger>
               <OverlayTrigger
                 placement="right"
-                delay={{ show: 10, hide: 25 }}
+                delay={{ show: 500, hide: 25 }}
                 overlay={renderTooltipExam}>
               <ListGroup.Item  className="list-group-item-o "action href="#link3">
                 <i className="fas fa-file-alt" title="Exam"/>
@@ -187,7 +187,7 @@ export default function ClassSideNavigation({setLoading}) {
               </OverlayTrigger>
               <OverlayTrigger
                 placement="right"
-                delay={{ show: 10, hide: 25 }}
+                delay={{ show: 500, hide: 25 }}
                 overlay={renderTooltipDiscussion}>
               <ListGroup.Item className="list-group-item-o " action href="#link4">
                 <i className="fas fa-comment-alt" title="Discussion"/>
@@ -195,7 +195,7 @@ export default function ClassSideNavigation({setLoading}) {
               </OverlayTrigger>
               <OverlayTrigger
                 placement="right"
-                delay={{ show: 10, hide: 25 }}
+                delay={{ show: 500, hide: 25 }}
                 overlay={renderTooltipAssignment}>
               <ListGroup.Item className="list-group-item-o " action href="#link5">
                <i className="fas fa-sticky-note" title="Assignment"/>
@@ -203,7 +203,7 @@ export default function ClassSideNavigation({setLoading}) {
               </OverlayTrigger>
               <OverlayTrigger
                 placement="right"
-                delay={{ show: 10, hide: 25 }}
+                delay={{ show: 500, hide: 25 }}
                 overlay={renderTooltipTask}>
               <ListGroup.Item className="list-group-item-o " action href="#link6">
                 <i className="fas fa-edit" title="Task"/>
@@ -211,7 +211,7 @@ export default function ClassSideNavigation({setLoading}) {
               </OverlayTrigger>
               <OverlayTrigger
                 placement="right"
-                delay={{ show: 10, hide: 25 }}
+                delay={{ show: 500, hide: 25 }}
                 overlay={renderTooltipInteractive}>
               <ListGroup.Item className="list-group-item-o " action href="#link7">
                 <i className='fas fa-chalkboard-teacher' title='Interactive Exercises'/>
@@ -219,7 +219,7 @@ export default function ClassSideNavigation({setLoading}) {
               </OverlayTrigger>
               <OverlayTrigger
                 placement="right"
-                delay={{ show: 10, hide: 25 }}
+                delay={{ show: 500, hide: 25 }}
                 overlay={renderTooltipLink}>
               <ListGroup.Item className="list-group-item-o " action href="#link8">
                 <i className='fa fa-link' title='Links'/>
@@ -232,7 +232,7 @@ export default function ClassSideNavigation({setLoading}) {
               <>
               <OverlayTrigger
                 placement="right"
-                delay={{ show: 10, hide: 25 }}
+                delay={{ show: 500, hide: 25 }}
                 overlay={renderTooltipClassList}>
                 <ListGroup.Item className="list-group-item-o " action href="#link9">
                   <i className="fas fa-users" title="Class List"/>
@@ -240,7 +240,7 @@ export default function ClassSideNavigation({setLoading}) {
                 </OverlayTrigger>
                 <OverlayTrigger
                 placement="right"
-                delay={{ show: 10, hide: 25 }}
+                delay={{ show: 500, hide: 25 }}
                 overlay={renderTooltipFiles}>
                 <ListGroup.Item className="list-group-item-o " action href="#link10">
                   <i className="fas fa-folder-open" title="Files"/>

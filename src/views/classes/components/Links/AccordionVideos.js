@@ -86,7 +86,7 @@ function AccordionVideos({videos, getVideos, setOpenEditModal, setEditLinks, sea
             }
           }).map(item =>{
             return(
-            <Row>
+            <Row style={{margin:'10px'}}>
               <Col sm={9}>
                 <div className='title-exam'>
                   {/* <Link style={{color:'#EE9337', textDecoration:'none'}} to={item?.url}>{item?.description}</Link> */}
@@ -101,13 +101,13 @@ function AccordionVideos({videos, getVideos, setOpenEditModal, setEditLinks, sea
                 <Col sm={3} className='icon-exam'>
                   <OverlayTrigger
                     placement="right"
-                    delay={{ show: 10, hide: 25 }}
+                    delay={{ show: 1500, hide: 0 }}
                     overlay={renderTooltipEdit}>
                       <Button onClick={(e) => handleOpeEditModal(e, item)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i className="fa fa-edit"></i></Button>
                   </OverlayTrigger> 
                   <OverlayTrigger
                     placement="right"
-                    delay={{ show: 10, hide: 25 }}
+                    delay={{ show: 1500, hide: 0 }}
                     overlay={renderTooltipDelete}>
                       <Button onClick={() => handleDeleteNotify(item?.classLink.id)} className="m-r-5 color-white tficolorbg-button" size="sm"> <i class="fas fa-trash-alt"></i> </Button>
                   </OverlayTrigger>
@@ -124,7 +124,7 @@ function AccordionVideos({videos, getVideos, setOpenEditModal, setEditLinks, sea
                   </div>
                 </Col>
                 <div className='text-color-bcbcbc' >
-                ___________________________________________________________________________________________________________________________________________________________________________________________________________
+                <hr></hr>
                 </div>
             </Row>)
           })}

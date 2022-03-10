@@ -82,24 +82,26 @@ function ClassWaiting({waitingStudent, getStudentEnrolled, getStudentWaiting, se
           return (         
             <tr>
               <td>
-                <div className='class-waiting-list' style={{fontSize:'24px', color:'#707070', }} >
+                <div className='class-waiting-list' style={{fontSize:'24px', color:'#707070', marginLeft:'25px'}} >
                   <i class="fas fa-user-circle fas-1x" style={{color:'#EE9337',fontSize:'36px',}}></i>&nbsp;
                     {item.fname} {item.lname}
                 </div>
               </td>
-              <td className='class-waiting-icon'> 
+              <td className='class-waiting-icon'>
+              <div style={{marginRight:'35px'}}> 
               <OverlayTrigger
                 placement="right"
-                delay={{ show: 10, hide: 25 }}
+                delay={{ show: 1500, hide: 0 }}
                 overlay={renderTooltipAdd}>
                   <Button onClick={(e) => addStudent(e, item.id)} className="m-r-5 color-white tficolorbg-button" size="sm"> <i class="fas fa-user-plus"></i> </Button>
                </OverlayTrigger>
                <OverlayTrigger
                 placement="right"
-                delay={{ show: 10, hide: 25 }}
+                delay={{ show: 1500, hide: 0 }}
                 overlay={renderTooltipDelete}>
                 <Button onClick={() => handleDeleteNotify(item.id)} className="m-r-5 color-white tficolorbg-button" size="sm"> <i class="fas fa-trash-alt"></i></Button>
               </OverlayTrigger>
+              </div>
               </td>
             </tr>)
             })}

@@ -137,20 +137,20 @@ export default function CoursesDiscussion({moduleInfo, moduleId, showDiscussion,
                 {discussionInfo.filter(di => 
                   di.discussion?.discussionName?.toLowerCase().includes(filter.toLowerCase())
                 ).map((di, index) => (
-                  <Row>
+                  <Row style={{margin:'10px'}}>
                     <Col className="lesson-header" md={9}>
                     <span onClick={(e) => {viewDis(di)}}>{di?.discussion.discussionName}</span>
                     </Col>
                     <Col className="align-right-content" md={3}>
                     <OverlayTrigger
                       placement="right"
-                      delay={{ show: 10, hide: 25 }}
+                      delay={{ show: 1500, hide: 25 }}
                       overlay={renderTooltipEdit}>
                            <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={(e) => handleOpenEditDiscussionModal(e, di)}><i className="fa fa-edit"></i></Button>
                     </OverlayTrigger>
                     <OverlayTrigger
                       placement="right"
-                      delay={{ show: 10, hide: 25 }}
+                      delay={{ show: 1500, hide: 25 }}
                       overlay={renderTooltipDelete}>
                       <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={() => {setSweetError(true); setDiscussionId(di.discussion.id)}}><i className="fa fa-trash"></i></Button>
                     </OverlayTrigger>

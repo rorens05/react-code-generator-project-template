@@ -76,12 +76,6 @@ function ClassInteractive({classInfo}) {
 
   const renderTooltipReasign = (props) => (
     <Tooltip id="button-tooltip" {...props}>
-      Reasign
-    </Tooltip>
-  )
-
-  const renderTooltipAsign = (props) => (
-    <Tooltip id="button-tooltip" {...props}>
       Asign
     </Tooltip>
   )
@@ -110,7 +104,8 @@ function ClassInteractive({classInfo}) {
                 return interItem
               }
             }).map(interItem =>{
-              return( <Row>
+              return(
+               <Row style={{margin:'5px'}}>
                 <Col sm={8}>
                   <div className='title-exam'>
                     {/* <Link style={{color:'#EE9337', textDecoration:'none'}} to={interItem?.interactive?.path} >{interItem?.interactive?.interactiveName}</Link> */}
@@ -133,7 +128,7 @@ function ClassInteractive({classInfo}) {
                     <>
                         <OverlayTrigger
                           placement="right"
-                          delay={{ show: 10, hide: 25 }}
+                          delay={{ show: 1500, hide: 0 }}
                           overlay={renderTooltipReasign}>
                            <Button onClick={(e) => editAssignIteractiveToggle(e, interItem)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-clock"></i></Button>
                        </OverlayTrigger> 
@@ -142,7 +137,7 @@ function ClassInteractive({classInfo}) {
                     <>
                     <OverlayTrigger
                       placement="right"
-                      delay={{ show: 10, hide: 25 }}
+                      delay={{ show: 1500, hide: 0 }}
                       overlay={renderTooltipReasign}>
                         <Button onClick={(e) => assignInteractiveToggle(e, interItem?.interactive?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-user-clock"></i></Button>
                     </OverlayTrigger>
@@ -202,7 +197,7 @@ function ClassInteractive({classInfo}) {
                       </div>
                     </Col>
                     <div className='text-color-bcbcbc' >
-                      ___________________________________________________________________________________________________________________________________________________________________________________________________________
+                    <hr></hr>
                     </div>
                     </>
                   ):
@@ -211,7 +206,7 @@ function ClassInteractive({classInfo}) {
                       <b>Not Assigned</b>
                     </div>
                     <div className='text-color-bcbcbc' >
-                      ___________________________________________________________________________________________________________________________________________________________________________________________________________
+                    <hr></hr>
                     </div>
                   </>
                   }
