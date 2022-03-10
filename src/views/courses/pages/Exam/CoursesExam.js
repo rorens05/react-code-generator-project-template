@@ -10,7 +10,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link } from "react-router-dom";
 import Status from "../../../../components/utilities/Status";
-
+import CourseContent from "../../CourseContent";
 
 export default function CoursesExam() {
 
@@ -101,6 +101,7 @@ export default function CoursesExam() {
   }, [])
 
   return (
+    <CourseContent setLoading={() => console.log('sample')}>
     <React.Fragment>
       <span className="content-pane-title">
         Exam 
@@ -168,5 +169,6 @@ export default function CoursesExam() {
         }
       </Accordion>
     </React.Fragment> 
+    </CourseContent>
   )
 }

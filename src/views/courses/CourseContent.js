@@ -8,15 +8,15 @@ import CoursesExam from "./pages/Exam/CoursesExam";
 import CoursesDiscussion from "./pages/Discussion/CoursesDiscussion";
 import CoursesAssignment from "./pages/Assignment/CoursesAssignment";
 import CoursesTask from "./pages/Task/CoursesTask";
+import CourseFiles from "./pages/Files/CourseFiles";
 import CourseLinks from "./pages/Links/CourseLinks";
 import { HashRouter, BrowserRouter as Router, } from 'react-router-dom';
 import PrivateRoute from "../../routes/components/PrivateRoute";
-import CourseFiles from "./pages/Files/CourseFiles";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ClassAssignment from "../classes/ClassAssignment";
-
-export default function CourseContent(course) {
+import { useParams } from "react-router";
+export default function CourseContent({children, course}) {
   console.log(course, '//////////////////')
   const [loading, setLoading] = useState(false)
   const [moduleInfo, setModuleInfo] = useState([])
@@ -28,7 +28,11 @@ export default function CourseContent(course) {
   const [showDiscussion, setShowDiscussion] = useState(false)
   const [collapseSide, setCollapseSide] = useState(true)
   const courseid = sessionStorage.getItem('courseid')
-  const currentLoc = window.location.hash;
+  const currentLoc = window.location.pathname;
+  console.log(window.location, 'ssssssssssssssssssssss')
+  const {id} = useParams()
+
+  console.log(id, 'url id')
 
   const getCourseUnitInformation = async(e) => {
     setLoading(true)
@@ -101,10 +105,8 @@ export default function CourseContent(course) {
                 <Col className="" sm={9} >
                   {courseInfo.courseName}
                   <div className="course-subtitle">{courseInfo.authorName}</div>
-                  {/* <div className="course-subtitle">{courseInfo.subjectArea.subjectAreaName}</div> */}
                 </Col>
                 <Col className="t-a-r" sm={3}>
-                  {/* <i className="fa fa-ellipsis-v s"></i> */}
                   <Col className="text-align-right">
                     <i className="fas fa-chevron-left cursor-pointer" style={{color: '#EE9337'}} onClick={()=> setCollapseSide(false)}/>
                   </Col>
@@ -112,22 +114,22 @@ export default function CourseContent(course) {
               </Row>
             </ListGroup.Item> 
             <ListGroup>
-              <a className={currentLoc == '#/' ? "active-nav-item" : 'nav-item'} href="#/">
+              <a className={currentLoc.includes('learn') ? "active-nav-item" : 'nav-item'} href={`/courses/${id}/learn`}>
                 Learn
               </a>
-              <a className={currentLoc == '#/exam' ? "active-nav-item" : 'nav-item'} href="#/exam">
+              <a className={currentLoc.includes('exam') ? "active-nav-item" : 'nav-item'}  href={`/courses/${id}/exam`}>
                 Exam
               </a>
-              <a className={currentLoc == '#/discussion' ? "active-nav-item" : 'nav-item'} href="#/discussion">
+              <a className={currentLoc.includes('discussion') ? "active-nav-item" : 'nav-item'}  href={`/courses/${id}/discussion`}>
                 Discussion
               </a>
-              <a className={currentLoc == '#/assignment' ? "active-nav-item" : 'nav-item'} href="#/assignment">
+              <a className={currentLoc.includes('assignment') ? "active-nav-item" : 'nav-item'}  href={`/courses/${id}/assignment`}>
                 Assignment
               </a>
-              <a className={currentLoc == '#/task' ? "active-nav-item" : 'nav-item'} href="#/task">
+              <a className={currentLoc.includes('task') ? "active-nav-item" : 'nav-item'}  href={`/courses/${id}/task`}>
                 Task
               </a>
-              <a className={currentLoc == '#/files' ? "active-nav-item" : 'nav-item'} href="#/files">
+              <a className={currentLoc.includes('files') ? "active-nav-item" : 'nav-item'}  href={`/courses/${id}/files`}>
                 Files
               </a>
             </ListGroup>
@@ -160,14 +162,7 @@ export default function CourseContent(course) {
           </Col>
           }
           <Col sm={ collapseSide ? 9 : 11} className='scrollable vh-85 pb-5'>
-            <HashRouter basename='/'>
-              <PrivateRoute path='/' exact component={CoursesLearn} />
-              <PrivateRoute path='/exam' exact component={CoursesExam} />
-              <PrivateRoute path='/discussion' exact component={CoursesDiscussion} />
-              <PrivateRoute path='/assignment' exact component={CoursesAssignment} />
-              <PrivateRoute path='/task' exact component={CoursesTask} />
-              <PrivateRoute path='/files' exact component={CourseFiles} />
-            </HashRouter>
+           {children}
           </Col>
         </Row>
       </Tab.Container>

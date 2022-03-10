@@ -3,6 +3,7 @@ import {Accordion, Row, Col} from 'react-bootstrap'
 import FilesContent from '../../../files/FilesContent';
 import FileHeader from '../../../files/FileHeader'
 import FilesAPI from '../../../../api/FilesApi';
+import CourseContent from "../../CourseContent";
 
 function CourseFiles() {
   const [filesToDisplay, setFilesToDisplay] = useState([]);
@@ -28,12 +29,12 @@ function CourseFiles() {
   }
 
   return (
-    <div>
+    <CourseContent setLoading={() => console.log('sample')}>
       <div className="row m-b-20 file-content">
         <FileHeader type='Course' id={courseid} doneUpload={()=> handleRefetch()}/>
         <FilesContent data={filesToDisplay} type='Course' id={courseid}/>
       </div>
-    </div>
+    </CourseContent>
   )
 }
 

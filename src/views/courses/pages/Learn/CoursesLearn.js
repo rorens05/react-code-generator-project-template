@@ -7,9 +7,14 @@ import EditLesson from "../../components/EditLesson";
 import CoursesLearnContent from "./CoursesLearnContent";
 import SweetAlert from 'react-bootstrap-sweetalert';
 import { toast } from 'react-toastify';
+import CourseContent from "../../CourseContent";
 import 'react-toastify/dist/ReactToastify.css';
+import { useParams } from "react-router";
 
 export default function CourseLearn() {
+
+  const {id} = useParams()
+  console.log(id, 'sasasasas')
 
   const [loading, setLoading] = useState(false)
   const [openCreateUnitModal, setOpenCreateUnitModal] = useState(false)
@@ -56,7 +61,7 @@ export default function CourseLearn() {
     setLoading(true)
     sessionStorage.setItem('moduleid', data)
     sessionStorage.setItem('modulename', modulename)
-    let response = await new CoursesAPI().getCourseUnitPages(courseid, data)
+    let response = await new CoursesAPI().getCourseUnitPages(id, data)
     setLoading(false)
     if(response.ok){
       setLessonInfo(response.data)
@@ -68,7 +73,7 @@ export default function CourseLearn() {
 
   const getCourseInformation = async(e) => {
     setLoading(true)
-    let response = await new CoursesAPI().getCourseInformation(courseid)
+    let response = await new CoursesAPI().getCourseInformation(id)
     setLoading(false)
     if(response.ok){
       setCourseInfo(response.data)
@@ -80,7 +85,7 @@ export default function CourseLearn() {
 
   const getCourseUnitInformation = async(e) => {
     setLoading(true)
-    let response = await new CoursesAPI().getCourseUnit(courseid)
+    let response = await new CoursesAPI().getCourseUnit(id)
     setLoading(false)
     if(response.ok){
       setModuleInfo(response.data)
@@ -105,7 +110,7 @@ export default function CourseLearn() {
   const getModuleContent = async(e, data, pagesid) => {
     setLoading(true)
     setViewLesson(true)
-    let response = await new CoursesAPI().getCourseUnitPagesContent(courseid, data, pagesid)
+    let response = await new CoursesAPI().getCourseUnitPagesContent(id, data, pagesid)
     setLoading(false)
     if(response.ok){
       setLessonContent(response.data)
@@ -137,81 +142,85 @@ export default function CourseLearn() {
   
   if(viewLesson === false){
     return (
-      <React.Fragment>
-        <span className="content-pane-title">
-          Learn <Button variant="outline-warning" onClick={handleOpenCreateUnitModal}><i className="fa fa-plus"></i> Add Unit</Button>
-          <CourseCreateUnit moduleInfo={moduleInfo} setModuleInfo={setModuleInfo} openCreateUnitModal={openCreateUnitModal} setOpenCreateUnitModal={setOpenCreateUnitModal}/>
-        </span>
-        <div className="row m-b-20 m-t-30">
-          <div className="col-md-12">
-            <InputGroup size="lg">
-              <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Search..." type="search" onChange={(e) => onSearch(e.target.value)}/>
-              <InputGroup.Text id="basic-addon2" className="search-button"><i className="fas fa-search fa-1x"></i></InputGroup.Text>
-            </InputGroup>
+      <CourseContent setLoading={() => console.log('sample')}>
+        <React.Fragment>
+          <span className="content-pane-title">
+            Learn <Button variant="outline-warning" onClick={handleOpenCreateUnitModal}><i className="fa fa-plus"></i> Add Unit</Button>
+            <CourseCreateUnit moduleInfo={moduleInfo} setModuleInfo={setModuleInfo} openCreateUnitModal={openCreateUnitModal} setOpenCreateUnitModal={setOpenCreateUnitModal}/>
+          </span>
+          <div className="row m-b-20 m-t-30">
+            <div className="col-md-12">
+              <InputGroup size="lg">
+                <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Search..." type="search" onChange={(e) => onSearch(e.target.value)}/>
+                <InputGroup.Text id="basic-addon2" className="search-button"><i className="fas fa-search fa-1x"></i></InputGroup.Text>
+              </InputGroup>
+            </div>
           </div>
-        </div>
-        <EditLesson selectedLesson={selectedLesson} setLessonInfo={setLessonInfo} openEditLessonModal={openEditLessonModal} setOpenEditLessonModal={setOpenEditLessonModal}/>
-        <CreateLesson 
-          openCreateLessonModal={openCreateLessonModal} 
-          setCreateLessonModal={setCreateLessonModal} 
-          selectedLesson={selectedLesson} 
-          setSelectedLesson={setSelectedLesson}
-          setLessonInfo={setLessonInfo}
-        />
-        <Accordion defaultActiveKey="0">
-          {moduleInfo.map((item, index) => {
-            return(
-              <>
-                <Accordion.Item eventKey={item.id}> 
-                  <Accordion.Header onClick={(e) => getCourseLessons(e, item.id, item.moduleName)}>
-                    <span className="unit-title">{item.moduleName} <Button className="m-l-10" variant="outline-warning" onClick={handleOpenCreateLessonModal}><i className="fa fa-plus"></i> Add Lesson</Button>
-                    </span>
-                  </Accordion.Header>
-                  <Accordion.Body>                         
-                      {lessonInfo.filter(li =>
-                        li.pageName.toLowerCase().includes(filter.toLowerCase())).map
-                        ((li, index) => {
-                      return(
-                        <Row>
-                          <Col className="lesson-header" md={9} onClick={(e) => getModuleContent(e, moduleid, li.id)}>
-                            {li?.pageName}
-                          </Col>
-                          <Col className="align-right-content" md={3}>
-                            <Button key={li.id} className="m-r-5 color-white tficolorbg-button" size="sm" onClick={(e) => handleOpenEditLessonModal(e, li)}><i className="fa fa-edit"></i></Button>
-                            <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={() => {setSweetError(true) }}><i className="fa fa-trash"></i></Button>
-                            <SweetAlert
-                              warning
-                              showCancel
-                              show={sweetError}
-                              confirmBtnText="Yes, delete it!"  
-                              confirmBtnBsStyle="danger"
-                              title="Are you sure?"
-                              onConfirm={() => confirmSweetError(li.id)}
-                              onCancel={cancelSweetError}
-                              focusCancelBtn
-                            >
-                              You will not be able to recover this Lesson!
-                            </SweetAlert>
-                          </Col>
-                          
+          <EditLesson selectedLesson={selectedLesson} setLessonInfo={setLessonInfo} openEditLessonModal={openEditLessonModal} setOpenEditLessonModal={setOpenEditLessonModal}/>
+          <CreateLesson 
+            openCreateLessonModal={openCreateLessonModal} 
+            setCreateLessonModal={setCreateLessonModal} 
+            selectedLesson={selectedLesson} 
+            setSelectedLesson={setSelectedLesson}
+            setLessonInfo={setLessonInfo}
+          />
+          <Accordion defaultActiveKey="0">
+            {moduleInfo.map((item, index) => {
+              return(
+                <>
+                  <Accordion.Item eventKey={item.id}> 
+                    <Accordion.Header onClick={(e) => getCourseLessons(e, item.id, item.moduleName)}>
+                      <span className="unit-title">{item.moduleName} <Button className="m-l-10" variant="outline-warning" onClick={handleOpenCreateLessonModal}><i className="fa fa-plus"></i> Add Lesson</Button>
+                      </span>
+                    </Accordion.Header>
+                    <Accordion.Body>                         
+                        {lessonInfo.filter(li =>
+                          li.pageName.toLowerCase().includes(filter.toLowerCase())).map
+                          ((li, index) => {
+                        return(
+                          <Row>
+                            <Col className="lesson-header" md={9} onClick={(e) => getModuleContent(e, moduleid, li.id)}>
+                              {li?.pageName}
+                            </Col>
+                            <Col className="align-right-content" md={3}>
+                              <Button key={li.id} className="m-r-5 color-white tficolorbg-button" size="sm" onClick={(e) => handleOpenEditLessonModal(e, li)}><i className="fa fa-edit"></i></Button>
+                              <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={() => {setSweetError(true) }}><i className="fa fa-trash"></i></Button>
+                              <SweetAlert
+                                warning
+                                showCancel
+                                show={sweetError}
+                                confirmBtnText="Yes, delete it!"  
+                                confirmBtnBsStyle="danger"
+                                title="Are you sure?"
+                                onConfirm={() => confirmSweetError(li.id)}
+                                onCancel={cancelSweetError}
+                                focusCancelBtn
+                              >
+                                You will not be able to recover this Lesson!
+                              </SweetAlert>
+                            </Col>
+                            
 
-                        </Row>
-                      )
-                    })}
-                  </Accordion.Body>
-                </Accordion.Item>
-                
-              </>
-              )
-            })
-          }
-        </Accordion>
-        
-      </React.Fragment>
+                          </Row>
+                        )
+                      })}
+                    </Accordion.Body>
+                  </Accordion.Item>
+                  
+                </>
+                )
+              })
+            }
+          </Accordion>
+          
+        </React.Fragment>
+        </CourseContent>
     )
   }else{
     return (
-    <CoursesLearnContent courseInfo={courseInfo} setCourseInfo={setCourseInfo} setLessonContent={setLessonContent} lessonContent={lessonContent}/>
+      <CourseContent setLoading={() => console.log('sample')}>
+        <CoursesLearnContent courseInfo={courseInfo} setCourseInfo={setCourseInfo} setLessonContent={setLessonContent} lessonContent={lessonContent}/>
+      </CourseContent>
     )
   }
 }

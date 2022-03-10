@@ -35,7 +35,8 @@ export default function ExamForm({
                 <Status>{part.isDone ? "Completed" : "Not Completed"}</Status>
               </div>
             </Accordion.Header>
-            <Accordion.Body>
+            {!part.hidden && (
+              <Accordion.Body>
               {part.questionDtos.map((question, index) => {
                 return (
                   <QuestionInput
@@ -59,6 +60,8 @@ export default function ExamForm({
                 </Button>
               )}
             </Accordion.Body>
+            )}
+            
           </Accordion.Item>
         </Accordion>
       ))}
