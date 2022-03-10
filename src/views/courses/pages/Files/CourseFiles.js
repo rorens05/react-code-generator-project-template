@@ -4,8 +4,9 @@ import FilesContent from '../../../files/FilesContent';
 import FileHeader from '../../../files/FileHeader'
 import FilesAPI from '../../../../api/FilesApi';
 
-function CourseFiles({id}) {
+function CourseFiles() {
   const [filesToDisplay, setFilesToDisplay] = useState([]);
+  const courseid = sessionStorage.getItem('courseid')
 
   useEffect(() => {
     handleGetCourseFiles()
@@ -17,7 +18,7 @@ function CourseFiles({id}) {
 
   const handleGetCourseFiles = async() => {
     // setLoading(true)
-    let response = await new FilesAPI().getCourseFiles(id)
+    let response = await new FilesAPI().getCourseFiles(courseid)
     // setLoading(false)
     if(response.ok){
       setFilesToDisplay(response.data)
@@ -29,8 +30,8 @@ function CourseFiles({id}) {
   return (
     <div>
       <div className="row m-b-20 file-content">
-        <FileHeader type='Course' id={id} doneUpload={()=> handleRefetch()}/>
-        <FilesContent data={filesToDisplay} type='Course' id={id}/>
+        <FileHeader type='Course' id={courseid} doneUpload={()=> handleRefetch()}/>
+        <FilesContent data={filesToDisplay} type='Course' id={courseid}/>
       </div>
     </div>
   )

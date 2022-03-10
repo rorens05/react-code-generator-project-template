@@ -14,7 +14,7 @@ function CreateAssignment({modal, toggle, module, getAssignmentList}) {
   const [addNotify, setAddNotity] = useState(false)
   const [displayFiles, setDisplayFiles] = useState([]);
   const [showFiles, setShowFiles] = useState(false)
-  const id = window.location.pathname.split('/')[2];
+  const id = sessionStorage.getItem('courseid')
 
   const closeNotify = () =>{
     setAddNotity(false)
@@ -44,9 +44,10 @@ function CreateAssignment({modal, toggle, module, getAssignmentList}) {
 
   const handleGetClassFiles = async() => {
     // setLoading(true)
-    let response = await new FilesAPI().getClassFiles(id)
+    let response = await new FilesAPI().getAllCourseFiles(id)
     // setLoading(false)
     if(response.ok){
+      console.log(response)
       setDisplayFiles(response.data)
     }else{
       alert("Something went wrong while fetching class files.")

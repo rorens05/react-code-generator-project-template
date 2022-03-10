@@ -9,7 +9,7 @@ import ViewAssignment from "./ViewAssignment";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export default function CoursesAssignment({moduleInfo, setModuleInfo, showAssignment, setShowAssignment}) {
+export default function CoursesAssignment() {
 
   const [loading, setLoading] = useState(false)
 
@@ -22,6 +22,8 @@ export default function CoursesAssignment({moduleInfo, setModuleInfo, showAssign
   const [assignmentId, setAssignmentId] = useState("")
   const [localModuleId, setLocalModuleId] = useState(false)
   const [filter, setFilter] = useState("")
+  const [moduleInfo, setModuleInfo] = useState([])
+  const [showAssignment, setShowAssignment] = useState(false)
 
   const courseid = sessionStorage.getItem('courseid')
   const moduleid = sessionStorage.getItem('moduleid')
@@ -65,6 +67,18 @@ export default function CoursesAssignment({moduleInfo, setModuleInfo, showAssign
     }
   }
 
+  const getCourseUnitInformation = async(e) => {
+    setLoading(true)
+    let response = await new CoursesAPI().getCourseUnit(courseid)
+    setLoading(false)
+    if(response.ok){
+      setModuleInfo(response.data)
+      console.log(response.data)
+    }else{
+      alert("Something went wrong while fetching course unit")
+    }
+  }
+
 
   const cancelSweetError = () => {
     setSweetError(false)
@@ -98,6 +112,7 @@ export default function CoursesAssignment({moduleInfo, setModuleInfo, showAssign
   }
 
   useEffect(() => {
+    getCourseUnitInformation()
   }, [])
 
   const notifyDeleteAssignment= () => 

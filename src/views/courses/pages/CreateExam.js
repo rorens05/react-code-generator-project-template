@@ -58,7 +58,7 @@ export default function CreateExam({setCourse, openCreateExamModal, setOpenCreat
       setExamInfo(response.data)
       console.log(response.data)
     }else{
-      alert("Something went wrong while fetching all a")
+      alert("Something went wrong while fetching exam information")
     }
   }
 

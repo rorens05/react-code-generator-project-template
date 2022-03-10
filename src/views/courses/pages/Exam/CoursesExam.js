@@ -12,13 +12,13 @@ import { Link } from "react-router-dom";
 import Status from "../../../../components/utilities/Status";
 
 
-export default function CoursesExam({moduleInfo, setModuleInfo, moduleId}) {
+export default function CoursesExam() {
 
   const [loading, setLoading] = useState(false)
 
   const [openCreateExamModal, setOpenCreateExamModal] = useState(false)
   const [openEditExamModal, setOpenEditExamModal] = useState(false)
-  // const [moduleInfo, setModuleInfo] = useState([])
+  const [moduleInfo, setModuleInfo] = useState([])
   const [examInfo, setExamInfo] = useState([])
   const [selectedExam, setSelectedExam] = useState(null)
   const [sweetError, setSweetError] = useState(false)

@@ -9,7 +9,7 @@ import SweetAlert from 'react-bootstrap-sweetalert';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export default function CourseLearn({courseInfo, setCourseInfo, viewLesson, setViewLesson, moduleInfo, setModuleInfo}) {
+export default function CourseLearn() {
 
   const [loading, setLoading] = useState(false)
   const [openCreateUnitModal, setOpenCreateUnitModal] = useState(false)
@@ -19,7 +19,10 @@ export default function CourseLearn({courseInfo, setCourseInfo, viewLesson, setV
   const [lessonInfo, setLessonInfo] = useState([])
   const [lessonContent, setLessonContent] = useState([])
   const [sweetError, setSweetError] = useState(false)
-  const [filter, setFilter] = useState("")
+  const [filter, setFilter] = useState("");
+  const [courseInfo, setCourseInfo] = useState("")
+  const [viewLesson, setViewLesson] = useState(false)
+  const [moduleInfo, setModuleInfo] = useState([])
 
   const courseid = sessionStorage.getItem('courseid')
   const moduleid = sessionStorage.getItem('moduleid')
@@ -63,6 +66,30 @@ export default function CourseLearn({courseInfo, setCourseInfo, viewLesson, setV
     }
   }
 
+  const getCourseInformation = async(e) => {
+    setLoading(true)
+    let response = await new CoursesAPI().getCourseInformation(courseid)
+    setLoading(false)
+    if(response.ok){
+      setCourseInfo(response.data)
+      console.log(response.data)
+    }else{
+      alert("Something went wrong while fetching course information")
+    }
+  }
+
+  const getCourseUnitInformation = async(e) => {
+    setLoading(true)
+    let response = await new CoursesAPI().getCourseUnit(courseid)
+    setLoading(false)
+    if(response.ok){
+      setModuleInfo(response.data)
+      console.log(response, '...............')
+    }else{
+      alert("Something went wrong while fetching course unit")
+    }
+  }
+
   const deleteCourseLesson = async(data) => {
     setLoading(true)
     let response = await new CoursesAPI().deleteLesson(data)
@@ -93,6 +120,8 @@ export default function CourseLearn({courseInfo, setCourseInfo, viewLesson, setV
   }
 
   useEffect(() => {
+    getCourseUnitInformation();
+    getCourseInformation();
   }, [])
 
   const notifyDeleteLesson= () => 

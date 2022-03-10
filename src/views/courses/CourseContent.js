@@ -9,9 +9,12 @@ import CoursesDiscussion from "./pages/Discussion/CoursesDiscussion";
 import CoursesAssignment from "./pages/Assignment/CoursesAssignment";
 import CoursesTask from "./pages/Task/CoursesTask";
 import CourseLinks from "./pages/Links/CourseLinks";
+import { HashRouter, BrowserRouter as Router, } from 'react-router-dom';
+import PrivateRoute from "../../routes/components/PrivateRoute";
 import CourseFiles from "./pages/Files/CourseFiles";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ClassAssignment from "../classes/ClassAssignment";
 
 export default function CourseContent(course) {
   console.log(course, '//////////////////')
@@ -25,6 +28,7 @@ export default function CourseContent(course) {
   const [showDiscussion, setShowDiscussion] = useState(false)
   const [collapseSide, setCollapseSide] = useState(true)
   const courseid = sessionStorage.getItem('courseid')
+  const currentLoc = window.location.hash;
 
   const getCourseUnitInformation = async(e) => {
     setLoading(true)
@@ -34,7 +38,7 @@ export default function CourseContent(course) {
       setModuleInfo(response.data)
       console.log(response.data)
     }else{
-      alert("Something went wrong while fetching all a")
+      alert("Something went wrong while fetching course unit")
     }
   }
 
@@ -53,7 +57,7 @@ export default function CourseContent(course) {
       setCourseInfo(response.data)
       console.log(response.data)
     }else{
-      alert("Something went wrong while fetching all a")
+      alert("Something went wrong while fetching course information.")
     }
   }
 
@@ -108,27 +112,24 @@ export default function CourseContent(course) {
               </Row>
             </ListGroup.Item> 
             <ListGroup>
-              <ListGroup.Item className="list-group-item-o " action href="#link1" onClick={(e) => contentDisplay(e)}>
-              Learn
-              </ListGroup.Item>
-              <ListGroup.Item className="list-group-item-o "action href="#link2" onClick={(e) => setBread(e, "Exam")}>
-              Exam
-              </ListGroup.Item>
-              <ListGroup.Item  className="list-group-item-o "action href="#link3" onClick={(e) => setBread(e, "Discussion")}>
-              Discussion
-              </ListGroup.Item>
-              <ListGroup.Item className="list-group-item-o " action href="#link4" onClick={(e) => setBread(e, "Assignment")}>
-              Assignment
-              </ListGroup.Item>
-              <ListGroup.Item className="list-group-item-o " action href="#link5" onClick={(e) => setBread(e, "Task")}>
-              Task
-              </ListGroup.Item>
-              <ListGroup.Item className="list-group-item-o " action href="#link6" onClick={(e) => setBread(e, "Files")}>
+              <a className={currentLoc == '#/' ? "active-nav-item" : 'nav-item'} href="#/">
+                Learn
+              </a>
+              <a className={currentLoc == '#/exam' ? "active-nav-item" : 'nav-item'} href="#/exam">
+                Exam
+              </a>
+              <a className={currentLoc == '#/discussion' ? "active-nav-item" : 'nav-item'} href="#/discussion">
+                Discussion
+              </a>
+              <a className={currentLoc == '#/assignment' ? "active-nav-item" : 'nav-item'} href="#/assignment">
+                Assignment
+              </a>
+              <a className={currentLoc == '#/task' ? "active-nav-item" : 'nav-item'} href="#/task">
+                Task
+              </a>
+              <a className={currentLoc == '#/files' ? "active-nav-item" : 'nav-item'} href="#/files">
                 Files
-              </ListGroup.Item>
-              {/* <ListGroup.Item className="list-group-item-o " action href="#link6">
-              Links
-              </ListGroup.Item> */}
+              </a>
             </ListGroup>
           </Col>
           :
@@ -137,54 +138,36 @@ export default function CourseContent(course) {
               <i className="fas fa-chevron-right" style={{color: '#EE9337'}} onClick={()=> setCollapseSide(true)}/>
             </Col>
             <ListGroup>
-              <ListGroup.Item className="list-group-item-o" action href="#link1" onClick={(e) => contentDisplay(e)}>
+            <a className={currentLoc == '#/' ? "active-nav-item" : 'nav-item'} href="#/">
                 <i className="fas fa-book" title="Learn"/>
-              </ListGroup.Item>
-              <ListGroup.Item className="list-group-item-o "action href="#link2" onClick={(e) => setBread(e, "Exam")}>
+              </a>
+              <a className={currentLoc == '#/exam' ? "active-nav-item" : 'nav-item'} href="#/exam">
                 <i className="fas fa-file-alt" title="Exam"/>
-              </ListGroup.Item>
-              <ListGroup.Item  className="list-group-item-o "action href="#link3" onClick={(e) => setBread(e, "Discussion")}>
+              </a>
+              <a className={currentLoc == '#/discussion' ? "active-nav-item" : 'nav-item'} href="#/discussion">
                 <i className="fas fa-comment-alt" title="Discussion"/>
-              </ListGroup.Item>
-              <ListGroup.Item className="list-group-item-o " action href="#link4" onClick={(e) => setBread(e, "Assignment")}>
+              </a>
+              <a className={currentLoc == '#/assignment' ? "active-nav-item" : 'nav-item'} href="#/assignment">
                 <i className="fas fa-sticky-note" title="Assignment"/>
-              </ListGroup.Item>
-              <ListGroup.Item className="list-group-item-o " action href="#link5" onClick={(e) => setBread(e, "Task")}>
+              </a>
+              <a className={currentLoc == '#/task' ? "active-nav-item" : 'nav-item'} href="#/task">
                 <i className="fas fa-edit" title="Task"/>
-              </ListGroup.Item>
-              <ListGroup.Item className="list-group-item-o " action href="#link6" onClick={(e) => setBread(e, "Files")}>
+              </a>
+              <a className={currentLoc == '#/files' ? "active-nav-item" : 'nav-item'} href="#/files">
                 <i className="fas fa-folder-open" title="Files"/>
-              </ListGroup.Item>
-              {/* <ListGroup.Item className="list-group-item-o " action href="#link6">
-              Links
-              </ListGroup.Item> */}
+              </a>
             </ListGroup>
           </Col>
           }
           <Col sm={ collapseSide ? 9 : 11} className='scrollable vh-85 pb-5'>
-            <Tab.Content className={Authors === "Techfactors Inc." ? "" : "content-pane"} >
-              <Tab.Pane eventKey="#link1" style={{backgroundColor:""}}>
-                <CoursesLearn courseInfo={courseInfo} setCourseInfo={setCourseInfo} viewLesson={viewLesson} setViewLesson={setViewLesson} moduleInfo={moduleInfo} setModuleInfo={setModuleInfo}/>
-              </Tab.Pane>
-              <Tab.Pane eventKey="#link2">
-                <CoursesExam moduleInfo={moduleInfo} setModuleInfo={setModuleInfo} moduleId={moduleId()}/>
-              </Tab.Pane>
-              <Tab.Pane eventKey="#link3">
-                <CoursesDiscussion moduleInfo={moduleInfo} setModuleInfo={setModuleInfo} moduleId={moduleId()} setShowDiscussion={setShowDiscussion} showDiscussion={showDiscussion} />
-              </Tab.Pane>
-              <Tab.Pane eventKey="#link4">
-                <CoursesAssignment moduleInfo={moduleInfo} setModuleInfo={setModuleInfo} setShowAssignment={setShowAssignment} showAssignment={showAssignment} />
-              </Tab.Pane>
-              <Tab.Pane eventKey="#link5">
-                <CoursesTask moduleInfo={moduleInfo} setModuleInfo={setModuleInfo} setShowTask={setShowTask} showTask={showTask} />
-              </Tab.Pane>
-              <Tab.Pane eventKey="#link6">
-                <CourseFiles id={courseid}/>
-              </Tab.Pane>
-              {/* <Tab.Pane eventKey="#link6">
-                <CourseLinks moduleInfo={moduleInfo} setModuleInfo={setModuleInfo} />
-              </Tab.Pane> */}
-            </Tab.Content> 
+            <HashRouter basename='/'>
+              <PrivateRoute path='/' exact component={CoursesLearn} />
+              <PrivateRoute path='/exam' exact component={CoursesExam} />
+              <PrivateRoute path='/discussion' exact component={CoursesDiscussion} />
+              <PrivateRoute path='/assignment' exact component={CoursesAssignment} />
+              <PrivateRoute path='/task' exact component={CoursesTask} />
+              <PrivateRoute path='/files' exact component={CourseFiles} />
+            </HashRouter>
           </Col>
         </Row>
       </Tab.Container>

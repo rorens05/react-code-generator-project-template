@@ -9,7 +9,7 @@ import SweetAlert from 'react-bootstrap-sweetalert';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export default function CoursesDiscussion({moduleInfo, moduleId, showDiscussion, setShowDiscussion}) {
+export default function CoursesDiscussion() {
 
   const [loading, setLoading] = useState(false)
   const [filter, setFilter] = useState("")
@@ -20,6 +20,8 @@ export default function CoursesDiscussion({moduleInfo, moduleId, showDiscussion,
   const [sweetError, setSweetError] = useState(false)
   const [localModuleId, setLocalModuleId] = useState(false)
   const [discussionId, setDiscussionId] = useState("")
+  const [moduleInfo, setModuleInfo] = useState([])
+  const [showDiscussion, setShowDiscussion] = useState(false)
 
   const courseid = sessionStorage.getItem('courseid')
   const moduleid = sessionStorage.getItem('moduleid')
@@ -45,6 +47,18 @@ export default function CoursesDiscussion({moduleInfo, moduleId, showDiscussion,
       console.log(response.data)
     }else{
       alert("Something went wrong while fetching all discussion")
+    }
+  }
+
+  const getCourseUnitInformation = async(e) => {
+    setLoading(true)
+    let response = await new CoursesAPI().getCourseUnit(courseid)
+    setLoading(false)
+    if(response.ok){
+      setModuleInfo(response.data)
+      console.log(response.data)
+    }else{
+      alert("Something went wrong while fetching course unit")
     }
   }
 
@@ -81,7 +95,8 @@ export default function CoursesDiscussion({moduleInfo, moduleId, showDiscussion,
   }
 
   useEffect(() => {
-    console.log(moduleId)
+    getCourseUnitInformation();
+    console.log(moduleid)
   }, [])
 
   const notifyDeleteDiscussion= () => 

@@ -9,7 +9,7 @@ import ViewTask from "./ViewTask";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export default function CoursesTask({moduleInfo, showTask, setShowTask}) {
+export default function CoursesTask() {
 
   const [loading, setLoading] = useState(false)
 
@@ -20,8 +20,10 @@ export default function CoursesTask({moduleInfo, showTask, setShowTask}) {
   const [sweetError, setSweetError] = useState(false)
   const [taskId, setTaskId] = useState("")
   const [localModuleId, setLocalModuleId] = useState("")
-  const [filter, setFilter] = useState("")
-  const sessionCourse = sessionStorage.getItem('courseid')
+  const [filter, setFilter] = useState("");
+  const [moduleInfo, setModuleInfo] = useState([]);
+  const courseid = sessionStorage.getItem('courseid');
+  const [showTask, setShowTask] = useState(false)
 
   const handleOpenCreateTaskModal = () =>{
     setCreateTaskModal(!openCreateTaskModal)
@@ -43,6 +45,18 @@ export default function CoursesTask({moduleInfo, showTask, setShowTask}) {
       setTaskInfo(response.data)
     }else{
       alert("Something went wrong while fetching all task")
+    }
+  }
+
+  const getCourseUnitInformation = async(e) => {
+    setLoading(true)
+    let response = await new CoursesAPI().getCourseUnit(courseid)
+    setLoading(false)
+    if(response.ok){
+      setModuleInfo(response.data)
+      console.log(response.data)
+    }else{
+      alert("Something went wrong while fetching course unit")
     }
   }
 
@@ -79,6 +93,7 @@ export default function CoursesTask({moduleInfo, showTask, setShowTask}) {
   }
 
   useEffect(() => {
+    getCourseUnitInformation();
   }, [])
 
   const notifyDeleteTask= () => 
