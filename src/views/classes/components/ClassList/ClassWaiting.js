@@ -9,8 +9,7 @@ function ClassWaiting({waitingStudent, getStudentEnrolled, getStudentWaiting, se
   const [addNotify, setAddNotify] = useState(false)
   const [deleteNotify, setDeleteNotify] = useState(false)
   const [itemId, setItemId] = useState('')
-  // const {id} = useParams()
-  const id = window.location.pathname.split('/')[2];
+  const {id} = useParams();
 
   const cancelSweetAlert = () => {
     setDeleteNotify(false)

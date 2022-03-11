@@ -24,7 +24,7 @@ function ClassDiscussion() {
   const [editDiscussionItem, setEditDiscussionItem] = useState()
   const [moduleId, setModuleId] = useState(null)
   const [deleteNotify, setDeleteNotify] = useState(false)
-  const id = window.location.pathname.split('/')[2];
+  const {id} = useParams();
   // const courseId = classInfo?.classInformation?.courseId
   const [itemId, setItemId] = useState('')
   const [assignModal, setAssignModal] = useState(false)

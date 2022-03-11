@@ -16,7 +16,7 @@ export default function ExamItemContent({
         to={
           user.isStudent
             ? `/class/${id}/exam/${exam.test.id}`
-            : `/exam_creation/${exam.test.id}?class_id=${id}&${exam.test.classId == null && 'not_editable=true'}`
+            : `/class/${id}/exam/${exam.test.id}?class_id=${id}&${exam.test.classId == null && 'not_editable=true'}`
         }
         className='exam-title'
       >

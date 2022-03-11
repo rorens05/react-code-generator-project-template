@@ -5,6 +5,7 @@ import moment from 'moment'
 import StudentDiscussionComment from './components/StudentDiscussionComment'
 import ClassesAPI from '../../../api/ClassesAPI'
 import SweetAlert from 'react-bootstrap-sweetalert';
+import { useParams } from 'react-router';
 
 function StudentDiscussion({discussionModule, getDiscussionUnit, moduleId, searchTerm}) {
   const [discussionId, setDiscussionId] = useState('')
@@ -19,8 +20,7 @@ function StudentDiscussion({discussionModule, getDiscussionUnit, moduleId, searc
   const [endDate, setEndDate] = useState()
   const [endTime, setEndTime] = useState()
   const [getComments, setGetComments] = useState([])
-  // const {id} = useParams()
-  const id = window.location.pathname.split('/')[2];
+  const {id} = useParams();
   // const userContext = useContext(UserContext)
   // const {user} = userContext.data
   // const [reply, setReply] = useState('')

@@ -24,18 +24,10 @@ export default function ClassSideNavigation({children}) {
   const {id} = useParams()
   const {user} = userContext.data
   const currentLoc = window.location.pathname;
-  const [collapseSide, setCollapseSide] = useState(true);
+  const [collapseSide, setCollapseSide] = useState(localStorage.getItem('collaps') == 'false' ? false : true);
   const [loading, setLoading] = useState(false);
-  const links = [
-    {link: 'feed', title: 'Feed', icon: 'fa-comment'},
-    {link: 'learn', title: 'Learn', icon: 'fa-book'},
-    {link: 'exam', title: 'Exam', icon: 'fa-file-alt'},
-    {link: 'discussion', title: 'Discussion', icon: 'fa-comment-alt'},
-    {link: 'assignment', title: 'Assignment', icon: 'fa-sticky-note'},
-    {link: 'task', title: 'Task', icon: 'fa-edit'},
-    {link: 'interactives', title: 'Interactive Exercises', icon: 'fa-chalkboard-teacher'},
-    {link: 'links', title: 'Links', icon: 'fa-link'},
-  ]
+  const [showTab, setShowTab] = useState(true)
+
   const getClassInfo = async() => {
     setLoading(true)
     let response = await new DiscussionAPI().getClassInfo(id)
@@ -51,34 +43,22 @@ export default function ClassSideNavigation({children}) {
   useEffect(() => {
     getClassInfo();
   }, [window.location.pathname])
+  
+  useEffect(() => {
+    console.log(localStorage.getItem('collaps'))
+    setShowTab(localStorage.getItem('collaps') == 'false' ? false : true)
+  }, [collapseSide])
 
-  if(classInfo == null){
-    return (<div/>)
+  const handleClicked = (data) => {
+    setCollapseSide(data);
+    localStorage.setItem('collaps', data)
   }
-  if(classInfo == null) return <div/>
-
-  const handleSideNavTabsWords = (link, title, icon) => {
-    if(collapseSide){
-      return(
-        <Link className={currentLoc.includes(link) ? "active-nav-item" : 'nav-item'} to={`/classes/${id}/${link}`}>
-          {title}
-        </Link>
-      )
-    }else{
-      return(
-        <a className={ currentLoc.includes(link) ? "active-nav-item" : 'nav-item'} href={`#/${link}`}>
-          <i className={`fas ${icon}`} title={title}/>
-        </a>
-      )
-    }
-  }
-
 
   return (
     <MainContainer activeHeader={'classes'} loading={loading} fluid style='not-scrollable'>
     <Col style={{height: 100}} />
     <Row>
-      {collapseSide ? <Col className="row-course-bg course-widget-font" sm={collapseSide ? 3 : 1}>
+      {showTab ? <Col className="row-course-bg course-widget-font" sm={3}>
           <ListGroup.Item className="list-group-item-o">
             <Row>
               <Col className="" sm={9} >
@@ -88,8 +68,7 @@ export default function ClassSideNavigation({children}) {
                 <div className="class-subtitle-name">{classInfo?.classInformation?.teacherName}</div>
               </Col>
               <Col className="ellipsis-top-right" sm={3}>
-                {/* <i className="fa fa-ellipsis-v fa-1x cursor-pointer"></i> */}
-                <i className="fas fa-chevron-left cursor-pointer color-black" onClick={()=> setCollapseSide(false)}/>
+                <i className="fas fa-chevron-left cursor-pointer color-black" onClick={()=> handleClicked(false)}/>
                 <div className='fa-user-size'>
                 <i className="fas fa-user"></i> {classInfo?.students?.length}
                 </div>
@@ -124,12 +103,12 @@ export default function ClassSideNavigation({children}) {
           { 
             (user?.teacher != null) && 
             <>
-              <a className={currentLoc == '#/list' ? "active-nav-item" : 'nav-item'} href="#/list">
+               <Link className={currentLoc.includes('classList') ? "active-nav-item" : 'nav-item'} to={`/classes/${id}/classList`}>
                 Class List
-              </a>
-              <a className={currentLoc == '#/files' ? "active-nav-item" : 'nav-item'} href="#/files">
+              </Link>
+              <Link className={currentLoc.includes('files') ? "active-nav-item" : 'nav-item'} to={`/classes/${id}/files`}>
                 Class Files
-              </a>
+              </Link>
             </>
           }
         </ListGroup>
@@ -137,45 +116,48 @@ export default function ClassSideNavigation({children}) {
       :
       <Col className='row-course-bg course-widget-font' sm={1}>
         <Col className="text-align-right mb-2">
-          <i className="fas fa-chevron-right" style={{color: '#EE9337'}} onClick={()=> setCollapseSide(true)}/>
+          <i className="fas fa-chevron-right" style={{color: '#EE9337'}} onClick={()=> handleClicked(true)}/>
         </Col>
         <ListGroup>
-          {
-            links.map((item, index) => {
-              return(
-                handleSideNavTabsWords(item.link, item.title, item.icon)
-                )
-              }
-            )
-          }
+        <Link className={currentLoc.includes('feed') ? "active-nav-item" : 'nav-item'} to={`/classescontent/${id}/feed`}>
+          <i className='fas fa-comment' title='Feed' />
+        </Link>
+        <Link className={currentLoc.includes('learn') ? "active-nav-item" : 'nav-item'} to={`/classes/${id}/learn`}>
+          <i className='fas fa-book' title='Learn' />
+        </Link>
+        <Link className={currentLoc.includes('exam') ? "active-nav-item" : 'nav-item'} to={`/classes/${id}/exam`}>
+        <i className='fas fa-file-alt' title='Exam' />
+        </Link>
+        <Link className={currentLoc.includes('discussion') ? "active-nav-item" : 'nav-item'} to={`/classes/${id}/discussion`}>
+          <i className='fas fa-comment-alt' title='Discussion' />
+        </Link>
+        <Link className={currentLoc.includes('assignment') ? "active-nav-item" : 'nav-item'} to={`/classes/${id}/assignment`}>
+          <i className='fas fa-sticky-note' title='Assignment' />
+        </Link>
+        <Link className={currentLoc.includes('task') ? "active-nav-item" : 'nav-item'} to={`/classes/${id}/task`}>
+          <i className='fas fa-edit' title='Task' />
+        </Link>
+        <Link className={currentLoc.includes('interactives') ? "active-nav-item" : 'nav-item'} to={`/classes/${id}/interactives`}>
+          <i className='fas fa-chalkboard-teacher' title='Class Interactives' />
+        </Link>
+        <Link className={currentLoc.includes('links') ? "active-nav-item" : 'nav-item'} to={`/classes/${id}/links`}>
+          <i className='fas fa-link' title='Links' />
+        </Link>
           {(user?.teacher != null)
           &&
           <>
-            <a className={currentLoc == '#/list' ? "active-nav-item" : 'nav-item'} href="#/list">
+            <Link className={currentLoc.includes('classList') ? "active-nav-item" : 'nav-item'} to={`/classes/${id}/classList`}>
               <i className="fas fa-users" title="Class List"/>
-            </a>
-            <a className={currentLoc == '#/files' ? "active-nav-item" : 'nav-item'} href="#/files">
+            </Link>
+            <Link className={currentLoc.includes('files') ? "active-nav-item" : 'nav-item'} to={`/classes/${id}/files`}>
               <i className="fas fa-folder-open" title="Files"/>
-            </a>
+            </Link>
           </>}
         </ListGroup>
       </Col>
       }
-      <Col sm={collapseSide ? 9 : 11} className='scrollable vh-85 pb-5'>
+      <Col sm={showTab ? 9 : 11} className='scrollable vh-85 pb-5'>
         {children}
-        {/* <HashRouter basename='/'>
-          <PrivateRoute path='/' exact component={ClassFeed} />
-          <PrivateRoute path='/learn' exact component={ClassLearn} />
-          <PrivateRoute path='/exam' exact component={ClassExam} />
-          <PrivateRoute path='/exam_creation/:id' exact component={ExamCreation} />
-          <PrivateRoute path='/discussion' exact component={ClassDiscussion} />
-          <PrivateRoute path='/assignment' exact component={ClassAssignment} />
-          <PrivateRoute path='/task' exact component={ClassTask} />
-          <PrivateRoute path='/interactives' exact component={ClassInteractive} />
-          <PrivateRoute path='/links' exact component={ClassLinks} />
-          <PrivateRoute path='/list' exact component={ClassList} />
-          <PrivateRoute path='/files' exact component={ClassFiles} />
-        </HashRouter> */}
       </Col> 
     </Row>
     </MainContainer>

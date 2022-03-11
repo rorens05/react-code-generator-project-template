@@ -15,7 +15,7 @@ function CreateTask({modal, toggle, module, getTaskModule, classId}) {
   const [displayFiles, setDisplayFiles] = useState([]);
   const [showFiles, setShowFiles] = useState(false)
   const allowLate = true
-  const id = window.location.pathname.split('/')[2];
+  const id = useParams();
 
   const closeNotify = () =>{
     setAddNotity(false)

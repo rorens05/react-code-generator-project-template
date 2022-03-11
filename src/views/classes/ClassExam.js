@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import ClassExamHeader from "./components/Exam/ClassExamHeader";
 import { Accordion } from "react-bootstrap";
 import { useEffect } from "react";
+import { useParams } from 'react-router';
 import ExamItem from "./components/Exam/ExamItem";
 import ExamAPI from "../../api/ExamAPI";
 import ActivityIndicator from "../../components/loaders/ActivityIndicator";
@@ -14,10 +15,12 @@ import ClassBreadcrumbs from "./components/ClassBreedCrumbs";
 export const ClassExam = () => {
   const [loading, setLoading] = useState(true);
   const [exams, setExams] = useState([]);
-  const id = window.location.pathname.split('/')[2];
+  const {id} = useParams();
   const [filter, setFilter] = useState("");
   const [modules, setModules] = useState([]);
   const { data } = useContext(UserContext);
+  const [showExam, setShowExam] = useState(false)
+  const [examName, setExamName] = useState('');
   const { user } = data;
 
   const fetchExams = async () => {
@@ -86,44 +89,44 @@ export const ClassExam = () => {
   return (
     <ClassSideNavigation>
       <ClassBreadcrumbs title={''} clicked={() => console.log('')}/>
-    <div className="class-container position-relative">
-      {loading && <ActivityIndicator />}
-      <ClassExamHeader onSearch={onSearch} modules={modules} fetchExams={fetchExams} />
-      <Accordion defaultActiveKey="0">
-        {modules.map((module, index) => {
-          if (
-            exams
-              .filter((item) => module.id === item.module.id)
-              .filter((item) =>
-                item.test.testName.toLowerCase().includes(filter.toLowerCase())
-              ).length == 0
-          ) {
-            return <div />;
-          }
-          return (
-            <Accordion.Item key={index} eventKey={index}>
-              <Accordion.Header>{module.moduleName}</Accordion.Header>
-              <Accordion.Body>
-                {exams
-                  .filter((item) => module.id === item.module.id)
-                  .filter((item) =>
-                    item.test.testName
-                      .toLowerCase()
-                      .includes(filter.toLowerCase())
-                  )
-                  .map((exam, index) => (
-                    <ExamItem key={index} exam={exam} deleteExam={deleteExam} setLoading={setLoading} fetchExams={fetchExams}/>
-                  ))}
-              </Accordion.Body>
-            </Accordion.Item>
-          );
-        })}
-      </Accordion>
-      {exams.filter((item) =>
-        item.test.testName.toLowerCase().includes(filter.toLowerCase())
-      ).length === 0 &&
-        !loading && <div className="no-exams">No exams found...</div>}
-    </div>
+      <div className="class-container position-relative">
+        {loading && <ActivityIndicator />}
+        <ClassExamHeader onSearch={onSearch} modules={modules} fetchExams={fetchExams} />
+        <Accordion defaultActiveKey="0">
+          {modules.map((module, index) => {
+            if (
+              exams
+                .filter((item) => module.id === item.module.id)
+                .filter((item) =>
+                  item.test.testName.toLowerCase().includes(filter.toLowerCase())
+                ).length == 0
+            ) {
+              return <div />;
+            }
+            return (
+              <Accordion.Item key={index} eventKey={index}>
+                <Accordion.Header>{module.moduleName}</Accordion.Header>
+                <Accordion.Body>
+                  {exams
+                    .filter((item) => module.id === item.module.id)
+                    .filter((item) =>
+                      item.test.testName
+                        .toLowerCase()
+                        .includes(filter.toLowerCase())
+                    )
+                    .map((exam, index) => (
+                      <ExamItem key={index} exam={exam} deleteExam={deleteExam} setLoading={setLoading} fetchExams={fetchExams}/>
+                    ))}
+                </Accordion.Body>
+              </Accordion.Item>
+            );
+          })}
+        </Accordion>
+        {exams.filter((item) =>
+          item.test.testName.toLowerCase().includes(filter.toLowerCase())
+        ).length === 0 &&
+          !loading && <div className="no-exams">No exams found...</div>}
+      </div>
     </ClassSideNavigation>
   );
 };

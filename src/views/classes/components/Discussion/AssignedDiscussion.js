@@ -12,8 +12,7 @@ function AssignedDiscussion({assignToggle, assignModal, discussionId, moduleId, 
   const [endDate, setEndDate] = useState('')
   const [endTime, setEndTime] = useState('')
   const [assignNotify, setAssignNotify] = useState(false)
-  // const {id} = useParams()
-  const id = window.location.pathname.split('/')[2];
+  const {id} = useParams();
 
   const closeNotify = () =>{
     setAssignNotify(false)

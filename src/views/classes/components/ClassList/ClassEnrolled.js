@@ -9,8 +9,7 @@ function ClassEnrolled({enrolledStudent, getStudentEnrolled, getStudentWaiting, 
   const [deleteNotify, setDeleteNotify] = useState(false)
   const [itemId, setItemId] = useState('')
   const [openPortfolioModal, setOpenPortfolioModal] = useState(false)
-  // const {id} = useParams()
-  const id = window.location.pathname.split('/')[2];
+  const {id} = useParams()
   const [studentinfo, setStudentInfo] = useState()
   const [classInfo, setClassinfo] = useState()
   const [studentClasses, setStudentClasses] = useState()

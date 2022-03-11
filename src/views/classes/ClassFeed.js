@@ -4,6 +4,7 @@ import ClassesAPI from '../../api/ClassesAPI'
 import SweetAlert from 'react-bootstrap-sweetalert';
 import EditAnnouncement from './components/Feed/EditAnnouncement';
 import moment from 'moment';
+import { useParams } from 'react-router';
 import { UserContext } from '../../context/UserContext'
 import { toast } from 'react-toastify';
 import ClassSideNavigation from './components/ClassSideNavigation';
@@ -13,7 +14,7 @@ function ClassFeed() {
   const [title, setTitle] = useState('Feed')
   const [content, setContent] = useState('')
   const [announcementItem, setAnnouncementItem] = useState([])
-  const id = window.location.pathname.split('/')[2];
+  const {id} = useParams();
   const [referenceIds, setReferenceIds] = useState([id])
   const [deleteNotify, setDeleteNotify] = useState(false)
   const [itemId, setItemId] = useState('')
@@ -32,8 +33,6 @@ function ClassFeed() {
     setEditAssignAssignmentItem(item)
     setEditAnnouncementModal(!editAnnouncementModal)
   }
- const params = window.location.pathname.split('/')[2];
-  console.log('openedit:', id, params.split('/')[2], params, '//////////////')
   
   const createAnnouncementClass = async (e) => {
     e.preventDefault()

@@ -3,7 +3,7 @@ import {Row, Col, Button} from 'react-bootstrap'
 import moment from 'moment'
 import StundentAnswerTask from './components/StundentAnswerTask';
 import StudentSubmittedTask from './components/StudentSubmittedTask';
-// import { useParams } from 'react-router'
+import { useParams } from 'react-router';
 import { UserContext } from '../../../context/UserContext'
 import ClassesAPI from '../../../api/ClassesAPI';
 import StudentViewTask from './components/StudentViewTask';
@@ -15,7 +15,7 @@ function StudentTask({taskModule, searchTerm}) {
   const [submittedTaskModal, setSubmittedTaskModal] = useState(false)
   const [taskId, setTaskId] = useState(null)
   const [taskAnswerItem, setTaskAnswerItem] = useState()
-  const id = window.location.pathname.split('/')[2];
+  const {id} = useParams();
   const dateCompareNow = moment().format("YYYY-MM-DD")
   const timeNow = moment().format('HH:mm');
   const [viewTaskMotal, setViewTaskModal] = useState()

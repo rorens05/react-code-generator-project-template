@@ -13,8 +13,7 @@ function EditAssignedAssignment({moduleId, getAssignmentList, editAssignedAssign
   const [endDate, setEndDate] = useState('')
   const [endTime, setEndTime] = useState('')
   const [editNotufy, setEditNotify] = useState(false)
-  // const {id} = useParams()
-  const id = window.location.pathname.split('/')[2];
+  const {id} = useParams();
 
 const closeNotify = () =>{
   setEditNotify(false)

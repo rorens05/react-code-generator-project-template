@@ -9,7 +9,9 @@ import moment from 'moment'
 import AssignInteractive from './components/Interactive/AssignInteractive'
 import EditAssignInteractive from './components/Interactive/EditAssignInteractive'
 import { UserContext } from '../../context/UserContext'
-import StudentInteractive from './student/StudentInteractive'
+import StudentInteractive from './student/StudentInteractive';
+import ClassSideNavigation from './components/ClassSideNavigation';
+import ClassBreadcrumbs from './components/ClassBreedCrumbs';
 
 function ClassInteractive() {
   const [module, setModule] = useState([])
@@ -19,7 +21,7 @@ function ClassInteractive() {
   const [editAssignInteractiveModal, setEditAssignInteractiveModal] = useState(false)
   const [editAssignInteractiveItem, setEditAssignInteractiveItem] = useState()
   const [interactiveId, setInteractiveId] = useState()
-  const id = window.location.pathname.split('/')[2];
+  const {id} = useParams();
   const dateCompareNow = moment().format("YYYY-MM-DD")
   const timeNow = moment().format('HH:mm');
   const userContext = useContext(UserContext)
@@ -93,7 +95,8 @@ const getClassInfo = async() => {
   }, [])
 
   return (
-    <div>
+    <ClassSideNavigation>
+      <ClassBreadcrumbs title='' clicked={() => console.log('')} />
       <ClassInteractiveHeader onSearch={onSearch} />
       <Accordion>
         {module.map((item, index) => {
@@ -222,7 +225,7 @@ const getClassInfo = async() => {
       </Accordion>
       <AssignInteractive moduleId={moduleId} getIndteractive={getIndteractive} interactiveId={interactiveId} assignInteractiveToggle={assignInteractiveToggle} assignInteractiveModal={assignInteractiveModal} />
       <EditAssignInteractive getIndteractive={getIndteractive} editAssignInteractiveItem={editAssignInteractiveItem} editAssignIteractiveToggle={editAssignIteractiveToggle} editAssignInteractiveModal={editAssignInteractiveModal} />
-    </div>
+    </ClassSideNavigation>
   )
 }
 

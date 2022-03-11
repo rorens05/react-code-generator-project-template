@@ -19,8 +19,9 @@ import CoursesDiscussion from "../views/courses/pages/Discussion/CoursesDiscussi
 import CoursesAssignment from "../views/courses/pages/Assignment/CoursesAssignment";
 import CoursesTask from "../views/courses/pages/Task/CoursesTask";
 import CourseFiles from "../views/courses/pages/Files/CourseFiles";
+import CourseExamCreation from "../views/courses/pages/Exam/CourseExamCreation";
 
-
+import ClassExamCreation from '../views/classes/ClassExamCreation';
 import ClassAssignment from '../views/classes/ClassAssignment'
 import ClassDiscussion from '../views/classes/ClassDiscussion'
 import ClassExam from '../views/classes/ClassExam'
@@ -63,6 +64,7 @@ export default function Routes() {
             <PrivateRoute path='/coursecontent/:id/learn' exact component={CoursesLearn}/>
             {/* <PrivateRoute path='/courses/:id/learn' exact component={CoursesLearn}/> */}
             <PrivateRoute path='/courses/:id/exam' exact component={CoursesExam}/>
+            <PrivateRoute path='/course/:id/exam/:examid' exact component={CourseExamCreation}/>
             <PrivateRoute path='/courses/:id/discussion' exact component={CoursesDiscussion}/>
             <PrivateRoute path='/courses/:id/assignment' exact component={CoursesAssignment}/>
             <PrivateRoute path='/courses/:id/task' exact component={CoursesTask}/>
@@ -70,13 +72,14 @@ export default function Routes() {
 
             <PrivateRoute path='/classes' exact component={Classes}/>
             <PrivateRoute path='/classescontent/:id/feed' exact component={ClassFeed}/>
+            <PrivateRoute path='/class/:id/exam/:examid' exact component={ClassExamCreation}/>
             {/* <PrivateRoute path='/classes/:id/feed' exact component={ClassFeed} /> */}
             <PrivateRoute path='/classes/:id/learn' exact component={ClassLearn} />
             <PrivateRoute path='/classes/:id/exam' exact component={ClassExam} />
             <PrivateRoute path='/classes/:id/discussion' exact component={ClassDiscussion} />
             <PrivateRoute path='/classes/:id/assignment' exact component={ClassAssignment} />
             <PrivateRoute path='/classes/:id/task' exact component={ClassTask} />
-            <PrivateRoute path='/classes/:id/interactives' exact component={ClassesContent} />
+            <PrivateRoute path='/classes/:id/interactives' exact component={ClassInteractive} />
             <PrivateRoute path='/classes/:id/links' exact component={ClassLinks} />
             <PrivateRoute path='/classes/:id/classList' exact component={ClassList} />
             <PrivateRoute path='/classes/:id/files' exact component={ClassFiles} />

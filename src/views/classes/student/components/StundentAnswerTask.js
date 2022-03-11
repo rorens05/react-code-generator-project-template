@@ -7,8 +7,7 @@ import { UserContext } from '../../../../context/UserContext'
 import SweetAlert from 'react-bootstrap-sweetalert';
 
 function StundentAnswerTask({answerTaskToggle, answerTaskModal, taskId}) {
-  // const {id} = useParams()
-  const id = window.location.pathname.split('/')[2];
+  const {id} = useParams();
   const userContext = useContext(UserContext)
   const {user} = userContext.data
   const  [taskAnswer, setTaskAnswer] = useState('')

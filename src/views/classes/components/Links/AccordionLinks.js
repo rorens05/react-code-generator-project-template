@@ -10,8 +10,7 @@ import { UserContext } from '../../../../context/UserContext'
 function AccordionLinks({links, getLinks, setOpenEditModal, setEditLinks, searchTerm}) {
   const [deleteNotify, setDeleteNotify] = useState(false)
   const [itemId, setItemId] = useState('')
-  // const {id} = useParams()
-  const id = window.location.pathname.split('/')[2];
+  const {id} = useParams();
   const userContext = useContext(UserContext)
   const {user} = userContext.data
 

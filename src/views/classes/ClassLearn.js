@@ -1,18 +1,20 @@
 import React, {useState, useEffect} from 'react'
 import ClassLearnHeader from './components/Learn/ClassLearnHeader'
 import {  Col, Row, Card, Form, Button } from 'react-bootstrap';
-// import ClassCalendar from './components/ClassCalendar';
+// import ClassCalendar from './components/ClassCalendar'
+import { useParams } from 'react-router';
 import ClassesAPI from '../../api/ClassesAPI'
 import DiscussionAPI from '../../api/DiscussionAPI'
 import ClassSideNavigation from './components/ClassSideNavigation';
 import ClassBreedCrumbs from './components/ClassBreedCrumbs';
+
 function ClassLearn() {
   const [selectedModuleId, setSelectedModuleId] = useState(null)
   const [modules, setModules] = useState([])
   const [Pages, setPages] = useState([])
   const [content, setContent] = useState([]);
   const [classInfo, setClassInfo] = useState({});
-  const id = window.location.pathname.split('/')[2];
+  const {id} = useParams()
 
   const getClassInfo = async() => {
     // setLoading(true)

@@ -11,14 +11,14 @@ import { useParams } from "react-router";
 export default function CourseContent({children, course}) {
   const [loading, setLoading] = useState(false)
   const [courseInfo, setCourseInfo] = useState("")
-  const [collapseSide, setCollapseSide] = useState(true)
-  const courseid = sessionStorage.getItem('courseid')
+  const [collapseSide, setCollapseSide] = useState(localStorage.getItem('collapsCourse') == 'false' ? false : true);
+  const [showTab, setShowTab] = useState(true)
   const currentLoc = window.location.pathname;
   const {id} = useParams()
 
   const getCourseInformation = async(e) => {
     setLoading(true)
-    let response = await new CoursesAPI().getCourseInformation(courseid)
+    let response = await new CoursesAPI().getCourseInformation(id)
     setLoading(false)
     if(response.ok){
       setCourseInfo(response.data)
@@ -26,6 +26,16 @@ export default function CourseContent({children, course}) {
     }else{
       alert("Something went wrong while fetching course information.")
     }
+  }
+
+  useEffect(() => {
+    console.log(localStorage.getItem('collapsCourse'))
+    setShowTab(localStorage.getItem('collapsCourse') == 'false' ? false : true)
+  }, [collapseSide]);
+
+  const handleClicked = (data) => {
+    setCollapseSide(data);
+    localStorage.setItem('collapsCourse', data)
   }
 
   useEffect(() => {
@@ -37,7 +47,7 @@ export default function CourseContent({children, course}) {
       {/* <ToastContainer /> */}
         <Col style={{height: 100}} />
         <Row>
-          {collapseSide ? <Col className="row-course-bg course-widget-font" sm={3}>
+          {showTab ? <Col className="row-course-bg course-widget-font" sm={3}>
             <ListGroup.Item className="list-group-item-o">
               <Row>
                 <Col className="" sm={9} >
@@ -46,7 +56,7 @@ export default function CourseContent({children, course}) {
                 </Col>
                 <Col className="t-a-r" sm={3}>
                   <Col className="text-align-right">
-                    <i className="fas fa-chevron-left cursor-pointer" style={{color: '#EE9337'}} onClick={()=> setCollapseSide(false)}/>
+                    <i className="fas fa-chevron-left cursor-pointer" style={{color: '#EE9337'}} onClick={()=> handleClicked(false)}/>
                   </Col>
                 </Col>
               </Row>
@@ -75,7 +85,7 @@ export default function CourseContent({children, course}) {
           :
           <Col className="row-course-bg course-widget-font pt-2" sm={1}>
             <Col className="text-align-right mb-2">
-              <i className="fas fa-chevron-right" style={{color: '#EE9337'}} onClick={()=> setCollapseSide(true)}/>
+              <i className="fas fa-chevron-right" style={{color: '#EE9337'}} onClick={()=> handleClicked(true)}/>
             </Col>
             <ListGroup>
               <Link className={currentLoc.includes('learn') ? "active-nav-item" : 'nav-item'} to={`/courses/${id}/learn`}>
@@ -99,7 +109,7 @@ export default function CourseContent({children, course}) {
             </ListGroup>
           </Col>
           }
-          <Col sm={ collapseSide ? 9 : 11} className='scrollable vh-85 pb-5'>
+          <Col sm={ showTab ? 9 : 11} className='scrollable vh-85 pb-5'>
            {children}
           </Col>
         </Row>

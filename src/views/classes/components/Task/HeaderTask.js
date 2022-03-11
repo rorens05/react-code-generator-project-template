@@ -1,13 +1,14 @@
 import React, {useState, useContext} from 'react'
 import { Button, InputGroup, FormControl } from 'react-bootstrap';
 import CreateTask from './CreateTask';
-import { UserContext } from '../../../../context/UserContext'
+import { UserContext } from '../../../../context/UserContext';
+import {useParams} from 'react-router';
 
 function HeaderTask({module, getTaskModule, refModuleId, onSearch}) {
 const [modal, setModal] = useState(false)
 const userContext = useContext(UserContext)
 const {user} = userContext.data
-const classId = window.location.pathname.split('/')[2];
+const {id} = useParams();
 const toggle = () =>{
     setModal(!modal)
   }
@@ -33,7 +34,7 @@ const toggle = () =>{
 					</InputGroup>
 				</div>
 			</div>
-				<CreateTask refModuleId={refModuleId} module={module} classId={classId} toggle={toggle} modal={modal} getTaskModule={getTaskModule} />
+				<CreateTask refModuleId={refModuleId} module={module} classId={id} toggle={toggle} modal={modal} getTaskModule={getTaskModule} />
 		</div>
 	)
 }

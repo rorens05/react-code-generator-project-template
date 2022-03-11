@@ -27,7 +27,7 @@ function ClassTask() {
   const [assingTaskId, setAssingTaskId] = useState('')
   const [taskModule, setTaskModule] = useState([])
   const [editTask, setEditTask] = useState()
-  const id = window.location.pathname.split('/')[2];
+  const {id} = useParams();
   // const classId = classInfo?.classInformation?.classId;
   const [deleteNotify, setDeleteNotify] = useState(false)
   const [itemId, setItemId] = useState('')
@@ -136,7 +136,8 @@ function ClassTask() {
   console.log('setTaskModulesetTaskModule:', taskModule)
 
   return (
-    <>
+    <ClassSideNavigation>
+      <ClassBreadcrumbs title='' clicked={()=> console.log('')} />
       <HeaderTask onSearch={onSearch} module={module} getTaskModule={getTaskModule} />
         <Accordion>
           <SweetAlert
@@ -303,7 +304,7 @@ function ClassTask() {
           <EditTask moduleId={moduleId} editTask={editTask} toggle={toggle} modal={modal} module={module} getTaskModule={getTaskModule} />
           <AssignTask moduleId={moduleId} getTaskModule={getTaskModule} assingTaskId={assingTaskId} assignTaskModal={assignTaskModal} assignTaskToggle={assignTaskToggle} />
           <EditAssignTask getTaskModule={getTaskModule} editAssignTaskItem={editAssignTaskItem} editAssignTaskToggle={editAssignTaskToggle} editAssignTaskModal={editAssignTaskModal} />
-       </>
+      </ClassSideNavigation>
     )
   }
 export default ClassTask

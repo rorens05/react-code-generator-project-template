@@ -4,14 +4,16 @@ import ClassWaiting from './components/ClassList/ClassWaiting'
 import {Button, InputGroup, FormControl, Row, Col, Modal, Form} from 'react-bootstrap'
 import ClassesAPI from '../../api/ClassesAPI';
 import { toast } from "react-toastify";
+import { useParams } from 'react-router';
 import FullScreenLoader from '../../components/loaders/FullScreenLoader';
+import ClassSideNavigation from './components/ClassSideNavigation';
+import ClassBreadcrumbs from './components/ClassBreedCrumbs';
 
 function ClassList() {
   const [openClass, setOpenClass] = useState(false)
   const [waitingStudent, setWaitingStudent] = useState([])
   const [enrolledStudent, setEnrolledStudent] = useState([{}])
-  // const {id} = useParams()
-  const id = window.location.pathname.split('/')[2];
+  const {id} = useParams()
   const [searchTerm, setSearchTerm] = useState('');
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [filesToUpload, setFilesToUpload] = useState({});
@@ -127,7 +129,8 @@ function ClassList() {
   // console.log('this is Enrolled Student', enrolledStudent)
 
   return (
-    <div>
+    <ClassSideNavigation>
+      <ClassBreadcrumbs title='' clicked={() => console.log('')}/>
     <Row style={{paddingTop:'15px'}}>
       <Col className='title-header' >
       <p>Class List </p> 
@@ -150,7 +153,7 @@ function ClassList() {
         {openClass === false?(<ClassEnrolled searchTerm={searchTerm} getStudentWaiting={getStudentWaiting} getStudentEnrolled={getStudentEnrolled} enrolledStudent={enrolledStudent}  />):<ClassWaiting searchTerm={searchTerm} getStudentEnrolled={getStudentEnrolled} getStudentWaiting={getStudentWaiting} waitingStudent={waitingStudent} />}
     {handleShowUploadModal()}
     {loading && <FullScreenLoader /> }
-    </div>
+    </ClassSideNavigation>
   )
 }
 export default ClassList

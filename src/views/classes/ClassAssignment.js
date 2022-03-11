@@ -5,7 +5,8 @@ import ClassesAPI from '../../api/ClassesAPI'
 import DiscussionAPI from '../../api/DiscussionAPI'
 import EditAssignment from './components/Assignment/EditAssignment'
 import SweetAlert from 'react-bootstrap-sweetalert';
-import moment from 'moment'
+import moment from 'moment';
+import { useParams } from 'react-router';
 import AssignAssignment from './components/Assignment/AssignAssignment'
 import EditAssignedAssignment from './components/Assignment/EditAssignedAssignment'
 import { UserContext } from '../../context/UserContext'
@@ -27,7 +28,7 @@ function ClassAssignment() {
   const [module, setModule] = useState([])
   const [assignment, setAssignment] = useState([])
   const [editAssignment, setEditAssignment] = useState()
-  const id = window.location.pathname.split('/')[2];
+  const {id} = useParams()
   const [deleteNotify, setDeleteNotify] = useState(false)
   const [itemId, setItemId] = useState('')
   const [moduleId, setModuleId] = useState(null)
