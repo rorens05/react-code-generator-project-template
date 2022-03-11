@@ -87,6 +87,10 @@ export default function Files() {
     getCourseAllFiles();
   }, [])
 
+  useEffect(() => {
+    if (user.isStudent) return (window.location.href = "/404");
+  }, []);
+
   return (
     <MainContainer loading={loading} fluid activeHeader={'files'} style='not-scrollable'>
         <Row className="row">
