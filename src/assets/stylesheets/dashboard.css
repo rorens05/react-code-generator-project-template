@@ -321,3 +321,23 @@ code {
   color: #707070;
   text-align: center;
 }
+
+.fr-box.fr-basic.fr-top{
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.mq-editable-field.mq-math-mode{
+  width: 100%;
+  padding: 8px 16px;
+  border: 1px solid #E9E9E9 !important;
+  border-radius: 0.25rem;
+}
+
+
+.content-viewer .mq-editable-field{
+  border: none !important;
+  box-shadow: none !important;
+  pointer-events: none;
+  cursor: default;
+}
