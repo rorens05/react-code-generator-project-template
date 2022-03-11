@@ -207,7 +207,7 @@ function ClassDiscussion({classInfo}) {
                         {/* <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button> */}
                         <OverlayTrigger
                           placement="right"
-                          delay={{ show: 1500, hide: 0 }}
+                          delay={{ show: 1, hide: 1 }}
                           overlay={renderTooltipEdit}>
                           <Button onClick={(e)=> toggle(e, moduleitem)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-edit"></i></Button>
                         </OverlayTrigger>
@@ -215,7 +215,7 @@ function ClassDiscussion({classInfo}) {
                           <>
                           <OverlayTrigger
                             placement="right"
-                            delay={{ show: 1500, hide: 0 }}
+                            delay={{ show: 1, hide: 1 }}
                             overlay={renderTooltipReasign}>
                               <Button onClick={(e) => editAssignToggle(e, moduleitem)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-clock"></i></Button>
                           </OverlayTrigger>
@@ -224,7 +224,7 @@ function ClassDiscussion({classInfo}) {
                           <>
                             <OverlayTrigger
                               placement="right"
-                              delay={{ show: 1500, hide: 0 }}
+                              delay={{ show: 1, hide: 0 }}
                               overlay={renderTooltipAsign}>
                             <Button onClick={(e) => assignToggle(e, moduleitem?.discussion?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-user-clock"></i></Button>
                             </OverlayTrigger>
@@ -232,7 +232,7 @@ function ClassDiscussion({classInfo}) {
                         }
                         <OverlayTrigger
                           placement="right"
-                          delay={{ show: 1500, hide: 0 }}
+                          delay={{ show: 1, hide: 0 }}
                           overlay={renderTooltipDelete}>
                         <Button onClick={() => handleDeleteNotify(moduleitem.discussion?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-trash-alt"></i></Button>
                         </OverlayTrigger>
@@ -246,7 +246,7 @@ function ClassDiscussion({classInfo}) {
                         <div style={{marginRight:'5px'}}>
                         <OverlayTrigger
                           placement="right"
-                          delay={{ show: 1500, hide: 0 }}
+                          delay={{ show: 1, hide: 0 }}
                           overlay={renderTooltipReasign}>
                         <Button onClick={(e) => editAssignToggle(e, moduleitem)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-clock"></i></Button>
                         </OverlayTrigger>
@@ -259,7 +259,7 @@ function ClassDiscussion({classInfo}) {
                         {/* <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button> */}
                         <OverlayTrigger
                           placement="right"
-                          delay={{ show: 1500, hide: 0 }}
+                          delay={{ show: 1, hide: 0 }}
                           overlay={renderTooltipAsign}>
                         <Button onClick={(e) => assignToggle(e, moduleitem?.discussion?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-user-clock"></i></Button>
                         </OverlayTrigger>

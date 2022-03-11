@@ -183,54 +183,54 @@ export default function CourseContent(course) {
               <i className="fas fa-chevron-right" style={{color: '#EE9337'}} onClick={()=> setCollapseSide(true)}/>
             </Col>
             <ListGroup>
-            <OverlayTrigger
-                placement="right"
-                delay={{ show: 1000, hide: 25 }}
-                overlay={renderTooltipLearn}>
               <ListGroup.Item className="list-group-item-o" action href="#link1" onClick={(e) => contentDisplay(e)}>
+              <OverlayTrigger
+                placement="right"
+                delay={{ show: 1, hide: 25 }}
+                overlay={renderTooltipLearn}>
                 <i className="fas fa-book" />
+                </OverlayTrigger>
               </ListGroup.Item>
-              </OverlayTrigger>
-              <OverlayTrigger
-                placement="right"
-                delay={{ show: 1000, hide: 25 }}
-                overlay={renderTooltipExam}>
               <ListGroup.Item className="list-group-item-o "action href="#link2" onClick={(e) => setBread(e, "Exam")}>
+              <OverlayTrigger
+                placement="right"
+                delay={{ show: 1, hide: 25 }}
+                overlay={renderTooltipExam}>
                 <i className="fas fa-file-alt" />
+                </OverlayTrigger>
               </ListGroup.Item>
-              </OverlayTrigger>
-              <OverlayTrigger
-                placement="right"
-                delay={{ show: 1000, hide: 25 }}
-                overlay={renderTooltipDiscussion}>
               <ListGroup.Item  className="list-group-item-o "action href="#link3" onClick={(e) => setBread(e, "Discussion")}>
+              <OverlayTrigger
+                placement="right"
+                delay={{ show: 1, hide: 25 }}
+                overlay={renderTooltipDiscussion}>
                 <i className="fas fa-comment-alt" />
+                </OverlayTrigger>
               </ListGroup.Item>
-              </OverlayTrigger>
-              <OverlayTrigger
-                placement="right"
-                delay={{ show: 1000, hide: 25 }}
-                overlay={renderTooltipAssignment}>
               <ListGroup.Item className="list-group-item-o " action href="#link4" onClick={(e) => setBread(e, "Assignment")}>
+              <OverlayTrigger
+                placement="right"
+                delay={{ show: 1, hide: 25 }}
+                overlay={renderTooltipAssignment}>
                 <i className="fas fa-sticky-note" />
+                </OverlayTrigger>
               </ListGroup.Item>
-              </OverlayTrigger>
-              <OverlayTrigger
-                placement="right"
-                delay={{ show: 1000, hide: 25 }}
-                overlay={renderTooltipTask}>
               <ListGroup.Item className="list-group-item-o " action href="#link5" onClick={(e) => setBread(e, "Task")}>
-                <i className="fas fa-edit" />
-              </ListGroup.Item>
-              </OverlayTrigger>
               <OverlayTrigger
                 placement="right"
-                delay={{ show: 1000, hide: 25 }}
-                overlay={renderTooltipFiles}>
-              <ListGroup.Item className="list-group-item-o " action href="#link6" onClick={(e) => setBread(e, "Files")}>
-                <i className="fas fa-folder-open" />
+                delay={{ show: 1, hide: 25 }}
+                overlay={renderTooltipTask}>
+                <i className="fas fa-edit" />
+                </OverlayTrigger>
               </ListGroup.Item>
-              </OverlayTrigger>
+              <ListGroup.Item className="list-group-item-o " action href="#link6" onClick={(e) => setBread(e, "Files")}>
+              <OverlayTrigger
+                placement="right"
+                delay={{ show: 1, hide: 25 }}
+                overlay={renderTooltipFiles}>
+                <i className="fas fa-folder-open" />
+                </OverlayTrigger>
+              </ListGroup.Item>
               {/* <ListGroup.Item className="list-group-item-o " action href="#link6">
               Links
               </ListGroup.Item> */}

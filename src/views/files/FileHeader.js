@@ -153,7 +153,7 @@ function FileHeader(props) {
         <div className="col-md-10 pages-header file-content"><h1>Files
         <OverlayTrigger
                     placement="right"
-                    delay={{ show: 1500, hide: 0 }}
+                    delay={{ show: 1, hide: 0 }}
                     overlay={renderTooltipUploadFiles}>
           <i onClick={() => setShowUploadModal(true)} class="fas fa-folder-plus file-upload-content td-file-page cursor-pointer"></i>
           </OverlayTrigger>

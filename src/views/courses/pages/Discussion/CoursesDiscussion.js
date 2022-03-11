@@ -144,13 +144,13 @@ export default function CoursesDiscussion({moduleInfo, moduleId, showDiscussion,
                     <Col className="align-right-content" md={3}>
                     <OverlayTrigger
                       placement="right"
-                      delay={{ show: 1500, hide: 25 }}
+                      delay={{ show: 1, hide: 25 }}
                       overlay={renderTooltipEdit}>
                            <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={(e) => handleOpenEditDiscussionModal(e, di)}><i className="fa fa-edit"></i></Button>
                     </OverlayTrigger>
                     <OverlayTrigger
                       placement="right"
-                      delay={{ show: 1500, hide: 25 }}
+                      delay={{ show: 1, hide: 25 }}
                       overlay={renderTooltipDelete}>
                       <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={() => {setSweetError(true); setDiscussionId(di.discussion.id)}}><i className="fa fa-trash"></i></Button>
                     </OverlayTrigger>

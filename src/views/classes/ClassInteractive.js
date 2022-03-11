@@ -105,7 +105,7 @@ function ClassInteractive({classInfo}) {
               }
             }).map(interItem =>{
               return(
-               <Row style={{margin:'5px'}}>
+               <Row style={{margin:'10px'}}>
                 <Col sm={8}>
                   <div className='title-exam'>
                     {/* <Link style={{color:'#EE9337', textDecoration:'none'}} to={interItem?.interactive?.path} >{interItem?.interactive?.interactiveName}</Link> */}
@@ -128,7 +128,7 @@ function ClassInteractive({classInfo}) {
                     <>
                         <OverlayTrigger
                           placement="right"
-                          delay={{ show: 1500, hide: 0 }}
+                          delay={{ show: 1, hide: 0 }}
                           overlay={renderTooltipReasign}>
                            <Button onClick={(e) => editAssignIteractiveToggle(e, interItem)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-clock"></i></Button>
                        </OverlayTrigger> 
@@ -137,7 +137,7 @@ function ClassInteractive({classInfo}) {
                     <>
                     <OverlayTrigger
                       placement="right"
-                      delay={{ show: 1500, hide: 0 }}
+                      delay={{ show: 1, hide: 0 }}
                       overlay={renderTooltipReasign}>
                         <Button onClick={(e) => assignInteractiveToggle(e, interItem?.interactive?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-user-clock"></i></Button>
                     </OverlayTrigger>

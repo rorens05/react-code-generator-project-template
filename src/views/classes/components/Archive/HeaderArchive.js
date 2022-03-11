@@ -91,7 +91,7 @@ return (
                   <Dropdown.Toggle data-toggle="dropdown" as={CustomToggle} >
                   <OverlayTrigger
                     placement="right"
-                    delay={{ show: 1500, hide: 0 }}
+                    delay={{ show: 1, hide: 0 }}
                     overlay={renderTooltipRestore}>
                     <i className="fa fa-ellipsis-v fa-1x cursor-pointer"></i>
                   </OverlayTrigger>

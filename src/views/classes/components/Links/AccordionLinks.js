@@ -101,13 +101,13 @@ function AccordionLinks({links, getLinks, setOpenEditModal, setEditLinks, search
                 <Col sm={3} className='icon-exam'>
                 <OverlayTrigger
                     placement="right"
-                    delay={{ show: 1500, hide: 0 }}
+                    delay={{ show: 1, hide: 0 }}
                     overlay={renderTooltipEdit}>
                   <Button onClick={(e) => handleOpeEditModal(e, item)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i className="fa fa-edit"></i></Button>
                  </OverlayTrigger> 
                  <OverlayTrigger
                     placement="right"
-                    delay={{ show: 1500, hide: 0 }}
+                    delay={{ show: 1, hide: 0 }}
                     overlay={renderTooltipDelete}>
                   <Button onClick={() => handleDeleteNotify(item?.classLink.id)} className="m-r-5 color-white tficolorbg-button" size="sm"> <i class="fas fa-trash-alt"></i> </Button>
                 </OverlayTrigger>

@@ -162,13 +162,13 @@ export default function CourseLearn({courseInfo, setCourseInfo, viewLesson, setV
                           <Col className="align-right-content" md={3}>
                             <OverlayTrigger
                               placement="right"
-                              delay={{ show: 1500, hide: 0 }}
+                              delay={{ show: 1, hide: 0 }}
                               overlay={renderTooltipEdit}>
                                 <Button key={li.id} className="m-r-5 color-white tficolorbg-button" size="sm" onClick={(e) => handleOpenEditLessonModal(e, li)}><i className="fa fa-edit"></i></Button>
                             </OverlayTrigger>
                             <OverlayTrigger
                               placement="right"
-                              delay={{ show: 1500, hide: 0 }}
+                              delay={{ show: 1, hide: 0 }}
                               overlay={renderTooltipDelete}>
                                 <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={() => {setSweetError(true) }}><i className="fa fa-trash"></i></Button>
                             </OverlayTrigger>

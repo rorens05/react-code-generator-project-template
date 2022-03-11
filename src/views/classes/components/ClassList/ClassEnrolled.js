@@ -86,7 +86,7 @@ function ClassEnrolled({enrolledStudent, getStudentEnrolled, getStudentWaiting, 
                 <div style={{marginRight:'35px'}}>
               <OverlayTrigger
                 placement="right"
-                delay={{ show: 1500, hide: 0 }}
+                delay={{ show: 1, hide: 0 }}
                 overlay={renderTooltipDelete}>
                 <Button onClick={() => handleDeleteNotify(item.id)} className="m-r-5 color-white tficolorbg-button" size="sm"> <i class="fas fa-trash-alt"></i></Button>
               </OverlayTrigger>

@@ -140,13 +140,13 @@ export default function CoursesTask({moduleInfo, showTask, setShowTask}) {
                     <Col className="align-right-content" md={3}>
                       <OverlayTrigger
                         placement="right"
-                        delay={{ show: 1500, hide: 25 }}
+                        delay={{ show: 1, hide: 25 }}
                         overlay={renderTooltipEdit}>
                         <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={(e) => handleOpenEditTaskModal(e, ti)}><i className="fa fa-edit"></i></Button>
                      </OverlayTrigger>
                      <OverlayTrigger
                         placement="right"
-                        delay={{ show: 1500, hide: 25 }}
+                        delay={{ show: 1, hide: 25 }}
                         overlay={renderTooltipDelete}>
                       <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i className="fa fa-trash"  onClick={() => {setSweetError(true); setTaskId(ti.id)}}></i></Button>
                     </OverlayTrigger>

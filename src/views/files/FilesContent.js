@@ -72,7 +72,7 @@ function FilesContent(props) {
                     : */}
                                       <OverlayTrigger
                     placement="right"
-                    delay={{ show: 1500, hide: 0 }}
+                    delay={{ show: 1, hide: 0 }}
                     overlay={item.path_Base.match(/.(jpg|jpeg|png|gif|pdf)$/i) ? renderTooltipView : renderTooltipDownload }>
                     <a href={item.path_Base} download={true} target='_blank'>                     
                       <i class={`${item.path_Base.match(/.(jpg|jpeg|png|gif|pdf)$/i) ? 'fa-eye' : 'fa-arrow-down'} fas td-file-page`}></i>
@@ -81,7 +81,7 @@ function FilesContent(props) {
                   {/* } */}
                   <OverlayTrigger
                     placement="right"
-                    delay={{ show: 1500, hide: 0 }}
+                    delay={{ show: 1, hide: 0 }}
                     overlay={renderTooltipDelete}>
                     <a  >
                     <i class="fas fa-trash-alt td-file-page"></i> </a>

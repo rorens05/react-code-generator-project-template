@@ -201,13 +201,13 @@ function ClassTask({classInfo}) {
                       {/* Student Modal Answers */}
                       <OverlayTrigger
                         placement="right"
-                        delay={{ show: 1500, hide: 0 }}
+                        delay={{ show: 1, hide: 0 }}
                         overlay={renderTooltipView}>
                           <Button onClick={() => viewTaskTaggle(moduleitem?.task, moduleitem?.taskAssignment)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button>
                       </OverlayTrigger>
                       <OverlayTrigger
                         placement="right"
-                        delay={{ show: 1500, hide: 0 }}
+                        delay={{ show: 1, hide: 0 }}
                         overlay={renderTooltipEdit}>
                         <Button onClick={(e) => toggle(e, moduleitem)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-edit"></i></Button>
                       </OverlayTrigger> 
@@ -215,7 +215,7 @@ function ClassTask({classInfo}) {
                           <>
                           <OverlayTrigger
                             placement="right"
-                            delay={{ show: 1500, hide: 0 }}
+                            delay={{ show: 1, hide: 0 }}
                             overlay={renderTooltipReasign}>
                               <Button onClick={(e) => editAssignTaskToggle(e,moduleitem)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-clock"></i></Button>
                             </OverlayTrigger>
@@ -224,7 +224,7 @@ function ClassTask({classInfo}) {
                           <>
                           <OverlayTrigger
                             placement="right"
-                            delay={{ show: 1500, hide: 0 }}
+                            delay={{ show: 1, hide: 0 }}
                             overlay={renderTooltipAsign}>
                             <Button onClick={(e) => assignTaskToggle(e, moduleitem.task.id)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-user-clock"></i></Button>
                           </OverlayTrigger>
@@ -232,7 +232,7 @@ function ClassTask({classInfo}) {
                         }
                           <OverlayTrigger
                             placement="right"
-                            delay={{ show: 1500, hide: 0 }}
+                            delay={{ show: 1, hide: 0 }}
                             overlay={renderTooltipDelete}>
                               <Button onClick={() => handleDeleteNotify(moduleitem?.task?.id, item?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-trash-alt"></i></Button>
                           </OverlayTrigger> 
@@ -246,13 +246,13 @@ function ClassTask({classInfo}) {
                         {/* <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button> */}
                         <OverlayTrigger
                           placement="right"
-                          delay={{ show: 1500, hide: 0 }}
+                          delay={{ show: 1, hide: 0 }}
                           overlay={renderTooltipView}>
                             <Button onClick={() => viewTaskTaggle(moduleitem?.task, moduleitem?.taskAssignment)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button>
                         </OverlayTrigger> 
                         <OverlayTrigger
                           placement="right"
-                          delay={{ show: 1500, hide: 0 }}
+                          delay={{ show: 1, hide: 0 }}
                           overlay={renderTooltipReasign}>
                             <Button onClick={(e) => editAssignTaskToggle(e,moduleitem)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-clock"></i></Button>
                         </OverlayTrigger> 
@@ -264,13 +264,13 @@ function ClassTask({classInfo}) {
                         {/* <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button> */}
                         <OverlayTrigger
                           placement="right"
-                          delay={{ show: 1500, hide: 0 }}
+                          delay={{ show: 1, hide: 0 }}
                           overlay={renderTooltipView}>
                           <Button onClick={() => viewTaskTaggle(moduleitem?.task, moduleitem?.taskAssignment)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button>
                         </OverlayTrigger> 
                         <OverlayTrigger
                           placement="right"
-                          delay={{ show: 1500, hide: 0 }}
+                          delay={{ show: 1, hide: 0 }}
                           overlay={renderTooltipAsign}>
                           <Button onClick={(e) => assignTaskToggle(e, moduleitem?.task.id)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-user-clock"></i></Button>
                         </OverlayTrigger>

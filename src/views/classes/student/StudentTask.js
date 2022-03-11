@@ -93,7 +93,7 @@ function StudentTask({taskModule, searchTerm}) {
           <>
               {(item?.isScheduled === true)?(
               <>
-              <Row>
+              <Row style={{margin:'8px'}} >
                <Col sm={8}>
                       <div className='title-exam' >
                         {item?.task?.taskName}
@@ -114,13 +114,13 @@ function StudentTask({taskModule, searchTerm}) {
                       <Col sm={3} className='icon-exam'>
                       <OverlayTrigger
                         placement="right"
-                        delay={{ show: 10, hide: 25 }}
+                        delay={{ show: 1, hide: 1}}
                         overlay={renderTooltipView}>  
                          <Button onClick={(e) => getStudentTaskAnwswer(item?.task?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button>
                       </OverlayTrigger>
                       <OverlayTrigger
                         placement="right"
-                        delay={{ show: 10, hide: 25 }}
+                        delay={{ show: 1, hide: 1 }}
                         overlay={renderTooltipView}> 
                          <Button onClick={() => viewTaskToggle(item?.task, item?.taskAssignment?.startDate, item?.taskAssignment?.startTime, item?.taskAssignment?.endDate, item?.taskAssignment?.endTime)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-book-reader"></i></Button>
                       </OverlayTrigger>
@@ -138,13 +138,13 @@ function StudentTask({taskModule, searchTerm}) {
                       <Col sm={3} className='icon-exam'>
                       <OverlayTrigger
                         placement="right"
-                        delay={{ show: 10, hide: 25 }}
+                        delay={{ show: 1, hide: 1 }}
                         overlay={renderTooltipAnswer}>
                           <Button onClick={() => answerTaskToggle(item?.task?.id)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-user-edit"></i></Button>
                       </OverlayTrigger>
                       <OverlayTrigger
                         placement="right"
-                        delay={{ show: 10, hide: 25 }}
+                        delay={{ show: 1, hide: 1 }}
                         overlay={renderTooltipAnswer}>
                           <Button onClick={() => viewTaskToggle(item?.task, item?.taskAssignment?.startDate, item?.taskAssignment?.startTime, item?.taskAssignment?.endDate, item?.taskAssignment?.endTime)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-book-reader"></i></Button>
                       </OverlayTrigger>
@@ -156,7 +156,7 @@ function StudentTask({taskModule, searchTerm}) {
                       <Button  className="m-r-5 color-white tficolorbg-button" size="sm">Not Submitted</Button>
                       <OverlayTrigger
                         placement="right"
-                        delay={{ show: 10, hide: 25 }}
+                        delay={{ show: 1, hide: 1 }}
                         overlay={renderTooltipView}> 
                       <Button onClick={() => viewTaskToggle(item?.task, item?.taskAssignment?.startDate, item?.taskAssignment?.startTime, item?.taskAssignment?.endDate, item?.taskAssignment?.endTime)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-book-reader"></i></Button>
                       </OverlayTrigger>
@@ -167,7 +167,7 @@ function StudentTask({taskModule, searchTerm}) {
                       <Col sm={3} className='icon-exam'>
                       <OverlayTrigger
                         placement="right"
-                        delay={{ show: 10, hide: 25 }}
+                        delay={{ show: 1, hide: 1 }}
                         overlay={renderTooltipView}> 
                           <Button onClick={() => viewTaskToggle(item?.task, item?.taskAssignment?.startDate, item?.taskAssignment?.startTime, item?.taskAssignment?.endDate, item?.taskAssignment?.endTime)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-book-reader"></i></Button>
                       </OverlayTrigger>

@@ -161,91 +161,91 @@ export default function ClassSideNavigation({setLoading}) {
               <i className="fas fa-chevron-right" style={{color: '#EE9337'}} onClick={()=> setCollapseSide(true)}/>
             </Col>
             <ListGroup>
-            <OverlayTrigger
-                placement="right"
-                delay={{ show: 500, hide: 25 }}
-                overlay={renderTooltipFeed}>
               <ListGroup.Item  className="list-group-item-o " action href="#link1">
+              <OverlayTrigger
+                placement="right"
+                delay={{ show: 1, hide: 1 }}
+                overlay={renderTooltipFeed}>
                 <i className='fas fa-comment' />
+                </OverlayTrigger>
               </ListGroup.Item>
-              </OverlayTrigger>
-              <OverlayTrigger
-                placement="right"
-                delay={{ show: 500, hide: 25 }}
-                overlay={renderTooltipLearn}>
               <ListGroup.Item style={{position:'relative'}} className="list-group-item-o "action href="#link2">
+              <OverlayTrigger
+                placement="right"
+                delay={{ show: 1, hide: 1 }}
+                overlay={renderTooltipLearn}>
                 <i className="fas fa-book" />
+                </OverlayTrigger>
               </ListGroup.Item>
-              </OverlayTrigger>
-              <OverlayTrigger
-                placement="right"
-                delay={{ show: 500, hide: 25 }}
-                overlay={renderTooltipExam}>
               <ListGroup.Item  className="list-group-item-o "action href="#link3">
+              <OverlayTrigger
+                placement="right"
+                delay={{ show: 1, hide: 1 }}
+                overlay={renderTooltipExam}>
                 <i className="fas fa-file-alt" />
-              </ListGroup.Item>
               </OverlayTrigger>
-              <OverlayTrigger
-                placement="right"
-                delay={{ show: 500, hide: 25 }}
-                overlay={renderTooltipDiscussion}>
+              </ListGroup.Item>
               <ListGroup.Item className="list-group-item-o " action href="#link4">
+              <OverlayTrigger
+                placement="right"
+                delay={{ show: 1, hide: 1 }}
+                overlay={renderTooltipDiscussion}>
                 <i className="fas fa-comment-alt" />
+                </OverlayTrigger>
               </ListGroup.Item>
-              </OverlayTrigger>
-              <OverlayTrigger
-                placement="right"
-                delay={{ show: 500, hide: 25 }}
-                overlay={renderTooltipAssignment}>
               <ListGroup.Item className="list-group-item-o " action href="#link5">
+              <OverlayTrigger
+                placement="right"
+                delay={{ show: 1, hide: 1 }}
+                overlay={renderTooltipAssignment}>
                <i className="fas fa-sticky-note" />
+               </OverlayTrigger>
               </ListGroup.Item>
-              </OverlayTrigger>
-              <OverlayTrigger
-                placement="right"
-                delay={{ show: 500, hide: 25 }}
-                overlay={renderTooltipTask}>
               <ListGroup.Item className="list-group-item-o " action href="#link6">
+              <OverlayTrigger
+                placement="right"
+                delay={{ show: 1, hide: 1 }}
+                overlay={renderTooltipTask}>
                 <i className="fas fa-edit" />
+                </OverlayTrigger>
               </ListGroup.Item>
-              </OverlayTrigger>
-              <OverlayTrigger
-                placement="right"
-                delay={{ show: 500, hide: 25 }}
-                overlay={renderTooltipInteractive}>
               <ListGroup.Item className="list-group-item-o " action href="#link7">
-                <i className='fas fa-chalkboard-teacher' />
-              </ListGroup.Item>
-              </OverlayTrigger>
               <OverlayTrigger
                 placement="right"
-                delay={{ show: 500, hide: 25 }}
-                overlay={renderTooltipLink}>
-              <ListGroup.Item className="list-group-item-o " action href="#link8">
-                <i className='fa fa-link' />
+                delay={{ show: 1, hide: 1 }}
+                overlay={renderTooltipInteractive}>
+                <i className='fas fa-chalkboard-teacher' />
+                </OverlayTrigger>
               </ListGroup.Item>
-              </OverlayTrigger>
+              <ListGroup.Item className="list-group-item-o " action href="#link8">
+              <OverlayTrigger
+                placement="right"
+                delay={{ show: 1, hide: 1 }}
+                overlay={renderTooltipLink}>
+                <i className='fa fa-link' />
+                </OverlayTrigger>
+              </ListGroup.Item>
               {(user?.teacher === null)?(
               <>
               </>
               ):
               <>
-              <OverlayTrigger
-                placement="right"
-                delay={{ show: 500, hide: 25 }}
-                overlay={renderTooltipClassList}>
                 <ListGroup.Item className="list-group-item-o " action href="#link9">
-                  <i className="fas fa-users" />
-                </ListGroup.Item>
-                </OverlayTrigger>
                 <OverlayTrigger
-                placement="right"
-                delay={{ show: 500, hide: 25 }}
-                overlay={renderTooltipFiles}>
-                <ListGroup.Item className="list-group-item-o " action href="#link10">
-                  <i className="fas fa-folder-open" />
+                  placement="right"
+                  delay={{ show: 1, hide: 1 }}
+                  overlay={renderTooltipClassList}>
+                  <i className="fas fa-users" />
+                 </OverlayTrigger>
                 </ListGroup.Item>
-                </OverlayTrigger>
+                <ListGroup.Item className="list-group-item-o " action href="#link10">
+                <OverlayTrigger
+                  placement="right"
+                  delay={{ show: 1, hide: 1 }}
+                  overlay={renderTooltipFiles}>
+                  <i className="fas fa-folder-open" />
+                  </OverlayTrigger>
+                </ListGroup.Item>
               </>}
             </ListGroup>
           </Col>

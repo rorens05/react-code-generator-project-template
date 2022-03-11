@@ -153,13 +153,13 @@ export default function CoursesExam({moduleInfo, setModuleInfo, moduleId}) {
                       <Col className="align-right-content" md={3}>
                       <OverlayTrigger
                         placement="right"
-                        delay={{ show: 1500, hide: 25 }}
+                        delay={{ show: 1, hide: 25 }}
                         overlay={renderTooltipEdit}>
                           <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={(e) => handleOpenEditExamModal(e, ei)}><i className="fa fa-edit"></i></Button>
                       </OverlayTrigger>
                       <OverlayTrigger
                         placement="right"
-                        delay={{ show: 1500, hide: 25 }}
+                        delay={{ show: 1, hide: 25 }}
                         overlay={renderTooltipDelete}>
                         <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={() => setSweetError(true)}><i className="fa fa-trash" ></i></Button>
                       </OverlayTrigger>
