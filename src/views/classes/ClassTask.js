@@ -129,7 +129,7 @@ function ClassTask({classInfo}) {
   )
   const renderTooltipReasign = (props) => (
     <Tooltip id="button-tooltip" {...props}>
-      Reasign
+      Reassign
     </Tooltip>
   )
   const renderTooltipAsign = (props) => (
@@ -180,7 +180,7 @@ function ClassTask({classInfo}) {
                 }
               }).map(moduleitem => {
                 return (
-                  <Row style={{margin:'5px'}}>
+                  <Row style={{margin:'8px'}}>
                     <Col sm={8}>
                       <div className='title-exam' >
                         {moduleitem?.task?.taskName}

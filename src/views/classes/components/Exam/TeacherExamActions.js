@@ -42,7 +42,7 @@ export default function TeacherExamActions({
 
   const renderTooltipDelete = (props) => (
     <Tooltip id="button-tooltip" {...props}>
-      Assign
+      Delete
     </Tooltip>
   )
 

@@ -76,7 +76,7 @@ function ClassInteractive({classInfo}) {
 
   const renderTooltipReasign = (props) => (
     <Tooltip id="button-tooltip" {...props}>
-      Asign
+      Assign
     </Tooltip>
   )
 
