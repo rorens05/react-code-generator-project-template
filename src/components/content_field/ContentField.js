@@ -3,30 +3,41 @@ import React, { useState } from "react";
 import { Form } from "react-bootstrap";
 import FroalaEditor from "react-froala-wysiwyg";
 
+const EQUATION = "equation";
+const RICH_TEXT = "rich-text";
+export const EQUATION_TAG = "{{type=equation}}"
+
 const Field = (props) => {
-  const {inputType, value, onChange} = props
+  const {inputType, value, placeholder, onChange} = props
   switch (inputType) {
-    case "equation":
+    case EQUATION:
       return (
         <EquationEditor
           className='custom-input'
           size='lg'
-          value={value}
+          value={value.split(EQUATION_TAG)[1] || ""}
           placeholder='Enter equation'
           autoCommands="pi theta sqrt sum prod alpha beta gamma rho"
           autoOperatorNames="sin cos tan"
-          onChange={onChange}
+          onChange={(text) => onChange(`${EQUATION_TAG}${text}`)}
         />
       );
-    case "rich-text":
-      return <FroalaEditor value={value} onModelChange={onChange}/>;
+    case RICH_TEXT:
+      return <FroalaEditor 
+      value={value}
+      model={value}
+      config={{
+        placeholderText: placeholder,
+        charCounterCount: false
+      }}
+      onModelChange={onChange}/>;
     default:
       return (
         <Form.Control
           size='lg'
           value={value}
           type='text'
-          placeholder='Enter test instructions'
+          placeholder={placeholder}
           onChange={(e) => onChange(e.target.value)}
         />
       );
@@ -34,8 +45,35 @@ const Field = (props) => {
 }
 
 export default function ContentField(props) {
-  const [inputType, setInputType] = useState("text");
+
+  const setDefaultType = () => {
+    if(props.value.substring(0, 2) === '<p')
+      return RICH_TEXT  
+    if(props.value.includes(EQUATION_TAG))
+      return EQUATION
+    return ""
+  }
+
+  const [inputType, setInputType] = useState(setDefaultType());
   
+  
+  const updateInputType = (type) => {
+    switch (type) {
+      case EQUATION:
+        console.log({type})
+        props.onChange(EQUATION_TAG);
+        break;
+      case RICH_TEXT:
+        props.onChange("")
+        break;
+      default:
+        props.onChange("")
+        break;
+    }
+    
+    setInputType(type)
+  }
+
   return (
     <div className={props.className}>
 
@@ -46,7 +84,8 @@ export default function ContentField(props) {
         name="inputType"
         type={"radio"}
         value=""
-        onChange={e => setInputType(e.target.value)}
+        selected={inputType === ""}
+        onChange={e => updateInputType(e.target.value)}
       />
       <Form.Check
         inline
@@ -54,7 +93,8 @@ export default function ContentField(props) {
         name="inputType"
         type={"radio"}
         value="equation"
-        onChange={e => setInputType("equation")}
+        selected={inputType === EQUATION}
+        onChange={e => updateInputType(EQUATION)}
       />
       <Form.Check
         inline
@@ -62,7 +102,8 @@ export default function ContentField(props) {
         name="inputType"
         type={"radio"}
         value="rich-text"
-        onChange={e => setInputType("rich-text")}
+        selected={inputType === RICH_TEXT}
+        onChange={e => updateInputType(RICH_TEXT)}
       />
     </div>
 
