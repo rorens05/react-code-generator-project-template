@@ -24,7 +24,6 @@ export default class Base {
     if (method != 'GET') {
       config.body = JSON.stringify(data);
     }
-
     let response = await fetch(url, config)
       .then(async function(res) {
         return res;
@@ -36,7 +35,7 @@ export default class Base {
           return {network_error: true, ok: false};
         }
         return error;
-      });
+      })
     if (response.network_error) {
       return response;
     }
@@ -47,9 +46,16 @@ export default class Base {
       responseData = JSON.parse(responseData);
     }
 
+    if(response.status == 401){
+      await localStorage.removeItem("token")
+      window.location.href = '/login?message=You have been logged out! Please login again'
+      return
+    }
+
     let output = {
       res: response,
       ok: response.ok,
+      status: response.status,
       data: responseData,
       statusMessage: this.getStatusMessage(response.status),
     };
