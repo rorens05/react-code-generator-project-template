@@ -1,7 +1,8 @@
 import React, {useState, useEffect, useRef} from 'react'
-import {Button, Modal,Table, ProgressBar, Form } from 'react-bootstrap';
+import {Button, Modal,Table, ProgressBar, Form, Col, Row } from 'react-bootstrap';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import FilesAPI from '../../api/FilesApi';
-import { toast } from 'react-toastify';
 
 function FileHeader(props) {
   const [showUploadModal, setShowUploadModal] = useState(false);
@@ -144,13 +145,21 @@ function FileHeader(props) {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div style={{ paddingBottom:'45px', paddingTop:'25px'}}>
-            <Button size='lg' variant="outline-warning" className="file-library" onClick={() => { document.getElementById('inputFile').click() }}>
-              <i class="fas fa-paperclip"></i>
+          <Row style={{paddingTop:'25px', paddingBottom: '20px'}}>
+            <Col lg={3} className='mt-3'>
+              <Button size='lg' variant="outline-warning" className="file-library" onClick={() => { document.getElementById('inputFile').click() }}>
+                <i className="fas fa-paperclip"></i>
                 Choose Files
               </Button>
-              <input id='inputFile' className='d-none' multiple type='file' placeholder='Choose color' style={{ backgroundColor: 'inherit' }} onChange={(e) => handlefilesUpload(e.target.files)} />
-          </div>
+            </Col>
+              <Col lg={4} className='bg-gray d-flex justify-content-center br-5px'>
+                <div className='row position-absolute d-flex p-2'>
+                  <p className='mb-0 text-center'>Drag files here</p>
+                  <i className='text-center fa fa-download font-size-30'/>
+                </div>
+                <input className='opacity-0 w-100 height-80px' id='inputFile' multiple type='file' placeholder='Choose color' style={{ backgroundColor: 'inherit' }} onChange={(e) => handlefilesUpload(e.target.files)} />
+              </Col>
+          </Row>
           <Table responsive="sm">
             <thead>
               <tr>
