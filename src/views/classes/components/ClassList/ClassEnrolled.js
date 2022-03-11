@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Table, Button } from 'react-bootstrap'
 import ClassesAPI from '../../../../api/ClassesAPI'
 import { useParams } from 'react-router'
@@ -9,6 +9,7 @@ function ClassEnrolled({enrolledStudent, getStudentEnrolled, getStudentWaiting, 
   const [deleteNotify, setDeleteNotify] = useState(false)
   const [itemId, setItemId] = useState('')
   const [openPortfolioModal, setOpenPortfolioModal] = useState(false)
+  const [sortedData, setSortedData] = useState(enrolledStudent.students);
   const [studentinfo, setStudentInfo] = useState()
   const [classInfo, setClassinfo] = useState()
   const [studentClasses, setStudentClasses] = useState()
@@ -61,6 +62,25 @@ function ClassEnrolled({enrolledStudent, getStudentEnrolled, getStudentWaiting, 
     }
   }
 
+  const testClick = () => {
+    alert('test')
+  }
+  
+  useEffect(()=>{
+    arrageAlphabetical()
+  }, [enrolledStudent])
+
+  const arrageAlphabetical = () => {
+      let data = enrolledStudent?.students;
+      let temp = data?.sort(function(a, b){
+        let nameA = a.fname.toLocaleLowerCase();
+        let nameB = b.fname.toLocaleLowerCase();
+        if(nameA < nameB)
+          return -1
+      });
+      setSortedData(temp);
+  }
+
   return (
     <div>
       <SweetAlert
@@ -82,7 +102,7 @@ function ClassEnrolled({enrolledStudent, getStudentEnrolled, getStudentWaiting, 
           </tr>
         </thead>
         <tbody>
-        {enrolledStudent.students?.filter((item) => {
+        {sortedData?.filter((item) => {
           if(searchTerm == ''){
             return item
           }else if(item.lname.toLowerCase().includes(searchTerm.toLowerCase())){
