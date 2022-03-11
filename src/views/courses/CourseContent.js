@@ -188,7 +188,7 @@ export default function CourseContent(course) {
                 delay={{ show: 1000, hide: 25 }}
                 overlay={renderTooltipLearn}>
               <ListGroup.Item className="list-group-item-o" action href="#link1" onClick={(e) => contentDisplay(e)}>
-                <i className="fas fa-book" title="Learn"/>
+                <i className="fas fa-book" />
               </ListGroup.Item>
               </OverlayTrigger>
               <OverlayTrigger
@@ -196,7 +196,7 @@ export default function CourseContent(course) {
                 delay={{ show: 1000, hide: 25 }}
                 overlay={renderTooltipExam}>
               <ListGroup.Item className="list-group-item-o "action href="#link2" onClick={(e) => setBread(e, "Exam")}>
-                <i className="fas fa-file-alt" title="Exam"/>
+                <i className="fas fa-file-alt" />
               </ListGroup.Item>
               </OverlayTrigger>
               <OverlayTrigger
@@ -204,7 +204,7 @@ export default function CourseContent(course) {
                 delay={{ show: 1000, hide: 25 }}
                 overlay={renderTooltipDiscussion}>
               <ListGroup.Item  className="list-group-item-o "action href="#link3" onClick={(e) => setBread(e, "Discussion")}>
-                <i className="fas fa-comment-alt" title="Discussion"/>
+                <i className="fas fa-comment-alt" />
               </ListGroup.Item>
               </OverlayTrigger>
               <OverlayTrigger
@@ -212,7 +212,7 @@ export default function CourseContent(course) {
                 delay={{ show: 1000, hide: 25 }}
                 overlay={renderTooltipAssignment}>
               <ListGroup.Item className="list-group-item-o " action href="#link4" onClick={(e) => setBread(e, "Assignment")}>
-                <i className="fas fa-sticky-note" title="Assignment"/>
+                <i className="fas fa-sticky-note" />
               </ListGroup.Item>
               </OverlayTrigger>
               <OverlayTrigger
@@ -220,7 +220,7 @@ export default function CourseContent(course) {
                 delay={{ show: 1000, hide: 25 }}
                 overlay={renderTooltipTask}>
               <ListGroup.Item className="list-group-item-o " action href="#link5" onClick={(e) => setBread(e, "Task")}>
-                <i className="fas fa-edit" title="Task"/>
+                <i className="fas fa-edit" />
               </ListGroup.Item>
               </OverlayTrigger>
               <OverlayTrigger
@@ -228,7 +228,7 @@ export default function CourseContent(course) {
                 delay={{ show: 1000, hide: 25 }}
                 overlay={renderTooltipFiles}>
               <ListGroup.Item className="list-group-item-o " action href="#link6" onClick={(e) => setBread(e, "Files")}>
-                <i className="fas fa-folder-open" title="Files"/>
+                <i className="fas fa-folder-open" />
               </ListGroup.Item>
               </OverlayTrigger>
               {/* <ListGroup.Item className="list-group-item-o " action href="#link6">

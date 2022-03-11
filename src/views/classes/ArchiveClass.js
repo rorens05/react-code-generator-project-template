@@ -29,7 +29,6 @@ export default function Classes() {
     getArchive()
   }, [])
 
-  console.log('asd teacher', user?.teacher?.id)
   return (
     <MainContainer loading={loading} activeHeader={'classes'}>
       <div className='page-container'>

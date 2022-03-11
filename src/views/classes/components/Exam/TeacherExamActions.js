@@ -9,24 +9,68 @@ export default function TeacherExamActions({
   toggleShare,
   getInformationExam
 }) {
+
+  const renderTooltipEdit = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Edit
+    </Tooltip>
+  )
+
+  const renderTooltipPreview = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Preview
+    </Tooltip>
+  )
+
+  const renderTooltipShare = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Share
+    </Tooltip>
+  )
+
+  const renderTooltipUnShare = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Unshare
+    </Tooltip>
+  )
+
+  const renderTooltipAssign = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Assign
+    </Tooltip>
+  )
+
+  const renderTooltipDelete = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Assign
+    </Tooltip>
+  )
+
   
 
   return (
     <div className='exam-actions'>
-      <a href='#preview'
-        title={"Preview"}
-      >
-        <i
-          class='fas fa-eye'
-          onClick={(e) => {
-            getInformationExam(e, exam?.test?.id)
-          }}
-        ></i>
-      </a>
+      <OverlayTrigger
+        placement="right"
+        delay={{ show: 1500, hide: 0 }}
+        overlay={renderTooltipPreview}>
+        <a href='#preview'
+        >
+          <i
+            class='fas fa-eye'
+            onClick={(e) => {
+              getInformationExam(e, exam?.test?.id)
+            }}
+          ></i>
+        </a>
+      </OverlayTrigger>
       {exam.test.classId && (
+      <OverlayTrigger
+        placement="right"
+        delay={{ show: 1500, hide: 0 }}
+        overlay={exam.test.isShared ? renderTooltipUnShare : renderTooltipShare}>
         <a
           href='#share'
-          title={exam.test.isShared ? "Unshare" : "Share"}
           onClick={(e) => {
             e.preventDefault();
             toggleShare();
@@ -34,21 +78,30 @@ export default function TeacherExamActions({
         >
           <i class={`fas fa-share ${exam.test.isShared && "rotate"}`}></i>
         </a>
+      </OverlayTrigger>
       ) }
-      <a
-        href='#assign'
-        title='Assign'
-        onClick={(e) => {
-          e.preventDefault();
-          setShowModal(true);
-        }}
-      >
-        <i class='fas fa-user-clock'></i>
-      </a>
+      <OverlayTrigger
+        placement="right"
+        delay={{ show: 1500, hide: 0 }}
+        overlay={renderTooltipAssign}>
+        <a
+          href='#assign'
+          onClick={(e) => {
+            e.preventDefault();
+            setShowModal(true);
+          }}
+        >
+          <i class='fas fa-user-clock'></i>
+        </a>
+      </OverlayTrigger>
       {exam.test.classId != null && !exam.test.isShared && (
+      <OverlayTrigger
+        placement="right"
+        delay={{ show: 1500, hide: 0 }}
+        overlay={renderTooltipEdit}>
         <a
           href='#edit'
-          title="Edit"
+
           onClick={(e) => {
             e.preventDefault();
             setShowEditModal(true);
@@ -56,20 +109,25 @@ export default function TeacherExamActions({
         >
           <i class='fas fa-edit'></i>
         </a>
+      </OverlayTrigger>
       )}
       {exam.classTest == null && (
         <>
           {exam.test.classId != null && !exam.test.isShared && (
-            <a
-              href='#delete'
-              title="Delete"
-              onClick={(e) => {
-                e.preventDefault();
-                setShowWarning(true);
-              }}
-            >
-              <i class='fas fa-trash-alt'></i>
-            </a>
+          <OverlayTrigger
+            placement="right"
+            delay={{ show: 1500, hide: 0 }}
+            overlay={renderTooltipDelete}>
+              <a
+                href='#delete'
+                onClick={(e) => {
+                  e.preventDefault();
+                  setShowWarning(true);
+                }}
+              >
+                <i class='fas fa-trash-alt'></i>
+              </a>
+          </OverlayTrigger>
           )}
         </>
       )}

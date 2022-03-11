@@ -1,5 +1,5 @@
 import React from 'react'
-import {Table, Button} from 'react-bootstrap'
+import {Table, Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import moment from 'moment';
 
 function FilesContent(props) {
@@ -21,6 +21,23 @@ function FilesContent(props) {
     })
   }
 
+  const renderTooltipDelete = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Delete
+    </Tooltip>
+  )
+
+  const renderTooltipView = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      View
+    </Tooltip>
+  )
+
+  const renderTooltipDownload = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Download
+    </Tooltip>
+  )
 
   return (
     <Table responsive="sm">
@@ -41,24 +58,35 @@ function FilesContent(props) {
           props.data?.map((item, index) => {
             return(
               <tr key={item.fileName+index}>
-                <td className='ellipsis w-50' style={{color:'#EE9337', fontSize:'20px'}}>{item.fileName}</td>
+                <td className='ellipsis w-25' style={{color:'#EE9337', fontSize:'20px'}}>{item.fileName}</td>
                 {
                   props.type == 'Class' ? <td className='ellipsis w-50' style={{fontSize:'20px'}}>{item.classFiles ? moment(item.classFiles?.createdDate).format('LL') : moment(item.courseFiles?.createdDate).format('LL')}</td> 
                     :
-                  <td className='ellipsis w-50' style={{fontSize:'20px'}} >{moment(item.createdDate).format('LL')}</td>
+                  <td className='ellipsis w-25' style={{fontSize:'20px'}} >{moment(item.createdDate).format('LL')}</td>
                 }
-                <td  >
+                <td style={{paddingRight:'15px'}} >
                   {/* {
                     item.path_Base.match(/.(jpg|jpeg|png|gif|pdf)$/i)
                     ?
                     <i class="fas fa-arrow-down td-file-page" onClick={() => downloadImage(item.path_Base)}></i>
                     : */}
-                    <a href={item.path_Base} download={true} target='_blank' title={`${item.path_Base.match(/.(jpg|jpeg|png|gif|pdf)$/i) ? 'View' : 'Download'}`}>
+                                      <OverlayTrigger
+                    placement="right"
+                    delay={{ show: 1500, hide: 0 }}
+                    overlay={item.path_Base.match(/.(jpg|jpeg|png|gif|pdf)$/i) ? renderTooltipView : renderTooltipDownload }>
+                    <a href={item.path_Base} download={true} target='_blank'>                     
                       <i class={`${item.path_Base.match(/.(jpg|jpeg|png|gif|pdf)$/i) ? 'fa-eye' : 'fa-arrow-down'} fas td-file-page`}></i>
                     </a> 
+                    </OverlayTrigger>
                   {/* } */}
-                  <a title='Delete' >
-                  <i class="fas fa-trash-alt td-file-page"></i> </a></td>
+                  <OverlayTrigger
+                    placement="right"
+                    delay={{ show: 1500, hide: 0 }}
+                    overlay={renderTooltipDelete}>
+                    <a  >
+                    <i class="fas fa-trash-alt td-file-page"></i> </a>
+                  </OverlayTrigger>
+                  </td>
               </tr>
             )
           })

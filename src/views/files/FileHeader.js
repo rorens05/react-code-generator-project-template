@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react'
-import {Button, Modal,Table, ProgressBar, Form,  InputGroup, FormControl} from 'react-bootstrap';
+import {Button, Modal,Table, ProgressBar, Form,  InputGroup, FormControl, Tooltip, OverlayTrigger} from 'react-bootstrap';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import FilesAPI from '../../api/FilesApi';
@@ -141,10 +141,23 @@ function FileHeader(props) {
     setUploadStarted(false)
   }
 
+  const renderTooltipUploadFiles = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Upload Files
+    </Tooltip>
+  )
+
   return (
     <div>
       <div className="row m-b-20">
-        <div className="col-md-10 pages-header file-content"><h1>Files<i onClick={() => setShowUploadModal(true)} class="fas fa-folder-plus file-upload-content td-file-page cursor-pointer" title='Upload Files'></i></h1>
+        <div className="col-md-10 pages-header file-content"><h1>Files
+        <OverlayTrigger
+                    placement="right"
+                    delay={{ show: 1500, hide: 0 }}
+                    overlay={renderTooltipUploadFiles}>
+          <i onClick={() => setShowUploadModal(true)} class="fas fa-folder-plus file-upload-content td-file-page cursor-pointer"></i>
+          </OverlayTrigger>
+          </h1>
             {/* <h1 className="file-upload-content"><Button size="sm" variant="outline-warning"><i class="fas fa-folder file-upload-content "></i> New Folder</Button></h1> <h5 className="fileupload"> OR </h5> */}
             {/* <h1 className="file-upload-content"><Button className="file-upload-content" size='sm' variant="outline-warning" onClick={() => setShowUploadModal(true)}> +Upload File</Button></h1> */}
             <p><Button style={{paddingTop:'11px'}} className='btn-create-discussion' variant="link" onClick={() => setShowUploadModal(true)}> <i className="fa fa-plus"></i>  Upload Files  </Button></p>

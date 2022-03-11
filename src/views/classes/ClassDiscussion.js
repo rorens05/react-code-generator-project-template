@@ -141,7 +141,7 @@ function ClassDiscussion({classInfo}) {
   )
   const renderTooltipAsign= (props) => (
     <Tooltip id="button-tooltip" {...props}>
-      Asign
+      Assign
     </Tooltip>
   )
   const renderTooltipDelete= (props) => (
