@@ -8,6 +8,8 @@ import ViewDiscussion from "./ViewDiscussion";
 import SweetAlert from 'react-bootstrap-sweetalert';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import CourseContent from "../../CourseContent";
+import CourseBreadcrumbs from "../../components/CourseBreadcrumbs";
 
 export default function CoursesDiscussion() {
 
@@ -21,7 +23,8 @@ export default function CoursesDiscussion() {
   const [localModuleId, setLocalModuleId] = useState(false)
   const [discussionId, setDiscussionId] = useState("")
   const [moduleInfo, setModuleInfo] = useState([])
-  const [showDiscussion, setShowDiscussion] = useState(false)
+  const [showDiscussion, setShowDiscussion] = useState(false);
+  const [clickedDiscussion, setClickedDiscussion] = useState('')
 
   const courseid = sessionStorage.getItem('courseid')
   const moduleid = sessionStorage.getItem('moduleid')
@@ -92,6 +95,8 @@ export default function CoursesDiscussion() {
   const viewDis = (data) => {
     setSelectedDiscussion(data)
     setShowDiscussion(true)
+    console.log(data)
+    setClickedDiscussion(data.discussion.discussionName)
   }
 
   useEffect(() => {
@@ -110,70 +115,78 @@ export default function CoursesDiscussion() {
     progress: undefined,
   });
 
-  if(showDiscussion === false){
-  return (
-    <>
-      <span className="content-pane-title">
-        Discussion 
-      </span>
-      <div className="row m-b-20 m-t-30">
-        <div className="col-md-12">
-          <InputGroup size="lg">
-            <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Search..." type="search" onChange={(e) => onSearch(e.target.value)}/>
-            <InputGroup.Text id="basic-addon2" className="search-button"><i className="fas fa-search fa-1x"></i></InputGroup.Text>
-          </InputGroup>
-        </div>
-      </div>
-      <CreateDiscussion setDiscussionInfo={setDiscussionInfo} openCreateDiscussionModal={openCreateDiscussionModal} setOpenCreateDiscussionModal={setOpenCreateDiscussionModal}/>
-      <EditDiscussion setDiscussionInfo={setDiscussionInfo} selectedDiscussion={selectedDiscussion} openEditDiscussionModal={openEditDiscussionModal} setOpenEditDiscussionModal={setOpenEditDiscussionModal}/>
-      <Accordion defaultActiveKey="0">
-        {moduleInfo.map((item, index) => {
-          return(
-            <>
-            <Accordion.Item eventKey={item.id}> 
-              <Accordion.Header onClick={(e) => {getDiscussionInfo(e, item.id)}}>
-                <span className="unit-title">{item.moduleName} <Button className="m-l-10" variant="outline-warning" onClick={handleopenCreateDiscussionModal}><i className="fa fa-plus"></i> Add Discussion</Button>
-                </span>
-              </Accordion.Header>
-              <Accordion.Body>
-                
-                {discussionInfo.filter(di => 
-                  di.discussion?.discussionName?.toLowerCase().includes(filter.toLowerCase())
-                ).map((di, index) => (
-                  <Row>
-                    <Col className="lesson-header" md={9}>
-                    <span onClick={(e) => {viewDis(di)}}>{di?.discussion.discussionName}</span>
-                    </Col>
-                    <Col className="align-right-content" md={3}>
-                      <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={(e) => handleOpenEditDiscussionModal(e, di)}><i className="fa fa-edit"></i></Button>
-                      <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={() => {setSweetError(true); setDiscussionId(di.discussion.id)}}><i className="fa fa-trash"></i></Button>
-                    </Col>
-                  </Row>
-                ))}
-                <SweetAlert
-                  warning
-                  showCancel
-                  show={sweetError}
-                  confirmBtnText="Yes, delete it!"
-                  confirmBtnBsStyle="danger"
-                  title="Are you sure?"
-                  onConfirm={() => confirmSweetError(item.id, moduleid)}
-                  onCancel={cancelSweetError}
-                  focusCancelBtn
-                >
-                  You will not be able to recover this Discussion!
-                </SweetAlert>
-              </Accordion.Body>
-            </Accordion.Item>
-            </>
-            )
-          })
-        }
-      </Accordion>
-    </> 
-  )}else{
-    return(
-      <ViewDiscussion selectedDiscussion={selectedDiscussion} setShowDiscussion={setShowDiscussion} />
-    )
+  const clickedTab = () => {
+    setShowDiscussion(false);
+    setClickedDiscussion('');
   }
+
+  return (
+    <CourseContent>
+      <CourseBreadcrumbs title={clickedDiscussion} clicked={() => clickedTab()}/>
+      {
+      showDiscussion ?
+          <ViewDiscussion selectedDiscussion={selectedDiscussion} setShowDiscussion={setShowDiscussion} />
+        :
+        <>
+          <span className="content-pane-title">
+            Discussion 
+          </span>
+          <div className="row m-b-20 m-t-30">
+            <div className="col-md-12">
+              <InputGroup size="lg">
+                <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Search..." type="search" onChange={(e) => onSearch(e.target.value)}/>
+                <InputGroup.Text id="basic-addon2" className="search-button"><i className="fas fa-search fa-1x"></i></InputGroup.Text>
+              </InputGroup>
+            </div>
+          </div>
+          <CreateDiscussion setDiscussionInfo={setDiscussionInfo} openCreateDiscussionModal={openCreateDiscussionModal} setOpenCreateDiscussionModal={setOpenCreateDiscussionModal}/>
+          <EditDiscussion setDiscussionInfo={setDiscussionInfo} selectedDiscussion={selectedDiscussion} openEditDiscussionModal={openEditDiscussionModal} setOpenEditDiscussionModal={setOpenEditDiscussionModal}/>
+          <Accordion defaultActiveKey="0">
+            {moduleInfo.map((item, index) => {
+              return(
+                <>
+                <Accordion.Item eventKey={item.id}> 
+                  <Accordion.Header onClick={(e) => {getDiscussionInfo(e, item.id)}}>
+                    <span className="unit-title">{item.moduleName} <Button className="m-l-10" variant="outline-warning" onClick={handleopenCreateDiscussionModal}><i className="fa fa-plus"></i> Add Discussion</Button>
+                    </span>
+                  </Accordion.Header>
+                  <Accordion.Body>
+                    
+                    {discussionInfo.filter(di => 
+                      di.discussion?.discussionName?.toLowerCase().includes(filter.toLowerCase())
+                    ).map((di, index) => (
+                      <Row>
+                        <Col className="lesson-header" md={9}>
+                        <span onClick={(e) => {viewDis(di)}}>{di?.discussion.discussionName}</span>
+                        </Col>
+                        <Col className="align-right-content" md={3}>
+                          <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={(e) => handleOpenEditDiscussionModal(e, di)}><i className="fa fa-edit"></i></Button>
+                          <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={() => {setSweetError(true); setDiscussionId(di.discussion.id)}}><i className="fa fa-trash"></i></Button>
+                        </Col>
+                      </Row>
+                    ))}
+                    <SweetAlert
+                      warning
+                      showCancel
+                      show={sweetError}
+                      confirmBtnText="Yes, delete it!"
+                      confirmBtnBsStyle="danger"
+                      title="Are you sure?"
+                      onConfirm={() => confirmSweetError(item.id, moduleid)}
+                      onCancel={cancelSweetError}
+                      focusCancelBtn
+                    >
+                      You will not be able to recover this Discussion!
+                    </SweetAlert>
+                  </Accordion.Body>
+                </Accordion.Item>
+              </>
+              )
+            })
+          }
+        </Accordion>
+      </>
+      }
+    </CourseContent>
+  )
 }

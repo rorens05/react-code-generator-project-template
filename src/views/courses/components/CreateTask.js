@@ -6,7 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import FilesAPI from '../../../api/FilesApi';
 import FileHeader from '../../files/FileHeader';
-
+import { useParams } from "react-router";
 export default function CreateTask({openCreateTaskModal, setCreateTaskModal, setTaskInfo}){
 
 	const [loading, setLoading] = useState(false)
@@ -15,7 +15,7 @@ export default function CreateTask({openCreateTaskModal, setCreateTaskModal, set
 	const [instructions, setInstructions] = useState('')
   const [displayFiles, setDisplayFiles] = useState([]);
   const [showFiles, setShowFiles] = useState(false)
-  const courseid = sessionStorage.getItem('courseid')
+  const {id} = useParams()
   let sessionCourse = sessionStorage.getItem('courseid')
   let sessionModule = sessionStorage.getItem('moduleid')
 
@@ -84,7 +84,7 @@ export default function CreateTask({openCreateTaskModal, setCreateTaskModal, set
 
   const handleGetCourseFiles = async() => {
     // setLoading(true)
-    let response = await new FilesAPI().getCourseFiles(courseid)
+    let response = await new FilesAPI().getCourseFiles(id)
     // setLoading(false)
     if(response.ok){
       console.log(response, '-----------------------')
@@ -102,7 +102,7 @@ export default function CreateTask({openCreateTaskModal, setCreateTaskModal, set
 				<Modal.Body className="modal-label b-0px">
 						<Form onSubmit={saveTask}>
               <div className={showFiles ? 'mb-3' : 'd-none'}>
-                <FileHeader type='Course' id={courseid} doneUpload={()=> handleGetCourseFiles()} />
+                <FileHeader type='Course' id={id} doneUpload={()=> handleGetCourseFiles()} />
                 {
                   displayFiles.map( (item,ind) => {
                     return(

@@ -8,12 +8,10 @@ import {  Col, Row } from 'react-bootstrap';
 function ClassesContent() {
   const [loading, setLoading] = useState(true)
   return (
-    <div>
-      <MainContainer activeHeader={'classes'} loading={loading} fluid style='not-scrollable'>
-        <ClassBreedCrumbs />
-        <ClassSideNavigation setLoading={setLoading}/>
-      </MainContainer>
-    </div>
+    // <MainContainer activeHeader={'classes'} loading={loading} fluid style='not-scrollable'>
+      // {/* <ClassBreedCrumbs /> */}
+      <ClassSideNavigation setLoading={setLoading}/>
+    // </MainContainer>
   )
 }
 

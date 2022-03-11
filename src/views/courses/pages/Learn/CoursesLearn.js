@@ -9,6 +9,8 @@ import SweetAlert from 'react-bootstrap-sweetalert';
 import { toast } from 'react-toastify';
 import CourseContent from "../../CourseContent";
 import 'react-toastify/dist/ReactToastify.css';
+import CourseBreadcrumbs from "../../components/CourseBreadcrumbs";
+
 import { useParams } from "react-router";
 
 export default function CourseLearn() {
@@ -27,7 +29,8 @@ export default function CourseLearn() {
   const [filter, setFilter] = useState("");
   const [courseInfo, setCourseInfo] = useState("")
   const [viewLesson, setViewLesson] = useState(false)
-  const [moduleInfo, setModuleInfo] = useState([])
+  const [moduleInfo, setModuleInfo] = useState([]);
+  const [clickedModule, setClickedModule] = useState('');
 
   const courseid = sessionStorage.getItem('courseid')
   const moduleid = sessionStorage.getItem('moduleid')
@@ -107,7 +110,8 @@ export default function CourseLearn() {
     }
   }
 
-  const getModuleContent = async(e, data, pagesid) => {
+  const getModuleContent = async(e, data, pagesid, pageName) => {
+    setClickedModule(pageName)
     setLoading(true)
     setViewLesson(true)
     let response = await new CoursesAPI().getCourseUnitPagesContent(id, data, pagesid)
@@ -139,10 +143,18 @@ export default function CourseLearn() {
     draggable: true,
     progress: undefined,
   });
+
+  const clickedTab = () => {
+    setViewLesson(false);
+    setClickedModule('');
+  }
   
-  if(viewLesson === false){
-    return (
-      <CourseContent setLoading={() => console.log('sample')}>
+  return (
+    <CourseContent>
+      <CourseBreadcrumbs title={clickedModule} clicked={() => clickedTab()}/>
+      {viewLesson ? 
+          <CoursesLearnContent courseInfo={courseInfo} setCourseInfo={setCourseInfo} setLessonContent={setLessonContent} lessonContent={lessonContent}/>
+        :
         <React.Fragment>
           <span className="content-pane-title">
             Learn <Button variant="outline-warning" onClick={handleOpenCreateUnitModal}><i className="fa fa-plus"></i> Add Unit</Button>
@@ -167,9 +179,8 @@ export default function CourseLearn() {
           <Accordion defaultActiveKey="0">
             {moduleInfo.map((item, index) => {
               return(
-                <>
                   <Accordion.Item eventKey={item.id}> 
-                    <Accordion.Header onClick={(e) => getCourseLessons(e, item.id, item.moduleName)}>
+                    <Accordion.Header onClick={(e) => {getCourseLessons(e, item.id, item.moduleName)}}>
                       <span className="unit-title">{item.moduleName} <Button className="m-l-10" variant="outline-warning" onClick={handleOpenCreateLessonModal}><i className="fa fa-plus"></i> Add Lesson</Button>
                       </span>
                     </Accordion.Header>
@@ -179,7 +190,7 @@ export default function CourseLearn() {
                           ((li, index) => {
                         return(
                           <Row>
-                            <Col className="lesson-header" md={9} onClick={(e) => getModuleContent(e, moduleid, li.id)}>
+                            <Col className="lesson-header" md={9} onClick={(e) => getModuleContent(e, moduleid, li.id, li?.pageName)}>
                               {li?.pageName}
                             </Col>
                             <Col className="align-right-content" md={3}>
@@ -206,21 +217,11 @@ export default function CourseLearn() {
                       })}
                     </Accordion.Body>
                   </Accordion.Item>
-                  
-                </>
                 )
               })
             }
           </Accordion>
-          
-        </React.Fragment>
-        </CourseContent>
-    )
-  }else{
-    return (
-      <CourseContent setLoading={() => console.log('sample')}>
-        <CoursesLearnContent courseInfo={courseInfo} setCourseInfo={setCourseInfo} setLessonContent={setLessonContent} lessonContent={lessonContent}/>
-      </CourseContent>
-    )
-  }
+        </React.Fragment>}
+    </CourseContent>
+  )
 }

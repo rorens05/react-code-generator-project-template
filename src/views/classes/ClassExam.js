@@ -8,6 +8,8 @@ import ActivityIndicator from "../../components/loaders/ActivityIndicator";
 import { UserContext } from "../../context/UserContext";
 import { toast } from "react-toastify";
 import ClassesAPI from "../../api/ClassesAPI";
+import ClassSideNavigation from "./components/ClassSideNavigation";
+import ClassBreadcrumbs from "./components/ClassBreedCrumbs";
 
 export const ClassExam = () => {
   const [loading, setLoading] = useState(true);
@@ -82,6 +84,8 @@ export const ClassExam = () => {
   console.log('exams:', modules)
 
   return (
+    <ClassSideNavigation>
+      <ClassBreadcrumbs title={''} clicked={() => console.log('')}/>
     <div className="class-container position-relative">
       {loading && <ActivityIndicator />}
       <ClassExamHeader onSearch={onSearch} modules={modules} fetchExams={fetchExams} />
@@ -120,6 +124,7 @@ export const ClassExam = () => {
       ).length === 0 &&
         !loading && <div className="no-exams">No exams found...</div>}
     </div>
+    </ClassSideNavigation>
   );
 };
 export default ClassExam;

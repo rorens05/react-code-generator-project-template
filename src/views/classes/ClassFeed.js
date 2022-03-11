@@ -6,6 +6,8 @@ import EditAnnouncement from './components/Feed/EditAnnouncement';
 import moment from 'moment';
 import { UserContext } from '../../context/UserContext'
 import { toast } from 'react-toastify';
+import ClassSideNavigation from './components/ClassSideNavigation';
+import ClassBreadcrumbs from './components/ClassBreedCrumbs';
 
 function ClassFeed() {
   const [title, setTitle] = useState('Feed')
@@ -89,6 +91,8 @@ function ClassFeed() {
   console.log('this is announcement:', announcementItem)
 
   return (
+    <ClassSideNavigation>
+      <ClassBreadcrumbs title='' clicked={() => console.log('')}/>
     <div>
       <SweetAlert
           warning
@@ -179,9 +183,9 @@ function ClassFeed() {
               </>)}
               </Col>
               </Row>
-            <div style={{paddingBottom:'20px', color:'#00000029'}} >
-                _____________________________________________________________________________________________________________________________________________________________________________________________________________
-              </div>
+            {/* <div style={{paddingBottom:'20px', color:'#00000029'}} > */}
+              <hr />
+              {/* </div> */}
               <Row>  
                 <Col className='icon-post' sm={1}>
                   <i class="fas fa-file-alt" style={{color:'#EE9337', fontSize:'30px',}}></i>
@@ -191,9 +195,9 @@ function ClassFeed() {
                 </Col>
               </Row>
               <Row>
-              <div style={{paddingBottom:'10px', color:'#00000029'}} >
-              _____________________________________________________________________________________________________________________________________________________________________________________________________________
-              </div>
+              {/* <div style={{paddingBottom:'10px', color:'#00000029'}} > */}
+                <hr />
+              {/* </div> */}
                 <Col style={{textAlign:'center'}} onClick={() => toast.error("Feature under development")}>
                   <div className='inline-flex' >
                     <div style={{color:'#EE9337', fontSize:'25px',}}>
@@ -236,9 +240,7 @@ function ClassFeed() {
               
               </div>
             </div>
-            <div style={{paddingBottom:'20px', color:'#00000029'}} >
-                      _____________________________________________________________________________________________________________________________________________________________________________________________________________
-              </div>
+              <hr/>
               <Row>  
                 <Col className='icon-post' sm={1}>
                   <i class="fas fa-file-alt" style={{color:'#EE9337', fontSize:'30px', paddingTop:'30px'}}></i>
@@ -283,12 +285,10 @@ function ClassFeed() {
               </div>
                 </Col> */}
               </Row>
-              <Row>
                 <Col>
-                <div style={{paddingBottom:'10px', color:'#00000029'}} >
-                _____________________________________________________________________________________________________________________________________________________________________________________________________________
-              </div>
+                <hr />
                 </Col>
+              <Row>
   
                 <Col style={{textAlign:'center'}}>
                   <div className='inline-flex' onClick={() => toast.error("Feature under development")}>
@@ -357,6 +357,7 @@ function ClassFeed() {
         </SweetAlert>
         <EditAnnouncement getFeedClass={getFeedClass} editAnnouncementItem={editAnnouncementItem} editAnnouncementModal={editAnnouncementModal} openEditAnnouncementToggle={openEditAnnouncementToggle} />
     </div>
+    </ClassSideNavigation>
   )
 }
 export default ClassFeed

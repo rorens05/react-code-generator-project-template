@@ -10,11 +10,9 @@ export default function Exam() {
   
   return (
     <MainContainer activeHeader={'exam'}>
-      <CourseContent setLoading={() => console.log('sample')}>
-      <div className='containerpages'>
+      <CourseContent>
         <ExamHeaders />
         <ExamList />
-      </div> 
       </CourseContent>
     </MainContainer>
   )

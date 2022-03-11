@@ -14,7 +14,7 @@ function CreateAssignment({modal, toggle, module, getAssignmentList}) {
   const [addNotify, setAddNotity] = useState(false)
   const [displayFiles, setDisplayFiles] = useState([]);
   const [showFiles, setShowFiles] = useState(false)
-  const id = sessionStorage.getItem('courseid')
+  const {id} = useParams();
 
   const closeNotify = () =>{
     setAddNotity(false)

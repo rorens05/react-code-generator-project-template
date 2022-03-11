@@ -190,6 +190,7 @@ export default function ExamCreation() {
   return (
     <Container title='Exam Information' loading={loading} fluid className='x-0'>
       <div className='page-container exam-information-container'>
+        <p>sample</p>
         <div className='containerpages'>
           <ExamCreationDetails
             getExamInformation={getExamInformation}

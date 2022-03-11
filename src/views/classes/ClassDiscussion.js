@@ -12,6 +12,8 @@ import EditAssignDiscussion from './components/Discussion/EditAssignDiscussion'
 import { UserContext } from '../../context/UserContext'
 import StudentDiscussion from './student/StudentDiscussion'
 import DiscussionComments from './components/Discussion/DiscussionComments'
+import ClassBreadcrumbs from './components/ClassBreedCrumbs'
+import ClassSideNavigation from './components/ClassSideNavigation'
 
 function ClassDiscussion() {
   const [discussionCommentModal, setDiscussionCommentModal] = useState(false)
@@ -147,7 +149,8 @@ function ClassDiscussion() {
   }
 
   return (
-    <>
+    <ClassSideNavigation>
+      <ClassBreadcrumbs title='' clicked={()=> console.log('')} />
       <HeaderDiscussion onSearch={onSearch} getDiscussionUnit={getDiscussionUnit} module={module} />
         <Accordion>
         <SweetAlert
@@ -304,18 +307,14 @@ function ClassDiscussion() {
                        </div>
                      </div>
                    </Col>
-                   <div className='text-color-bcbcbc' >
-                    ___________________________________________________________________________________________________________________________________________________________________________________________________________
-                    </div>
+                   <hr />
                  </Row>
                  </div>):
                   <div>
                     <div style={{color:'red'}}>
                         <b>Not Assigned</b>
                     </div>
-                  <div className='text-color-bcbcbc' >
-                  ___________________________________________________________________________________________________________________________________________________________________________________________________________
-                  </div>
+                  <hr />
                 </div> 
                     }
               </Row>
@@ -331,7 +330,7 @@ function ClassDiscussion() {
           <EditDiscussion editDiscussionItem={editDiscussionItem} toggle={toggle} modal={modal} getDiscussionUnit={getDiscussionUnit} /> 
           <AssignedDiscussion moduleId={moduleId} getDiscussionUnit={getDiscussionUnit} discussionId={discussionId} assignToggle={assignToggle} assignModal={assignModal} />
           <EditAssignDiscussion getDiscussionUnit={getDiscussionUnit} editAssignDiscussionItem={editAssignDiscussionItem} editAssignToggle={editAssignToggle} editAssignModal={editAssignModal} />
-       </>
+       </ClassSideNavigation>
     )
   }
 export default ClassDiscussion

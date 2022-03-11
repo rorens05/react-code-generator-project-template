@@ -12,7 +12,9 @@ import { UserContext } from '../../context/UserContext'
 import StudentAssignment from './student/components/StudentAssignment'
 import StudentAnswerAssignment from './student/components/StudentAnswerAssignment'
 import StudentSubmittedAssigment from './student/components/StudentSubmittedAssigment'
-import ViewAssignment from './components/Assignment/ViewAssignment'
+import ViewAssignment from './components/Assignment/ViewAssignment';
+import ClassSideNavigation from './components/ClassSideNavigation';
+import ClassBreadcrumbs from './components/ClassBreedCrumbs'
 
 function ClassAssignment() {
   const [submittedAssignment, setSubmittedAssignment] = useState(false)
@@ -143,7 +145,8 @@ function ClassAssignment() {
   }, [])
 
   return (
-    <div>
+    <ClassSideNavigation>
+      <ClassBreadcrumbs title='' clicked={()=> console.log('')}/>
       <AssignmentHeader onSearch={onSearch} module={module} getAssignmentList={getAssignmentList} />
       <Accordion>
         <SweetAlert
@@ -156,8 +159,8 @@ function ClassAssignment() {
           onConfirm={(e) => removeAssignment(e, itemId, moduleId)}
           onCancel={cancelSweetAlert}
           focusCancelBtn
-            >
-              You will not be able to recover this imaginary file!
+        >
+          You will not be able to recover this imaginary file!
         </SweetAlert>
       {module.map((item, index) => {
         return(<Accordion.Item eventKey={index} onClick={(e) => getAssignmentList(e, item?.id)} >
@@ -299,17 +302,13 @@ function ClassAssignment() {
                   </div>
                 </div>
               </Col>
-              <div className='text-color-bcbcbc' >
-                ___________________________________________________________________________________________________________________________________________________________________________________________________________
-              </div>
+              <hr />
             </Row>):
               <div>                      
                 <div style={{color:'red'}}>
                     <b>Not Assigned</b>
                 </div>
-              <div className='text-color-bcbcbc' >
-                ___________________________________________________________________________________________________________________________________________________________________________________________________________
-              </div>
+              <hr />
             </div>
             }
           </Row>)
@@ -326,7 +325,7 @@ function ClassAssignment() {
       <EditAssignment toggle={toggle} modal={modal} editAssignment={editAssignment} getAssignmentList={getAssignmentList} moduleId={moduleId} />
       <AssignAssignment moduleId={moduleId} assignmentId={assignmentId} assginModal={assginModal} assignAssignmentToggle={assignAssignmentToggle} getAssignmentList={getAssignmentList} />
       <EditAssignedAssignment moduleId={moduleId} getAssignmentList={getAssignmentList} editAssignAssignmentItem={editAssignAssignmentItem} editAssignedAssignmentModal={editAssignedAssignmentModal} editAssignedAssignmentToggle={editAssignedAssignmentToggle} />
-    </div>
+    </ClassSideNavigation>
   )
 }
 export default ClassAssignment

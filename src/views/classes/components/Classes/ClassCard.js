@@ -64,7 +64,7 @@ function ClassCard({item, setOpenEditModal, setSeletedClass, getClasses}) {
             You will not be able to recover this imaginary file!
       </SweetAlert>
       <Card className='class-card' >
-        <Link to={`/classescontent/${item.classId}`}>
+        <Link to={`/classescontent/${item.classId}/feed`}>
           <Card.Header className='class-header-card' >
             <Row>
               <Col sm={10}>

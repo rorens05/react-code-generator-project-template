@@ -14,7 +14,8 @@ import StudentSubmittedTask from './student/components/StudentSubmittedTask'
 import StudentTask from './student/StudentTask'
 import { UserContext } from '../../context/UserContext'
 import ViewTask from './components/Task/ViewTask'
-
+import ClassBreadcrumbs from './components/ClassBreedCrumbs';
+import ClassSideNavigation from './components/ClassSideNavigation';
 
 function ClassTask() {
   const [modal, setModal] = useState(false)

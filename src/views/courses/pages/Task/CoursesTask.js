@@ -8,6 +8,9 @@ import SweetAlert from 'react-bootstrap-sweetalert';
 import ViewTask from "./ViewTask";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import CourseContent from "../../CourseContent";
+import {useParams} from 'react-router';
+import CourseBreadcrumbs from "../../components/CourseBreadcrumbs";
 
 export default function CoursesTask() {
 
@@ -22,8 +25,9 @@ export default function CoursesTask() {
   const [localModuleId, setLocalModuleId] = useState("")
   const [filter, setFilter] = useState("");
   const [moduleInfo, setModuleInfo] = useState([]);
-  const courseid = sessionStorage.getItem('courseid');
-  const [showTask, setShowTask] = useState(false)
+  const {id} = useParams();
+  const [showTask, setShowTask] = useState(false);
+  const [taskName, setTaskName] = useState('')
 
   const handleOpenCreateTaskModal = () =>{
     setCreateTaskModal(!openCreateTaskModal)
@@ -50,7 +54,7 @@ export default function CoursesTask() {
 
   const getCourseUnitInformation = async(e) => {
     setLoading(true)
-    let response = await new CoursesAPI().getCourseUnit(courseid)
+    let response = await new CoursesAPI().getCourseUnit(id)
     setLoading(false)
     if(response.ok){
       setModuleInfo(response.data)
@@ -88,6 +92,7 @@ export default function CoursesTask() {
   }
 
   const viewTas = (data) => {
+    setTaskName(data.taskName);
     setSelectedTask(data)
     setShowTask(true)
   }
@@ -107,9 +112,18 @@ export default function CoursesTask() {
     progress: undefined,
   });
 
-  if(showTask === false){
+  const clickedTab = () => {
+    setTaskName('');
+    setShowTask(false)
+  }
+
   return (
-    <>
+    <CourseContent>
+      <CourseBreadcrumbs title={taskName} clicked={() => clickedTab()}/>
+     {showTask ?
+        <ViewTask selectedTask={selectedTask} showTask={showTask} setShowTask={setShowTask} />
+     :
+      <>
       <span className="content-pane-title">
         Task 
       </span>
@@ -166,10 +180,8 @@ export default function CoursesTask() {
           })
         }
       </Accordion>
-    </> 
-  )}else{
-    return(
-      <ViewTask selectedTask={selectedTask} showTask={showTask} setShowTask={setShowTask} />
-    )
-  }
+      </>
+      }
+    </CourseContent>
+  )
 }

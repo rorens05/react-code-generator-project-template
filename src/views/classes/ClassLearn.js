@@ -4,7 +4,8 @@ import {  Col, Row, Card, Form, Button } from 'react-bootstrap';
 // import ClassCalendar from './components/ClassCalendar';
 import ClassesAPI from '../../api/ClassesAPI'
 import DiscussionAPI from '../../api/DiscussionAPI'
-
+import ClassSideNavigation from './components/ClassSideNavigation';
+import ClassBreedCrumbs from './components/ClassBreedCrumbs';
 function ClassLearn() {
   const [selectedModuleId, setSelectedModuleId] = useState(null)
   const [modules, setModules] = useState([])
@@ -72,7 +73,8 @@ function ClassLearn() {
   }
   
   return (
-    <div style={{position:'relative'}}>
+    <ClassSideNavigation setLoading={()=> console.log('sample')}>
+      <ClassBreedCrumbs title={''} clicked={() => console.log('')}/>
       <Row>
         <Col className='scrollable vh-80 pb-5' style={{marginLeft:'15px'}} >
           <ClassLearnHeader content={content}  classInfo={classInfo}/>
@@ -117,8 +119,7 @@ function ClassLearn() {
     </Card>
         </Col>
       </Row>
-      
-    </div>
+    </ClassSideNavigation>
   )
 }
 
