@@ -3,11 +3,13 @@ import Modal from 'react-bootstrap/Modal'
 import { Form, Button, } from 'react-bootstrap'
 import ClassesAPI from '../../../../api/ClassesAPI'
 import SweetAlert from 'react-bootstrap-sweetalert';
+import ContentField from '../../../../components/content_field/ContentField';
 
 function EditAssignment({modal, toggle, editAssignment, getAssignmentList, moduleId}) {
   const [assignmentName, setAssignmentName] = useState('')
-  const [instructions, setInstructions] = useState('')
+  const [instructions, setInstructions] = useState(editAssignment?.assignment?.instructions)
   const [editNotufy, setEditNotify] = useState(false)
+  const[newIntructions, setNewIntructions] = useState('')
   const isShared = null
 
   const closeNotify = () =>{
@@ -58,7 +60,8 @@ function EditAssignment({modal, toggle, editAssignment, getAssignmentList, modul
                   </Form.Group>
                   <Form.Group className="mb-4">
                     <Form.Label >Instruction</Form.Label>
-                      <Form.Control defaultValue={editAssignment?.assignment?.instructions} type="text" onChange={(e) => setInstructions(e.target.value)} />
+                      <Form.Control defaultValue={instructions} type="text" onChange={(e) => setInstructions(e.target.value)} />
+                      <ContentField  />
                     </Form.Group>
                 <Form.Group className='right-btn'>
                 <Button className='tficolorbg-button' type='submit' >Save</Button>

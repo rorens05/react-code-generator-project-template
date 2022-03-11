@@ -13,6 +13,7 @@ import StudentAssignment from './student/components/StudentAssignment'
 import StudentAnswerAssignment from './student/components/StudentAnswerAssignment'
 import StudentSubmittedAssigment from './student/components/StudentSubmittedAssigment'
 import ViewAssignment from './components/Assignment/ViewAssignment'
+import ContentViewer from '../../components/content_field/ContentViewer'
 
 function ClassAssignment({classInfo}) {
   const [submittedAssignment, setSubmittedAssignment] = useState(false)
@@ -178,7 +179,8 @@ function ClassAssignment({classInfo}) {
                   Instruction:&nbsp;
                 </div>
                 <div className='text-color-707070' >
-                <span style={{marginTop:"300px !important"}} dangerouslySetInnerHTML={{__html:assigItem?.assignment?.instructions }} /> 
+                {/* <span style={{marginTop:"300px !important"}} dangerouslySetInnerHTML={{__html:assigItem?.assignment?.instructions }} />  */}
+                <ContentViewer>{assigItem?.assignment?.instructions}</ContentViewer>
                 </div>
               </div>
             </Col>

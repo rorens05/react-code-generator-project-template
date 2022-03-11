@@ -13,6 +13,7 @@ import StudentSubmittedTask from './student/components/StudentSubmittedTask'
 import StudentTask from './student/StudentTask'
 import { UserContext } from '../../context/UserContext'
 import ViewTask from './components/Task/ViewTask'
+import ContentViewer from '../../components/content_field/ContentViewer'
 
 
 function ClassTask({classInfo}) {
@@ -165,7 +166,7 @@ function ClassTask({classInfo}) {
                           Instruction:&nbsp;
                         </div>
                         <div className='text-color-707070' >
-                        <span style={{marginTop:"300px !important"}} dangerouslySetInnerHTML={{__html:moduleitem?.task?.instructions }} />
+                        <ContentViewer>{moduleitem?.task?.instructions}</ContentViewer>
                         </div>
                       </div>
                     </Col>
