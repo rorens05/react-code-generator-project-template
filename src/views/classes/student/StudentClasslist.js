@@ -7,7 +7,7 @@ function StudentClasslist({item}) {
   return (
     <div>
          <Card className='class-card' >
-        <Link to={`/classescontent/${item.classId}`}>
+        <Link to={`/classescontent/${item.classId}/feed`}>
           <Card.Header className='class-header-card' >
             <Row>
               <Col sm={10}>

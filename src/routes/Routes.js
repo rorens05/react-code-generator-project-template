@@ -89,7 +89,7 @@ export default function Routes() {
             <PrivateRoute path='/reports' exact component={Reports}/>
             {/* <PrivateRoute path='/classlist' exact component={ClassList}/> */}
             <PrivateRoute path='/archive' exact component={ArchiveClass}/>
-            <PrivateRoute path='/class/:class_id/exam/:id' exact component={ExamInformation}/>
+            <PrivateRoute path='/classExam/:class_id/exam/:id' exact component={ExamInformation}/>
             <PrivateRoute path='/' exact component={Home}/>
             <PrivateRoute path='/classescontent/:id' exact component={ClassesContent}/>
             <PrivateRoute path='/class/:class_id/exam/:id' exact component={ExamInformation}/>

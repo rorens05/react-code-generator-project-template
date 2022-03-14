@@ -10,12 +10,13 @@ export default function ExamItemContent({
   startDate,
   endDate,
 }) {
+  console.log(user.isStudent, 'sampleeee')
   return (
     <>
       <Link
         to={
           user.isStudent
-            ? `/class/${id}/exam/${exam.test.id}`
+            ? `/classExam/${id}/exam/${exam.test.id}`
             : `/class/${id}/exam/${exam.test.id}?class_id=${id}&${exam.test.classId == null && 'not_editable=true'}`
         }
         className='exam-title'
