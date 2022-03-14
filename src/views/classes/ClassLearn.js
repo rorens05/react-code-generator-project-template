@@ -77,50 +77,52 @@ function ClassLearn() {
   return (
     <ClassSideNavigation setLoading={()=> console.log('sample')}>
       <ClassBreedCrumbs title={''} clicked={() => console.log('')}/>
-      <Row>
-        <Col className='scrollable vh-80 pb-5' style={{marginLeft:'15px'}} >
-          <ClassLearnHeader content={content}  classInfo={classInfo}/>
-        </Col>
-        <Col md='3'>
-        <Card className='calendar kb-0px'style={{backgroundColor:'white'}}>
-      <Card.Header className='calendar-header' style={{backgroundColor:'white'}}>
-        <div className="row calendar-title">
-          <div>
-           Table of Content
-          </div>
-        </div>
-        <div className="row calendar-subtitle">
-          <div>
-          <Form.Select onChange={onModuleChange} aria-label="Default select example">
-        <option value="">--SELECT UNIT HERE--</option>
-        {modules.map(item =>{
-            return (<option value={item?.id} > {item?.moduleName}</option>)
-          })}
-        </Form.Select>
-          </div>
-        </div>
-      </Card.Header>
-      <div >
-      <Card.Body >
-        <Card.Title tag="h5" className='card-title'>
-          UNIT
-        </Card.Title>
-        <Card.Text className='card-title' >
-        <ul style={{listStyle:'none'}}>
-        {Pages.map(item =>{
-            return (
-              <>
-                <li><Button onClick={() => getContent(item?.id)} className='btn-create-discussion' variant="link" > {item?.pageName}  </Button></li>
-              </>
-            )
-          })}
-          </ul>
-        </Card.Text>
-      </Card.Body>
+      <div style={{position:'relative'}} className='not-scrollable'>
+        <Row>
+          <Col className='scrollable vh-80 pb-5' style={{marginLeft:'15px'}} >
+            <ClassLearnHeader content={content}  classInfo={classInfo}/>
+          </Col>
+          <Col md='3'>
+            <Card className='calendar kb-0px'style={{backgroundColor:'white'}}>
+              <Card.Header className='calendar-header' style={{backgroundColor:'white'}}>
+                <div className="row calendar-title">
+                  <div>
+                  Table of Content
+                  </div>
+                </div>
+                <div className="row calendar-subtitle">
+                  <div>
+                  <Form.Select onChange={onModuleChange} aria-label="Default select example">
+                <option value="">--SELECT UNIT HERE--</option>
+                {modules.map(item =>{
+                    return (<option value={item?.id} > {item?.moduleName}</option>)
+                  })}
+                </Form.Select>
+                  </div>
+                </div>
+              </Card.Header>
+              <div >
+              <Card.Body >
+                <Card.Title tag="h5" className='card-title'>
+                  UNIT
+                </Card.Title>
+                <Card.Text className='card-title' >
+                <ul style={{listStyle:'none', height: '50vh'}} className='scrollable pb-5'>
+                {Pages.map(item =>{
+                    return (
+                      <>
+                        <li><Button onClick={() => getContent(item?.id)} className='btn-create-discussion' variant="link" > {item?.pageName}  </Button></li>
+                      </>
+                    )
+                  })}
+                  </ul>
+                </Card.Text>
+              </Card.Body>
+              </div>
+            </Card>
+          </Col>
+        </Row>
       </div>
-    </Card>
-        </Col>
-      </Row>
     </ClassSideNavigation>
   )
 }

@@ -4,7 +4,6 @@ import MainContainer from '../../components/layouts/MainContainer'
 import ClassBreedCrumbs from './components/ClassBreedCrumbs'
 import {  Col, Row } from 'react-bootstrap';
 
-
 function ClassesContent() {
   const [loading, setLoading] = useState(true)
   return (

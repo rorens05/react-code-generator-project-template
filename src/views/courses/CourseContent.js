@@ -1,20 +1,34 @@
-import React, { useState, useEffect } from "react";
-import { Tab, ListGroup, Row, Col } from 'react-bootstrap';
+import React, { useState, useEffect, useContext } from "react";
+import { ListGroup, Row, Col} from 'react-bootstrap';
 import MainContainer from '../../components/layouts/MainContainer'
-import CourseBreadcrumbs from "./components/CourseBreadcrumbs";
 import CoursesAPI from "../../api/CoursesAPI";
 import { Link} from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useParams } from "react-router";
+import { UserContext } from '../../context/UserContext';
 
-export default function CourseContent({children, course}) {
+export default function CourseContent({children}) {
   const [loading, setLoading] = useState(false)
   const [courseInfo, setCourseInfo] = useState("")
   const [collapseSide, setCollapseSide] = useState(localStorage.getItem('collapsCourse') == 'false' ? false : true);
   const [showTab, setShowTab] = useState(true)
   const currentLoc = window.location.pathname;
   const {id} = useParams()
+  const [moduleInfo, setModuleInfo] = useState({})
+  const userContext = useContext(UserContext)
+  const {user} = userContext.data
+
+  const getCourseUnitInformation = async(e) => {
+    setLoading(true)
+    let response = await new CoursesAPI().getCourseUnit(id)
+    setLoading(false)
+    if(response.ok){
+      setModuleInfo(response.data)
+      console.log(response.data)
+    }else{
+      alert("Something went wrong while fetching all a")
+    }
+  }
 
   const getCourseInformation = async(e) => {
     setLoading(true)
@@ -29,7 +43,6 @@ export default function CourseContent({children, course}) {
   }
 
   useEffect(() => {
-    console.log(localStorage.getItem('collapsCourse'))
     setShowTab(localStorage.getItem('collapsCourse') == 'false' ? false : true)
   }, [collapseSide]);
 
@@ -40,11 +53,15 @@ export default function CourseContent({children, course}) {
 
   useEffect(() => {
     getCourseInformation()
+    getCourseUnitInformation()
   }, [])
+
+  useEffect(() => {
+    if (user.isStudent) return (window.location.href = "/404");
+  }, []);
 
   return (
     <MainContainer loading={loading} fluid activeHeader={'courses'} style='not-scrollable'>
-      {/* <ToastContainer /> */}
         <Col style={{height: 100}} />
         <Row>
           {showTab ? <Col className="row-course-bg course-widget-font" sm={3}>

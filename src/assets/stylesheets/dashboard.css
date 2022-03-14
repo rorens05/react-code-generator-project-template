@@ -308,6 +308,22 @@ code {
   padding: 10px;
 }
 
+.font-size-30{
+  font-size: 30px;
+}
+
+.bg-gray{
+  background-color: #BCBCBC;
+}
+
+.height-80px{
+  height: 80px;
+}
+
+.br-5px{
+  border-radius: 5px;
+}
+
 @media only screen and (max-width: 1280px) {
   .header .floating-options{
     transform: scale(0.7);
@@ -334,4 +350,24 @@ code {
   letter-spacing: 0px;
   color: #707070;
   text-align: center;
+}
+
+.fr-box.fr-basic.fr-top{
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.mq-editable-field.mq-math-mode{
+  width: 100%;
+  padding: 8px 16px;
+  border: 1px solid #E9E9E9 !important;
+  border-radius: 0.25rem;
+}
+
+
+.content-viewer .mq-editable-field{
+  border: none !important;
+  box-shadow: none !important;
+  pointer-events: none;
+  cursor: default;
 }
