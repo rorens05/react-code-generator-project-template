@@ -51,8 +51,8 @@ export default function TeacherExamActions({
   return (
     <div className='exam-actions'>
       <OverlayTrigger
-        placement="right"
-        delay={{ show: 1500, hide: 0 }}
+        placement="bottom"
+        delay={{ show: 1, hide: 0 }}
         overlay={renderTooltipPreview}>
         <a href='#preview'
         >
@@ -66,8 +66,8 @@ export default function TeacherExamActions({
       </OverlayTrigger>
       {exam.test.classId && (
       <OverlayTrigger
-        placement="right"
-        delay={{ show: 1500, hide: 0 }}
+        placement="bottom"
+        delay={{ show: 1, hide: 0 }}
         overlay={exam.test.isShared ? renderTooltipUnShare : renderTooltipShare}>
         <a
           href='#share'
@@ -81,8 +81,8 @@ export default function TeacherExamActions({
       </OverlayTrigger>
       ) }
       <OverlayTrigger
-        placement="right"
-        delay={{ show: 1500, hide: 0 }}
+        placement="bottom"
+        delay={{ show: 1, hide: 0 }}
         overlay={renderTooltipAssign}>
         <a
           href='#assign'
@@ -96,8 +96,8 @@ export default function TeacherExamActions({
       </OverlayTrigger>
       {exam.test.classId != null && !exam.test.isShared && (
       <OverlayTrigger
-        placement="right"
-        delay={{ show: 1500, hide: 0 }}
+        placement="bottom"
+        delay={{ show: 1, hide: 0 }}
         overlay={renderTooltipEdit}>
         <a
           href='#edit'
@@ -115,8 +115,8 @@ export default function TeacherExamActions({
         <>
           {exam.test.classId != null && !exam.test.isShared && (
           <OverlayTrigger
-            placement="right"
-            delay={{ show: 1500, hide: 0 }}
+            placement="bottom"
+            delay={{ show: 1, hide: 0 }}
             overlay={renderTooltipDelete}>
               <a
                 href='#delete'

@@ -155,19 +155,19 @@ export default function CourseLearn({courseInfo, setCourseInfo, viewLesson, setV
                         li.pageName.toLowerCase().includes(filter.toLowerCase())).map
                         ((li, index) => {
                       return(
-                        <Row style={{margin:'10px', marginRight:'30px'}}>
+                        <Row style={{margin:'10px'}}>
                           <Col className="lesson-header" md={9} onClick={(e) => getModuleContent(e, moduleid, li.id)}>
                             {li?.pageName}
                           </Col>
                           <Col className="align-right-content" md={3}>
                             <OverlayTrigger
-                              placement="right"
+                              placement="bottom"
                               delay={{ show: 1, hide: 0 }}
                               overlay={renderTooltipEdit}>
                                 <Button key={li.id} className="m-r-5 color-white tficolorbg-button" size="sm" onClick={(e) => handleOpenEditLessonModal(e, li)}><i className="fa fa-edit"></i></Button>
                             </OverlayTrigger>
                             <OverlayTrigger
-                              placement="right"
+                              placement="bottom"
                               delay={{ show: 1, hide: 0 }}
                               overlay={renderTooltipDelete}>
                                 <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={() => {setSweetError(true) }}><i className="fa fa-trash"></i></Button>

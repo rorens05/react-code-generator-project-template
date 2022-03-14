@@ -127,7 +127,7 @@ function ClassInteractive({classInfo}) {
                     {interItem?.classInteractiveAssignment?(
                     <>
                         <OverlayTrigger
-                          placement="right"
+                          placement="bottom"
                           delay={{ show: 1, hide: 0 }}
                           overlay={renderTooltipReasign}>
                            <Button onClick={(e) => editAssignIteractiveToggle(e, interItem)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-clock"></i></Button>
@@ -136,7 +136,7 @@ function ClassInteractive({classInfo}) {
                     ):
                     <>
                     <OverlayTrigger
-                      placement="right"
+                      placement="bottom"
                       delay={{ show: 1, hide: 0 }}
                       overlay={renderTooltipReasign}>
                         <Button onClick={(e) => assignInteractiveToggle(e, interItem?.interactive?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-user-clock"></i></Button>

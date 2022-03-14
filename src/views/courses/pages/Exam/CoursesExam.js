@@ -141,7 +141,7 @@ export default function CoursesExam({moduleInfo, setModuleInfo, moduleId}) {
                   ((ei, index) => {
                   return(
                     <>
-                    <Row style={{margin:'10px', marginRight:'30px'}}>
+                    <Row style={{margin:'10px'}}>
                       <Col className="" md={9}>
                         <Link className="lesson-header" to={`/exam_creation/${ei?.id}`}>
                           {ei?.testName}
@@ -152,13 +152,13 @@ export default function CoursesExam({moduleInfo, setModuleInfo, moduleId}) {
                       </Col>
                       <Col className="align-right-content" md={3}>
                       <OverlayTrigger
-                        placement="right"
+                        placement="bottom"
                         delay={{ show: 1, hide: 25 }}
                         overlay={renderTooltipEdit}>
                           <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={(e) => handleOpenEditExamModal(e, ei)}><i className="fa fa-edit"></i></Button>
                       </OverlayTrigger>
                       <OverlayTrigger
-                        placement="right"
+                        placement="bottom"
                         delay={{ show: 1, hide: 25 }}
                         overlay={renderTooltipDelete}>
                         <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={() => setSweetError(true)}><i className="fa fa-trash" ></i></Button>

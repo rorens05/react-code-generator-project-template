@@ -153,19 +153,19 @@ export default function CoursesAssignment({moduleInfo, setModuleInfo, showAssign
                   {assignmentInfo.filter(item => 
                     item.assignmentName.toLowerCase().includes(filter.toLowerCase())
                   ).map((as, index) => (
-                    <Row style={{margin:'10px', marginRight:'30px'}} >
+                    <Row style={{margin:'10px',}} >
                       <Col className="lesson-header" md={9} >
                         <span onClick={(e) => {viewAss(as)}}>{as?.assignmentName}</span>
                       </Col>
                       <Col className="align-right-content" md={3}>
                       <OverlayTrigger
-                        placement="right"
+                        placement="bottom"
                         delay={{ show: 1, hide: 25 }}
                         overlay={renderTooltipEdit}>
                           <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={(e) => handleOpenEditAssignmentModal(e, as)}><i className="fa fa-edit"></i></Button>
                       </OverlayTrigger>
                       <OverlayTrigger
-                        placement="right"
+                        placement="bottom"
                         delay={{ show: 1, hide: 25 }}
                         overlay={renderTooltipDelete}> 
                         <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={() => {setSweetError(true); setAssignmentId(as.id)}}><i className="fa fa-trash"  ></i></Button>
