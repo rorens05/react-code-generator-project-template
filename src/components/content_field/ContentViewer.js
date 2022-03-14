@@ -14,7 +14,7 @@ export default function ContentViewer({className = "", children}) {
           placeholder='Enter equation'
           autoCommands="pi theta sqrt sum prod alpha beta gamma rho"
           autoOperatorNames="sin cos tan"
-        /> 
+          /> 
         </div>
       )
     }

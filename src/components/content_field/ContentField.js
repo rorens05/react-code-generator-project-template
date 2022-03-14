@@ -84,7 +84,7 @@ export default function ContentField(props) {
         name="inputType"
         type={"radio"}
         value=""
-        selected={inputType === ""}
+        checked={inputType === ""}
         onChange={e => updateInputType(e.target.value)}
       />
       <Form.Check
@@ -93,7 +93,7 @@ export default function ContentField(props) {
         name="inputType"
         type={"radio"}
         value="equation"
-        selected={inputType === EQUATION}
+        checked={inputType === EQUATION}
         onChange={e => updateInputType(EQUATION)}
       />
       <Form.Check
@@ -102,7 +102,7 @@ export default function ContentField(props) {
         name="inputType"
         type={"radio"}
         value="rich-text"
-        selected={inputType === RICH_TEXT}
+        checked={inputType === RICH_TEXT}
         onChange={e => updateInputType(RICH_TEXT)}
       />
     </div>

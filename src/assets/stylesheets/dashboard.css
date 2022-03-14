@@ -341,3 +341,7 @@ code {
   pointer-events: none;
   cursor: default;
 }
+
+.mq-scaled.mq-paren{
+  transform: scale(1) !important;
+}
