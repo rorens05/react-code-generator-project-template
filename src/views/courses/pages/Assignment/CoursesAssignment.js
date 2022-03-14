@@ -162,13 +162,13 @@ export default function CoursesAssignment({moduleInfo, setModuleInfo, showAssign
                         placement="right"
                         delay={{ show: 1, hide: 25 }}
                         overlay={renderTooltipEdit}>
-                          <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={(e) => handleOpenEditAssignmentModal(e, as)}><i className="fa fa-edit"></i></Button>
+                          <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={(e) => handleOpenEditAssignmentModal(e, as)}><i className="fa fa-edit"></i>1</Button>
                       </OverlayTrigger>
                       <OverlayTrigger
                         placement="right"
                         delay={{ show: 1, hide: 25 }}
                         overlay={renderTooltipDelete}> 
-                        <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={() => {setSweetError(true); setAssignmentId(as.id)}}><i className="fa fa-trash"  ></i></Button>
+                        <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={() => {setSweetError(true); setAssignmentId(as.id)}}><i className="fa fa-trash"  >1</i></Button>
                       </OverlayTrigger> 
                       </Col>
                       {assignmentInfo.length == 0 && !loading && <div className="no-exams">No assignment found...</div>}

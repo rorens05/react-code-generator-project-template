@@ -186,7 +186,7 @@ function ClassDiscussion({classInfo}) {
                 }
               }).map(moduleitem => {
                 return (
-                  <Row style={{margin:'5px'}}>
+                  <Row style={{margin:'10px'}}>
                     <Col sm={8}>
                       <div className='title-exam'>
                         {moduleitem?.discussion?.discussionName}

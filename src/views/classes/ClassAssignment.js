@@ -195,7 +195,7 @@ function ClassAssignment({classInfo}) {
               }
             }).map(assigItem => {
           return( 
-          <Row style={{margin:'5px'}}>
+          <Row style={{margin:'10px'}}>
             <Col sm={8}>
               <div className='title-exam'>
                 {assigItem?.assignment?.assignmentName}
@@ -286,7 +286,7 @@ function ClassAssignment({classInfo}) {
                 <OverlayTrigger
                   placement="right"
                   delay={{ show: 1, hide: 0 }}
-                  overlay={1}>
+                  overlay={renderTooltipView}>
                   <Button onClick={() => viewAssignmentToggle(assigItem?.assignment, assigItem?.classAssignment)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button>
                 </OverlayTrigger>
                 <OverlayTrigger
