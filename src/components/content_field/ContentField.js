@@ -81,7 +81,6 @@ export default function ContentField(props) {
       <Form.Check
         inline
         label="Text Editor"
-        name="inputType"
         type={"radio"}
         value=""
         checked={inputType === ""}
@@ -90,7 +89,6 @@ export default function ContentField(props) {
       <Form.Check
         inline
         label="Equation Editor"
-        name="inputType"
         type={"radio"}
         value="equation"
         checked={inputType === EQUATION}
@@ -99,7 +97,6 @@ export default function ContentField(props) {
       <Form.Check
         inline
         label="Rich Text Editor"
-        name="inputType"
         type={"radio"}
         value="rich-text"
         checked={inputType === RICH_TEXT}

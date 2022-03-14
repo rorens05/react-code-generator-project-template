@@ -96,17 +96,8 @@ const MultipleChoiceForm = ({
                     >
                       <div />
                     </div>
-                    <Form.Control
-                      defaultValue={""}
-                      value={choice.testChoices}
-                      className='custom-input'
-                      size='lg'
-                      type='text'
-                      placeholder='Enter Choice'
-                      onChange={(e) =>
-                        onChoiceTextChange(index, e.target.value)
-                      }
-                    />
+                    <ContentField value={choice.testChoices} onChange={value => onChoiceTextChange(index, value)} />
+
                   </div>
                 );
               })}
@@ -232,11 +223,11 @@ export default function MultipleChoice({
             <table>
               {question.choices.map((choice, index) => (
                 <tr key={index}>
-                  <td>{choice.testChoices}</td>
+                  <td><ContentViewer>{choice.testChoices}</ContentViewer></td>
                 </tr>
               ))}
             </table>
-            <h5 className='font-weight-bold mt-3'>Answer: {question.answer}</h5>
+            <h5 className='font-weight-bold mt-3'>Answer: <ContentViewer>{question.answer}</ContentViewer></h5>
             <p className=''>Point(s): {question.question.rate}</p>
           </div>
           {editable && (
