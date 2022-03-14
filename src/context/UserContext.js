@@ -41,6 +41,7 @@ export class UserContextProvider extends Component {
           break;
       }
       await this.setState({loading: false, user })
+      document.body.style.setProperty('--primary-color', 'green')
     } else {
       await this.setState({loading: false, user: null})
     }    
