@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Form, Modal, InputGroup } from "react-bootstrap";
+import ContentViewer from '../../../../components/content_field/ContentViewer';
 
 function PreviewExam({showPreviewExamModal, setShowPreviewExamModal, testItem, questionPartDto}) {
 
@@ -31,12 +32,13 @@ function PreviewExam({showPreviewExamModal, setShowPreviewExamModal, testItem, q
             let number = index + 1
           return(<>
           <Form.Group className='m-b-15'>
-          <Form.Label >{number}. {item2?.question?.testQuestion}</Form.Label>
+            <Form.Label className='d-flex'>{number}. <ContentViewer> {item2?.question?.testQuestion}</ContentViewer></Form.Label>
           </Form.Group>
           {item2.choices?.map(item3 => {
             return(<>
-              <Form.Group className='m-b-20'>
-                <Form.Check type="radio" label={item3?.testChoices} disabled/>
+              <Form.Group className='m-b-20 d-flex align-items-center'>
+                <Form.Check type="radio" disabled className='px-3 pl-0'/>
+                <ContentViewer>{item3?.testChoices}</ContentViewer>
               </Form.Group>
             </>)
           })}
@@ -49,7 +51,7 @@ function PreviewExam({showPreviewExamModal, setShowPreviewExamModal, testItem, q
            let number = index + 1
           return(<>
           <Form.Group className='m-b-15'>
-          <Form.Label >{number}. {item2?.question?.testQuestion}</Form.Label>
+          <Form.Label className='d-flex'>{number}. <ContentViewer>{item2?.question?.testQuestion}</ContentViewer></Form.Label>
           </Form.Group>
           {item2.choices?.map(item3 => {
             return(<>
@@ -68,7 +70,7 @@ function PreviewExam({showPreviewExamModal, setShowPreviewExamModal, testItem, q
            let number = index + 1
           return(<>
           <Form.Group className='m-b-15'>
-          <Form.Label >{number}. {item2?.question?.testQuestion}</Form.Label>
+          <Form.Label className='d-flex'>{number}. <ContentViewer>{item2?.question?.testQuestion}</ContentViewer></Form.Label>
           </Form.Group>
           {item2.choices?.map(item3 => {
             return(<>
@@ -87,7 +89,7 @@ function PreviewExam({showPreviewExamModal, setShowPreviewExamModal, testItem, q
            let number = index + 1
           return(<>
           <Form.Group className='m-b-15'>
-          <Form.Label >{number}. {item2?.question?.testQuestion}</Form.Label>
+          <Form.Label className='d-flex'>{number}. <ContentViewer>{item2?.question?.testQuestion}</ContentViewer></Form.Label>
           </Form.Group>
           <Form.Group className="mb-20">
             <Form.Control  as="textarea" rows={4} disabled style={{resize:'none'}} disabled />
@@ -102,7 +104,7 @@ function PreviewExam({showPreviewExamModal, setShowPreviewExamModal, testItem, q
            let number = index + 1
           return(<>
           <Form.Group className='m-b-15'>
-          <Form.Label >{number}. {item2?.question?.testQuestion}</Form.Label>
+          <Form.Label className='d-flex'>{number}. <ContentViewer>{item2?.question?.testQuestion}</ContentViewer></Form.Label>
           </Form.Group>
           {item2.choices?.map(item3 => {
             return(<>
