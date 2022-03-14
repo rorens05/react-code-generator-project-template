@@ -40,8 +40,12 @@ export class UserContextProvider extends Component {
         default:
           break;
       }
+      let themeResponse = await new Auth().theme()
+      console.log({themeResponse})
+      if(themeResponse.ok) {
+        document.body.style.setProperty('--primary-color', themeResponse.data)
+      }
       await this.setState({loading: false, user })
-      document.body.style.setProperty('--primary-color', 'green')
     } else {
       await this.setState({loading: false, user: null})
     }    

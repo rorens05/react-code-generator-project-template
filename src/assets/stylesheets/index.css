@@ -1,6 +1,11 @@
+
+span, input::placeholder {
+  font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans",
+    "Helvetica Neue", Arial, sans-serif !important;
+}
+
 body{
-  --primary-color: blue;
-  /* --primary-color: #EE9337; */
+  --primary-color: #EE9337;
   margin: 0;
   background-color: #F5F5F5;
 }
@@ -1265,7 +1270,8 @@ hr{
 }
 
 .hover-link:hover{
-  background-color: rgb(255, 250, 240);
+  background-color: var(--primary-color) '80';
+  
   cursor: pointer;
 }
 
