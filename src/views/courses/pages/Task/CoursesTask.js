@@ -133,7 +133,7 @@ export default function CoursesTask({moduleInfo, showTask, setShowTask}) {
                 {taskInfo.filter(item => 
                   item.taskName.toLowerCase().includes(filter.toLowerCase())
                 ).map((ti, index) => (
-                  <Row style={{margin:'10px'}}>
+                  <Row style={{margin:'10px', marginRight:'30px'}}>
                     <Col className="lesson-header" md={9}>
                       <span onClick={(e) => {viewTas(ti)}}>{ti?.taskName}</span>
                     </Col>

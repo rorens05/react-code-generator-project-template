@@ -141,7 +141,7 @@ export default function CoursesExam({moduleInfo, setModuleInfo, moduleId}) {
                   ((ei, index) => {
                   return(
                     <>
-                    <Row style={{margin:'10px'}}>
+                    <Row style={{margin:'10px', marginRight:'30px'}}>
                       <Col className="" md={9}>
                         <Link className="lesson-header" to={`/exam_creation/${ei?.id}`}>
                           {ei?.testName}

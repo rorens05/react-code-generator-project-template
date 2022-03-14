@@ -137,7 +137,7 @@ export default function CoursesDiscussion({moduleInfo, moduleId, showDiscussion,
                 {discussionInfo.filter(di => 
                   di.discussion?.discussionName?.toLowerCase().includes(filter.toLowerCase())
                 ).map((di, index) => (
-                  <Row style={{margin:'10px'}}>
+                  <Row style={{margin:'10px', marginRight:'30px'}}>
                     <Col className="lesson-header" md={9}>
                     <span onClick={(e) => {viewDis(di)}}>{di?.discussion.discussionName}</span>
                     </Col>

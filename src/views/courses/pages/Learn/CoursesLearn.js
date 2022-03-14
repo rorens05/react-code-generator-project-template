@@ -155,7 +155,7 @@ export default function CourseLearn({courseInfo, setCourseInfo, viewLesson, setV
                         li.pageName.toLowerCase().includes(filter.toLowerCase())).map
                         ((li, index) => {
                       return(
-                        <Row style={{margin:'10px'}}>
+                        <Row style={{margin:'10px', marginRight:'30px'}}>
                           <Col className="lesson-header" md={9} onClick={(e) => getModuleContent(e, moduleid, li.id)}>
                             {li?.pageName}
                           </Col>
