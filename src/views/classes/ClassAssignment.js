@@ -40,6 +40,9 @@ function ClassAssignment({classInfo}) {
   const [viewAssignmentItem, setViewAssignmentItem] = useState([])
   const [viewAssignmentAssign, setViewAssignmentAssign] = useState()
   const [searchTerm, setSearchTerm] = useState('')
+  const [assignmentName, setAssignmentName] = useState('')
+  const [instructions, setInstructions] = useState('')
+  const [unit, setUnit] = useState('')
 
   const onSearch = (text) => {
     setSearchTerm(text)
@@ -62,8 +65,13 @@ function ClassAssignment({classInfo}) {
     setAnswerModal(!answerModal)
   }
 
-  const toggle = (e, item) =>{
-    setEditAssignment(item)
+  const toggle = (e, item, item2, item3, item4, item5) =>{
+    setInstructions(item)
+    setAssignmentName(item2)
+    setUnit(item3)
+    setAssignmentId(item4)
+    setModuleId(item5)
+    getAssignmentList(null, item5)
     setModal(!modal)
   }
 
@@ -129,6 +137,8 @@ function ClassAssignment({classInfo}) {
     }  
   }, [])
 
+  console.log('item?.id:', assignment)
+
   return (
     <div>
       <AssignmentHeader onSearch={onSearch} module={module} getAssignmentList={getAssignmentList} />
@@ -191,7 +201,7 @@ function ClassAssignment({classInfo}) {
                 <Button onClick={() => answerAnswerToggle()} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-user-edit"></i></Button>
                 Student Modal Answers */}
                 <Button onClick={() => viewAssignmentToggle(assigItem?.assignment, assigItem?.classAssignment)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button>
-                <Button onClick={(e) => toggle(e, assigItem)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-edit"></i></Button>
+                <Button onClick={(e) => toggle(e, assigItem?.assignment?.instructions, assigItem?.assignment?.assignmentName, item?.moduleName, assigItem?.assignment?.id, assigItem?.module?.id)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-edit"></i>1</Button>
                 {assigItem?.classAssignment?(
                   <Button onClick={(e) => editAssignedAssignmentToggle(e, assigItem)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-clock"></i></Button>
                 ):
@@ -311,7 +321,7 @@ function ClassAssignment({classInfo}) {
       <ViewAssignment viewAssignmentAssign={viewAssignmentAssign}  viewAssignmentItem={viewAssignmentItem} viewAssignmentToggle={viewAssignmentToggle} viewAssignmentModal={viewAssignmentModal} />
       <StudentSubmittedAssigment submittedAssignmentToggle={submittedAssignmentToggle} submittedAssignment={submittedAssignment}  />
       <StudentAnswerAssignment answerAnswerToggle={answerAnswerToggle} answerModal={answerModal} />
-      <EditAssignment toggle={toggle} modal={modal} editAssignment={editAssignment} getAssignmentList={getAssignmentList} moduleId={moduleId} />
+      <EditAssignment assignmentId={assignmentId} unit={unit} setUnit={setUnit} setAssignmentName={setAssignmentName} assignmentName={assignmentName} setModal={setModal} instructions={instructions} setInstructions={setInstructions} toggle={toggle} modal={modal} editAssignment={editAssignment} getAssignmentList={getAssignmentList} moduleId={moduleId} />
       <AssignAssignment moduleId={moduleId} assignmentId={assignmentId} assginModal={assginModal} assignAssignmentToggle={assignAssignmentToggle} getAssignmentList={getAssignmentList} />
       <EditAssignedAssignment moduleId={moduleId} getAssignmentList={getAssignmentList} editAssignAssignmentItem={editAssignAssignmentItem} editAssignedAssignmentModal={editAssignedAssignmentModal} editAssignedAssignmentToggle={editAssignedAssignmentToggle} />
     </div>

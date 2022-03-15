@@ -40,21 +40,29 @@ function ClassTask({classInfo}) {
   const [viewTaskItem, setViewTaskItem] = useState([])
   const [viewTaskAssign, setViewTaskAssign] = useState(null)
   const [searchTerm, setSearchTerm] = useState('')
+  const [taskName, setTaskName] = useState('')
+  const [instructions, setInstructions] = useState('')
+  const [taskId, setTaskId] = useState('')
+  const [moduleName, setModuleName] = useState('')
 
   const onSearch = (text) => {
     setSearchTerm(text)
   }
   
-  const viewTaskTaggle = (item, item1,) => {
+  const viewTaskTaggle = (item, item1) => {
     setViewTaskItem(item)
     setViewTaskAssign(item1)
     setViewTaskModal(!viewTaskModal)
   }
 
-  const toggle = (e, item) =>{
-    setEditTask(item)
+  const toggle = (e, item, item1, item2, item3) =>{
+    setTaskName(item)
+    setInstructions(item1)
+    setTaskId(item2)
+    setModuleName(item3)
     setModal(!modal)
   }
+
 
   const editAssignTaskToggle = (e, item) => {
     setEditAssignTaskItem(item)
@@ -174,7 +182,7 @@ function ClassTask({classInfo}) {
                     <Col sm={3} className='icon-exam'>
                       {/* Student Modal Answers */}
                       <Button onClick={() => viewTaskTaggle(moduleitem?.task, moduleitem?.taskAssignment)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button>
-                        <Button onClick={(e) => toggle(e, moduleitem)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-edit"></i></Button>
+                        <Button onClick={(e) => toggle(e, moduleitem?.task?.taskName,  moduleitem?.task?.instructions, moduleitem?.task?.id, moduleitem?.module?.moduleName)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-edit"></i></Button>
                         {moduleitem?.taskAssignment?(
                           <>
                             
@@ -285,7 +293,7 @@ function ClassTask({classInfo}) {
           })}
           </Accordion>
           <ViewTask viewTaskAssign={viewTaskAssign} viewTaskItem={viewTaskItem} viewTaskTaggle={viewTaskTaggle} viewTaskModal={viewTaskModal} />
-          <EditTask moduleId={moduleId} editTask={editTask} toggle={toggle} modal={modal} module={module} getTaskModule={getTaskModule} />
+          <EditTask moduleName={moduleName} taskId={taskId} setTaskId={setTaskId} instructions={instructions} setInstructions={setInstructions} taskName={taskName} setTaskName={setTaskName} setModal={setModal} moduleId={moduleId} editTask={editTask} toggle={toggle} modal={modal} module={module} getTaskModule={getTaskModule} />
           <AssignTask moduleId={moduleId} getTaskModule={getTaskModule} assingTaskId={assingTaskId} assignTaskModal={assignTaskModal} assignTaskToggle={assignTaskToggle} />
           <EditAssignTask getTaskModule={getTaskModule} editAssignTaskItem={editAssignTaskItem} editAssignTaskToggle={editAssignTaskToggle} editAssignTaskModal={editAssignTaskModal} />
        </>
