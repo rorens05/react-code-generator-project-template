@@ -9,7 +9,7 @@ export default function CourseExamCreation() {
 
   return (
     <ClassSideNavigation>
-      <ClassBreadcrumbs title='Exam Details' clicked={() => window.location.replace(`/classes/${id}/exam`)}/>
+      <ClassBreadcrumbs title='Exam Information' clicked={() => window.location.replace(`/classes/${id}/exam`)}/>
       <ExamCreation />
     </ClassSideNavigation>
   )

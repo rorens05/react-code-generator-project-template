@@ -9,7 +9,7 @@ export default function CourseExamCreation() {
 
   return (
     <CourseContent>
-      <CourseBreadcrumbs title='Exam Details' clicked={() => window.location.replace(`/courses/${id}/exam`)}/>
+      <CourseBreadcrumbs title='Exam Information' clicked={() => window.location.replace(`/courses/${id}/exam`)}/>
       <ExamCreation />
     </CourseContent>
   )

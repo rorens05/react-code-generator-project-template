@@ -105,7 +105,7 @@ export default function CourseContent({children}) {
               <i className="fas fa-chevron-right" style={{color: '#EE9337'}} onClick={()=> handleClicked(true)}/>
             </Col>
             <ListGroup>
-              <Link className={currentLoc.includes('learn') ? "active-nav-item" : 'nav-item'} to={`/courses/${id}/learn`}>
+              <Link className={currentLoc.includes('learn') ? "active-nav-item" : 'nav-item'} to={`/coursecontent/${id}/learn`}>
                 <i className="fas fa-book" title="Learn"/>
               </Link>
               <Link className={currentLoc.includes('exam') ? "active-nav-item" : 'nav-item'} to={`/courses/${id}/exam`}>
