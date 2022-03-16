@@ -20,6 +20,7 @@ const Field = (props) => {
           autoCommands="pi theta sqrt sum prod alpha beta gamma rho"
           autoOperatorNames="sin cos tan"
           onChange={(text) => onChange(`${EQUATION_TAG}${text}`)}
+          required
         />
       );
     case RICH_TEXT:
@@ -39,6 +40,7 @@ const Field = (props) => {
           type='text'
           placeholder={placeholder}
           onChange={(e) => onChange(e.target.value)}
+          required
         />
       );
   }

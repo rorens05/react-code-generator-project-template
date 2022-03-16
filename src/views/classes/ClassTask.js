@@ -292,7 +292,7 @@ function ClassTask({classInfo}) {
             )
           })}
           </Accordion>
-          <ViewTask viewTaskAssign={viewTaskAssign} viewTaskItem={viewTaskItem} viewTaskTaggle={viewTaskTaggle} viewTaskModal={viewTaskModal} />
+          <ViewTask setViewTaskModal={setViewTaskModal} viewTaskAssign={viewTaskAssign} viewTaskItem={viewTaskItem} viewTaskTaggle={viewTaskTaggle} viewTaskModal={viewTaskModal} />
           <EditTask moduleName={moduleName} taskId={taskId} setTaskId={setTaskId} instructions={instructions} setInstructions={setInstructions} taskName={taskName} setTaskName={setTaskName} setModal={setModal} moduleId={moduleId} editTask={editTask} toggle={toggle} modal={modal} module={module} getTaskModule={getTaskModule} />
           <AssignTask moduleId={moduleId} getTaskModule={getTaskModule} assingTaskId={assingTaskId} assignTaskModal={assignTaskModal} assignTaskToggle={assignTaskToggle} />
           <EditAssignTask getTaskModule={getTaskModule} editAssignTaskItem={editAssignTaskItem} editAssignTaskToggle={editAssignTaskToggle} editAssignTaskModal={editAssignTaskModal} />

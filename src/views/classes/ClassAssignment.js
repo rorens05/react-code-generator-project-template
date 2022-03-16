@@ -54,7 +54,6 @@ function ClassAssignment({classInfo}) {
   const viewAssignmentToggle = (item, item1) => {
     setViewAssignmentItem(item)
     setViewAssignmentAssign(item1)
-
     setViewAssigmentModal(!viewAssignmentModal)
   }
 
@@ -318,7 +317,7 @@ function ClassAssignment({classInfo}) {
         </Accordion.Item>)
       })}
       </Accordion>
-      <ViewAssignment viewAssignmentAssign={viewAssignmentAssign}  viewAssignmentItem={viewAssignmentItem} viewAssignmentToggle={viewAssignmentToggle} viewAssignmentModal={viewAssignmentModal} />
+      <ViewAssignment setViewAssigmentModal={setViewAssigmentModal} viewAssignmentAssign={viewAssignmentAssign}  viewAssignmentItem={viewAssignmentItem} viewAssignmentToggle={viewAssignmentToggle} viewAssignmentModal={viewAssignmentModal} />
       <StudentSubmittedAssigment submittedAssignmentToggle={submittedAssignmentToggle} submittedAssignment={submittedAssignment}  />
       <StudentAnswerAssignment answerAnswerToggle={answerAnswerToggle} answerModal={answerModal} />
       <EditAssignment xmoduleId={xmoduleId} assignmentId={assignmentId} unit={unit} setUnit={setUnit} setAssignmentName={setAssignmentName} assignmentName={assignmentName} setModal={setModal} instructions={instructions} setInstructions={setInstructions} toggle={toggle} modal={modal} editAssignment={editAssignment} getAssignmentList={getAssignmentList} moduleId={moduleId} />
