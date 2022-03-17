@@ -2,6 +2,7 @@ import React from 'react';
 import {Row, Col} from 'react-bootstrap'
 import Modal from 'react-bootstrap/Modal'
 import moment from 'moment'
+import ContentViewer from '../../../../components/content_field/ContentViewer';
 
 const StudentViewTask = ({viewTaskToggle, viewTaskMotal, viewTaskItem, startDate, startTime, endDate, endTime}) => {
   console.log('viewTaskItemviewTaskItemviewTaskItem:', viewTaskItem)
@@ -51,7 +52,7 @@ const StudentViewTask = ({viewTaskToggle, viewTaskMotal, viewTaskItem, startDate
           </Modal.Header>
           <Modal.Body>
           <div className='text-color-707070' >
-            <span style={{marginTop:"300px !important"}} dangerouslySetInnerHTML={{__html:viewTaskItem?.instructions }} />
+            <ContentViewer>{viewTaskItem?.instructions}</ContentViewer>
           </div>
           </Modal.Body>
         </Modal>

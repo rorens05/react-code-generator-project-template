@@ -2,12 +2,13 @@ import React from 'react';
 import {Row, Col} from 'react-bootstrap'
 import Modal from 'react-bootstrap/Modal'
 import moment from 'moment'
+import ContentViewer from '../../../../components/content_field/ContentViewer';
 
-const StudentViewAssignment = ({viewAssignmentToggle, viewAssignmentModal, viewAssignmentItem, startDate, startTime, endDate, endTime}) => {
+const StudentViewAssignment = ({viewAssignmentToggle, viewAssignmentModal, viewAssignmentItem, startDate, startTime, endDate, endTime, setViewAssignmentModal}) => {
   console.log('viewAssignmentItem:', viewAssignmentItem)
   console.log('TIME AND DATE:', startDate, startTime, endDate, endTime)
   return <div>
-     <Modal  size="lg" show={viewAssignmentModal} onHide={viewAssignmentToggle} aria-labelledby="example-modal-sizes-title-lg">
+     <Modal  size="lg" show={viewAssignmentModal} onHide={() => setViewAssignmentModal(false)} aria-labelledby="example-modal-sizes-title-lg">
           <Modal.Header className='class-modal-header' closeButton>
             <Modal.Title id="example-modal-sizes-title-lg" >
               {viewAssignmentItem?.assignmentName}
@@ -51,7 +52,7 @@ const StudentViewAssignment = ({viewAssignmentToggle, viewAssignmentModal, viewA
           </Modal.Header>
           <Modal.Body>
           <div className='text-color-707070' >
-            <span style={{marginTop:"300px !important"}} dangerouslySetInnerHTML={{__html:viewAssignmentItem?.instructions }} />
+            <ContentViewer>{viewAssignmentItem?.instructions}</ContentViewer>
           </div>
           </Modal.Body>
         </Modal>

@@ -7,6 +7,7 @@ import StudentAnswerAssignment from './StudentAnswerAssignment'
 import StudentSubmittedAssigment from './StudentSubmittedAssigment'
 import ClassesAPI from '../../../../api/ClassesAPI'
 import StudentViewAssignment from './StudentViewAssignment'
+import ContentViewer from '../../../../components/content_field/ContentViewer'
 
 function StudentAssignment({assignment, searchTerm}) {
   const [answerModal, setAnswerModal] = useState(false)
@@ -92,7 +93,7 @@ function StudentAssignment({assignment, searchTerm}) {
                           Instruction:&nbsp;
                         </div>
                         <div className='text-color-707070' >
-                        <span style={{marginTop:"300px !important"}} dangerouslySetInnerHTML={{__html:item?.assignment?.instructions }} />
+                        <ContentViewer>{item?.assignment?.instructions}</ContentViewer>
                         </div>
                       </div>
                     </Col>
@@ -193,7 +194,7 @@ function StudentAssignment({assignment, searchTerm}) {
         )
       })}
       <StudentAnswerAssignment assignmentId={assignmentId} answerAnswerToggle={answerAnswerToggle} answerModal={answerModal} />
-      <StudentViewAssignment startDate={startDate} startTime={startTime} endDate={endDate} endTime={endTime} viewAssignmentItem={viewAssignmentItem} viewAssignmentToggle={viewAssignmentToggle} viewAssignmentModal={viewAssignmentModal} />
+      <StudentViewAssignment setViewAssignmentModal={setViewAssignmentModal} startDate={startDate} startTime={startTime} endDate={endDate} endTime={endTime} viewAssignmentItem={viewAssignmentItem} viewAssignmentToggle={viewAssignmentToggle} viewAssignmentModal={viewAssignmentModal} />
       <StudentSubmittedAssigment studentAnswer={studentAnswer} submittedAssignmentToggle={submittedAssignmentToggle} submittedAssignment={submittedAssignment} />
     </div>
   )

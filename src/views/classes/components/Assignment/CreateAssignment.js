@@ -92,7 +92,7 @@ function CreateAssignment({modal, toggle, module, getAssignmentList, question, s
               </Form.Group>
               <Form.Group className="mb-4">
                 <Form.Label >Instruction</Form.Label>
-                  <ContentField value={instructions} onChange={value => setInstructions(value)} />
+                  <ContentField  value={instructions} onChange={value => setInstructions(value)} />
               </Form.Group>  
               <Form.Group className='right-btn'>
                 <Button className='tficolorbg-button' type='submit' >Save</Button>
