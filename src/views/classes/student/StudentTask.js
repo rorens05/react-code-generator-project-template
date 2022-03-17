@@ -195,7 +195,7 @@ function StudentTask({taskModule, searchTerm}) {
         )
       })}
       <StundentAnswerTask taskId={taskId} answerTaskToggle={answerTaskToggle} answerTaskModal={answerTaskModal} />
-      <StudentViewTask startDate={startDate} startTime={startTime} endDate={endDate} endTime={endTime} viewTaskItem={viewTaskItem} viewTaskToggle={viewTaskToggle} viewTaskMotal={viewTaskMotal} />
+      <StudentViewTask startDate={startDate} startTime={startTime} endDate={endDate} endTime={endTime} viewTaskItem={viewTaskItem} viewTaskToggle={viewTaskToggle} setViewTaskModal={setViewTaskModal} viewTaskMotal={viewTaskMotal} />
       <StudentSubmittedTask taskAnswerItem={taskAnswerItem} submittedTaskToggle={submittedTaskToggle} submittedTaskModal={submittedTaskModal} />
     </div>
   )
