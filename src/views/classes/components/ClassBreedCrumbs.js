@@ -11,6 +11,8 @@ const handleDisplayTab = () => {
       return 'Class List'
     case 'files':
       return 'Class Files'
+    case 'interactives':
+      return 'Interactive Exercises'
     default:
       return currentLoc
   }

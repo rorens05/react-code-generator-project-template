@@ -35,7 +35,7 @@ function CourseFiles() {
       <CourseBreadcrumbs title={''} clicked={() => console.log('')}/>
       <div className="row m-b-20 file-content">
         <FileHeader type='Course' id={id} doneUpload={()=> handleRefetch()}/>
-        <FilesContent data={filesToDisplay} type='Course' id={id}/>
+        <FilesContent data={filesToDisplay} deleted={() => handleRefetch()} type='Course' id={id}/>
       </div>
     </CourseContent>
   )
