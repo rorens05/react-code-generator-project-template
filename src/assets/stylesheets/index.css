@@ -1265,3 +1265,14 @@ hr{
   color: #7D7D7D;
   font: normal normal normal 36px Segoe UI;
 }
+
+.choice-delete{
+  color: #ff8103 !important;
+  font-size: 22px;
+  margin-right: 12px;
+  margin-left: 32px;
+}
+
+.flex-1{
+  flex: 1
+}

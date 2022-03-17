@@ -9,6 +9,7 @@ import DEFAULT_CHOICES from "../../../../contants/default-choices";
 import QuestionActions from "./QuestionActions";
 
 const MultipleChoiceForm = ({
+  selectedQuestion,
   showModal,
   setShowModal,
   onSubmit,
@@ -19,6 +20,37 @@ const MultipleChoiceForm = ({
   choices,
   setChoices,
 }) => {
+  
+  const addQuestion = (e) => {
+    e.preventDefault();
+    if(choices.length > 8){
+      toast.error("You can only add 8 choices")
+      return
+    }
+    setChoices([
+      ...choices,
+      { choicesImage: null, isCorrect: false, testChoices: "" },
+    ]);
+  };
+
+  const removeQuestion = (e, index) => {
+    if(choices.length <= 2){
+      toast.error("You must have at least 2 choices");
+      return;
+    }
+
+    e.preventDefault()
+    let tempChoices = choices.filter((choice, i) => i !== index)
+    let hasAnswer = false
+    tempChoices.forEach(choice => {
+      if(choice.isCorrect) hasAnswer = true
+    })
+    if(!hasAnswer) {
+      tempChoices[0].isCorrect = true
+    }
+    setChoices([...tempChoices])
+  };
+
   return (
     <Modal
       size='lg'
@@ -33,7 +65,10 @@ const MultipleChoiceForm = ({
         <Form onSubmit={onSubmit}>
           <Form.Group className='m-b-20'>
             <Form.Label for='question'>Question</Form.Label>
-            <ContentField value={question} onChange={value => setQuestion(value)} />
+            <ContentField
+              value={question}
+              onChange={(value) => setQuestion(value)}
+            />
           </Form.Group>
           <Form.Group className='m-b-20'>
             <Form.Label for='question'>Points</Form.Label>
@@ -96,11 +131,29 @@ const MultipleChoiceForm = ({
                     >
                       <div />
                     </div>
-                    <ContentField value={choice.testChoices} onChange={value => onChoiceTextChange(index, value)} />
-
+                    <ContentField
+                      className='flex-1'
+                      value={choice.testChoices}
+                      onChange={(value) => onChoiceTextChange(index, value)}
+                    />
+                    {selectedQuestion == null && (
+                      <a href='#delete-item' className="choice-delete" onClick={(e) => removeQuestion(e, index)}>
+                        <i class='fas fa-trash-alt'></i>
+                      </a>
+                    )}
+                    
                   </div>
                 );
               })}
+              {selectedQuestion == null && (
+                <Button
+                  className='tficolorbg-button'
+                  type='add-question'
+                  onClick={addQuestion}
+                  >
+                  Add Choice
+                </Button>
+              )}
             </div>
           </Form.Group>
           <span style={{ float: "right" }}>
@@ -145,18 +198,18 @@ export default function MultipleChoice({
       choices,
     };
     if (selectedQuestion != null) {
-      if(rate > 0 && rate < 101){
+      if (rate > 0 && rate < 101) {
         updateQuestion(selectedQuestion, data);
-      }else{
-        setLoading(false)
-        toast.error('Rate should be greater than 1 and less than 100.')
+      } else {
+        setLoading(false);
+        toast.error("Rate should be greater than 1 and less than 100.");
       }
     } else {
-      if(rate > 0 && rate < 101){
+      if (rate > 0 && rate < 101) {
         addQuestion(data);
-      }else{
-        setLoading(false)
-        toast.error('Rate should be greater than 1 and less than 100.')
+      } else {
+        setLoading(false);
+        toast.error("Rate should be greater than 1 and less than 100.");
       }
     }
   };
@@ -223,11 +276,15 @@ export default function MultipleChoice({
             <table>
               {question.choices.map((choice, index) => (
                 <tr key={index}>
-                  <td><ContentViewer>{choice.testChoices}</ContentViewer></td>
+                  <td>
+                    <ContentViewer>{choice.testChoices}</ContentViewer>
+                  </td>
                 </tr>
               ))}
             </table>
-            <h5 className='font-weight-bold mt-3'>Answer: <ContentViewer>{question.answer}</ContentViewer></h5>
+            <h5 className='font-weight-bold mt-3'>
+              Answer: <ContentViewer>{question.answer}</ContentViewer>
+            </h5>
             <p className=''>Point(s): {question.question.rate}</p>
           </div>
           {editable && (
@@ -263,6 +320,7 @@ export default function MultipleChoice({
         </Button>
       )}
       <MultipleChoiceForm
+        selectedQuestion={selectedQuestion}
         showModal={showModal}
         setShowModal={setShowModal}
         question={question}
