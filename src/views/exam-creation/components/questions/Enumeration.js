@@ -3,6 +3,8 @@ import { Button, Form, Modal } from "react-bootstrap";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { toast } from "react-toastify";
 import ExamAPI from "../../../../api/ExamAPI";
+import ContentField from "../../../../components/content_field/ContentField";
+import ContentViewer from "../../../../components/content_field/ContentViewer";
 import QuestionActions from "./QuestionActions";
 
 const EnumerationForm = ({
@@ -34,15 +36,7 @@ const EnumerationForm = ({
         <Form onSubmit={onSubmit}>
           <Form.Group className='m-b-20'>
             <Form.Label for='question'>Question</Form.Label>
-            <Form.Control
-              defaultValue={""}
-              value={question}
-              className='custom-input'
-              size='lg'
-              type='text'
-              placeholder='Enter test question'
-              onChange={(e) => setQuestion(e.target.value)}
-            />
+            <ContentField value={question} placeholder="Enter test question" onChange={value => setQuestion(value)} />
           </Form.Group>
           <Form.Group className='m-b-20'>
             <Form.Label for='question'>Points</Form.Label>
@@ -246,7 +240,7 @@ export default function Enumeration({
         <div key={index} className='d-flex hover-link p-3 rounded'>
           <div style={{ flex: 1 }}>
             <p className='primary-title'>
-              {index + 1}. {question.question.testQuestion}
+              <ContentViewer>{question.question.testQuestion}</ContentViewer>
             </p>
             <h5>Answers</h5>
             <table>

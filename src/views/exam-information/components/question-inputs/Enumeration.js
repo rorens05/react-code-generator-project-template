@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, Form } from "react-bootstrap";
+import ContentViewer from "../../../../components/content_field/ContentViewer";
 
 const Enumeration = ({ number, part, question, onAnswer }) => {
   return (
@@ -7,7 +8,7 @@ const Enumeration = ({ number, part, question, onAnswer }) => {
       <div className='question-input-number flex-direction-row'>{number}.</div>
       <div className='question-input-content'>
         <div className='question-input-content-title'>
-          {question.question.testQuestion}
+        <ContentViewer>{question.question.testQuestion}</ContentViewer>
         </div>
         <div className='question-input-content-choices'>
           {(question.studentAnswer || question.choices.map(() => ({answer: ""}))).map((item, index) => {
