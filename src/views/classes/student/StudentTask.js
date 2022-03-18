@@ -7,6 +7,7 @@ import { useParams } from 'react-router'
 import { UserContext } from '../../../context/UserContext'
 import ClassesAPI from '../../../api/ClassesAPI';
 import StudentViewTask from './components/StudentViewTask';
+import ContentViewer from '../../../components/content_field/ContentViewer';
 
 function StudentTask({taskModule, searchTerm}) {
   const userContext = useContext(UserContext)
@@ -105,7 +106,7 @@ function StudentTask({taskModule, searchTerm}) {
                           Instruction:&nbsp;
                         </div>
                         <div className='text-color-707070' >
-                        <span style={{marginTop:"300px !important"}} dangerouslySetInnerHTML={{__html:item?.task?.instructions }} />
+                        <ContentViewer>{item?.task?.instructions}</ContentViewer>
                         </div>
                       </div>
                     </Col>
@@ -236,7 +237,7 @@ function StudentTask({taskModule, searchTerm}) {
         )
       })}
       <StundentAnswerTask taskId={taskId} answerTaskToggle={answerTaskToggle} answerTaskModal={answerTaskModal} />
-      <StudentViewTask startDate={startDate} startTime={startTime} endDate={endDate} endTime={endTime} viewTaskItem={viewTaskItem} viewTaskToggle={viewTaskToggle} viewTaskMotal={viewTaskMotal} />
+      <StudentViewTask startDate={startDate} startTime={startTime} endDate={endDate} endTime={endTime} viewTaskItem={viewTaskItem} viewTaskToggle={viewTaskToggle} setViewTaskModal={setViewTaskModal} viewTaskMotal={viewTaskMotal} />
       <StudentSubmittedTask taskAnswerItem={taskAnswerItem} submittedTaskToggle={submittedTaskToggle} submittedTaskModal={submittedTaskModal} />
     </div>
   )

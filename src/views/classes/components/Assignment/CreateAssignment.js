@@ -6,8 +6,9 @@ import ClassesAPI from '../../../../api/ClassesAPI'
 import SweetAlert from 'react-bootstrap-sweetalert';
 import FilesAPI from '../../../../api/FilesApi';
 import FileHeader from '../../../files/FileHeader';
+import ContentField from '../../../../components/content_field/ContentField'
 
-function CreateAssignment({modal, toggle, module, getAssignmentList}) {
+function CreateAssignment({modal, toggle, module, getAssignmentList, question, setQuestion}) {
   const [moduleId, setModuleId] = useState('')
   const [assignmentName, setAssignmentName] = useState('')
   const [instructions, setInstructions] = useState('')
@@ -91,7 +92,7 @@ function CreateAssignment({modal, toggle, module, getAssignmentList}) {
               </Form.Group>
               <Form.Group className="mb-4">
                 <Form.Label >Instruction</Form.Label>
-                  <Form.Control onChange={(e) => setInstructions(e.target.value)} type="text" placeholder='Enter instruction here'/>
+                  <ContentField  value={instructions} onChange={value => setInstructions(value)} />
               </Form.Group>  
               <Form.Group className='right-btn'>
                 <Button className='tficolorbg-button' type='submit' >Save</Button>
