@@ -31,7 +31,7 @@ const TrueOrFalseForm = ({
       <Modal.Body className='modal-label b-0px'>
         <Form onSubmit={onSubmit}>
           <Form.Group className='m-b-20'>
-            <Form.Label for='question'>Question</Form.Label>
+            <Form.Label for='question'>Question1</Form.Label>
             <ContentField value={question} onChange={value => setQuestion(value)} />
           </Form.Group>
           <Form.Group className='m-b-20'>

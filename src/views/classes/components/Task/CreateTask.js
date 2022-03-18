@@ -6,6 +6,7 @@ import FilesAPI from '../../../../api/FilesApi';
 import FileHeader from '../../../files/FileHeader';
 import { useParams } from 'react-router'
 import SweetAlert from 'react-bootstrap-sweetalert';
+import ContentField from '../../../../components/content_field/ContentField';
 
 function CreateTask({modal, toggle, module, getTaskModule, classId}) {
   const [moduleId, setModuleId] = useState('')
@@ -89,7 +90,7 @@ function CreateTask({modal, toggle, module, getTaskModule, classId}) {
                 </Form.Group>
                 <Form.Group className="mb-4">
                   <Form.Label >Instruction</Form.Label>
-                    <Form.Control onChange={(e) => setInstructions(e.target.value)} type="text" placeholder='Enter instruction here'/>
+                    <ContentField value={instructions} onChange={value => setInstructions(value)} />
                   </Form.Group>
               <Form.Group className='right-btn'>
               <Button className={moduleId == '' ? 'disabled' : 'tficolorbg-button'} type='submit' >Save</Button>

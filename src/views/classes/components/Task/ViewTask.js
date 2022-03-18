@@ -2,14 +2,15 @@ import React from 'react';
 import {Row, Col} from 'react-bootstrap'
 import Modal from 'react-bootstrap/Modal'
 import moment from 'moment'
+import ContentViewer from '../../../../components/content_field/ContentViewer';
 
 
-const ViewTask = ({viewTaskTaggle, viewTaskModal, viewTaskItem, viewTaskAssign}) => {
+const ViewTask = ({viewTaskTaggle, viewTaskModal, viewTaskItem, viewTaskAssign, setViewTaskModal}) => {
   console.log('startDatestartDatestartDate:', viewTaskAssign)
   
   return (
   <>
-    <Modal  size="lg" show={viewTaskModal} onHide={viewTaskTaggle} aria-labelledby="example-modal-sizes-title-lg">
+    <Modal  size="lg" show={viewTaskModal} onHide={() => setViewTaskModal(false)} aria-labelledby="example-modal-sizes-title-lg">
       <Modal.Header className='class-modal-header' closeButton>
         <Modal.Title id="example-modal-sizes-title-lg" >
           {viewTaskItem?.taskName}
@@ -62,7 +63,8 @@ const ViewTask = ({viewTaskTaggle, viewTaskModal, viewTaskItem, viewTaskAssign})
       </Modal.Header>
       <Modal.Body>
       <div className='text-color-707070' >
-        <span style={{marginTop:"300px !important"}} dangerouslySetInnerHTML={{__html:viewTaskItem?.instructions }} />
+        {/* <span style={{marginTop:"300px !important"}} dangerouslySetInnerHTML={{__html:viewTaskItem?.instructions }} /> */}
+        <ContentViewer>{viewTaskItem?.instructions}</ContentViewer>
       </div>
       </Modal.Body>
     </Modal>

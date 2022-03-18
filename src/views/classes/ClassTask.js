@@ -16,6 +16,7 @@ import { UserContext } from '../../context/UserContext'
 import ViewTask from './components/Task/ViewTask'
 import ClassBreadcrumbs from './components/ClassBreedCrumbs';
 import ClassSideNavigation from './components/ClassSideNavigation';
+import ContentViewer from '../../components/content_field/ContentViewer'
 
 function ClassTask() {
   const [modal, setModal] = useState(false)
@@ -41,6 +42,10 @@ function ClassTask() {
   const [viewTaskAssign, setViewTaskAssign] = useState(null)
   const [searchTerm, setSearchTerm] = useState('')
   const [classInfo, setClassInfo] = useState({});
+  const [taskName, setTaskName] = useState('')
+  const [instructions, setInstructions] = useState('')
+  const [taskId, setTaskId] = useState('')
+  const [moduleName, setModuleName] = useState('')
 
   const onSearch = (text) => {
     setSearchTerm(text)
@@ -70,10 +75,14 @@ function ClassTask() {
     setViewTaskModal(!viewTaskModal)
   }
 
-  const toggle = (e, item) =>{
-    setEditTask(item)
+  const toggle = (e, item, item1, item2, item3) =>{
+    setTaskName(item)
+    setInstructions(item1)
+    setTaskId(item2)
+    setModuleName(item3)
     setModal(!modal)
   }
+
 
   const editAssignTaskToggle = (e, item) => {
     setEditAssignTaskItem(item)
@@ -209,13 +218,15 @@ function ClassTask() {
                           Instruction:&nbsp;
                         </div>
                         <div className='text-color-707070' >
-                        <span style={{marginTop:"300px !important"}} dangerouslySetInnerHTML={{__html:moduleitem?.task?.instructions }} />
+                        <ContentViewer>{moduleitem?.task?.instructions}</ContentViewer>
                         </div>
                       </div>
                     </Col>
                     {moduleitem.task.classId?( 
                     <Col sm={3} className='icon-exam'>
                       {/* Student Modal Answers */}
+                      <Button onClick={() => viewTaskTaggle(moduleitem?.task, moduleitem?.taskAssignment)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button>
+                        <Button onClick={(e) => toggle(e, moduleitem?.task?.taskName,  moduleitem?.task?.instructions, moduleitem?.task?.id, moduleitem?.module?.moduleName)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-edit"></i></Button>
                       <OverlayTrigger
                         placement="bottom"
                         delay={{ show: 1, hide: 0 }}
@@ -370,8 +381,8 @@ function ClassTask() {
             )
           })}
           </Accordion>
-          <ViewTask viewTaskAssign={viewTaskAssign} viewTaskItem={viewTaskItem} viewTaskTaggle={viewTaskTaggle} viewTaskModal={viewTaskModal} />
-          <EditTask moduleId={moduleId} editTask={editTask} toggle={toggle} modal={modal} module={module} getTaskModule={getTaskModule} />
+          <ViewTask setViewTaskModal={setViewTaskModal} viewTaskAssign={viewTaskAssign} viewTaskItem={viewTaskItem} viewTaskTaggle={viewTaskTaggle} viewTaskModal={viewTaskModal} />
+          <EditTask moduleName={moduleName} taskId={taskId} setTaskId={setTaskId} instructions={instructions} setInstructions={setInstructions} taskName={taskName} setTaskName={setTaskName} setModal={setModal} moduleId={moduleId} editTask={editTask} toggle={toggle} modal={modal} module={module} getTaskModule={getTaskModule} />
           <AssignTask moduleId={moduleId} getTaskModule={getTaskModule} assingTaskId={assingTaskId} assignTaskModal={assignTaskModal} assignTaskToggle={assignTaskToggle} />
           <EditAssignTask getTaskModule={getTaskModule} editAssignTaskItem={editAssignTaskItem} editAssignTaskToggle={editAssignTaskToggle} editAssignTaskModal={editAssignTaskModal} />
       </ClassSideNavigation>

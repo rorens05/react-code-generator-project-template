@@ -16,6 +16,7 @@ import StudentSubmittedAssigment from './student/components/StudentSubmittedAssi
 import ViewAssignment from './components/Assignment/ViewAssignment';
 import ClassSideNavigation from './components/ClassSideNavigation';
 import ClassBreadcrumbs from './components/ClassBreedCrumbs'
+import ContentViewer from '../../components/content_field/ContentViewer'
 import Status from '../../components/utilities/Status'
 
 function ClassAssignment() {
@@ -42,6 +43,10 @@ function ClassAssignment() {
   const [viewAssignmentItem, setViewAssignmentItem] = useState([])
   const [viewAssignmentAssign, setViewAssignmentAssign] = useState()
   const [searchTerm, setSearchTerm] = useState('')
+  const [assignmentName, setAssignmentName] = useState('')
+  const [instructions, setInstructions] = useState('')
+  const [unit, setUnit] = useState('')
+  const [xmoduleId, setXModuleId] = useState(null)
 
   const onSearch = (text) => {
     setSearchTerm(text)
@@ -70,7 +75,6 @@ function ClassAssignment() {
   const viewAssignmentToggle = (item, item1) => {
     setViewAssignmentItem(item)
     setViewAssignmentAssign(item1)
-
     setViewAssigmentModal(!viewAssignmentModal)
   }
 
@@ -82,8 +86,12 @@ function ClassAssignment() {
     setAnswerModal(!answerModal)
   }
 
-  const toggle = (e, item) =>{
-    setEditAssignment(item)
+  const toggle = (e, item, item2, item3, item4, item5) =>{
+    setInstructions(item)
+    setAssignmentName(item2)
+    setUnit(item3)
+    setAssignmentId(item4)
+    setXModuleId(item5)
     setModal(!modal)
   }
 
@@ -146,6 +154,7 @@ function ClassAssignment() {
     }  
   }, [])
 
+  console.log('item?.id:', assignment)
   const renderTooltipView = (props) => (
     <Tooltip id="button-tooltip" {...props}>
       View
@@ -225,7 +234,8 @@ function ClassAssignment() {
                   Instruction:&nbsp;
                 </div>
                 <div className='text-color-707070' >
-                <span style={{marginTop:"300px !important"}} dangerouslySetInnerHTML={{__html:assigItem?.assignment?.instructions }} /> 
+                {/* <span style={{marginTop:"300px !important"}} dangerouslySetInnerHTML={{__html:assigItem?.assignment?.instructions }} />  */}
+                <ContentViewer>{assigItem?.assignment?.instructions}</ContentViewer>
                 </div>
               </div>
             </Col>
@@ -235,6 +245,8 @@ function ClassAssignment() {
                 {/* <Button onClick={() => submittedAssignmentToggle()} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button>
                 <Button onClick={() => answerAnswerToggle()} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-user-edit"></i></Button>
                 Student Modal Answers */}
+                <Button onClick={() => viewAssignmentToggle(assigItem?.assignment, assigItem?.classAssignment)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button>
+                <Button onClick={(e) => toggle(e, assigItem?.assignment?.instructions, assigItem?.assignment?.assignmentName, item?.moduleName, assigItem?.assignment?.id, assigItem?.module?.id)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-edit"></i></Button>
               <OverlayTrigger
                 placement="bottom"
                 delay={{ show: 1, hide: 0 }}
@@ -394,10 +406,10 @@ function ClassAssignment() {
         </Accordion.Item>)
       })}
       </Accordion>
-      <ViewAssignment viewAssignmentAssign={viewAssignmentAssign}  viewAssignmentItem={viewAssignmentItem} viewAssignmentToggle={viewAssignmentToggle} viewAssignmentModal={viewAssignmentModal} />
+      <ViewAssignment setViewAssigmentModal={setViewAssigmentModal} viewAssignmentAssign={viewAssignmentAssign}  viewAssignmentItem={viewAssignmentItem} viewAssignmentToggle={viewAssignmentToggle} viewAssignmentModal={viewAssignmentModal} />
       <StudentSubmittedAssigment submittedAssignmentToggle={submittedAssignmentToggle} submittedAssignment={submittedAssignment}  />
       <StudentAnswerAssignment answerAnswerToggle={answerAnswerToggle} answerModal={answerModal} />
-      <EditAssignment toggle={toggle} modal={modal} editAssignment={editAssignment} getAssignmentList={getAssignmentList} moduleId={moduleId} />
+      <EditAssignment xmoduleId={xmoduleId} assignmentId={assignmentId} unit={unit} setUnit={setUnit} setAssignmentName={setAssignmentName} assignmentName={assignmentName} setModal={setModal} instructions={instructions} setInstructions={setInstructions} toggle={toggle} modal={modal} editAssignment={editAssignment} getAssignmentList={getAssignmentList} moduleId={moduleId} />
       <AssignAssignment moduleId={moduleId} assignmentId={assignmentId} assginModal={assginModal} assignAssignmentToggle={assignAssignmentToggle} getAssignmentList={getAssignmentList} />
       <EditAssignedAssignment moduleId={moduleId} getAssignmentList={getAssignmentList} editAssignAssignmentItem={editAssignAssignmentItem} editAssignedAssignmentModal={editAssignedAssignmentModal} editAssignedAssignmentToggle={editAssignedAssignmentToggle} />
     </ClassSideNavigation>
