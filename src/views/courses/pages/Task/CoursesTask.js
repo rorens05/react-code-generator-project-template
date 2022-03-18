@@ -8,8 +8,11 @@ import SweetAlert from 'react-bootstrap-sweetalert';
 import ViewTask from "./ViewTask";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import CourseContent from "../../CourseContent";
+import {useParams} from 'react-router';
+import CourseBreadcrumbs from "../../components/CourseBreadcrumbs";
 
-export default function CoursesTask({moduleInfo, showTask, setShowTask}) {
+export default function CoursesTask() {
 
   const [loading, setLoading] = useState(false)
 
@@ -20,8 +23,11 @@ export default function CoursesTask({moduleInfo, showTask, setShowTask}) {
   const [sweetError, setSweetError] = useState(false)
   const [taskId, setTaskId] = useState("")
   const [localModuleId, setLocalModuleId] = useState("")
-  const [filter, setFilter] = useState("")
-  const sessionCourse = sessionStorage.getItem('courseid')
+  const [filter, setFilter] = useState("");
+  const [moduleInfo, setModuleInfo] = useState([]);
+  const {id} = useParams();
+  const [showTask, setShowTask] = useState(false);
+  const [taskName, setTaskName] = useState('')
 
   const handleOpenCreateTaskModal = () =>{
     setCreateTaskModal(!openCreateTaskModal)
@@ -43,6 +49,18 @@ export default function CoursesTask({moduleInfo, showTask, setShowTask}) {
       setTaskInfo(response.data)
     }else{
       alert("Something went wrong while fetching all task")
+    }
+  }
+
+  const getCourseUnitInformation = async(e) => {
+    setLoading(true)
+    let response = await new CoursesAPI().getCourseUnit(id)
+    setLoading(false)
+    if(response.ok){
+      setModuleInfo(response.data)
+      console.log(response.data)
+    }else{
+      alert("Something went wrong while fetching course unit")
     }
   }
 
@@ -74,11 +92,13 @@ export default function CoursesTask({moduleInfo, showTask, setShowTask}) {
   }
 
   const viewTas = (data) => {
+    setTaskName(data.taskName);
     setSelectedTask(data)
     setShowTask(true)
   }
 
   useEffect(() => {
+    getCourseUnitInformation();
   }, [])
 
   const notifyDeleteTask= () => 
@@ -92,6 +112,11 @@ export default function CoursesTask({moduleInfo, showTask, setShowTask}) {
     progress: undefined,
   });
 
+  const clickedTab = () => {
+    setTaskName('');
+    setShowTask(false)
+  }
+
   const renderTooltipEdit = (props) => (
     <Tooltip id="button-tooltip" {...props}>
       Edit
@@ -104,9 +129,13 @@ export default function CoursesTask({moduleInfo, showTask, setShowTask}) {
     </Tooltip>
   )
 
-  if(showTask === false){
   return (
-    <>
+    <CourseContent>
+      <CourseBreadcrumbs title={taskName} clicked={() => clickedTab()}/>
+     {showTask ?
+        <ViewTask selectedTask={selectedTask} showTask={showTask} setShowTask={setShowTask} />
+     :
+      <>
       <span className="content-pane-title">
         Task 
       </span>
@@ -173,10 +202,8 @@ export default function CoursesTask({moduleInfo, showTask, setShowTask}) {
           })
         }
       </Accordion>
-    </> 
-  )}else{
-    return(
-      <ViewTask selectedTask={selectedTask} showTask={showTask} setShowTask={setShowTask} />
-    )
-  }
+      </>
+      }
+    </CourseContent>
+  )
 }

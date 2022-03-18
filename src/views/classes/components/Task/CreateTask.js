@@ -16,7 +16,7 @@ function CreateTask({modal, toggle, module, getTaskModule, classId}) {
   const [displayFiles, setDisplayFiles] = useState([]);
   const [showFiles, setShowFiles] = useState(false)
   const allowLate = true
-  const {id} = useParams()
+  const {id} = useParams();
 
   const closeNotify = () =>{
     setAddNotity(false)
@@ -24,17 +24,16 @@ function CreateTask({modal, toggle, module, getTaskModule, classId}) {
 
   useEffect(() => {
     handleGetClassFiles()
+    console.log(module, '-----------')
   }, [])
-
   const handleGetClassFiles = async() => {
     // setLoading(true)
     let response = await new FilesAPI().getClassFiles(classId)
     // setLoading(false)
     if(response.ok){
-      console.log(response, '-----------------------')
       setDisplayFiles(response.data)
     }else{
-      alert("Something went wrong while fetching class files ----------.")
+      alert("Something went wrong while fetching class files ;;.")
     }
   } 
 
@@ -76,7 +75,7 @@ function CreateTask({modal, toggle, module, getTaskModule, classId}) {
           <Form.Group className="mb-3">
           <Form.Label>Unit</Form.Label>
             <Form.Select onChange={(e) => setModuleId(e.target.value)}>
-              <option>-- Select Unit Here -- </option>
+              <option value=''>-- Select Unit Here -- </option>
                 {module.map(item => {
                   return(<option value={item.id}>{item.moduleName}</option>)
                 })}
@@ -94,7 +93,7 @@ function CreateTask({modal, toggle, module, getTaskModule, classId}) {
                     <ContentField value={instructions} onChange={value => setInstructions(value)} />
                   </Form.Group>
               <Form.Group className='right-btn'>
-              <Button className='tficolorbg-button' type='submit' >Save</Button>
+              <Button className={moduleId == '' ? 'disabled' : 'tficolorbg-button'} type='submit' >Save</Button>
             </Form.Group>
         </Form> 
         </Modal.Body>

@@ -1,18 +1,18 @@
-import React, { useState, useContext, useEffect } from 'react'
-import { useParams } from 'react-router'
-import { UserContext } from '../../../context/UserContext'
-import {Row, Col, Accordion, Button, InputGroup, FormControl} from 'react-bootstrap'
+import React, { useState } from 'react'
+// import { UserContext } from '../../../context/UserContext'
+import {Row, Col, Button,} from 'react-bootstrap'
 import moment from 'moment'
 import StudentDiscussionComment from './components/StudentDiscussionComment'
 import ClassesAPI from '../../../api/ClassesAPI'
 import SweetAlert from 'react-bootstrap-sweetalert';
+import { useParams } from 'react-router';
 
 function StudentDiscussion({discussionModule, getDiscussionUnit, moduleId, searchTerm}) {
   const [discussionId, setDiscussionId] = useState('')
   const [commentAlert, setCommentAlert] = useState(false)
   const dateCompareNow = moment().format("YYYY-MM-DD")
   const timeNow = moment().format('HH:mm');
-  const dateTimeNow = dateCompareNow + ' ' + '00:00:00';
+  // const dateTimeNow = dateCompareNow + ' ' + '00:00:00';
   const [studentCommentModal, setstudentCommentModal] = useState(false)
   const [comments, setComments] = useState([])
   const [startDate, setStartDate] = useState()
@@ -20,10 +20,10 @@ function StudentDiscussion({discussionModule, getDiscussionUnit, moduleId, searc
   const [endDate, setEndDate] = useState()
   const [endTime, setEndTime] = useState()
   const [getComments, setGetComments] = useState([])
-  const {id} = useParams()
-  const userContext = useContext(UserContext)
-  const {user} = userContext.data
-  const [reply, setReply] = useState('')
+  const {id} = useParams();
+  // const userContext = useContext(UserContext)
+  // const {user} = userContext.data
+  // const [reply, setReply] = useState('')
 
   const closeNotify = () =>{
     setCommentAlert(false)

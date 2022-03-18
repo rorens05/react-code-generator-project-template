@@ -2,15 +2,15 @@ import React, { useContext, useState, useEffect } from 'react'
 import {Row, Col, Button, Tooltip, OverlayTrigger} from 'react-bootstrap'
 import moment from 'moment'
 import { UserContext } from '../../../context/UserContext'
-import { useParams } from 'react-router'
+import {useParams} from 'react-router';
 
 function StudentInteractive({interactive, searchTerm}) {
   const dateCompareNow = moment().format("YYYY-MM-DD")
   const timeNow = moment().format('HH:mm');
-  const dateTimeNow = dateCompareNow + ' ' + '00:00:00';
+  // const dateTimeNow = dateCompareNow + ' ' + '00:00:00';
   const userContext = useContext(UserContext)
   const {user} = userContext.data
-  const {id} = useParams()
+  const {id} = useParams();
   let dev = 'dev'
 
   const getInteractiveLink = (e, path, userId, gameId, classId, dev) => {

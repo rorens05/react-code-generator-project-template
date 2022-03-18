@@ -3,9 +3,13 @@ import {Accordion, Row, Col} from 'react-bootstrap'
 import FilesContent from '../../../files/FilesContent';
 import FileHeader from '../../../files/FileHeader'
 import FilesAPI from '../../../../api/FilesApi';
+import CourseContent from "../../CourseContent";
+import {useParams} from 'react-router';
+import CourseBreadcrumbs from "../../components/CourseBreadcrumbs";
 
-function CourseFiles({id}) {
+function CourseFiles() {
   const [filesToDisplay, setFilesToDisplay] = useState([]);
+  const {id} = useParams();
 
   useEffect(() => {
     handleGetCourseFiles()
@@ -27,12 +31,13 @@ function CourseFiles({id}) {
   }
 
   return (
-    <div>
+    <CourseContent>
+      <CourseBreadcrumbs title={''} clicked={() => console.log('')}/>
       <div className="row m-b-20 file-content">
         <FileHeader type='Course' id={id} doneUpload={()=> handleRefetch()}/>
-        <FilesContent data={filesToDisplay} type='Course' id={id} deleted={()=> handleRefetch()}/>
+        <FilesContent data={filesToDisplay} deleted={() => handleRefetch()} type='Course' id={id}/>
       </div>
-    </div>
+    </CourseContent>
   )
 }
 

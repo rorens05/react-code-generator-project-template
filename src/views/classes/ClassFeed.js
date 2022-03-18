@@ -1,18 +1,20 @@
 import React, { useState, useEffect, useContext } from 'react'
 import {Card, InputGroup, FormControl, Row, Col,Button, Form} from 'react-bootstrap'
 import ClassesAPI from '../../api/ClassesAPI'
-import { useParams } from 'react-router'
 import SweetAlert from 'react-bootstrap-sweetalert';
 import EditAnnouncement from './components/Feed/EditAnnouncement';
 import moment from 'moment';
+import { useParams } from 'react-router';
 import { UserContext } from '../../context/UserContext'
 import { toast } from 'react-toastify';
+import ClassSideNavigation from './components/ClassSideNavigation';
+import ClassBreadcrumbs from './components/ClassBreedCrumbs';
 
 function ClassFeed() {
   const [title, setTitle] = useState('Feed')
   const [content, setContent] = useState('')
   const [announcementItem, setAnnouncementItem] = useState([])
-  const {id} = useParams()
+  const {id} = useParams();
   const [referenceIds, setReferenceIds] = useState([id])
   const [deleteNotify, setDeleteNotify] = useState(false)
   const [itemId, setItemId] = useState('')
@@ -31,8 +33,6 @@ function ClassFeed() {
     setEditAssignAssignmentItem(item)
     setEditAnnouncementModal(!editAnnouncementModal)
   }
-
-  console.log('openedit:', editAnnouncementModal)
   
   const createAnnouncementClass = async (e) => {
     e.preventDefault()
@@ -53,6 +53,7 @@ function ClassFeed() {
 
 
   const getFeedClass = async () => {
+    console.log(id, 'classssssssss')
     let response = await new ClassesAPI().getFeedClass(id)
     if(response.ok){
     setFeedClass(response.data)
@@ -61,7 +62,7 @@ function ClassFeed() {
    }
   }
   useEffect(() => {
-    getFeedClass()
+    getFeedClass();
   }, [])
 
   console.log('feed:', feedClass)
@@ -89,6 +90,8 @@ function ClassFeed() {
   console.log('this is announcement:', announcementItem)
 
   return (
+    <ClassSideNavigation>
+      <ClassBreadcrumbs title='' clicked={() => console.log('')}/>
     <div>
       <SweetAlert
           warning
@@ -179,9 +182,7 @@ function ClassFeed() {
               </>)}
               </Col>
               </Row>
-            <div style={{paddingBottom:'20px', color:'#00000029'}} >
-               <hr></hr>
-              </div>
+              <hr />
               <Row>  
                 <Col className='icon-post' sm={1}>
                   <i class="fas fa-file-alt" style={{color:'#EE9337', fontSize:'30px',}}></i>
@@ -191,9 +192,7 @@ function ClassFeed() {
                 </Col>
               </Row>
               <Row>
-              <div style={{paddingBottom:'10px', color:'#00000029'}} >
-              <hr></hr>
-              </div>
+                <hr />
                 <Col style={{textAlign:'center'}} onClick={() => toast.error("Feature under development")}>
                   <div className='inline-flex' >
                     <div style={{color:'#EE9337', fontSize:'25px',}}>
@@ -236,9 +235,7 @@ function ClassFeed() {
               
               </div>
             </div>
-            <div style={{paddingBottom:'20px', color:'#00000029'}} >
-              <hr></hr>
-              </div>
+              <hr/>
               <Row>  
                 <Col className='icon-post' sm={1}>
                   <i class="fas fa-file-alt" style={{color:'#EE9337', fontSize:'30px', paddingTop:'30px'}}></i>
@@ -283,12 +280,11 @@ function ClassFeed() {
               </div>
                 </Col> */}
               </Row>
-              <Row>
                 <Col>
-                <div style={{paddingBottom:'10px', color:'#00000029'}} >
-              </div>
+                <hr />
                 </Col>
-                <hr></hr>
+              <Row>
+  
                 <Col style={{textAlign:'center'}}>
                   <div className='inline-flex' onClick={() => toast.error("Feature under development")}>
                     <div style={{color:'#EE9337', fontSize:'25px',}}>
@@ -356,6 +352,7 @@ function ClassFeed() {
         </SweetAlert>
         <EditAnnouncement getFeedClass={getFeedClass} editAnnouncementItem={editAnnouncementItem} editAnnouncementModal={editAnnouncementModal} openEditAnnouncementToggle={openEditAnnouncementToggle} />
     </div>
+    </ClassSideNavigation>
   )
 }
 export default ClassFeed

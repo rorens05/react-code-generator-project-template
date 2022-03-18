@@ -7,6 +7,7 @@ import MainContainer from "../../components/layouts/MainContainer";
 import { UserContext } from "../../context/UserContext";
 import AddPartModal from "./components/AddPartModal";
 import ExamCreationDetails from "./components/ExamCreationDetails";
+import { Container } from "react-bootstrap";
 
 export default function ExamCreation() {
   const [loading, setLoading] = useState(true);
@@ -17,17 +18,17 @@ export default function ExamCreation() {
   const [filesToUpload, setFilesToUpload] = useState({});
   const userContext = useContext(UserContext);
   const { user } = userContext.data;
-  const { id } = useParams();
+  const { id, examid } = useParams();
   const [noAssigned, setNoAssigned] = useState(false)
   const [selectedPart, setSelectedPart] = useState(null);
   const [editable, setEditable] = useState(true)
 
   const getExamInformation = async () => {
     setLoading(true);
-    let response = await new ExamAPI().getExamInformation(id);
+    let response = await new ExamAPI().getExamInformation(examid);
     if (response.ok) {
       let tempExam = response.data
-      response = await new ExamAPI().getParts(id)
+      response = await new ExamAPI().getParts(examid)
       console.log({response, tempExam})
       response.data.forEach(item => {
         if(!tempExam.questionPartDto.map(temp_part => temp_part.questionPart.id).includes(item.id)){
@@ -96,11 +97,11 @@ export default function ExamCreation() {
       questionPart: {
         instructions,
         questionTypeId: typeId,
-        testId: id
+        testId: examid
       },
       excelFile: filesToUpload
     }
-    let response = await new ExamAPI().uploadTestPart(id, typeId, data)
+    let response = await new ExamAPI().uploadTestPart(examid, typeId, data)
     console.log(response, '----------');
     if(response.ok){
       setTypeId('1');
@@ -142,7 +143,7 @@ export default function ExamCreation() {
     const data = {
       instructions
     }
-    let response = await new ExamAPI().addPart(id, typeId, data)
+    let response = await new ExamAPI().addPart(examid, typeId, data)
     if(response.ok){
       toast.success("Part created")
       setShowModal(false);
@@ -187,7 +188,7 @@ export default function ExamCreation() {
   
 
   return (
-    <MainContainer title='Exam Information' loading={loading}>
+    <Container title='Exam Information' loading={loading} fluid className='x-0'>
       <div className='page-container exam-information-container'>
         <div className='containerpages'>
           <ExamCreationDetails
@@ -214,6 +215,6 @@ export default function ExamCreation() {
         instructions={instructions}
         selectedPart={selectedPart}
         addPart={submitPartForm}/>
-    </MainContainer>
+    </Container>
   );
 }

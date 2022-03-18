@@ -45,7 +45,7 @@ export default function CoursesItem({filter, setFilter, course, setLoading, setO
           ((item, index) => {  
         return(
           <Col md={3}>
-            <Link to={"coursecontent/"+item.id} onClick={() => setCourseId(item.id)} course={course} setLoading={setLoading} className="active card-title">
+            <Link to={`coursecontent/${item.id}/learn`} onClick={() => setCourseId(item.id)} course={course} setLoading={setLoading} className="active card-title">
             <Card className="card-design b-0px">
               <Card.Header className="card-header-courses">
                 <Row style={{color:"white"}}>

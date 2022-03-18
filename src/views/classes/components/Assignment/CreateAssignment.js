@@ -15,7 +15,7 @@ function CreateAssignment({modal, toggle, module, getAssignmentList, question, s
   const [addNotify, setAddNotity] = useState(false)
   const [displayFiles, setDisplayFiles] = useState([]);
   const [showFiles, setShowFiles] = useState(false)
-  const {id} = useParams()
+  const {id} = useParams();
 
   const closeNotify = () =>{
     setAddNotity(false)
@@ -45,9 +45,10 @@ function CreateAssignment({modal, toggle, module, getAssignmentList, question, s
 
   const handleGetClassFiles = async() => {
     // setLoading(true)
-    let response = await new FilesAPI().getClassFiles(id)
+    let response = await new FilesAPI().getAllCourseFiles(id)
     // setLoading(false)
     if(response.ok){
+      console.log(response)
       setDisplayFiles(response.data)
     }else{
       alert("Something went wrong while fetching class files.")

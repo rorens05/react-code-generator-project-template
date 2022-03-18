@@ -2,21 +2,24 @@ import React, { useState, useEffect, useContext} from 'react'
 import AssignmentHeader from './components/Assignment/AssignmentHeader'
 import {Accordion, Row, Col, Button, Tooltip, OverlayTrigger} from 'react-bootstrap'
 import ClassesAPI from '../../api/ClassesAPI'
-import { useParams } from 'react-router'
+import DiscussionAPI from '../../api/DiscussionAPI'
 import EditAssignment from './components/Assignment/EditAssignment'
 import SweetAlert from 'react-bootstrap-sweetalert';
-import moment from 'moment'
+import moment from 'moment';
+import { useParams } from 'react-router';
 import AssignAssignment from './components/Assignment/AssignAssignment'
 import EditAssignedAssignment from './components/Assignment/EditAssignedAssignment'
 import { UserContext } from '../../context/UserContext'
 import StudentAssignment from './student/components/StudentAssignment'
 import StudentAnswerAssignment from './student/components/StudentAnswerAssignment'
 import StudentSubmittedAssigment from './student/components/StudentSubmittedAssigment'
-import ViewAssignment from './components/Assignment/ViewAssignment'
+import ViewAssignment from './components/Assignment/ViewAssignment';
+import ClassSideNavigation from './components/ClassSideNavigation';
+import ClassBreadcrumbs from './components/ClassBreedCrumbs'
 import ContentViewer from '../../components/content_field/ContentViewer'
 import Status from '../../components/utilities/Status'
 
-function ClassAssignment({classInfo}) {
+function ClassAssignment() {
   const [submittedAssignment, setSubmittedAssignment] = useState(false)
   const [answerModal, setAnswerModal] = useState(false)
   const [modal, setModal] = useState(false)
@@ -27,14 +30,13 @@ function ClassAssignment({classInfo}) {
   const [module, setModule] = useState([])
   const [assignment, setAssignment] = useState([])
   const [editAssignment, setEditAssignment] = useState()
-  const courseId = classInfo?.classInformation?.courseId
   const {id} = useParams()
   const [deleteNotify, setDeleteNotify] = useState(false)
   const [itemId, setItemId] = useState('')
   const [moduleId, setModuleId] = useState(null)
   const dateCompareNow = moment().format("YYYY-MM-DD")
   const timeNow = moment().format('HH:mm');
-  const dateTimeNow = dateCompareNow + ' ' + '00:00:00';
+  // const dateTimeNow = dateCompareNow + ' ' + '00:00:00';
   const userContext = useContext(UserContext)
   const {user} = userContext.data
   const [viewAssignmentModal, setViewAssigmentModal] = useState(false)
@@ -48,6 +50,24 @@ function ClassAssignment({classInfo}) {
 
   const onSearch = (text) => {
     setSearchTerm(text)
+  }
+
+  useEffect(() => {
+    getClassInfo(); 
+  }, [])
+
+  const getClassInfo = async() => {
+    // setLoading(true)
+    let response = await new DiscussionAPI().getClassInfo(id)
+    if(response.ok){
+      console.log({response})
+      getModule(response.data.classInformation?.courseId)
+      // setClassInfo(response.data)
+      console.log(response.data)
+    }else{
+      alert("Something went wrong while fetching all courses")
+    }
+    // setLoading(false)
   }
 
   console.log('this is assignment:', assignment)
@@ -95,8 +115,8 @@ function ClassAssignment({classInfo}) {
     setModuleId(item1)
   }
 
-  const getModule = async () =>{
-    let response = await new ClassesAPI().getModule(courseId)
+  const getModule = async (courseID) =>{
+    let response = await new ClassesAPI().getModule(courseID)
     if(response.ok){
         setModule(response.data)
     }else{
@@ -104,9 +124,6 @@ function ClassAssignment({classInfo}) {
     }
   }
 
-  useEffect(() => {
-    getModule() 
-  }, [])
 
   const getAssignmentList = async (e, item) => {
     let response = await new ClassesAPI().getAssignment(id, item)
@@ -166,7 +183,8 @@ function ClassAssignment({classInfo}) {
   )
 
   return (
-    <div>
+    <ClassSideNavigation>
+      <ClassBreadcrumbs title='' clicked={()=> console.log('')}/>
       <AssignmentHeader onSearch={onSearch} module={module} getAssignmentList={getAssignmentList} />
       <Accordion>
         <SweetAlert
@@ -179,8 +197,8 @@ function ClassAssignment({classInfo}) {
           onConfirm={(e) => removeAssignment(e, itemId, moduleId)}
           onCancel={cancelSweetAlert}
           focusCancelBtn
-            >
-              You will not be able to recover this imaginary file!
+        >
+          You will not be able to recover this imaginary file!
         </SweetAlert>
       {module.map((item, index) => {
         return(<Accordion.Item eventKey={index} onClick={(e) => getAssignmentList(e, item?.id)} >
@@ -371,17 +389,13 @@ function ClassAssignment({classInfo}) {
                   </div>
                 </div>
               </Col>
-              <div className='text-color-bcbcbc' >
-              <hr></hr>
-              </div>
+              <hr />
             </Row>):
               <div>                      
                 <div style={{color:'red'}}>
                     <b>Not Assigned</b>
                 </div>
-              <div className='text-color-bcbcbc' >
-              <hr></hr>
-              </div>
+              <hr />
             </div>
             }
           </Row>)
@@ -398,7 +412,7 @@ function ClassAssignment({classInfo}) {
       <EditAssignment xmoduleId={xmoduleId} assignmentId={assignmentId} unit={unit} setUnit={setUnit} setAssignmentName={setAssignmentName} assignmentName={assignmentName} setModal={setModal} instructions={instructions} setInstructions={setInstructions} toggle={toggle} modal={modal} editAssignment={editAssignment} getAssignmentList={getAssignmentList} moduleId={moduleId} />
       <AssignAssignment moduleId={moduleId} assignmentId={assignmentId} assginModal={assginModal} assignAssignmentToggle={assignAssignmentToggle} getAssignmentList={getAssignmentList} />
       <EditAssignedAssignment moduleId={moduleId} getAssignmentList={getAssignmentList} editAssignAssignmentItem={editAssignAssignmentItem} editAssignedAssignmentModal={editAssignedAssignmentModal} editAssignedAssignmentToggle={editAssignedAssignmentToggle} />
-    </div>
+    </ClassSideNavigation>
   )
 }
 export default ClassAssignment

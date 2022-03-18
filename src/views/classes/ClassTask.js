@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import {Row, Col, Accordion, Button, Tooltip, OverlayTrigger} from 'react-bootstrap'
 import ClassesAPI from '../../api/ClassesAPI'
+import DiscussionAPI from '../../api/DiscussionAPI';
 import HeaderTask from './components/Task/HeaderTask'
 import { useParams } from 'react-router'
 import EditTask from './components/Task/EditTask'
@@ -13,10 +14,11 @@ import StudentSubmittedTask from './student/components/StudentSubmittedTask'
 import StudentTask from './student/StudentTask'
 import { UserContext } from '../../context/UserContext'
 import ViewTask from './components/Task/ViewTask'
+import ClassBreadcrumbs from './components/ClassBreedCrumbs';
+import ClassSideNavigation from './components/ClassSideNavigation';
 import ContentViewer from '../../components/content_field/ContentViewer'
 
-
-function ClassTask({classInfo}) {
+function ClassTask() {
   const [modal, setModal] = useState(false)
   const [moduleId, setModuleId] = useState(null)
   const [module, setModule] = useState([])
@@ -26,9 +28,8 @@ function ClassTask({classInfo}) {
   const [assingTaskId, setAssingTaskId] = useState('')
   const [taskModule, setTaskModule] = useState([])
   const [editTask, setEditTask] = useState()
-  const {id} = useParams()
-  const courseId = classInfo?.classInformation?.courseId
-  const classId = classInfo?.classInformation?.classId;
+  const {id} = useParams();
+  // const classId = classInfo?.classInformation?.classId;
   const [deleteNotify, setDeleteNotify] = useState(false)
   const [itemId, setItemId] = useState('')
   const dateCompareNow = moment().format("YYYY-MM-DD")
@@ -40,6 +41,7 @@ function ClassTask({classInfo}) {
   const [viewTaskItem, setViewTaskItem] = useState([])
   const [viewTaskAssign, setViewTaskAssign] = useState(null)
   const [searchTerm, setSearchTerm] = useState('')
+  const [classInfo, setClassInfo] = useState({});
   const [taskName, setTaskName] = useState('')
   const [instructions, setInstructions] = useState('')
   const [taskId, setTaskId] = useState('')
@@ -49,7 +51,25 @@ function ClassTask({classInfo}) {
     setSearchTerm(text)
   }
   
-  const viewTaskTaggle = (item, item1) => {
+    useEffect(() => {
+      getClassInfo()
+    }, [])
+
+  const getClassInfo = async() => {
+    // setLoading(true)
+    let response = await new DiscussionAPI().getClassInfo(id)
+    if(response.ok){
+      console.log({response})
+      getModule(response.data.classInformation?.courseId)
+      setClassInfo(response.data)
+      console.log(response.data)
+    }else{
+      alert("Something went wrong while fetching all courses")
+    }
+    // setLoading(false)
+  }
+  
+  const viewTaskTaggle = (item, item1,) => {
     setViewTaskItem(item)
     setViewTaskAssign(item1)
     setViewTaskModal(!viewTaskModal)
@@ -85,18 +105,14 @@ function ClassTask({classInfo}) {
     setModuleId(item1)
   }
 
-  const getModule = async() =>{
-    let response = await new ClassesAPI().getModule(courseId)
+  const getModule = async(courseID) =>{
+    let response = await new ClassesAPI().getModule(courseID)
     if(response.ok){
         setModule(response.data)
     }else{
       alert("Something went wrong while fetching all Module")
     }
   }
-
-  useEffect(() => {
-    getModule()
-  }, [])
 
   const getTaskModule = async(e, item) =>{
     let response = await new ClassesAPI().getTaskModule(id, item)
@@ -156,8 +172,9 @@ function ClassTask({classInfo}) {
   console.log('setTaskModulesetTaskModule:', taskModule)
 
   return (
-    <>
-      <HeaderTask onSearch={onSearch} module={module} getTaskModule={getTaskModule} classId={classId} />
+    <ClassSideNavigation>
+      <ClassBreadcrumbs title='' clicked={()=> console.log('')} />
+      <HeaderTask onSearch={onSearch} module={module} getTaskModule={getTaskModule} />
         <Accordion>
           <SweetAlert
             warning
@@ -368,7 +385,7 @@ function ClassTask({classInfo}) {
           <EditTask moduleName={moduleName} taskId={taskId} setTaskId={setTaskId} instructions={instructions} setInstructions={setInstructions} taskName={taskName} setTaskName={setTaskName} setModal={setModal} moduleId={moduleId} editTask={editTask} toggle={toggle} modal={modal} module={module} getTaskModule={getTaskModule} />
           <AssignTask moduleId={moduleId} getTaskModule={getTaskModule} assingTaskId={assingTaskId} assignTaskModal={assignTaskModal} assignTaskToggle={assignTaskToggle} />
           <EditAssignTask getTaskModule={getTaskModule} editAssignTaskItem={editAssignTaskItem} editAssignTaskToggle={editAssignTaskToggle} editAssignTaskModal={editAssignTaskModal} />
-       </>
+      </ClassSideNavigation>
     )
   }
 export default ClassTask

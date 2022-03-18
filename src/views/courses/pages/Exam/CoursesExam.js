@@ -7,23 +7,26 @@ import EditExam from "./../../components/EditExam";
 import CreateExam from "../CreateExam";
 import SweetAlert from 'react-bootstrap-sweetalert';
 import { ToastContainer, toast } from 'react-toastify';
+import { useParams } from "react-router";
 import 'react-toastify/dist/ReactToastify.css';
 import { Link } from "react-router-dom";
 import Status from "../../../../components/utilities/Status";
+import CourseContent from "../../CourseContent";
+import ExamCreation from "../../../exam-creation/ExamCreation";
+import CourseBreadcrumbs from "../../components/CourseBreadcrumbs";
 
-
-export default function CoursesExam({moduleInfo, setModuleInfo, moduleId}) {
-
+export default function CoursesExam() {
+  const {id} = useParams();
   const [loading, setLoading] = useState(false)
-
+  const [showExam, setShowExam] = useState(false)
   const [openCreateExamModal, setOpenCreateExamModal] = useState(false)
   const [openEditExamModal, setOpenEditExamModal] = useState(false)
-  // const [moduleInfo, setModuleInfo] = useState([])
+  const [moduleInfo, setModuleInfo] = useState([])
   const [examInfo, setExamInfo] = useState([])
   const [selectedExam, setSelectedExam] = useState(null)
   const [sweetError, setSweetError] = useState(false)
   const [filter, setFilter] = useState("")
-
+  const [examName, setExamName] = useState('');
   const courseid = sessionStorage.getItem('courseid')
   const moduleid = sessionStorage.getItem('moduleid')
 
@@ -112,83 +115,96 @@ export default function CoursesExam({moduleInfo, setModuleInfo, moduleId}) {
     </Tooltip>
   )
 
+  const clickName = (data) => {
+    setShowExam(true);
+    setExamName(data.testName);
+  }
+
+  const clickTab = () => {
+    setShowExam(false);
+    setExamName('')
+  }
+
   return (
-    <React.Fragment>
-      <span className="content-pane-title">
-        Exam 
-      </span>
-      <div className="row m-b-20 m-t-30" onSearch={onSearch}>
-        <div className="col-md-12">
-          <InputGroup size="lg">
-            <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Search..." type="search" onChange={(e) => onSearch(e.target.value)} />
-            <InputGroup.Text id="basic-addon2" className="search-button"><i className="fas fa-search fa-1x"></i></InputGroup.Text>
-          </InputGroup>
-        </div>
-      </div>
-      <EditExam setExamInfo={setExamInfo} examInfo={examInfo} selectedExam={selectedExam} openEditExamModal={openEditExamModal} setOpenEditExamModal={setOpenEditExamModal}/>
-      <CreateExam examInfo={examInfo} setExamInfo={setExamInfo} openCreateExamModal={openCreateExamModal} setOpenCreateExamModal={setOpenCreateExamModal}/>
-      <Accordion defaultActiveKey="0">
-        {moduleInfo.map((item, index) => {
-          return(
-            <Accordion.Item eventKey={item.id}> 
-              <Accordion.Header onClick={(e) => getExamInfo(e, item.id)}>
-                <span className="unit-title">{item.moduleName} <Button className="m-l-10" variant="outline-warning" onClick={handleOpenCreateExamModal}><i className="fa fa-plus"></i> Add Exam</Button>
-                </span>
-              </Accordion.Header>
-              <Accordion.Body>
-                {examInfo.filter(ei =>
-                  ei.testName.toLowerCase().includes(filter.toLowerCase())).map
-                  ((ei, index) => {
-                  return(
-                    <>
-                    <Row style={{margin:'10px'}}>
-                      <Col className="" md={9}>
-                        <Link className="lesson-header" to={`/exam_creation/${ei?.id}`}>
-                          {ei?.testName}
-                        </Link>
-                        <div>
-                          {ei?.testInstructions}
-                        </div>
-                      </Col>
-                      <Col className="align-right-content" md={3}>
-                      <OverlayTrigger
-                        placement="bottom"
-                        delay={{ show: 1, hide: 25 }}
-                        overlay={renderTooltipEdit}>
-                          <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={(e) => handleOpenEditExamModal(e, ei)}><i className="fa fa-edit"></i></Button>
-                      </OverlayTrigger>
-                      <OverlayTrigger
-                        placement="bottom"
-                        delay={{ show: 1, hide: 25 }}
-                        overlay={renderTooltipDelete}>
-                        <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={() => setSweetError(true)}><i className="fa fa-trash" ></i></Button>
-                      </OverlayTrigger>
-                        <SweetAlert
-                          warning
-                          showCancel
-                          show={sweetError}
-                          confirmBtnText="Yes, delete it!"
-                          confirmBtnBsStyle="danger"
-                          title="Are you sure?"
-                          onConfirm={() => confirmSweetError(ei.id)}
-                          onCancel={cancelSweetError}
-                          focusCancelBtn
-                        >
-                          You will not be able to recover this imaginary file!
-                        </SweetAlert>
-                      </Col>
-                      {examInfo.length == 0 && !loading && <div className="no-exams">No exam found...</div>}
-                    </Row>
-                    <hr></hr>
-                    </>
-                  )
-                })}
-              </Accordion.Body>
-            </Accordion.Item>
-            )
-          })
-        }
-      </Accordion>
-    </React.Fragment> 
+    <CourseContent>
+      <CourseBreadcrumbs title={examName} clicked={() => clickTab()}/>
+        <React.Fragment>
+          <span className="content-pane-title">
+            Exam 
+          </span>
+          <div className="row m-b-20 m-t-30" onSearch={onSearch}>
+            <div className="col-md-12">
+              <InputGroup size="lg">
+                <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Search..." type="search" onChange={(e) => onSearch(e.target.value)} />
+                <InputGroup.Text id="basic-addon2" className="search-button"><i className="fas fa-search fa-1x"></i></InputGroup.Text>
+              </InputGroup>
+            </div>
+          </div>
+          <EditExam setExamInfo={setExamInfo} examInfo={examInfo} selectedExam={selectedExam} openEditExamModal={openEditExamModal} setOpenEditExamModal={setOpenEditExamModal}/>
+          <CreateExam examInfo={examInfo} setExamInfo={setExamInfo} openCreateExamModal={openCreateExamModal} setOpenCreateExamModal={setOpenCreateExamModal}/>
+          <Accordion defaultActiveKey="0">
+            {moduleInfo.map((item, index) => {
+              return(
+                <Accordion.Item eventKey={item.id}> 
+                  <Accordion.Header onClick={(e) => getExamInfo(e, item.id)}>
+                    <span className="unit-title">{item.moduleName} <Button className="m-l-10" variant="outline-warning" onClick={handleOpenCreateExamModal}><i className="fa fa-plus"></i> Add Exam</Button>
+                    </span>
+                  </Accordion.Header>
+                  <Accordion.Body>
+                    {examInfo.filter(ei =>
+                      ei.testName.toLowerCase().includes(filter.toLowerCase())).map
+                      ((ei, index) => {
+                      return(
+                        <>
+                        <Row>
+                          <Col className="" md={9}>
+                          <Link className="lesson-header" to={`/course/${id}/exam/${ei.id}`}>
+                              {ei?.testName}
+                            </Link>
+                            <div>
+                              {ei?.testInstructions}
+                            </div>
+                          </Col>
+                          <Col className="align-right-content" md={3}>
+                            <OverlayTrigger
+                              placement="bottom"
+                              delay={{ show: 1, hide: 25 }}
+                              overlay={renderTooltipEdit}>
+                                <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={(e) => handleOpenEditExamModal(e, ei)}><i className="fa fa-edit"></i></Button>
+                            </OverlayTrigger>
+                            <OverlayTrigger
+                              placement="bottom"
+                              delay={{ show: 1, hide: 25 }}
+                              overlay={renderTooltipDelete}>
+                              <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={() => setSweetError(true)}><i className="fa fa-trash" ></i></Button>
+                            </OverlayTrigger>
+                            <SweetAlert
+                              warning
+                              showCancel
+                              show={sweetError}
+                              confirmBtnText="Yes, delete it!"
+                              confirmBtnBsStyle="danger"
+                              title="Are you sure?"
+                              onConfirm={() => confirmSweetError(ei.id)}
+                              onCancel={cancelSweetError}
+                              focusCancelBtn
+                            >
+                              You will not be able to recover this imaginary file!
+                            </SweetAlert>
+                          </Col>
+                          {examInfo.length == 0 && !loading && <div className="no-exams">No exam found...</div>}
+                        </Row>
+                        <hr></hr>
+                        </>
+                      )
+                    })}
+                  </Accordion.Body>
+                </Accordion.Item>
+                )
+              })
+            }
+          </Accordion>
+        </React.Fragment>
+    </CourseContent>
   )
 }

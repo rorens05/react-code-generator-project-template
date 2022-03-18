@@ -10,7 +10,7 @@ import { UserContext } from '../../../../context/UserContext'
 function AccordionVideos({videos, getVideos, setOpenEditModal, setEditLinks, searchTerm}) {
   const [deleteNotify, setDeleteNotify] = useState(false)
   const [itemId, setItemId] = useState('')
-  const {id} = useParams()
+  const {id} = useParams();
   const userContext = useContext(UserContext)
   const {user} = userContext.data
 

@@ -12,7 +12,7 @@ function EditAssignInteractive({getIndteractive, editAssignInteractiveItem, edit
   const [endDate, setEndDate] = useState('')
   const [endTime, setEndTime] = useState('')
   const [editNotufy, setEditNotify] = useState(false)
-  const {id} = useParams()
+  const {id} = useParams();
 
   const closeNotify = () =>{
     setEditNotify(false)

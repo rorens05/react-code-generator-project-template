@@ -9,13 +9,12 @@ function ClassEnrolled({enrolledStudent, getStudentEnrolled, getStudentWaiting, 
   const [deleteNotify, setDeleteNotify] = useState(false)
   const [itemId, setItemId] = useState('')
   const [openPortfolioModal, setOpenPortfolioModal] = useState(false)
+  const {id} = useParams()
   const [sortedData, setSortedData] = useState(enrolledStudent.students);
   const [studentinfo, setStudentInfo] = useState()
   const [classInfo, setClassinfo] = useState()
   const [studentClasses, setStudentClasses] = useState()
   const [studentInformation, setStudentInformation] = useState([])
-  const {id} = useParams()
-  const [loading, setLoading] = useState(true)
 
   const cancelSweetAlert = () => {
     setDeleteNotify(false)

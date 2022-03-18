@@ -11,7 +11,7 @@ function AssignTask({moduleId, getTaskModule, assignTaskModal, assignTaskToggle,
   const [endDate, setEndDate] = useState('')
   const [endTime, setEndTime] = useState('')
   const [assignNotify, setAssignNotify] = useState(false)
-  const {id} = useParams()
+  const {id} = useParams();
 
   const closeNotify = () =>{
     setAssignNotify(false)

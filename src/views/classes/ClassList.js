@@ -4,10 +4,11 @@ import ClassWaiting from './components/ClassList/ClassWaiting'
 import {Button, InputGroup, FormControl, Row, Col, Modal, Form} from 'react-bootstrap'
 import ClassesAPI from '../../api/ClassesAPI';
 import { toast } from "react-toastify";
+import { useParams } from 'react-router';
 import FullScreenLoader from '../../components/loaders/FullScreenLoader';
+import ClassSideNavigation from './components/ClassSideNavigation';
+import ClassBreadcrumbs from './components/ClassBreedCrumbs';
 import { UserContext } from '../../context/UserContext';
-
-import { useParams } from 'react-router'
 
 function ClassList() {
   const [openClass, setOpenClass] = useState(false)
@@ -133,7 +134,8 @@ function ClassList() {
   // console.log('this is Enrolled Student', enrolledStudent)
 
   return (
-    <div>
+    <ClassSideNavigation>
+      <ClassBreadcrumbs title='' clicked={() => console.log('')}/>
     <Row style={{paddingTop:'15px'}}>
       <Col className='title-header' >
       <p>Class List </p> 
@@ -159,7 +161,7 @@ function ClassList() {
         <ClassWaiting searchTerm={searchTerm} getStudentEnrolled={getStudentEnrolled} getStudentWaiting={getStudentWaiting} waitingStudent={waitingStudent} />}
     {handleShowUploadModal()}
     {loading && <FullScreenLoader /> }
-    </div>
+    </ClassSideNavigation>
   )
 }
 export default ClassList

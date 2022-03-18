@@ -7,7 +7,7 @@ import { useParams } from 'react-router'
 
 
 function CreateLinks({modal, toggle, getConfe, getVideos, getLinks}) {
-  const {id} = useParams()
+  const {id} = useParams();
   const [typeId, setTypeId] = useState('')
   const [description, setDescription] = useState('')
   const [url, setUrl] = useState('')

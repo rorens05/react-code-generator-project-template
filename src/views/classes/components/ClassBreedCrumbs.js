@@ -1,15 +1,30 @@
-import React from 'react'
+import React from "react";
+import {Link} from 'react-router-dom'
 
-function ClassBreedCrumbs() {
-  return (
-  <div className="row bread-m-t-b">
-		<div className="col-md-3 bread-margin">
-      {/* <span style={{color:'#EE9337'}} >Home <i class="fas fa-chevron-right m-l-10 m-r-10"></i></span>
-      <span>B <i class="fas fa-chevron-right m-l-10 m-r-10"></i></span> */}
-      <span></span>
-		</div>
-  </div>
-  )
+export default function ClassBreadcrumbs({title, clicked}) {
+const bread = sessionStorage.getItem('breadname')
+const currentLoc = window.location.pathname.split('/')[3];
+
+const handleDisplayTab = () => {
+  switch (currentLoc) {
+    case 'classList':
+      return 'Class List'
+    case 'files':
+      return 'Class Files'
+    case 'interactives':
+      return 'Interactive Exercises'
+    default:
+      return currentLoc
+  }
 }
 
-export default ClassBreedCrumbs
+  return (
+    <div className="row font-20">
+      <div className="bread-margin bread-crumbs-position">
+        <span><Link className="text-decoration-none text-black" to='/classes'>Classes</Link> <i class="fas fa-chevron-right m-l-10 m-r-10"></i></span>
+        <span className={title == '' ? "tfi-font-color capitalize" : 'capitalize'} onClick={clicked}>{handleDisplayTab()} </span>
+      {title !== '' && <span className={title !== '' ? "tfi-font-color" : ''}><i class="text-black fas fa-chevron-right m-l-10 m-r-10"></i>{title}</span>}
+      </div>
+    </div>
+  )
+}

@@ -6,7 +6,7 @@ import ExamAPI from "../../../../api/ExamAPI";
 import { UserContext } from "../../../../context/UserContext";
 
 function ClassExamHeader({ onSearch, modules = [],fetchExams}, ) {
-  const {id} = useParams()
+  const {id} = useParams();
   const { data } = useContext(UserContext);
   const { user } = data;
   const [showModal, setShowModal] = useState(false);

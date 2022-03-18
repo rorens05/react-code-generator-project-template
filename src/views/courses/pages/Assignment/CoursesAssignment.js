@@ -8,8 +8,10 @@ import SweetAlert from 'react-bootstrap-sweetalert';
 import ViewAssignment from "./ViewAssignment";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import CourseContent from "../../CourseContent";
+import CourseBreadcrumbs from "../../components/CourseBreadcrumbs";
 
-export default function CoursesAssignment({moduleInfo, setModuleInfo, showAssignment, setShowAssignment}) {
+export default function CoursesAssignment() {
 
   const [loading, setLoading] = useState(false)
 
@@ -22,6 +24,9 @@ export default function CoursesAssignment({moduleInfo, setModuleInfo, showAssign
   const [assignmentId, setAssignmentId] = useState("")
   const [localModuleId, setLocalModuleId] = useState(false)
   const [filter, setFilter] = useState("")
+  const [moduleInfo, setModuleInfo] = useState([])
+  const [showAssignment, setShowAssignment] = useState(false);
+  const [assignmmentName, setAssignmentName] = useState('')
 
   const courseid = sessionStorage.getItem('courseid')
   const moduleid = sessionStorage.getItem('moduleid')
@@ -65,6 +70,18 @@ export default function CoursesAssignment({moduleInfo, setModuleInfo, showAssign
     }
   }
 
+  const getCourseUnitInformation = async(e) => {
+    setLoading(true)
+    let response = await new CoursesAPI().getCourseUnit(courseid)
+    setLoading(false)
+    if(response.ok){
+      setModuleInfo(response.data)
+      console.log(response.data)
+    }else{
+      alert("Something went wrong while fetching course unit")
+    }
+  }
+
 
   const cancelSweetError = () => {
     setSweetError(false)
@@ -93,11 +110,14 @@ export default function CoursesAssignment({moduleInfo, setModuleInfo, showAssign
   }
 
   const viewAss = (data) => {
+    console.log(data)
+    setAssignmentName(data.assignmentName);
     setSelectedAssignment(data)
     setShowAssignment(true)
   }
 
   useEffect(() => {
+    getCourseUnitInformation()
   }, [])
 
   const notifyDeleteAssignment= () => 
@@ -111,6 +131,10 @@ export default function CoursesAssignment({moduleInfo, setModuleInfo, showAssign
     progress: undefined,
   });
 
+  const clickedTab = () => {
+    setAssignmentName('');
+    setShowAssignment(false);
+  }
   const renderTooltipEdit = (props) => (
     <Tooltip id="button-tooltip" {...props}>
       Edit
@@ -123,81 +147,84 @@ export default function CoursesAssignment({moduleInfo, setModuleInfo, showAssign
     </Tooltip>
   )
 
-  if(showAssignment === false){
   return (
-    <React.Fragment>
-      <span className="content-pane-title">
-        Assignment 
-        <CourseCreateUnit moduleInfo={moduleInfo} setModuleInfo={setModuleInfo} openCreateUnitModal={openCreateUnitModal} setOpenCreateUnitModal={setOpenCreateUnitModal}/>
-      </span>
-      <div className="row m-b-20 m-t-30" onSearch={onSearch}>
-        <div className="col-md-12">
-          <InputGroup size="lg">
-            <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Search..." type="search" onChange={(e) => onSearch(e.target.value)} />
-            <InputGroup.Text id="basic-addon2" className="search-button"><i className="fas fa-search fa-1x"></i></InputGroup.Text>
-          </InputGroup>
+    <CourseContent>
+      <CourseBreadcrumbs title={assignmmentName} clicked={() => clickedTab()}/>
+      {
+        showAssignment ?
+          <ViewAssignment setShowAssignment={setShowAssignment} selectedAssignment={selectedAssignment} assignmentInfo={assignmentInfo} setAssignmentInfo={setAssignmentInfo}/>
+        :
+        <React.Fragment>
+        <span className="content-pane-title">
+          Assignment 
+          <CourseCreateUnit moduleInfo={moduleInfo} setModuleInfo={setModuleInfo} openCreateUnitModal={openCreateUnitModal} setOpenCreateUnitModal={setOpenCreateUnitModal}/>
+        </span>
+        <div className="row m-b-20 m-t-30" onSearch={onSearch}>
+          <div className="col-md-12">
+            <InputGroup size="lg">
+              <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Search..." type="search" onChange={(e) => onSearch(e.target.value)} />
+              <InputGroup.Text id="basic-addon2" className="search-button"><i className="fas fa-search fa-1x"></i></InputGroup.Text>
+            </InputGroup>
+          </div>
         </div>
-      </div>
-      <CreateAssignment openCreateAssignmentModal={openCreateAssignmentModal} setOpenCreateAssignmentModal={setOpenCreateAssignmentModal} setAssignmentInfo={setAssignmentInfo}/>
-      <EditAssignment setAssignmentInfo={setAssignmentInfo} selectedAssignment={selectedAssignment} openEditAssignmentModal={openEditAssignmentModal} setOpenEditAssignmentModal={setOpenEditAssignmentModal}/>
-      <Accordion defaultActiveKey="0">
-        {moduleInfo.map((item, index) => {
-          return(
-            <>
-              <Accordion.Item eventKey={item.id}> 
-                <Accordion.Header onClick={(e) => getAssignmentInfo(e, item.id)}>
-                  <span className="unit-title">{item.moduleName} <Button className="m-l-10" variant="outline-warning" onClick={handleOpenCreateAssignmentModal}><i className="fa fa-plus"></i> Add Assignment</Button>
-                  </span>
-                </Accordion.Header>
-                <Accordion.Body>
-                  {assignmentInfo.filter(item => 
-                    item.assignmentName.toLowerCase().includes(filter.toLowerCase())
-                  ).map((as, index) => (
-                    <Row style={{margin:'10px',}} >
-                      <Col className="lesson-header" md={9} >
-                        <span onClick={(e) => {viewAss(as)}}>{as?.assignmentName}</span>
-                      </Col>
-                      <Col className="align-right-content" md={3}>
-                      <OverlayTrigger
-                        placement="bottom"
-                        delay={{ show: 1, hide: 25 }}
-                        overlay={renderTooltipEdit}>
-                          <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={(e) => handleOpenEditAssignmentModal(e, as)}><i className="fa fa-edit"></i></Button>
-                      </OverlayTrigger>
-                      <OverlayTrigger
-                        placement="bottom"
-                        delay={{ show: 1, hide: 25 }}
-                        overlay={renderTooltipDelete}> 
-                        <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={() => {setSweetError(true); setAssignmentId(as.id)}}><i className="fa fa-trash"  ></i></Button>
-                      </OverlayTrigger> 
-                      </Col>
-                      {assignmentInfo.length == 0 && !loading && <div className="no-exams">No assignment found...</div>}
-                    </Row>
-                  ))}
-                  <SweetAlert
-                    warning
-                    showCancel
-                    show={sweetError}
-                    confirmBtnText= "Yes"
-                    confirmBtnBsStyle="danger"
-                    title="Are you sure?"
-                    onConfirm={() => confirmSweetError(item.id)}
-                    onCancel={cancelSweetError}
-                    focusCancelBtn
-                  >
-                    You will not be able to recover this Assignment!
-                  </SweetAlert>
-                </Accordion.Body>
-              </Accordion.Item>
-            </>
-            )
-          })
-        }
-      </Accordion>
-    </React.Fragment>
-  )}else{
-    return(
-    <ViewAssignment setShowAssignment={setShowAssignment} selectedAssignment={selectedAssignment} assignmentInfo={assignmentInfo} setAssignmentInfo={setAssignmentInfo}/>
-    )
-  }
+        <CreateAssignment openCreateAssignmentModal={openCreateAssignmentModal} setOpenCreateAssignmentModal={setOpenCreateAssignmentModal} setAssignmentInfo={setAssignmentInfo}/>
+        <EditAssignment setAssignmentInfo={setAssignmentInfo} selectedAssignment={selectedAssignment} openEditAssignmentModal={openEditAssignmentModal} setOpenEditAssignmentModal={setOpenEditAssignmentModal}/>
+        <Accordion defaultActiveKey="0">
+          {moduleInfo.map((item, index) => {
+            return(
+              <>
+                <Accordion.Item eventKey={item.id}> 
+                  <Accordion.Header onClick={(e) => getAssignmentInfo(e, item.id)}>
+                    <span className="unit-title">{item.moduleName} <Button className="m-l-10" variant="outline-warning" onClick={handleOpenCreateAssignmentModal}><i className="fa fa-plus"></i> Add Assignment</Button>
+                    </span>
+                  </Accordion.Header>
+                  <Accordion.Body>
+                    {assignmentInfo.filter(item => 
+                      item.assignmentName.toLowerCase().includes(filter.toLowerCase())
+                    ).map((as, index) => (
+                      <Row>
+                        <Col className="lesson-header" md={9} >
+                          <span onClick={(e) => {viewAss(as)}}>{as?.assignmentName}</span>
+                        </Col>
+                        <Col className="align-right-content" md={3}>
+                          <OverlayTrigger
+                            placement="bottom"
+                            delay={{ show: 1, hide: 25 }}
+                            overlay={renderTooltipEdit}>
+                              <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={(e) => handleOpenEditAssignmentModal(e, as)}><i className="fa fa-edit"></i></Button>
+                          </OverlayTrigger>
+                          <OverlayTrigger
+                            placement="bottom"
+                            delay={{ show: 1, hide: 25 }}
+                            overlay={renderTooltipDelete}> 
+                            <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={() => {setSweetError(true); setAssignmentId(as.id)}}><i className="fa fa-trash"  ></i></Button>
+                          </OverlayTrigger>
+                        </Col>
+                        {assignmentInfo.length == 0 && !loading && <div className="no-exams">No assignment found...</div>}
+                      </Row>
+                    ))}
+                    <SweetAlert
+                      warning
+                      showCancel
+                      show={sweetError}
+                      confirmBtnText= "Yes"
+                      confirmBtnBsStyle="danger"
+                      title="Are you sure?"
+                      onConfirm={() => confirmSweetError(item.id)}
+                      onCancel={cancelSweetError}
+                      focusCancelBtn
+                    >
+                      You will not be able to recover this Assignment!
+                    </SweetAlert>
+                  </Accordion.Body>
+                </Accordion.Item>
+              </>
+              )
+            })
+          }
+        </Accordion>
+      </React.Fragment>
+      }
+    </CourseContent>
+  )
 }

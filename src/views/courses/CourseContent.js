@@ -1,37 +1,26 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Tab, ListGroup, Row, Col, Button, InputGroup, FormControl, Accordion, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import MainContainer from '../../components/layouts/MainContainer'
-import CourseBreadcrumbs from "./components/CourseBreadcrumbs";
 import CoursesAPI from "../../api/CoursesAPI";
-import CoursesLearn from "./pages/Learn/CoursesLearn";
-import CoursesExam from "./pages/Exam/CoursesExam";
-import CoursesDiscussion from "./pages/Discussion/CoursesDiscussion";
-import CoursesAssignment from "./pages/Assignment/CoursesAssignment";
-import CoursesTask from "./pages/Task/CoursesTask";
-import CourseLinks from "./pages/Links/CourseLinks";
-import CourseFiles from "./pages/Files/CourseFiles";
-import { ToastContainer, toast } from 'react-toastify';
+import { Link} from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
+import { useParams } from "react-router";
 import { UserContext } from '../../context/UserContext';
 
-export default function CourseContent(course) {
-  console.log(course, '//////////////////')
+export default function CourseContent({children}) {
   const [loading, setLoading] = useState(false)
-  const [moduleInfo, setModuleInfo] = useState([])
-  const [viewLesson, setViewLesson] = useState(false)
   const [courseInfo, setCourseInfo] = useState("")
-  const [selectedModule, setSelectedModule] = useState("")
-  const [showAssignment, setShowAssignment] = useState(false)
-  const [showTask, setShowTask] = useState(false)
-  const [showDiscussion, setShowDiscussion] = useState(false)
-  const [collapseSide, setCollapseSide] = useState(true)
-  const courseid = sessionStorage.getItem('courseid')
+  const [collapseSide, setCollapseSide] = useState(localStorage.getItem('collapsCourse') == 'false' ? false : true);
+  const [showTab, setShowTab] = useState(true)
+  const currentLoc = window.location.pathname;
+  const {id} = useParams()
+  const [moduleInfo, setModuleInfo] = useState({})
   const userContext = useContext(UserContext)
   const {user} = userContext.data
 
   const getCourseUnitInformation = async(e) => {
     setLoading(true)
-    let response = await new CoursesAPI().getCourseUnit(courseid)
+    let response = await new CoursesAPI().getCourseUnit(id)
     setLoading(false)
     if(response.ok){
       setModuleInfo(response.data)
@@ -41,50 +30,35 @@ export default function CourseContent(course) {
     }
   }
 
-  const moduleId = () => {
-    if(moduleInfo.length > 0){ 
-      return (moduleInfo.map(item => item.id)) || []
-    }
-    return []
-  }
-
   const getCourseInformation = async(e) => {
     setLoading(true)
-    let response = await new CoursesAPI().getCourseInformation(courseid)
+    let response = await new CoursesAPI().getCourseInformation(id)
     setLoading(false)
     if(response.ok){
       setCourseInfo(response.data)
       console.log(response.data)
     }else{
-      alert("Something went wrong while fetching all a")
+      alert("Something went wrong while fetching course information.")
     }
   }
 
-  const contentDisplay = e => {
-    e.preventDefault()
-    setViewLesson(false)
-  }
+  useEffect(() => {
+    setShowTab(localStorage.getItem('collapsCourse') == 'false' ? false : true)
+  }, [collapseSide]);
 
-  const setBread = (e, data) => {
-    setLoading(true)
-    sessionStorage.setItem('breadname', data)
-    setShowAssignment(false)
-    setShowTask(false)
-    setShowDiscussion(false)
-    setLoading(false)
+  const handleClicked = (data) => {
+    setCollapseSide(data);
+    localStorage.setItem('collapsCourse', data)
   }
 
   useEffect(() => {
-    getCourseUnitInformation()
     getCourseInformation()
+    getCourseUnitInformation()
   }, [])
 
   useEffect(() => {
     if (user.isStudent) return (window.location.href = "/404");
   }, []);
-  
-
-  const Authors = courseInfo.authorName;
 
   const renderTooltipFeed = (props) => (
     <Tooltip id="button-tooltip" {...props}>
@@ -134,144 +108,104 @@ export default function CourseContent(course) {
 
   return (
     <MainContainer loading={loading} fluid activeHeader={'courses'} style='not-scrollable'>
-      <ToastContainer />
-      <Row>
-        <Col sm={3}>
-          <CourseBreadcrumbs setShowAssignment={setShowAssignment} setShowTask={setShowTask} setShowDiscussion={setShowDiscussion} />
-        </Col>
-        <Col sm={9}>
-          
-        </Col>
-      </Row>
-      <Tab.Container className="course-widget-font" id="list-group-tabs-example " defaultActiveKey="#link1" >
+        <Col style={{height: 100}} />
         <Row>
-          {collapseSide ? <Col className="row-course-bg course-widget-font" sm={3}>
+          {showTab ? <Col className="row-course-bg course-widget-font" sm={3}>
             <ListGroup.Item className="list-group-item-o">
               <Row>
                 <Col className="" sm={9} >
                   {courseInfo.courseName}
                   <div className="course-subtitle">{courseInfo.authorName}</div>
-                  {/* <div className="course-subtitle">{courseInfo.subjectArea.subjectAreaName}</div> */}
                 </Col>
                 <Col className="t-a-r" sm={3}>
-                  {/* <i className="fa fa-ellipsis-v s"></i> */}
                   <Col className="text-align-right">
-                    <i className="fas fa-chevron-left cursor-pointer" style={{color: '#EE9337'}} onClick={()=> setCollapseSide(false)}/>
+                    <i className="fas fa-chevron-left cursor-pointer" style={{color: '#EE9337'}} onClick={()=> handleClicked(false)}/>
                   </Col>
                 </Col>
               </Row>
             </ListGroup.Item> 
             <ListGroup>
-              <ListGroup.Item className="list-group-item-o " action href="#link1" onClick={(e) => contentDisplay(e)}>
-              Learn
-              </ListGroup.Item>
-              <ListGroup.Item className="list-group-item-o "action href="#link2" onClick={(e) => setBread(e, "Exam")}>
-              Exam
-              </ListGroup.Item>
-              <ListGroup.Item  className="list-group-item-o "action href="#link3" onClick={(e) => setBread(e, "Discussion")}>
-              Discussion
-              </ListGroup.Item>
-              <ListGroup.Item className="list-group-item-o " action href="#link4" onClick={(e) => setBread(e, "Assignment")}>
-              Assignment
-              </ListGroup.Item>
-              <ListGroup.Item className="list-group-item-o " action href="#link5" onClick={(e) => setBread(e, "Task")}>
-              Task
-              </ListGroup.Item>
-              <ListGroup.Item className="list-group-item-o " action href="#link6" onClick={(e) => setBread(e, "Files")}>
+              <Link className={currentLoc.includes('learn') ? "active-nav-item" : 'nav-item'} to={`/coursecontent/${id}/learn`}>
+                Learn
+              </Link>
+              <Link className={currentLoc.includes('exam') ? "active-nav-item" : 'nav-item'} to={`/courses/${id}/exam`}>
+                Exam
+              </Link>
+              <Link className={currentLoc.includes('discussion') ? "active-nav-item" : 'nav-item'} to={`/courses/${id}/discussion`}>
+                Discussion
+              </Link>
+              <Link className={currentLoc.includes('assignment') ? "active-nav-item" : 'nav-item'} to={`/courses/${id}/assignment`}>
+                Assignment
+              </Link>
+              <Link className={currentLoc.includes('task') ? "active-nav-item" : 'nav-item'} to={`/courses/${id}/task`}>
+                Task
+              </Link>
+              <Link className={currentLoc.includes('files') ? "active-nav-item" : 'nav-item'} to={`/courses/${id}/files`}>
                 Files
-              </ListGroup.Item>
-              {/* <ListGroup.Item className="list-group-item-o " action href="#link6">
-              Links
-              </ListGroup.Item> */}
+              </Link>
             </ListGroup>
           </Col>
           :
           <Col className="row-course-bg course-widget-font pt-2" sm={1}>
             <Col className="text-align-right mb-2">
-              <i className="fas fa-chevron-right" style={{color: '#EE9337'}} onClick={()=> setCollapseSide(true)}/>
+              <i className="fas fa-chevron-right" style={{color: '#EE9337'}} onClick={()=> handleClicked(true)}/>
             </Col>
             <ListGroup>
-              <ListGroup.Item className="list-group-item-o" action href="#link1" onClick={(e) => contentDisplay(e)}>
-              <OverlayTrigger
-                placement="right"
-                delay={{ show: 1, hide: 25 }}
-                overlay={renderTooltipLearn}>
-                <i className="fas fa-book" />
+              <Link className={currentLoc.includes('learn') ? "active-nav-item" : 'nav-item'} to={`/coursecontent/${id}/learn`}>
+                <OverlayTrigger
+                  placement="right"
+                  delay={{ show: 1, hide: 25 }}
+                  overlay={renderTooltipLearn}>
+                  <i className="fas fa-book" />
                 </OverlayTrigger>
-              </ListGroup.Item>
-              <ListGroup.Item className="list-group-item-o "action href="#link2" onClick={(e) => setBread(e, "Exam")}>
-              <OverlayTrigger
-                placement="right"
-                delay={{ show: 1, hide: 25 }}
-                overlay={renderTooltipExam}>
-                <i className="fas fa-file-alt" />
+              </Link>
+              <Link className={currentLoc.includes('exam') ? "active-nav-item" : 'nav-item'} to={`/courses/${id}/exam`}>
+                <OverlayTrigger
+                  placement="right"
+                  delay={{ show: 1, hide: 25 }}
+                  overlay={renderTooltipExam}>
+                  <i className="fas fa-file-alt" />
                 </OverlayTrigger>
-              </ListGroup.Item>
-              <ListGroup.Item  className="list-group-item-o "action href="#link3" onClick={(e) => setBread(e, "Discussion")}>
-              <OverlayTrigger
-                placement="right"
-                delay={{ show: 1, hide: 25 }}
-                overlay={renderTooltipDiscussion}>
-                <i className="fas fa-comment-alt" />
+              </Link>
+              <Link className={currentLoc.includes('discussion') ? "active-nav-item" : 'nav-item'} to={`/courses/${id}/discussion`}>
+                <OverlayTrigger
+                  placement="right"
+                  delay={{ show: 1, hide: 25 }}
+                  overlay={renderTooltipDiscussion}>
+                  <i className="fas fa-comment-alt" />
                 </OverlayTrigger>
-              </ListGroup.Item>
-              <ListGroup.Item className="list-group-item-o " action href="#link4" onClick={(e) => setBread(e, "Assignment")}>
-              <OverlayTrigger
-                placement="right"
-                delay={{ show: 1, hide: 25 }}
-                overlay={renderTooltipAssignment}>
-                <i className="fas fa-sticky-note" />
+              </Link>
+              <Link className={currentLoc.includes('assignment') ? "active-nav-item" : 'nav-item'} to={`/courses/${id}/assignment`}>
+                <OverlayTrigger
+                  placement="right"
+                  delay={{ show: 1, hide: 25 }}
+                  overlay={renderTooltipAssignment}>
+                  <i className="fas fa-sticky-note" />
                 </OverlayTrigger>
-              </ListGroup.Item>
-              <ListGroup.Item className="list-group-item-o " action href="#link5" onClick={(e) => setBread(e, "Task")}>
-              <OverlayTrigger
-                placement="right"
-                delay={{ show: 1, hide: 25 }}
-                overlay={renderTooltipTask}>
-                <i className="fas fa-edit" />
+              </Link>
+              <Link className={currentLoc.includes('task') ? "active-nav-item" : 'nav-item'} to={`/courses/${id}/task`}>
+                <OverlayTrigger
+                  placement="right"
+                  delay={{ show: 1, hide: 25 }}
+                  overlay={renderTooltipTask}>
+                  <i className="fas fa-edit" />
                 </OverlayTrigger>
-              </ListGroup.Item>
-              <ListGroup.Item className="list-group-item-o " action href="#link6" onClick={(e) => setBread(e, "Files")}>
-              <OverlayTrigger
-                placement="right"
-                delay={{ show: 1, hide: 25 }}
-                overlay={renderTooltipFiles}>
-                <i className="fas fa-folder-open" />
+              </Link>
+              <Link className={currentLoc.includes('files') ? "active-nav-item" : 'nav-item'} to={`/courses/${id}/files`}>
+                <OverlayTrigger
+                  placement="right"
+                  delay={{ show: 1, hide: 25 }}
+                  overlay={renderTooltipFiles}>
+                  <i className="fas fa-folder-open" />
                 </OverlayTrigger>
-              </ListGroup.Item>
-              {/* <ListGroup.Item className="list-group-item-o " action href="#link6">
-              Links
-              </ListGroup.Item> */}
+              </Link>
             </ListGroup>
           </Col>
           }
-          <Col sm={ collapseSide ? 9 : 11} className='scrollable vh-85 pb-5'>
-            <Tab.Content className={Authors === "Techfactors Inc." ? "" : "content-pane"} >
-              <Tab.Pane eventKey="#link1" style={{backgroundColor:""}}>
-                <CoursesLearn courseInfo={courseInfo} setCourseInfo={setCourseInfo} viewLesson={viewLesson} setViewLesson={setViewLesson} moduleInfo={moduleInfo} setModuleInfo={setModuleInfo}/>
-              </Tab.Pane>
-              <Tab.Pane eventKey="#link2">
-                <CoursesExam moduleInfo={moduleInfo} setModuleInfo={setModuleInfo} moduleId={moduleId()}/>
-              </Tab.Pane>
-              <Tab.Pane eventKey="#link3">
-                <CoursesDiscussion moduleInfo={moduleInfo} setModuleInfo={setModuleInfo} moduleId={moduleId()} setShowDiscussion={setShowDiscussion} showDiscussion={showDiscussion} />
-              </Tab.Pane>
-              <Tab.Pane eventKey="#link4">
-                <CoursesAssignment moduleInfo={moduleInfo} setModuleInfo={setModuleInfo} setShowAssignment={setShowAssignment} showAssignment={showAssignment} />
-              </Tab.Pane>
-              <Tab.Pane eventKey="#link5">
-                <CoursesTask moduleInfo={moduleInfo} setModuleInfo={setModuleInfo} setShowTask={setShowTask} showTask={showTask} />
-              </Tab.Pane>
-              <Tab.Pane eventKey="#link6">
-                <CourseFiles id={courseid}/>
-              </Tab.Pane>
-              {/* <Tab.Pane eventKey="#link6">
-                <CourseLinks moduleInfo={moduleInfo} setModuleInfo={setModuleInfo} />
-              </Tab.Pane> */}
-            </Tab.Content> 
+          <Col sm={ showTab ? 9 : 11} className='scrollable vh-85 pb-5'>
+           {children}
           </Col>
         </Row>
-      </Tab.Container>
     </MainContainer>
   )
 }
