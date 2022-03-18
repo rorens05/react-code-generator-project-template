@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { Table, Button } from 'react-bootstrap'
+import React, { useState, useEffect } from 'react'
+import { Table, Button, Tooltip, OverlayTrigger } from 'react-bootstrap'
 import ClassesAPI from '../../../../api/ClassesAPI'
 import { useParams } from 'react-router'
 import SweetAlert from 'react-bootstrap-sweetalert';
@@ -62,6 +62,11 @@ function ClassEnrolled({enrolledStudent, getStudentEnrolled, getStudentWaiting, 
     }
   }
 
+  const renderTooltipDelete = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Delete
+    </Tooltip>
+  )
   const testClick = () => {
     alert('test')
   }
@@ -95,7 +100,7 @@ function ClassEnrolled({enrolledStudent, getStudentEnrolled, getStudentWaiting, 
         focusCancelBtn
         >
       </SweetAlert>
-      <Table>
+      <Table >
         <thead>
           <tr> 
             <th><div className='class-enrolled-header'> Student{' '}</div></th>
@@ -111,14 +116,21 @@ function ClassEnrolled({enrolledStudent, getStudentEnrolled, getStudentWaiting, 
         }).map(item => {
           return (         
             <tr>
-              <td>
-                <div className='class-waiting-list' style={{fontSize:'24px', color:'#707070', }} >
+              <td >
+                <div className='class-waiting-list' style={{fontSize:'24px', color:'#707070', marginLeft:'25px'}} >
                   <i class="fas fa-user-circle fas-1x" style={{color:'#EE9337',fontSize:'36px'}}></i>&nbsp;
                     <Button className='btn-student-portfolio' onClick={() => openPortfolioToggle(item, enrolledStudent?.classInformation, item.id)} variant="link">{item.fname} {item.lname}</Button>
                 </div>
               </td>
               <td className='class-waiting-icon'>
+                <div style={{marginRight:'35px'}}>
+              <OverlayTrigger
+                placement="right"
+                delay={{ show: 1, hide: 0 }}
+                overlay={renderTooltipDelete}>
                 <Button onClick={() => handleDeleteNotify(item.id)} className="m-r-5 color-white tficolorbg-button" size="sm"> <i class="fas fa-trash-alt"></i></Button>
+              </OverlayTrigger>
+              </div>
               </td> 
             </tr>)
             })}

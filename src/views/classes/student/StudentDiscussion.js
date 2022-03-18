@@ -63,7 +63,7 @@ function StudentDiscussion({discussionModule, getDiscussionUnit, moduleId, searc
           <>
             {(item?.isScheduled === true)?(
             <>
-          <Row>
+          <Row style={{margin:'8px'}}>
             <Col sm={8}>
                 <div className='title-exam' >
                   {item?.discussion?.discussionName}

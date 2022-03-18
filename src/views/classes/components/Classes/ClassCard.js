@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Card, Dropdown, Row, Col } from 'react-bootstrap';
+import { Card, Dropdown, Row, Col, Tooltip, OverlayTrigger, renderTooltip, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import ClassesAPI from '../../../../api/ClassesAPI';
 import SweetAlert from 'react-bootstrap-sweetalert';
@@ -48,6 +48,13 @@ function ClassCard({item, setOpenEditModal, setSeletedClass, getClasses}) {
       }}
     >{children}</span> 
   ));
+  
+  const renderTooltip = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Edit
+    </Tooltip>
+  );
+
   return (
     <div>
         <SweetAlert
@@ -71,6 +78,10 @@ function ClassCard({item, setOpenEditModal, setSeletedClass, getClasses}) {
                {item.classCode}
               </Col>
               <Col sm={2} style={{textAlign:'right'}}>
+              <OverlayTrigger
+                placement="right"
+                delay={{ show: 10, hide: 25 }}
+                overlay={renderTooltip}>
                 <Dropdown isOpen={openDropdown} toggle={()=> setOpenDropdown(!openDropdown)}>
                   <Dropdown.Toggle data-toggle="dropdown" as={CustomToggle} >
                     <i className="fa fa-ellipsis-v fa-1x cursor-pointer"></i>
@@ -84,6 +95,7 @@ function ClassCard({item, setOpenEditModal, setSeletedClass, getClasses}) {
                     </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
+                </OverlayTrigger>
               </Col>
               <Col sm={10}>
                 <b>{item.gradeName} -  {item.className} </b>

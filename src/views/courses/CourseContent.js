@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Tab, ListGroup, Row, Col, Button, InputGroup, FormControl, Accordion } from 'react-bootstrap';
+import { Tab, ListGroup, Row, Col, Button, InputGroup, FormControl, Accordion, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import MainContainer from '../../components/layouts/MainContainer'
 import CourseBreadcrumbs from "./components/CourseBreadcrumbs";
 import CoursesAPI from "../../api/CoursesAPI";
@@ -86,6 +86,52 @@ export default function CourseContent(course) {
 
   const Authors = courseInfo.authorName;
 
+  const renderTooltipFeed = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Feed
+    </Tooltip>
+  )
+  const renderTooltipLearn = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Learn
+    </Tooltip>
+  )
+  const renderTooltipExam = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Exam
+    </Tooltip>
+  )
+  const renderTooltipDiscussion = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Discussion
+    </Tooltip>
+  )
+  const renderTooltipAssignment = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Assignment
+    </Tooltip>
+  )
+  const renderTooltipTask = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Task
+    </Tooltip>
+  )
+  const renderTooltipInteractive = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Interactive
+    </Tooltip>
+  )
+  const renderTooltipLink = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Link
+    </Tooltip>
+  )
+  const renderTooltipFiles = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Files
+    </Tooltip>
+  )
+
   return (
     <MainContainer loading={loading} fluid activeHeader={'courses'} style='not-scrollable'>
       <ToastContainer />
@@ -146,22 +192,52 @@ export default function CourseContent(course) {
             </Col>
             <ListGroup>
               <ListGroup.Item className="list-group-item-o" action href="#link1" onClick={(e) => contentDisplay(e)}>
-                <i className="fas fa-book" title="Learn"/>
+              <OverlayTrigger
+                placement="right"
+                delay={{ show: 1, hide: 25 }}
+                overlay={renderTooltipLearn}>
+                <i className="fas fa-book" />
+                </OverlayTrigger>
               </ListGroup.Item>
               <ListGroup.Item className="list-group-item-o "action href="#link2" onClick={(e) => setBread(e, "Exam")}>
-                <i className="fas fa-file-alt" title="Exam"/>
+              <OverlayTrigger
+                placement="right"
+                delay={{ show: 1, hide: 25 }}
+                overlay={renderTooltipExam}>
+                <i className="fas fa-file-alt" />
+                </OverlayTrigger>
               </ListGroup.Item>
               <ListGroup.Item  className="list-group-item-o "action href="#link3" onClick={(e) => setBread(e, "Discussion")}>
-                <i className="fas fa-comment-alt" title="Discussion"/>
+              <OverlayTrigger
+                placement="right"
+                delay={{ show: 1, hide: 25 }}
+                overlay={renderTooltipDiscussion}>
+                <i className="fas fa-comment-alt" />
+                </OverlayTrigger>
               </ListGroup.Item>
               <ListGroup.Item className="list-group-item-o " action href="#link4" onClick={(e) => setBread(e, "Assignment")}>
-                <i className="fas fa-sticky-note" title="Assignment"/>
+              <OverlayTrigger
+                placement="right"
+                delay={{ show: 1, hide: 25 }}
+                overlay={renderTooltipAssignment}>
+                <i className="fas fa-sticky-note" />
+                </OverlayTrigger>
               </ListGroup.Item>
               <ListGroup.Item className="list-group-item-o " action href="#link5" onClick={(e) => setBread(e, "Task")}>
-                <i className="fas fa-edit" title="Task"/>
+              <OverlayTrigger
+                placement="right"
+                delay={{ show: 1, hide: 25 }}
+                overlay={renderTooltipTask}>
+                <i className="fas fa-edit" />
+                </OverlayTrigger>
               </ListGroup.Item>
               <ListGroup.Item className="list-group-item-o " action href="#link6" onClick={(e) => setBread(e, "Files")}>
-                <i className="fas fa-folder-open" title="Files"/>
+              <OverlayTrigger
+                placement="right"
+                delay={{ show: 1, hide: 25 }}
+                overlay={renderTooltipFiles}>
+                <i className="fas fa-folder-open" />
+                </OverlayTrigger>
               </ListGroup.Item>
               {/* <ListGroup.Item className="list-group-item-o " action href="#link6">
               Links
