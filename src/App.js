@@ -8,7 +8,6 @@ export default function App() {
     <UserContextProvider>
       <Routes/>
       <ToastContainer />
-      
     </UserContextProvider>
   );
 }

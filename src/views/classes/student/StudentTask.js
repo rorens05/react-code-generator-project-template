@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react'
-import {Row, Col, Accordion, Button} from 'react-bootstrap'
+import {Row, Col, Accordion, Button, Tooltip, OverlayTrigger} from 'react-bootstrap'
 import moment from 'moment'
 import StundentAnswerTask from './components/StundentAnswerTask';
 import StudentSubmittedTask from './components/StudentSubmittedTask';
@@ -69,6 +69,18 @@ function StudentTask({taskModule, searchTerm}) {
     
   }, [])
 
+  const renderTooltipAnswer = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Answer
+    </Tooltip>
+  )
+
+  const renderTooltipView = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      View
+    </Tooltip>
+  )
+
   return (
     <div>
       {taskModule.filter((item) => {
@@ -82,7 +94,7 @@ function StudentTask({taskModule, searchTerm}) {
           <>
               {(item?.isScheduled === true)?(
               <>
-              <Row>
+              <Row style={{margin:'8px'}} >
                <Col sm={8}>
                       <div className='title-exam' >
                         {item?.task?.taskName}
@@ -101,8 +113,18 @@ function StudentTask({taskModule, searchTerm}) {
                       {(item.isLoggedUserDone === true)?(
                     <>
                       <Col sm={3} className='icon-exam'>
-                      <Button onClick={(e) => getStudentTaskAnwswer(item?.task?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button>
-                      <Button onClick={() => viewTaskToggle(item?.task, item?.taskAssignment?.startDate, item?.taskAssignment?.startTime, item?.taskAssignment?.endDate, item?.taskAssignment?.endTime)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-book-reader"></i></Button>
+                      <OverlayTrigger
+                        placement="right"
+                        delay={{ show: 1, hide: 1}}
+                        overlay={renderTooltipView}>  
+                         <Button onClick={(e) => getStudentTaskAnwswer(item?.task?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button>
+                      </OverlayTrigger>
+                      <OverlayTrigger
+                        placement="right"
+                        delay={{ show: 1, hide: 1 }}
+                        overlay={renderTooltipView}> 
+                         <Button onClick={() => viewTaskToggle(item?.task, item?.taskAssignment?.startDate, item?.taskAssignment?.startTime, item?.taskAssignment?.endDate, item?.taskAssignment?.endTime)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-book-reader"></i></Button>
+                      </OverlayTrigger>
                     </Col>
                       {
                         moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isAfter(moment(item?.taskAssignment?.endDate + ' ' + item?.taskAssignment?.endTime, 'YYYY-MM-DD HH:mm')) &&
@@ -115,21 +137,41 @@ function StudentTask({taskModule, searchTerm}) {
                       moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isAfter(moment(item?.taskAssignment?.startDate + ' ' + item?.taskAssignment?.startTime, 'YYYY-MM-DD HH:mm')) &&
                       moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isBefore(moment(item?.taskAssignment?.endDate + ' ' + item?.taskAssignment?.endTime, 'YYYY-MM-DD HH:mm')) &&
                       <Col sm={3} className='icon-exam'>
-                      <Button onClick={() => answerTaskToggle(item?.task?.id)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-user-edit"></i></Button>
-                      <Button onClick={() => viewTaskToggle(item?.task, item?.taskAssignment?.startDate, item?.taskAssignment?.startTime, item?.taskAssignment?.endDate, item?.taskAssignment?.endTime)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-book-reader"></i></Button>
+                      <OverlayTrigger
+                        placement="right"
+                        delay={{ show: 1, hide: 1 }}
+                        overlay={renderTooltipAnswer}>
+                          <Button onClick={() => answerTaskToggle(item?.task?.id)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-user-edit"></i></Button>
+                      </OverlayTrigger>
+                      <OverlayTrigger
+                        placement="right"
+                        delay={{ show: 1, hide: 1 }}
+                        overlay={renderTooltipAnswer}>
+                          <Button onClick={() => viewTaskToggle(item?.task, item?.taskAssignment?.startDate, item?.taskAssignment?.startTime, item?.taskAssignment?.endDate, item?.taskAssignment?.endTime)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-book-reader"></i></Button>
+                      </OverlayTrigger>
                       </Col>
                     }
                     {
                       moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isAfter(moment(item?.taskAssignment?.endDate + ' ' + item?.taskAssignment?.endTime, 'YYYY-MM-DD HH:mm')) &&
                       <Col sm={3} className='icon-exam'>
                       <Button  className="m-r-5 color-white tficolorbg-button" size="sm">Not Submitted</Button>
+                      <OverlayTrigger
+                        placement="right"
+                        delay={{ show: 1, hide: 1 }}
+                        overlay={renderTooltipView}> 
                       <Button onClick={() => viewTaskToggle(item?.task, item?.taskAssignment?.startDate, item?.taskAssignment?.startTime, item?.taskAssignment?.endDate, item?.taskAssignment?.endTime)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-book-reader"></i></Button>
+                      </OverlayTrigger>
                       </Col>
                     }
                     {
                       moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isBefore(moment(item?.taskAssignment?.startDate + ' ' + item?.taskAssignment?.startTime, 'YYYY-MM-DD HH:mm')) &&
                       <Col sm={3} className='icon-exam'>
-                        <Button onClick={() => viewTaskToggle(item?.task, item?.taskAssignment?.startDate, item?.taskAssignment?.startTime, item?.taskAssignment?.endDate, item?.taskAssignment?.endTime)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-book-reader"></i></Button>
+                      <OverlayTrigger
+                        placement="right"
+                        delay={{ show: 1, hide: 1 }}
+                        overlay={renderTooltipView}> 
+                          <Button onClick={() => viewTaskToggle(item?.task, item?.taskAssignment?.startDate, item?.taskAssignment?.startTime, item?.taskAssignment?.endDate, item?.taskAssignment?.endTime)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-book-reader"></i></Button>
+                      </OverlayTrigger>
                       </Col>
                     }
                     </>

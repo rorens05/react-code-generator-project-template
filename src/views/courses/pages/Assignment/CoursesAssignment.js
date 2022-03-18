@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Tab, Row, Col, Button, InputGroup, FormControl, Accordion } from 'react-bootstrap';
+import { Tab, Row, Col, Button, InputGroup, FormControl, Accordion, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import CoursesAPI from "../../../../api/CoursesAPI";
 import CourseCreateUnit from "./../../components/CourseCreateUnit";
 import CreateAssignment from "./../../components/CreateAssignment";
@@ -111,6 +111,17 @@ export default function CoursesAssignment({moduleInfo, setModuleInfo, showAssign
     progress: undefined,
   });
 
+  const renderTooltipEdit = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Edit
+    </Tooltip>
+  )
+
+  const renderTooltipDelete = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Delete
+    </Tooltip>
+  )
 
   if(showAssignment === false){
   return (
@@ -142,13 +153,23 @@ export default function CoursesAssignment({moduleInfo, setModuleInfo, showAssign
                   {assignmentInfo.filter(item => 
                     item.assignmentName.toLowerCase().includes(filter.toLowerCase())
                   ).map((as, index) => (
-                    <Row>
+                    <Row style={{margin:'10px',}} >
                       <Col className="lesson-header" md={9} >
                         <span onClick={(e) => {viewAss(as)}}>{as?.assignmentName}</span>
                       </Col>
                       <Col className="align-right-content" md={3}>
-                        <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={(e) => handleOpenEditAssignmentModal(e, as)}><i className="fa fa-edit"></i></Button>
+                      <OverlayTrigger
+                        placement="bottom"
+                        delay={{ show: 1, hide: 25 }}
+                        overlay={renderTooltipEdit}>
+                          <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={(e) => handleOpenEditAssignmentModal(e, as)}><i className="fa fa-edit"></i></Button>
+                      </OverlayTrigger>
+                      <OverlayTrigger
+                        placement="bottom"
+                        delay={{ show: 1, hide: 25 }}
+                        overlay={renderTooltipDelete}> 
                         <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={() => {setSweetError(true); setAssignmentId(as.id)}}><i className="fa fa-trash"  ></i></Button>
+                      </OverlayTrigger> 
                       </Col>
                       {assignmentInfo.length == 0 && !loading && <div className="no-exams">No assignment found...</div>}
                     </Row>

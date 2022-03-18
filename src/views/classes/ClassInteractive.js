@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import ClassInteractiveHeader from './components/Interactive/ClassInteractiveHeader'
-import { Row, Col, Accordion, Button} from 'react-bootstrap'
+import { Row, Col, Accordion, Button, OverlayTrigger, Tooltip} from 'react-bootstrap'
 import ClassesAPI from '../../api/ClassesAPI'
 import { useParams } from 'react-router'
 import { Link } from 'react-router-dom'
@@ -71,10 +71,14 @@ function ClassInteractive({classInfo}) {
       return(
         getIndteractive()
       )
-    }
-    
-    
+    } 
   }, [])
+
+  const renderTooltipReasign = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Assign
+    </Tooltip>
+  )
 
   return (
     <div>
@@ -100,7 +104,8 @@ function ClassInteractive({classInfo}) {
                 return interItem
               }
             }).map(interItem =>{
-              return( <Row>
+              return(
+               <Row style={{margin:'10px'}}>
                 <Col sm={8}>
                   <div className='title-exam'>
                     {/* <Link style={{color:'#EE9337', textDecoration:'none'}} to={interItem?.interactive?.path} >{interItem?.interactive?.interactiveName}</Link> */}
@@ -121,11 +126,21 @@ function ClassInteractive({classInfo}) {
                     {/* <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button> */}
                     {interItem?.classInteractiveAssignment?(
                     <>
-                       <Button onClick={(e) => editAssignIteractiveToggle(e, interItem)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-clock"></i></Button>
+                        <OverlayTrigger
+                          placement="bottom"
+                          delay={{ show: 1, hide: 0 }}
+                          overlay={renderTooltipReasign}>
+                           <Button onClick={(e) => editAssignIteractiveToggle(e, interItem)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-clock"></i></Button>
+                       </OverlayTrigger> 
                     </>
                     ):
                     <>
-                      <Button onClick={(e) => assignInteractiveToggle(e, interItem?.interactive?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-user-clock"></i></Button>
+                    <OverlayTrigger
+                      placement="bottom"
+                      delay={{ show: 1, hide: 0 }}
+                      overlay={renderTooltipReasign}>
+                        <Button onClick={(e) => assignInteractiveToggle(e, interItem?.interactive?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-user-clock"></i></Button>
+                    </OverlayTrigger>
                     </>}
                     
                   </Col>
@@ -182,7 +197,7 @@ function ClassInteractive({classInfo}) {
                       </div>
                     </Col>
                     <div className='text-color-bcbcbc' >
-                      ___________________________________________________________________________________________________________________________________________________________________________________________________________
+                    <hr></hr>
                     </div>
                     </>
                   ):
@@ -191,7 +206,7 @@ function ClassInteractive({classInfo}) {
                       <b>Not Assigned</b>
                     </div>
                     <div className='text-color-bcbcbc' >
-                      ___________________________________________________________________________________________________________________________________________________________________________________________________________
+                    <hr></hr>
                     </div>
                   </>
                   }

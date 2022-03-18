@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import MainContainer from '../../components/layouts/MainContainer'
-import {Button, Row, Col, Accordion, Form} from 'react-bootstrap'
+import {Button, Row, Col, Accordion, Form, InputGroup, FormControl} from 'react-bootstrap'
 import FilesContent from './FilesContent';
 import FileHeader from './FileHeader'
 import CoursesAPI from "../../api/CoursesAPI";
@@ -103,8 +103,28 @@ export default function Files() {
             </Col>
           </Col>
           <Col className='mt-5 scrollable pb-3 vh-85'>
+            <div className='content-pane'>
+          
             {
               active == 'course' ?
+              <>
+              <div className="row m-b-20" style={{paddingTop:'15px'}}>
+                <div className="col-md-10 pages-header"><p className='title-header'>Course Files </p>
+                </div>
+              </div>
+              <div className="row m-b-20">
+                <div className="col-md-12">
+                  <InputGroup size="lg">
+                    <FormControl  aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Search File here" type="search"/>
+                    <InputGroup.Text id="basic-addon2" className="search-button"><i className="fas fa-search fa-1x"></i></InputGroup.Text>
+                  </InputGroup>
+                </div>
+			        </div>
+              <Col>
+              <div style={{color:'#7D7D7D', fontSize:'24px', paddingLeft:'15px'}}>
+                Name
+              </div>
+              </Col>
               <Col>
                 {allCourse.map((item, index) => {
                   let data = courseFiles.filter(x => x.courseId === item.id);
@@ -113,7 +133,26 @@ export default function Files() {
                   )
                 })}
               </Col>
+              </>
               :
+              <>              
+              <div className="row m-b-20" style={{paddingTop:'15px'}}>
+              <div className="col-md-10 pages-header"><p className='title-header'>Class Files </p>
+              </div>
+            </div>
+            <div className="row m-b- 20">
+              <div className="col-md-12">
+                <InputGroup size="lg">
+                  <FormControl  aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Search File here" type="search"/>
+                  <InputGroup.Text id="basic-addon2" className="search-button"><i className="fas fa-search fa-1x"></i></InputGroup.Text>
+                </InputGroup>
+              </div>
+            </div>
+            <Col>
+              <div style={{color:'#7D7D7D', fontSize:'24px', paddingLeft:'15px', paddingTop:'20px'}}>
+                Name
+              </div>
+              </Col>
               <Col>
                 {allClass.map((item, index) => {
                   let filteredCourseFiles = classFiles.filter(x => x.courseFiles?.courseId === item.course.id); //courses files inside class
@@ -123,7 +162,9 @@ export default function Files() {
                   )
                 })}
               </Col>
+              </>
             }
+            </div>
           </Col>
         </Row>
     </MainContainer>

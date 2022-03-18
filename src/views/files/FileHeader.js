@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react'
-import {Button, Modal,Table, ProgressBar, Form, Col, Row } from 'react-bootstrap';
+import {Button, Modal,Table, ProgressBar, Col, Row,  InputGroup, FormControl, Tooltip, OverlayTrigger} from 'react-bootstrap';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import FilesAPI from '../../api/FilesApi';
@@ -130,14 +130,37 @@ function FileHeader(props) {
     setUploadStarted(false)
   }
 
+  const renderTooltipUploadFiles = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Upload Files
+    </Tooltip>
+  )
+
   return (
     <div>
       <div className="row m-b-20">
-        <div className="col-md-10 pages-header file-content"><h1>Files<i onClick={() => setShowUploadModal(true)} class="fas fa-folder-plus file-upload-content td-file-page cursor-pointer" title='Upload Files'></i></h1>
+        <div className="col-md-10 pages-header file-content"><h1>Files
+        <OverlayTrigger
+                    placement="right"
+                    delay={{ show: 1, hide: 0 }}
+                    overlay={renderTooltipUploadFiles}>
+          <i onClick={() => setShowUploadModal(true)} class="fas fa-folder-plus file-upload-content td-file-page cursor-pointer"></i>
+          </OverlayTrigger>
+          </h1>
             {/* <h1 className="file-upload-content"><Button size="sm" variant="outline-warning"><i class="fas fa-folder file-upload-content "></i> New Folder</Button></h1> <h5 className="fileupload"> OR </h5> */}
             {/* <h1 className="file-upload-content"><Button className="file-upload-content" size='sm' variant="outline-warning" onClick={() => setShowUploadModal(true)}> +Upload File</Button></h1> */}
+            <p><Button style={{paddingTop:'11px'}} className='btn-create-discussion' variant="link" onClick={() => setShowUploadModal(true)}> <i className="fa fa-plus"></i>  Upload Files  </Button></p>
         </div>
       </div>
+      <div className="row m-b-20">
+				<div className="col-md-12">
+					<InputGroup size="lg">
+						<FormControl  aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Search Files here" type="search"/>
+						<InputGroup.Text id="basic-addon2" className="search-button"><i className="fas fa-search fa-1x"></i></InputGroup.Text>
+					</InputGroup>
+				</div>
+			</div>
+
       <Modal size="lg" show={showUploadModal} onHide={() => setShowUploadModal(false)} aria-labelledby="example-modal-sizes-title-lg">
         <Modal.Header closeButton>
           <Modal.Title id="example-modal-sizes-title-lg">

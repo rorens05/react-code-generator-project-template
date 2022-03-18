@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Accordion, Button } from "react-bootstrap";
+import { Accordion, Button, Tooltip, OverlayTrigger } from "react-bootstrap";
 import SweetAlert from "react-bootstrap-sweetalert";
 import { displayQuestionType } from "../../../utils/displayQuestionType";
 import Questions from "./questions/Questions";
@@ -27,6 +27,18 @@ export default function ExamParts({
     return temp;
   }
 
+  const renderTooltipEdit = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Edit
+    </Tooltip>
+  )
+
+  const renderTooltipDelete = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Delete
+    </Tooltip>
+  )
+
   return (
     <Accordion defaultActiveKey='0' className='exam-part-creation'>
       <SweetAlert
@@ -50,7 +62,7 @@ export default function ExamParts({
           style={{ border: "1px solid #f1f1f1", padding: "8px 16px" }}
           eventKey={index}
           key={index}
-        >
+        >1
           <Accordion.Header>
             <div className='accordion-block-header'>
               <div className='header-content'>
@@ -59,9 +71,12 @@ export default function ExamParts({
                 <span>{`${part.questionDtos.length} Question(s)`}</span>
               </div>
             </div>
-          </Accordion.Header>
           {editable && (
-            <div className='exam-actions exam-absolute-actions'>
+            <div className='exam-actions' >
+              <OverlayTrigger
+                placement="right"
+                delay={{ show: 1500, hide: 0 }}
+                overlay={renderTooltipEdit}>
               <a
                 href='#edit-part'
                 onClick={(e) => {
@@ -71,14 +86,21 @@ export default function ExamParts({
               >
                 <i class='fas fa-edit'></i>
               </a>
+              </OverlayTrigger>
+              <OverlayTrigger
+                placement="right"
+                delay={{ show: 1500, hide: 0 }}
+                overlay={renderTooltipDelete}>
               <a href='#delete-part' onClick={(e) => {
                 setShowWarning(true)
                 setSelectedId(part)
               }}>
                 <i class='fas fa-trash-alt'></i>
               </a>
+              </OverlayTrigger>
             </div>
           )}
+          </Accordion.Header>
           <Accordion.Body>
             <Questions
               part={part}

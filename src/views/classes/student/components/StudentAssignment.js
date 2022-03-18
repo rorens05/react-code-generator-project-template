@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react'
-import {Row, Col, Button} from 'react-bootstrap'
+import {Row, Col, Button, Tooltip, OverlayTrigger} from 'react-bootstrap'
 import moment from 'moment'
 import { useParams } from 'react-router'
 import { UserContext } from '../../../../context/UserContext'
@@ -66,7 +66,17 @@ function StudentAssignment({assignment, searchTerm}) {
     
   }, [])
 
-  console.log('assignmentassignmentassignment:', assignment)
+  const renderTooltipAnswer = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Answer
+    </Tooltip>
+  )
+
+  const renderTooltipView = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      View
+    </Tooltip>
+  )
 
   return (
     <div>
@@ -81,7 +91,7 @@ function StudentAssignment({assignment, searchTerm}) {
           <>
             {(item?.isScheduled === true)?(
               <>
-              <Row>
+              <Row  style={{margin:'8px'}} >
                <Col sm={8}>
                       <div className='title-exam' >
                         {item?.assignment?.assignmentName}
@@ -100,8 +110,18 @@ function StudentAssignment({assignment, searchTerm}) {
                       {(item.isLoggedUserDone === true)?(
                     <>
                       <Col sm={3} className='icon-exam'>
-                      <Button onClick={() => getStudentAssignmentAnswer(item?.assignment?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button>
-                      <Button onClick={() => viewAssignmentToggle(item?.assignment, item?.classAssignment?.startDate, item?.classAssignment?.startTime, item?.classAssignment?.endDate, item?.classAssignment?.endTime)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-book-reader"></i></Button>
+                      <OverlayTrigger
+                        placement="right"
+                        delay={{ show: 1, hide: 1 }}
+                        overlay={renderTooltipView}>
+                          <Button onClick={() => getStudentAssignmentAnswer(item?.assignment?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button>
+                      </OverlayTrigger>
+                      <OverlayTrigger
+                        placement="right"
+                        delay={{ show: 1, hide: 1 }}
+                        overlay={renderTooltipView}>
+                          <Button onClick={() => viewAssignmentToggle(item?.assignment, item?.classAssignment?.startDate, item?.classAssignment?.startTime, item?.classAssignment?.endDate, item?.classAssignment?.endTime)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-book-reader"></i></Button>
+                      </OverlayTrigger>
                     </Col>
                       {
                         moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isAfter(moment(item?.classAssignment?.endDate + ' ' + item?.classAssignment?.endTime, 'YYYY-MM-DD HH:mm')) &&
@@ -114,23 +134,43 @@ function StudentAssignment({assignment, searchTerm}) {
                       moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isAfter(moment(item?.classAssignment?.startDate + ' ' + item?.classAssignment?.startTime, 'YYYY-MM-DD HH:mm')) &&
                       moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isBefore(moment(item?.classAssignment?.endDate + ' ' + item?.classAssignment?.endTime, 'YYYY-MM-DD HH:mm')) &&
                       <Col sm={3} className='icon-exam'>
-                      <Button onClick={() => answerAnswerToggle(item?.assignment?.id)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-user-edit"></i></Button>
-                      <Button onClick={() => viewAssignmentToggle(item?.assignment, item?.classAssignment?.startDate, item?.classAssignment?.startTime, item?.classAssignment?.endDate, item?.classAssignment?.endTime)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-book-reader"></i></Button>
+                      <OverlayTrigger
+                        placement="right"
+                        delay={{ show: 1, hide: 1 }}
+                        overlay={renderTooltipAnswer}>
+                          <Button onClick={() => answerAnswerToggle(item?.assignment?.id)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-user-edit"></i></Button>
+                      </OverlayTrigger>
+                      <OverlayTrigger
+                        placement="right"
+                        delay={{ show: 1, hide: 1 }}
+                        overlay={renderTooltipView}>
+                        <Button onClick={() => viewAssignmentToggle(item?.assignment, item?.classAssignment?.startDate, item?.classAssignment?.startTime, item?.classAssignment?.endDate, item?.classAssignment?.endTime)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-book-reader"></i></Button>
+                      </OverlayTrigger>
                       </Col>
-                    }
+                      }
                       {
                         moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isAfter(moment(item?.classAssignment?.endDate + ' ' + item?.classAssignment?.endTime, 'YYYY-MM-DD HH:mm')) &&
                         <Col sm={3} className='icon-exam'>
                         <Button  className="m-r-5 color-white tficolorbg-button" size="sm">Not Submitted</Button>
-                        <Button onClick={() => viewAssignmentToggle(item?.assignment, item?.classAssignment?.startDate, item?.classAssignment?.startTime, item?.classAssignment?.endDate, item?.classAssignment?.endTime)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-book-reader"></i></Button>
+                        <OverlayTrigger
+                          placement="right"
+                          delay={{ show: 1, hide: 1 }}
+                          overlay={renderTooltipView}>
+                            <Button onClick={() => viewAssignmentToggle(item?.assignment, item?.classAssignment?.startDate, item?.classAssignment?.startTime, item?.classAssignment?.endDate, item?.classAssignment?.endTime)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-book-reader"></i></Button>
+                        </OverlayTrigger>
                         </Col>
                       }
-                          {
+                      {
                       moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isBefore(moment(item?.classAssignment?.startDate + ' ' + item?.classAssignment?.startTime, 'YYYY-MM-DD HH:mm')) &&
                       <Col sm={3} className='icon-exam'>
-                        <Button onClick={() => viewAssignmentToggle(item?.assignment, item?.classAssignment?.startDate, item?.classAssignment?.startTime, item?.classAssignment?.endDate, item?.classAssignment?.endTime)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-book-reader"></i></Button>
+                        <OverlayTrigger
+                          placement="right"
+                          delay={{ show: 1, hide: 1 }}
+                          overlay={renderTooltipView}>
+                           <Button onClick={() => viewAssignmentToggle(item?.assignment, item?.classAssignment?.startDate, item?.classAssignment?.startTime, item?.classAssignment?.endDate, item?.classAssignment?.endTime)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-book-reader"></i></Button>
+                        </OverlayTrigger>
                       </Col>
-                    }
+                      }
                     </>
                     }
                     {

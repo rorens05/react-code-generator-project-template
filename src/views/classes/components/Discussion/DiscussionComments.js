@@ -1,6 +1,6 @@
 import React, {useContext, useState, useEffect} from 'react'
 import Modal from 'react-bootstrap/Modal'
-import { Form, Button, Row, Col, InputGroup, FormControl } from 'react-bootstrap'
+import { Form, Button, Row, Col, InputGroup, FormControl, Tooltip, OverlayTrigger } from 'react-bootstrap'
 import moment from 'moment'
 import { useParams } from 'react-router'
 import ClassesAPI from '../../../../api/ClassesAPI'
@@ -57,6 +57,12 @@ function DiscussionComments({getDiscussionComments, getComments, discussionComme
       }
   }
 
+  const renderTooltipDelete= (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Delete
+    </Tooltip>
+  )
+
   return (
   <div>
     <SweetAlert
@@ -106,7 +112,12 @@ function DiscussionComments({getDiscussionComments, getComments, discussionComme
                   moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isAfter(moment(startDate + ' ' + startTime, 'YYYY-MM-DD HH:mm')) &&
                   moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isBefore(moment(endDate + ' ' + endTime, 'YYYY-MM-DD HH:mm')) &&
                   <>
-                    <Button onClick={() => handleDeleteNotify(item?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-trash-alt"></i></Button>
+                  <OverlayTrigger
+                    placement="right"
+                    delay={{ show: 10, hide: 25 }}
+                    overlay={renderTooltipDelete}>
+                      <Button onClick={() => handleDeleteNotify(item?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-trash-alt"></i></Button>
+                    </OverlayTrigger>
                   </> 
                 }
               </>
