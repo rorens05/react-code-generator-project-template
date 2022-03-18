@@ -29,6 +29,11 @@ export default function Classes() {
     getArchive()
   }, [])
 
+  useEffect(() => {
+    if (user.isStudent) return (window.location.href = "/404");
+  }, []);
+
+  console.log('asd teacher', user?.teacher?.id)
   return (
     <MainContainer loading={loading} activeHeader={'classes'}>
       <div className='page-container'>

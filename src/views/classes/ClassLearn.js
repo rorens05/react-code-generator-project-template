@@ -60,9 +60,9 @@ function ClassLearn({classInfo}) {
   }
   
   return (
-    <div style={{position:'relative'}}>
+    <div style={{position:'relative'}} className='not-scrollable'>
       <Row>
-        <Col className='' style={{marginLeft:'15px'}} >
+        <Col className='scrollable vh-80 pb-5' style={{marginLeft:'15px'}} >
           <ClassLearnHeader content={content}  classInfo={classInfo}/>
         </Col>
         <Col md='3'>
@@ -90,7 +90,7 @@ function ClassLearn({classInfo}) {
           UNIT
         </Card.Title>
         <Card.Text className='card-title' >
-        <ul style={{listStyle:'none'}}>
+        <ul style={{listStyle:'none', height: '50vh'}} className='scrollable pb-5'>
         {Pages.map(item =>{
             return (
               <>

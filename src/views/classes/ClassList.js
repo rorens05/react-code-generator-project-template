@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import ClassEnrolled from './components/ClassList/ClassEnrolled'
 import ClassWaiting from './components/ClassList/ClassWaiting'
 import {Button, InputGroup, FormControl, Row, Col, Modal, Form} from 'react-bootstrap'
 import ClassesAPI from '../../api/ClassesAPI';
 import { toast } from "react-toastify";
 import FullScreenLoader from '../../components/loaders/FullScreenLoader';
+import { UserContext } from '../../context/UserContext';
 
 import { useParams } from 'react-router'
 
@@ -17,6 +18,8 @@ function ClassList() {
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [filesToUpload, setFilesToUpload] = useState({});
   const [loading, setLoading] = useState(false);
+  const userContext = useContext(UserContext)
+  const {user} = userContext.data
 
   const onSearch = (text) => {
     setSearchTerm(text)
@@ -42,12 +45,14 @@ function ClassList() {
       alert("Something went wrong while fetching all Waiting Student")
     }
     
-  } 
+  }
 
   useEffect(() => {
     getStudentWaiting()
     
   }, [])
+
+
 
   const getStudentEnrolled = async() =>{
     let isAccepted = true
@@ -148,7 +153,10 @@ function ClassList() {
           </InputGroup>
         </div>
       </div>
-        {openClass === false?(<ClassEnrolled searchTerm={searchTerm} getStudentWaiting={getStudentWaiting} getStudentEnrolled={getStudentEnrolled} enrolledStudent={enrolledStudent}  />):<ClassWaiting searchTerm={searchTerm} getStudentEnrolled={getStudentEnrolled} getStudentWaiting={getStudentWaiting} waitingStudent={waitingStudent} />}
+        {openClass === false?(
+        <ClassEnrolled searchTerm={searchTerm} getStudentWaiting={getStudentWaiting} getStudentEnrolled={getStudentEnrolled} enrolledStudent={enrolledStudent}  />
+        ):
+        <ClassWaiting searchTerm={searchTerm} getStudentEnrolled={getStudentEnrolled} getStudentWaiting={getStudentWaiting} waitingStudent={waitingStudent} />}
     {handleShowUploadModal()}
     {loading && <FullScreenLoader /> }
     </div>

@@ -5,6 +5,7 @@ import SweetAlert from 'react-bootstrap-sweetalert';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import moment from 'moment'
+import ContentViewer from '../../../components/content_field/ContentViewer';
 
 function ExamAnalysis({classesModules, setClassesModules, selectedClassId, examAnalysis, setExamAnalysis, testPartAnswers, showReportHeader, setShowReportHeader}) {
   
@@ -202,16 +203,16 @@ function ExamAnalysis({classesModules, setClassesModules, selectedClassId, examA
                   return(
                     <>
                       
-                      <span className='font-exam-analysis-content-24-tfi'>{index + 1}.  <span className='font-exam-analysis-content-24'>{ad.assignedQuestion}</span></span>
+                      <span className='font-exam-analysis-content-24-tfi'>{index + 1}.  <span className='font-exam-analysis-content-24'><ContentViewer>{ad.assignedQuestion}</ContentViewer></span></span>
                       <div>
                         <span className='font-exam-analysis-content-24' style={{marginRight:10}}>Student Answer :</span><span className='font-exam-analysis-content-24'>
-                          {ad.studentAnswer}
+                          <ContentViewer>{ad.studentAnswer}</ContentViewer>
                         </span>
                           {ad.studentAnswer?.toLowerCase() == ad.assignedAnswer.toLowerCase() && <i className="fa fa-check-circle" style={{color:"green", marginLeft:"10px"}}></i>}
                       </div>
                       <div>
                         <span className='font-exam-analysis-content-24' style={{marginRight:10}}>Correct Answer :</span>
-                        <span className='font-exam-analysis-content-24' style={{marginRight:10}}>{ad.assignedAnswer}</span>
+                        <span className='font-exam-analysis-content-24' style={{marginRight:10}}><ContentViewer>{ad.assignedAnswer}</ContentViewer></span>
                         {ad.studentAnswer?.toLowerCase() !== ad.assignedAnswer.toLowerCase() &&
                         <Form>
                           <Form.Group className="m-b-20">

@@ -43,6 +43,10 @@ export default function Courses() {
   useEffect(() => {
     getCourses()
   }, [])
+
+  useEffect(() => {
+    if (user.isStudent) return (window.location.href = "/404");
+  }, []);
   
   return (
     <MainContainer loading={loading} activeHeader={'courses'}>

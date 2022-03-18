@@ -14,6 +14,7 @@ export default function ExamCreation() {
   const [showModal, setShowModal] = useState(false)
   const [instructions, setInstructions] = useState("")
   const [typeId, setTypeId] = useState(1)
+  const [filesToUpload, setFilesToUpload] = useState({});
   const userContext = useContext(UserContext);
   const { user } = userContext.data;
   const { id } = useParams();
@@ -80,7 +81,39 @@ export default function ExamCreation() {
     if(selectedPart != null){
       updatePart(e)
     }else{
-      addPart(e)
+      if(filesToUpload.fileName){
+        addPartWithExcel(e)
+      }else{
+        addPart(e)
+      }
+    }
+  }
+
+  const addPartWithExcel = async(e) => {
+    setLoading(true)
+    e.preventDefault()
+    let data = {
+      questionPart: {
+        instructions,
+        questionTypeId: typeId,
+        testId: id
+      },
+      excelFile: filesToUpload
+    }
+    let response = await new ExamAPI().uploadTestPart(id, typeId, data)
+    console.log(response, '----------');
+    if(response.ok){
+      setTypeId('1');
+      setInstructions('');
+      setFilesToUpload({});
+      setLoading(false)
+      setShowModal(false)
+      toast.success("Test part was successfully uploaded.")
+      getExamInformation()
+      setSelectedPart(null)
+    }else{
+      setLoading(false)
+      toast.error(response.data?.errorMessage ? response.data?.errorMessage : "Something went wrong while uploading exam part")
     }
   }
 
@@ -96,7 +129,7 @@ export default function ExamCreation() {
       setShowModal(false)
       getExamInformation()
       setTypeId('1')
-      setSelectedPart(null)
+      setSelectedPart(null);
     }else{
       toast.error(response.data?.errorMessage || "Something went wrong while creating the part")
       setLoading(false)
@@ -112,8 +145,9 @@ export default function ExamCreation() {
     let response = await new ExamAPI().addPart(id, typeId, data)
     if(response.ok){
       toast.success("Part created")
-      setShowModal(false)
-      getExamInformation()
+      setShowModal(false);
+      getExamInformation();
+      setInstructions('')
       setTypeId('1')
       setSelectedPart(null)
     }else{
@@ -174,6 +208,7 @@ export default function ExamCreation() {
         setShowModal={setShowModal}
         showModal={showModal}
         setTypeId={setTypeId}
+        setFilesToUpload={setFilesToUpload}
         typeId={typeId}
         setInstructions={setInstructions}
         instructions={instructions}

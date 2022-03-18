@@ -7,6 +7,10 @@ export default function Reports() {
   const userContext = useContext(UserContext)
   const {user} = userContext.data
 
+  useEffect(() => {
+    if (user.isStudent) return (window.location.href = "/404");
+  }, []);
+
   return (
     <MainContainer activeHeader={'reports'} fluid style='not-scrollable'> 
       <SideReport/>

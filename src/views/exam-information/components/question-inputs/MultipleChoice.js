@@ -1,4 +1,5 @@
 import React from "react";
+import ContentViewer from "../../../../components/content_field/ContentViewer";
 
 const MultipleChoice = ({ number, part, question, onAnswer }) => {
   return (
@@ -6,7 +7,7 @@ const MultipleChoice = ({ number, part, question, onAnswer }) => {
       <div className='question-input-number flex-direction-row'>{number}.</div>
       <div className='question-input-content'>
         <div className='question-input-content-title'>
-          {question.question.testQuestion}
+          <ContentViewer>{question.question.testQuestion}</ContentViewer>
         </div>
         <div className='question-input-content-choices'>
           {question.choices.map((choice, index) => {
@@ -34,7 +35,7 @@ const MultipleChoice = ({ number, part, question, onAnswer }) => {
                   <div />
                 </div>
                 <p className='question-choice-title m-0'>
-                  {choice.testChoices}
+                  <ContentViewer>{choice.testChoices}</ContentViewer>
                 </p>
               </div>
             );

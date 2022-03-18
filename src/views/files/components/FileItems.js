@@ -21,7 +21,7 @@ export default function Files(props) {
       {
         props.show && <div className="row m-b-20 file-content m-4">
           <FileHeader type={props.type} id={props.id} doneUpload={()=> props.refetch()}/>
-          <FilesContent data={props.data} type={props.type} id={props.id}/>
+          <FilesContent data={props.data} type={props.type} id={props.id} deleted={()=> props.refetch() }/>
         </div>
       }
 
