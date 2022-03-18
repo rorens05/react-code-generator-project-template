@@ -182,9 +182,7 @@ function ClassFeed() {
               </>)}
               </Col>
               </Row>
-            {/* <div style={{paddingBottom:'20px', color:'#00000029'}} > */}
               <hr />
-              {/* </div> */}
               <Row>  
                 <Col className='icon-post' sm={1}>
                   <i class="fas fa-file-alt" style={{color:'#EE9337', fontSize:'30px',}}></i>
@@ -194,9 +192,7 @@ function ClassFeed() {
                 </Col>
               </Row>
               <Row>
-              {/* <div style={{paddingBottom:'10px', color:'#00000029'}} > */}
                 <hr />
-              {/* </div> */}
                 <Col style={{textAlign:'center'}} onClick={() => toast.error("Feature under development")}>
                   <div className='inline-flex' >
                     <div style={{color:'#EE9337', fontSize:'25px',}}>

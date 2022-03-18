@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { ListGroup, Row, Col} from 'react-bootstrap';
+import { Tab, ListGroup, Row, Col, Button, InputGroup, FormControl, Accordion, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import MainContainer from '../../components/layouts/MainContainer'
 import CoursesAPI from "../../api/CoursesAPI";
 import { Link} from 'react-router-dom';
@@ -60,6 +60,52 @@ export default function CourseContent({children}) {
     if (user.isStudent) return (window.location.href = "/404");
   }, []);
 
+  const renderTooltipFeed = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Feed
+    </Tooltip>
+  )
+  const renderTooltipLearn = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Learn
+    </Tooltip>
+  )
+  const renderTooltipExam = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Exam
+    </Tooltip>
+  )
+  const renderTooltipDiscussion = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Discussion
+    </Tooltip>
+  )
+  const renderTooltipAssignment = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Assignment
+    </Tooltip>
+  )
+  const renderTooltipTask = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Task
+    </Tooltip>
+  )
+  const renderTooltipInteractive = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Interactive
+    </Tooltip>
+  )
+  const renderTooltipLink = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Link
+    </Tooltip>
+  )
+  const renderTooltipFiles = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Files
+    </Tooltip>
+  )
+
   return (
     <MainContainer loading={loading} fluid activeHeader={'courses'} style='not-scrollable'>
         <Col style={{height: 100}} />
@@ -106,22 +152,52 @@ export default function CourseContent({children}) {
             </Col>
             <ListGroup>
               <Link className={currentLoc.includes('learn') ? "active-nav-item" : 'nav-item'} to={`/coursecontent/${id}/learn`}>
-                <i className="fas fa-book" title="Learn"/>
+                <OverlayTrigger
+                  placement="right"
+                  delay={{ show: 1, hide: 25 }}
+                  overlay={renderTooltipLearn}>
+                  <i className="fas fa-book" />
+                </OverlayTrigger>
               </Link>
               <Link className={currentLoc.includes('exam') ? "active-nav-item" : 'nav-item'} to={`/courses/${id}/exam`}>
-                <i className="fas fa-file-alt" title="Exam"/>
+                <OverlayTrigger
+                  placement="right"
+                  delay={{ show: 1, hide: 25 }}
+                  overlay={renderTooltipExam}>
+                  <i className="fas fa-file-alt" />
+                </OverlayTrigger>
               </Link>
               <Link className={currentLoc.includes('discussion') ? "active-nav-item" : 'nav-item'} to={`/courses/${id}/discussion`}>
-                <i className="fas fa-comment-alt" title="Discussion"/>
+                <OverlayTrigger
+                  placement="right"
+                  delay={{ show: 1, hide: 25 }}
+                  overlay={renderTooltipDiscussion}>
+                  <i className="fas fa-comment-alt" />
+                </OverlayTrigger>
               </Link>
               <Link className={currentLoc.includes('assignment') ? "active-nav-item" : 'nav-item'} to={`/courses/${id}/assignment`}>
-                <i className="fas fa-sticky-note" title="Assignment"/>
+                <OverlayTrigger
+                  placement="right"
+                  delay={{ show: 1, hide: 25 }}
+                  overlay={renderTooltipAssignment}>
+                  <i className="fas fa-sticky-note" />
+                </OverlayTrigger>
               </Link>
               <Link className={currentLoc.includes('task') ? "active-nav-item" : 'nav-item'} to={`/courses/${id}/task`}>
-                <i className="fas fa-edit" title="Task"/>
+                <OverlayTrigger
+                  placement="right"
+                  delay={{ show: 1, hide: 25 }}
+                  overlay={renderTooltipTask}>
+                  <i className="fas fa-edit" />
+                </OverlayTrigger>
               </Link>
               <Link className={currentLoc.includes('files') ? "active-nav-item" : 'nav-item'} to={`/courses/${id}/files`}>
-                <i className="fas fa-folder-open" title="Files"/>
+                <OverlayTrigger
+                  placement="right"
+                  delay={{ show: 1, hide: 25 }}
+                  overlay={renderTooltipFiles}>
+                  <i className="fas fa-folder-open" />
+                </OverlayTrigger>
               </Link>
             </ListGroup>
           </Col>

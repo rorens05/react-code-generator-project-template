@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { CardGroup, Card, Dropdown, InputGroup, FormControl, Button, Row, Col } from 'react-bootstrap';
+import { CardGroup, Card, Dropdown, InputGroup, FormControl, Button, Row, Col, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import { BrowserRouter as Router, useHistory } from 'react-router-dom'
 import { Link } from "react-router-dom";
 import ClassesAPI from "../../../../api/ClassesAPI";
@@ -32,7 +32,11 @@ const retrieveArchive = async(item) =>{
     }
 }
 
-console.log('Archive:', archiveItem)
+const renderTooltipRestore = (props) => (
+  <Tooltip id="button-tooltip" {...props}>
+    Restore
+  </Tooltip>
+)
 
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
         <span 
@@ -85,7 +89,12 @@ return (
               <Col sm={2} style={{textAlign:'right'}}>
                 <Dropdown isOpen={openDropdown} toggle={()=> setOpenDropdown(!openDropdown)}>
                   <Dropdown.Toggle data-toggle="dropdown" as={CustomToggle} >
+                  <OverlayTrigger
+                    placement="right"
+                    delay={{ show: 1, hide: 0 }}
+                    overlay={renderTooltipRestore}>
                     <i className="fa fa-ellipsis-v fa-1x cursor-pointer"></i>
+                  </OverlayTrigger>
                   </Dropdown.Toggle>
                   <Dropdown.Menu >
                     <Dropdown.Item onClick={() => retrieveArchive(item.id)} >

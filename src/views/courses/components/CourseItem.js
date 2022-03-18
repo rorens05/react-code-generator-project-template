@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Card, Dropdown, Row, Col } from 'react-bootstrap';
+import { Card, Dropdown, Row, Col, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import "../../../../node_modules/@fortawesome/fontawesome-free/css/all.css"
 import { Link } from 'react-router-dom'
 
@@ -30,7 +30,13 @@ export default function CoursesItem({filter, setFilter, course, setLoading, setO
         onClick(e);
       }}
     >{children}</span>
-  ));
+  ))
+
+  const renderTooltip = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Edit
+    </Tooltip>
+  )
   
   return (
     <React.Fragment>
@@ -46,6 +52,10 @@ export default function CoursesItem({filter, setFilter, course, setLoading, setO
                     <Col md={12}>
                       {/* <i className="fa fa-lock fa-2x"></i> */}
                       {item.authorName !== "Techfactors Inc." &&
+                        <OverlayTrigger
+                        placement="right"
+                        delay={{ show: 10, hide: 25 }}
+                        overlay={renderTooltip}>
                         <Dropdown className="float-right" isOpen={openDropdown} toggle={()=> setOpenDropdown(!openDropdown)}>
                           <Dropdown.Toggle data-toggle="dropdown" as={CustomToggle} >
                             <i className="fa fa-ellipsis-v fa-2x"></i>
@@ -59,6 +69,7 @@ export default function CoursesItem({filter, setFilter, course, setLoading, setO
                           </Dropdown.Item>
                           </Dropdown.Menu>
                         </Dropdown>
+                        </OverlayTrigger>
                       }
                     </Col>
                     <Col md={12} className="t-a-c m-t-20">

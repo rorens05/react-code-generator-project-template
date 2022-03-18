@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Tab, Row, Col, Button, InputGroup, FormControl, Accordion } from 'react-bootstrap';
+import { Tab, Row, Col, Button, InputGroup, FormControl, Accordion, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import CoursesAPI from "../../../../api/CoursesAPI";
 import CourseCreateUnit from "./../../components/CourseCreateUnit";
 import CreateLesson from "./../../components/CreateLesson";
@@ -148,6 +148,17 @@ export default function CourseLearn() {
     setViewLesson(false);
     setClickedModule('');
   }
+  const renderTooltipEdit = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Edit
+    </Tooltip>
+  )
+
+  const renderTooltipDelete = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Delete
+    </Tooltip>
+  )
   
   return (
     <CourseContent>
@@ -194,8 +205,18 @@ export default function CourseLearn() {
                               {li?.pageName}
                             </Col>
                             <Col className="align-right-content" md={3}>
-                              <Button key={li.id} className="m-r-5 color-white tficolorbg-button" size="sm" onClick={(e) => handleOpenEditLessonModal(e, li)}><i className="fa fa-edit"></i></Button>
-                              <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={() => {setSweetError(true) }}><i className="fa fa-trash"></i></Button>
+                              <OverlayTrigger
+                                placement="bottom"
+                                delay={{ show: 1, hide: 0 }}
+                                overlay={renderTooltipEdit}>
+                                  <Button key={li.id} className="m-r-5 color-white tficolorbg-button" size="sm" onClick={(e) => handleOpenEditLessonModal(e, li)}><i className="fa fa-edit"></i></Button>
+                              </OverlayTrigger>
+                              <OverlayTrigger
+                                placement="bottom"
+                                delay={{ show: 1, hide: 0 }}
+                                overlay={renderTooltipDelete}>
+                                  <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={() => {setSweetError(true) }}><i className="fa fa-trash"></i></Button>
+                              </OverlayTrigger>
                               <SweetAlert
                                 warning
                                 showCancel

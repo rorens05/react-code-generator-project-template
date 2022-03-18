@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react'
-import {ListGroup, Row, Col} from 'react-bootstrap'
+import {ListGroup, Tab, Row, Col, Tooltip, OverlayTrigger} from 'react-bootstrap'
 import ClassAssignment from '../ClassAssignment'
 import ClassDiscussion from '../ClassDiscussion'
 import ClassExam from '../ClassExam'
@@ -39,6 +39,57 @@ export default function ClassSideNavigation({children}) {
     }
     setLoading(false)
   }
+
+  const renderTooltipFeed = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Feed
+    </Tooltip>
+  )
+  const renderTooltipLearn = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Learn
+    </Tooltip>
+  )
+  const renderTooltipExam = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Exam
+    </Tooltip>
+  )
+  const renderTooltipDiscussion = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Discussion
+    </Tooltip>
+  )
+  const renderTooltipAssignment = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Assignment
+    </Tooltip>
+  )
+  const renderTooltipTask = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Task
+    </Tooltip>
+  )
+  const renderTooltipInteractive = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Interactive
+    </Tooltip>
+  )
+  const renderTooltipLink = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Link
+    </Tooltip>
+  )
+  const renderTooltipClassList = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Class List
+    </Tooltip>
+  )
+  const renderTooltipFiles = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Files
+    </Tooltip>
+  )
 
   useEffect(() => {
     getClassInfo();
@@ -120,37 +171,87 @@ export default function ClassSideNavigation({children}) {
         </Col>
         <ListGroup>
         <Link className={currentLoc.includes('feed') ? "active-nav-item" : 'nav-item'} to={`/classescontent/${id}/feed`}>
-          <i className='fas fa-comment' title='Feed' />
+          <OverlayTrigger
+            placement="right"
+            delay={{ show: 1, hide: 1 }}
+            overlay={renderTooltipFeed}>
+            <i className='fas fa-comment' />
+          </OverlayTrigger>
         </Link>
         <Link className={currentLoc.includes('learn') ? "active-nav-item" : 'nav-item'} to={`/classes/${id}/learn`}>
-          <i className='fas fa-book' title='Learn' />
+          <OverlayTrigger
+            placement="right"
+            delay={{ show: 1, hide: 1 }}
+            overlay={renderTooltipLearn}>
+            <i className="fas fa-book" />
+          </OverlayTrigger>
         </Link>
         <Link className={currentLoc.includes('exam') ? "active-nav-item" : 'nav-item'} to={`/classes/${id}/exam`}>
-        <i className='fas fa-file-alt' title='Exam' />
+          <OverlayTrigger
+            placement="right"
+            delay={{ show: 1, hide: 1 }}
+            overlay={renderTooltipExam}>
+            <i className="fas fa-file-alt" />
+          </OverlayTrigger>
         </Link>
         <Link className={currentLoc.includes('discussion') ? "active-nav-item" : 'nav-item'} to={`/classes/${id}/discussion`}>
-          <i className='fas fa-comment-alt' title='Discussion' />
+         <OverlayTrigger
+            placement="right"
+            delay={{ show: 1, hide: 1 }}
+            overlay={renderTooltipDiscussion}>
+            <i className="fas fa-comment-alt" />
+          </OverlayTrigger>
         </Link>
         <Link className={currentLoc.includes('assignment') ? "active-nav-item" : 'nav-item'} to={`/classes/${id}/assignment`}>
-          <i className='fas fa-sticky-note' title='Assignment' />
+          <OverlayTrigger
+            placement="right"
+            delay={{ show: 1, hide: 1 }}
+            overlay={renderTooltipAssignment}>
+            <i className="fas fa-sticky-note" />
+          </OverlayTrigger>
         </Link>
         <Link className={currentLoc.includes('task') ? "active-nav-item" : 'nav-item'} to={`/classes/${id}/task`}>
-          <i className='fas fa-edit' title='Task' />
+          <OverlayTrigger
+            placement="right"
+            delay={{ show: 1, hide: 1 }}
+            overlay={renderTooltipTask}>
+            <i className="fas fa-edit" />
+          </OverlayTrigger>
         </Link>
         <Link className={currentLoc.includes('interactives') ? "active-nav-item" : 'nav-item'} to={`/classes/${id}/interactives`}>
-          <i className='fas fa-chalkboard-teacher' title='Class Interactives' />
+          <OverlayTrigger
+            placement="right"
+            delay={{ show: 1, hide: 1 }}
+            overlay={renderTooltipInteractive}>
+            <i className='fas fa-chalkboard-teacher' />
+          </OverlayTrigger>
         </Link>
         <Link className={currentLoc.includes('links') ? "active-nav-item" : 'nav-item'} to={`/classes/${id}/links`}>
-          <i className='fas fa-link' title='Links' />
+          <OverlayTrigger
+            placement="right"
+            delay={{ show: 1, hide: 1 }}
+            overlay={renderTooltipLink}>
+            <i className='fa fa-link' />
+          </OverlayTrigger>
         </Link>
           {(user?.teacher != null)
           &&
           <>
             <Link className={currentLoc.includes('classList') ? "active-nav-item" : 'nav-item'} to={`/classes/${id}/classList`}>
-              <i className="fas fa-users" title="Class List"/>
+              <OverlayTrigger
+                placement="right"
+                delay={{ show: 1, hide: 1 }}
+                overlay={renderTooltipClassList}>
+                <i className="fas fa-users" />
+              </OverlayTrigger>
             </Link>
             <Link className={currentLoc.includes('files') ? "active-nav-item" : 'nav-item'} to={`/classes/${id}/files`}>
-              <i className="fas fa-folder-open" title="Files"/>
+              <OverlayTrigger
+                placement="right"
+                delay={{ show: 1, hide: 1 }}
+                overlay={renderTooltipFiles}>
+                <i className="fas fa-folder-open" />
+              </OverlayTrigger>
             </Link>
           </>}
         </ListGroup>

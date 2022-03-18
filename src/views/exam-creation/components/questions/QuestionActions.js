@@ -1,14 +1,35 @@
 import React from "react";
+import { Tooltip, OverlayTrigger } from "react-bootstrap";
 
 export default function QuestionActions({onEdit = () => alert("Ongoing development"), onDelete = () => alert("Ongoing development")}) {
+  const renderTooltipEdit = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Edit
+    </Tooltip>
+  )
+  const renderTooltipDelete = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Delete
+    </Tooltip>
+  )
   return (
     <div className='exam-actions '>
-      <a href='#delete-part' onClick={onEdit}>
-        <i class='fas fa-edit'></i>
-      </a>
-      <a href='#delete-part' onClick={onDelete}>
-        <i class='fas fa-trash-alt'></i>
-      </a>
+      <OverlayTrigger
+        placement="right"
+        delay={{ show: 1500, hide: 0 }}
+        overlay={renderTooltipEdit}>
+        <a href='#delete-part' onClick={onEdit}>
+          <i class='fas fa-edit'></i>
+        </a>
+      </OverlayTrigger>
+      <OverlayTrigger
+        placement="right"
+        delay={{ show: 1500, hide: 0 }}
+        overlay={renderTooltipDelete}>
+        <a href='#delete-part' onClick={onDelete}>
+          <i class='fas fa-trash-alt'></i>
+        </a>
+      </OverlayTrigger>
     </div>
   );
 }

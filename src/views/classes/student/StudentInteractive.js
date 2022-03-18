@@ -1,5 +1,5 @@
-import React, { useContext } from 'react'
-import {Row, Col, Button} from 'react-bootstrap'
+import React, { useContext, useState, useEffect } from 'react'
+import {Row, Col, Button, Tooltip, OverlayTrigger} from 'react-bootstrap'
 import moment from 'moment'
 import { UserContext } from '../../../context/UserContext'
 import {useParams} from 'react-router';
@@ -18,9 +18,12 @@ function StudentInteractive({interactive, searchTerm}) {
     window.open(path + '?sid=' + userId + '&gid=' + gameId + '&cid=' + classId + '#' + dev) 
   }
 
-  console.log('id:', id)
+  const renderTooltipPlay = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Play
+    </Tooltip>
+  )
 
-  console.log('interactive:', interactive)
   return (
     <div>
       {interactive?.filter((item) => {
@@ -43,7 +46,12 @@ function StudentInteractive({interactive, searchTerm}) {
                       {(item.isLoggedUserDone === true)?(
                     <>
                     <Col sm={3} className='icon-exam'>
-                    <Button onClick={(e) => getInteractiveLink(e, item?.interactive?.path, user?.student?.id, item?.interactive?.id, id, dev)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-play" ></i></Button>  
+                    <OverlayTrigger
+                      placement="right"
+                      delay={{ show: 10, hide: 25 }}
+                      overlay={renderTooltipPlay}> 
+                        <Button onClick={(e) => getInteractiveLink(e, item?.interactive?.path, user?.student?.id, item?.interactive?.id, id, dev)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-play" ></i></Button>  
+                    </OverlayTrigger>
                     </Col>
                     </>
                   ):
@@ -52,7 +60,12 @@ function StudentInteractive({interactive, searchTerm}) {
                       moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isAfter(moment(item?.classInteractiveAssignment?.startDate + ' ' + item?.classInteractiveAssignment?.startTime, 'YYYY-MM-DD HH:mm')) &&
                       moment(dateCompareNow + ' ' + timeNow, 'YYYY-MM-DD HH:mm').isBefore(moment(item?.classInteractiveAssignment?.endDate + ' ' + item?.classInteractiveAssignment?.endTime, 'YYYY-MM-DD HH:mm')) &&
                       <Col sm={3} className='icon-exam'>
-                      <Button onClick={(e) => getInteractiveLink(e, item?.interactive?.path, user?.student?.id, item?.interactive?.id, id, dev)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-play" ></i></Button>
+                      <OverlayTrigger
+                        placement="right"
+                        delay={{ show: 10, hide: 25 }}
+                        overlay={renderTooltipPlay}> 
+                          <Button onClick={(e) => getInteractiveLink(e, item?.interactive?.path, user?.student?.id, item?.interactive?.id, id, dev)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-play" ></i></Button>
+                      </OverlayTrigger>
                       </Col>
                     }
                     {

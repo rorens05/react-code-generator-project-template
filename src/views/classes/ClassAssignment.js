@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext} from 'react'
 import AssignmentHeader from './components/Assignment/AssignmentHeader'
-import {Accordion, Row, Col, Button} from 'react-bootstrap'
+import {Accordion, Row, Col, Button, Tooltip, OverlayTrigger} from 'react-bootstrap'
 import ClassesAPI from '../../api/ClassesAPI'
 import DiscussionAPI from '../../api/DiscussionAPI'
 import EditAssignment from './components/Assignment/EditAssignment'
@@ -16,6 +16,7 @@ import StudentSubmittedAssigment from './student/components/StudentSubmittedAssi
 import ViewAssignment from './components/Assignment/ViewAssignment';
 import ClassSideNavigation from './components/ClassSideNavigation';
 import ClassBreadcrumbs from './components/ClassBreedCrumbs'
+import Status from '../../components/utilities/Status'
 
 function ClassAssignment() {
   const [submittedAssignment, setSubmittedAssignment] = useState(false)
@@ -145,6 +146,33 @@ function ClassAssignment() {
     }  
   }, [])
 
+  const renderTooltipView = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      View
+    </Tooltip>
+  )
+  const renderTooltipEdit = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Edit
+    </Tooltip>
+  )
+  const renderTooltipReasign = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Reassign
+    </Tooltip>
+  )
+  const renderTooltipAsign = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Assign
+    </Tooltip>
+  )
+
+  const renderTooltipDelete = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Delete
+    </Tooltip>
+  )
+
   return (
     <ClassSideNavigation>
       <ClassBreadcrumbs title='' clicked={()=> console.log('')}/>
@@ -184,7 +212,8 @@ function ClassAssignment() {
                 return assigItem
               }
             }).map(assigItem => {
-          return( <Row>
+          return( 
+          <Row style={{margin:'10px'}}>
             <Col sm={8}>
               <div className='title-exam'>
                 {assigItem?.assignment?.assignmentName}
@@ -206,14 +235,39 @@ function ClassAssignment() {
                 {/* <Button onClick={() => submittedAssignmentToggle()} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button>
                 <Button onClick={() => answerAnswerToggle()} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-user-edit"></i></Button>
                 Student Modal Answers */}
-                <Button onClick={() => viewAssignmentToggle(assigItem?.assignment, assigItem?.classAssignment)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button>
+              <OverlayTrigger
+                placement="bottom"
+                delay={{ show: 1, hide: 0 }}
+                overlay={renderTooltipView}>
+                  <Button onClick={() => viewAssignmentToggle(assigItem?.assignment, assigItem?.classAssignment)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button>
+                </OverlayTrigger>
+                <OverlayTrigger
+                  placement="bottom"
+                  delay={{ show: 1, hide: 0 }}
+                  overlay={renderTooltipEdit}>
                 <Button onClick={(e) => toggle(e, assigItem)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-edit"></i></Button>
+                </OverlayTrigger>
                 {assigItem?.classAssignment?(
-                  <Button onClick={(e) => editAssignedAssignmentToggle(e, assigItem)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-clock"></i></Button>
+                  <OverlayTrigger
+                    placement="bottom"
+                    delay={{ show: 1, hide: 0 }}
+                    overlay={renderTooltipReasign}>
+                      <Button onClick={(e) => editAssignedAssignmentToggle(e, assigItem)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-clock"></i></Button>
+                  </OverlayTrigger>
                 ):
-                  <Button onClick={(e) => assignAssignmentToggle(e, assigItem?.assignment?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-user-clock"></i></Button>
+                <OverlayTrigger
+                  placement="bottom"
+                  delay={{ show: 1, hide: 0 }}
+                  overlay={renderTooltipAsign}>
+                    <Button onClick={(e) => assignAssignmentToggle(e, assigItem?.assignment?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-user-clock"></i></Button>
+                </OverlayTrigger>
                 } 
-                  <Button onClick={() => handleDeleteNotify(assigItem?.assignment?.id, item?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-trash-alt"></i></Button>
+                <OverlayTrigger
+                  placement="bottom"
+                  delay={{ show: 1, hide: 0 }}
+                  overlay={renderTooltipDelete}>
+                    <Button onClick={() => handleDeleteNotify(assigItem?.assignment?.id, item?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-trash-alt"></i></Button>
+                </OverlayTrigger>
               </Col>
               </>
             ):
@@ -222,7 +276,7 @@ function ClassAssignment() {
               <>
               <Col sm={3} className='icon-exam'>
                 {/* <Button className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button> */}
-                <Button onClick={(e) => assignAssignmentToggle(e, assigItem?.assignment?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-user-clock"></i></Button>
+                <Button onClick={(e) => assignAssignmentToggle(e, assigItem?.assignment?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-user-clock"></i>0</Button>
               </Col>
               </>
             ):
@@ -230,15 +284,35 @@ function ClassAssignment() {
               {assigItem.classAssignment?.startDate?(
               <>
               <Col sm={3} className='icon-exam'>
+              <OverlayTrigger
+                placement="bottom"
+                delay={{ show: 1, hide: 0 }}
+                overlay={renderTooltipView}>
                 <Button onClick={() => viewAssignmentToggle(assigItem?.assignment, assigItem?.classAssignment)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button>
+              </OverlayTrigger>
+              <OverlayTrigger
+                placement="bottom"
+                delay={{ show: 1, hide: 0 }}
+                overlay={renderTooltipReasign}> 
                 <Button onClick={(e) => editAssignedAssignmentToggle(e, assigItem)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-clock"></i></Button>
+              </OverlayTrigger>
               </Col>
               </>
               ):(
               <>
                 <Col sm={3} className='icon-exam'>
+                <OverlayTrigger
+                  placement="bottom"
+                  delay={{ show: 1, hide: 0 }}
+                  overlay={renderTooltipView}>
                   <Button onClick={() => viewAssignmentToggle(assigItem?.assignment, assigItem?.classAssignment)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button>
+                </OverlayTrigger>
+                <OverlayTrigger
+                  placement="bottom"
+                  delay={{ show: 1, hide: 0 }}
+                  overlay={renderTooltipAsign}>  
                   <Button onClick={(e) => assignAssignmentToggle(e, assigItem?.assignment?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-user-clock"></i></Button>
+                </OverlayTrigger>
                 </Col>
               </>
               )
