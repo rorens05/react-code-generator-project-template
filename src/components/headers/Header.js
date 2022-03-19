@@ -6,7 +6,6 @@ import StudentLinks from './components/StudentLinks'
 import TeacherLinks from './components/TeacherLinks'
 
 export default function Header({activeHeader}) {
-
   return (
     <div className="header bg-white">
       <HomeLinks/>

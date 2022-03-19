@@ -75,6 +75,12 @@ code {
   display: flex
 }
 
+.header .home-link .home-link-logo{
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+}
+
 .header .home-links .home-link{
   padding: 18px;
   display: inline-block;

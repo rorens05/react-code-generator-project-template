@@ -10,22 +10,12 @@ import toBase64 from '../../../utils/toBase64'
 export default function SchoolProfileContent() {
 
   const userContext = useContext(UserContext)
-  const { themeColor, setThemeColor } = userContext.data 
-  const [loading, setLoading] = useState(true)
-  const [logo, setLogo] = useState("")
+  const { themeColor, setThemeColor, themeLogo, setThemeLogo } = userContext.data 
+  const [loading, setLoading] = useState(false)
+  const [logo, setLogo] = useState(themeLogo)
   const [fileName, setFileName] = useState("")
   const [theme, setTheme] = useState(themeColor)
   const [themeChanged, setThemeChanged] = useState(false)
-  
-  const getLogo = async() => {
-    let response = await new SchoolAPI().getSchoolLogo()
-    if(response.ok){
-      setLogo(response.data)
-    }else{
-      toast.error("Something went wrong while fetching logo")
-    }
-    setLoading(false)
-  }
 
   const onFileChange = async (e) => {
     if(e.target.files && e.target.files.length === 0){
@@ -53,6 +43,7 @@ export default function SchoolProfileContent() {
     })
     if(response.ok){
       setFileName("")
+      setThemeLogo(logo)
       toast.success("Logo saved successfully")
     }else{
       toast.error("Something went wrong while saving logo")
@@ -74,11 +65,6 @@ export default function SchoolProfileContent() {
     setLoading(false)
 
   }
-
-  useEffect(() => {
-    getLogo()
-  }, [])
-
 
   return (
     <div className='rounded-white-container'>
