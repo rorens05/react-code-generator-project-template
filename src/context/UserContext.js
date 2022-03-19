@@ -37,6 +37,9 @@ export class UserContextProvider extends Component {
           user.name = `${user.teacher?.fname} ${user.teacher?.lname}`
           user.isTeacher = true
           break;
+        case "School Admin":
+          user.name = `School Admin`
+          user.isSchoolAdmin = true
         default:
           break;
       }

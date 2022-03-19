@@ -8,6 +8,7 @@ export default function AuthRoute(props) {
   const {user} = userContext.data
   useEffect(() => {
     if(user != null){
+      if(user.isSchoolAdmin) return window.location.href = "/dashboard"
       window.location.href = '/classes'
     }
   }, [user])
