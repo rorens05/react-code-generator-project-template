@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 import { UserContext } from '../../context/UserContext';
 import MainContainer from '../../components/layouts/MainContainer'
 import { Col, Row } from 'react-bootstrap';
-import { Bar, Doughnut, Line } from 'react-chartjs-2';
+import {  Doughnut, Line } from 'react-chartjs-2';
 
 export default function Dashboard() {
 

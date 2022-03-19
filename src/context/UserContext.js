@@ -15,7 +15,8 @@ export class UserContextProvider extends Component {
       loading: true,
       connectionStatus: 'disconnected',
       takingExam: false,
-      examUrl: null
+      examUrl: null,
+      themeColor: '#EE9337'
     };
     this.connection = React.createRef();
 
@@ -40,19 +41,27 @@ export class UserContextProvider extends Component {
         case "School Admin":
           user.name = `School Admin`
           user.isSchoolAdmin = true
+          break;
         default:
+          user.name = 'No name'
           break;
       }
       let themeResponse = await new Auth().theme()
       console.log({themeResponse})
       if(themeResponse.ok) {
-        document.body.style.setProperty('--primary-color', themeResponse.data)
+        this.setThemeColor(themeResponse.data)
       }
       await this.setState({loading: false, user })
     } else {
       await this.setState({loading: false, user: null})
     }    
   };
+
+  setThemeColor = (themeColor) => {
+    document.body.style.setProperty('--primary-color', themeColor)
+    this.setState({themeColor})
+  }
+
 
   setLoading = (loading) => {
     this.setState({loading});
@@ -139,6 +148,7 @@ export class UserContextProvider extends Component {
       user,
       loading,
       connection,
+      themeColor,
       connectionStatus,
       takingExam
     } = this.state;
@@ -151,10 +161,12 @@ export class UserContextProvider extends Component {
             connection,
             connectionStatus,
             takingExam,
+            themeColor,
             takeExam: this.takeExam,
             endExam: this.endExam,
             refreshUser: this.refreshUser,
             connect: this.connect,
+            setThemeColor: this.setThemeColor
           },
         }}>
         {children}
