@@ -7,7 +7,28 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "../node_modules/@fortawesome/fontawesome-free/css/all.css"
 import 'froala-editor/css/froala_style.min.css';
 import 'froala-editor/css/froala_editor.pkgd.min.css';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement
+} from 'chart.js'
 
+ChartJS.register(
+  CategoryScale,
+  ArcElement,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+)
 
 ReactDOM.render(
   <React.StrictMode>

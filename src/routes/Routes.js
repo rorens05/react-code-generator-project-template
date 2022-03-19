@@ -46,7 +46,7 @@ import PageNotFound from "../components/error_pages/PageNotFound";
 import ExamInformation from "../views/exam-information/ExamInformation";
 import ExamCreation from "../views/exam-creation/ExamCreation";
 import  Profile from "../views/profile/Profile";
-import Dashboard from "../components/dashboard/Dashboard";
+import Dashboard from "../views/dashboard/Dashboard";
 
 export default function Routes() {
   const userContext = useContext(UserContext);

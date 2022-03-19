@@ -457,6 +457,10 @@ border-top-right-radius: 0px !important;
   color: var(--primary-color)!important;
   text-decoration: none !important;
 }
+
+.primary-color{
+  color: var(--primary-color)!important;
+}
 .card-subtitle{
   color: #BCBCBC;
 }
@@ -1311,4 +1315,29 @@ hr{
 
 .flex-1{
   flex: 1
+}
+
+.dashboard-content{
+  display: flex;
+}
+
+.dashboard-content .dashboard-content-item{
+  flex: 1;
+  height: 150px;
+  margin: 0 12px
+}
+
+.dashboard-content .dashboard-content-item:first-child{
+  margin-left: 0 !important;
+}
+
+.dashboard-content .dashboard-content-item:last-child{
+  margin-right: 0 !important;
+}
+
+.chart-container{
+  padding: 16px;
+  background-color: white;
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+  border-radius: 8px;
 }
