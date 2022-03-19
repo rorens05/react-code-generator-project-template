@@ -21,13 +21,28 @@ export default function Dashboard() {
       <MainContainer title="Dashboard" activeHeader={"dashboard"}>
         <Row>
           <Col className='px-4' sm={8}>
-          <h2 className="primary-color mt-5 mb-3">Analitics</h2>
+          <h2 className="primary-color mt-5 mb-3">Analytics</h2>
             <div className='dashboard-content mb-5 mt-3'>
-              <div className="dashboard-content-item rounded shadow bg-danger" >
+              <div className="dashboard-content-item rounded shadow bg-success" >
+                <div className='analytics-label'>
+                  <div className='analytics-icon'><i className="fas fa-user-graduate "></i></div>
+                  <h5 className="color-white my-0 ml-5">Students</h5>
+                </div>
+                <h2 className='color-white analytics-value h2 text-align-right'>145,322</h2>
               </div>
               <div className="dashboard-content-item rounded shadow bg-warning" >
+                <div className='analytics-label'>
+                  <div className='analytics-icon'><i className="fas fa-chalkboard-teacher "></i></div>
+                  <h5 className="color-white my-0 ml-5">Teacher</h5>
+                </div>
+                <h2 className='color-white analytics-value h2 text-align-right'>2,044</h2>
               </div>
               <div className="dashboard-content-item rounded shadow bg-info" >
+                <div className='analytics-label'>
+                  <div className='analytics-icon'><i className="fas fa-project-diagram "></i></div>
+                  <h5 className="color-white my-0 ml-5">Classes</h5>
+                </div>
+                <h2 className='color-white analytics-value h2 text-align-right'>793</h2>
               </div>
             </div>
             <div>

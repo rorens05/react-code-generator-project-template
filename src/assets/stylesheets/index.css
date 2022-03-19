@@ -1323,8 +1323,8 @@ hr{
 
 .dashboard-content .dashboard-content-item{
   flex: 1;
-  height: 150px;
-  margin: 0 12px
+  margin: 0 12px;
+  padding: 10px;
 }
 
 .dashboard-content .dashboard-content-item:first-child{
@@ -1333,6 +1333,7 @@ hr{
 
 .dashboard-content .dashboard-content-item:last-child{
   margin-right: 0 !important;
+  
 }
 
 .chart-container{
@@ -1340,4 +1341,15 @@ hr{
   background-color: white;
   box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
   border-radius: 8px;
+}
+
+.analytics-label{
+  color: white;
+  display: flex;
+  align-items: center;
+}
+
+.analytics-label .analytics-icon{
+  margin-right: 12px;
+  font-size: 24px;
 }
