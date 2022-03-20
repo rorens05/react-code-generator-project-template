@@ -1,13 +1,18 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Dropdown } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { toast } from "react-toastify";
+import { UserContext } from '../../../context/UserContext';
 
 export default function HomeLinks() {
+  const userContext = useContext(UserContext)
+  const {themeLogo} = userContext.data
   return (
     <div className="home-links">
        <Link className="home-link " to="#" onClick={() => toast.error("Feature under development")}>
-        <div><i class="fas fa-home"></i></div>
+        <div>
+          {themeLogo ? <img src={themeLogo} alt="logo" className="home-link-logo"/> : <i className="fas fa-home"></i>}
+        </div>
       </Link> 
       <div className="school-year-container">
         <span>S.Y.</span>

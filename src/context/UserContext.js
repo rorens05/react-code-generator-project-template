@@ -4,6 +4,7 @@ import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
 import { SIGNALR_URL } from '../contants/url';
 import Logger from '../utils/logger';
 import { onExamRoute } from '../utils/windowLocationHelper';
+import SchoolAPI from '../api/SchoolAPI';
 
 export const UserContext = React.createContext();
 export class UserContextProvider extends Component {
@@ -15,7 +16,9 @@ export class UserContextProvider extends Component {
       loading: true,
       connectionStatus: 'disconnected',
       takingExam: false,
-      examUrl: null
+      examUrl: null,
+      themeColor: '#EE9337',
+      themeLogo: null,
     };
     this.connection = React.createRef();
 
@@ -37,19 +40,37 @@ export class UserContextProvider extends Component {
           user.name = `${user.teacher?.fname} ${user.teacher?.lname}`
           user.isTeacher = true
           break;
+        case "School Admin":
+          user.name = `School Admin`
+          user.isSchoolAdmin = true
+          break;
         default:
+          user.name = 'No name'
           break;
       }
       let themeResponse = await new Auth().theme()
       console.log({themeResponse})
       if(themeResponse.ok) {
-        document.body.style.setProperty('--primary-color', themeResponse.data)
+        this.setThemeColor(themeResponse.data)
+      }
+      let themeLogoResponse = await new SchoolAPI().getSchoolLogo()
+      if(themeLogoResponse.ok) {
+        this.setThemeLogo(themeLogoResponse.data)
       }
       await this.setState({loading: false, user })
     } else {
       await this.setState({loading: false, user: null})
     }    
   };
+
+  setThemeLogo = async (themeLogo) => {
+    this.setState({themeLogo})
+  }
+
+  setThemeColor = (themeColor) => {
+    document.body.style.setProperty('--primary-color', themeColor)
+    this.setState({themeColor})
+  }
 
   setLoading = (loading) => {
     this.setState({loading});
@@ -71,8 +92,8 @@ export class UserContextProvider extends Component {
                         })
                         .build();
 
-      this.connection.current.on("OnLogoutMessage", (user, message) => {
-        Logger.info('Logout message received:', message);
+      this.connection.current.on("OnthemeLogoutMessage", (user, message) => {
+        Logger.info('themeLogout message received:', message);
       });
 
       this.connection.current.on("OnExamMessage", (user, message) => {
@@ -136,8 +157,10 @@ export class UserContextProvider extends Component {
       user,
       loading,
       connection,
+      themeColor,
       connectionStatus,
-      takingExam
+      takingExam,
+      themeLogo
     } = this.state;
     return (
       <UserContext.Provider
@@ -148,10 +171,14 @@ export class UserContextProvider extends Component {
             connection,
             connectionStatus,
             takingExam,
+            themeColor,
+            themeLogo,
             takeExam: this.takeExam,
             endExam: this.endExam,
             refreshUser: this.refreshUser,
             connect: this.connect,
+            setThemeColor: this.setThemeColor,
+            setThemeLogo: this.setThemeLogo,
           },
         }}>
         {children}
