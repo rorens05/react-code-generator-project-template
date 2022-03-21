@@ -157,8 +157,23 @@ color:#BCBCBC !important;
 .comment-btn {
   background-color: transparent !important;
   border-left:0px !important;
-  color:#BCBCBC !important;
+  color:var(--primary-color) !important;
   cursor: pointer !important;
+  font-size: 20px!important;
+}
+
+.comment {
+  background-color: #707070 !important;
+}
+
+.comment-log{
+  font-size: 30px;
+}
+
+.comment-content{
+  background-color: transparent !important;
+  /* padding: 10px;
+  margin-bottom: 20px; */
 }
 
 .search-box{
@@ -960,6 +975,12 @@ border-top-right-radius: 0px !important;
 .btn-create-task{
   color: var(--primary-color)!important;
   font-size: 18px!important;
+  text-decoration: none!important
+}
+.btn-like{
+  /* color: var(--primary-color)!important; */
+  color: #EE9337!important;
+  font-size: 20px!important;
   text-decoration: none!important
 }
 .btn-student-portfolio{

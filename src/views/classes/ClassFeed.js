@@ -9,6 +9,7 @@ import { UserContext } from '../../context/UserContext'
 import { toast } from 'react-toastify';
 import ClassSideNavigation from './components/ClassSideNavigation';
 import ClassBreadcrumbs from './components/ClassBreedCrumbs';
+import AnnouncementComment from './components/Feed/AnnouncementComment';
 
 function ClassFeed() {
   const [title, setTitle] = useState('Feed')
@@ -24,6 +25,8 @@ function ClassFeed() {
   const [feedClass, setFeedClass] = useState([])
   const userContext = useContext(UserContext)
   const {user} = userContext.data
+  const [showComment, setShowComment] = useState(false)
+  const [refId, setRefId] = useState()
 
   const closeNotify = () =>{
     setAddNotity(false)
@@ -50,7 +53,10 @@ function ClassFeed() {
       }
   }
 
-
+const getComment = (item) => {
+  setRefId(item)
+  setShowComment(!showComment)
+}
 
   const getFeedClass = async () => {
     console.log(id, 'classssssssss')
@@ -196,23 +202,18 @@ function ClassFeed() {
                 <Col style={{textAlign:'center'}} onClick={() => toast.error("Feature under development")}>
                   <div className='inline-flex' >
                     <div style={{color:'#EE9337', fontSize:'25px',}}>
-                    <i class="far fa-thumbs-up"></i>&nbsp;
+                    <i class="far fa-thumbs-up"></i>
                       </div>
-                      <div style={{color:'#EE9337', fontSize:'20px', paddingTop:'6px'}}>
-                      <p>Like</p>
+                      <div>
+                      <p><Button className='btn-like' Button variant="link">Like</Button></p>
                       </div>
                   </div>
                 </Col>
                 <Col style={{textAlign:'center'}}>
-                <div className='inline-flex'>
-                  <div style={{color:'#EE9337', fontSize:'25px',}}>
-                    <i class="far fa-comment-alt"></i>&nbsp;
-                    </div>
-                    <div style={{color:'#EE9337', fontSize:'20px',paddingTop:'5px'}}>
-                    <p>Comment</p>
-                    </div>
-                </div>
+                  <p><Button onClick={() => getComment(feedItem?.referenceId)} className='btn-like' Button variant="link"><i class="far fa-comment-alt"></i>&nbsp;Comment</Button></p>
                 </Col>
+                {showComment === true ? <><AnnouncementComment refId={refId} /></>:<span></span>}
+                
               </Row>
 
             </Card.Body>
