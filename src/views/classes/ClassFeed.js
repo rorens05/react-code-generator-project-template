@@ -27,6 +27,7 @@ function ClassFeed() {
   const {user} = userContext.data
   const [showComment, setShowComment] = useState(false)
   const [refId, setRefId] = useState()
+  const [typeId, setTypeId] = useState('')
 
   const closeNotify = () =>{
     setAddNotity(false)
@@ -53,8 +54,9 @@ function ClassFeed() {
       }
   }
 
-const getComment = (item) => {
+const getCommentAw = (item, item1) => {
   setRefId(item)
+  setTypeId(item1)
   setShowComment(!showComment)
 }
 
@@ -210,12 +212,10 @@ const getComment = (item) => {
                   </div>
                 </Col>
                 <Col style={{textAlign:'center'}}>
-                  <p><Button onClick={() => getComment(feedItem?.referenceId)} className='btn-like' Button variant="link"><i class="far fa-comment-alt"></i>&nbsp;Comment</Button></p>
+                  <p><Button onClick={() => getCommentAw(feedItem?.referenceId, feedItem.type)} className='btn-like' Button variant="link"><i class="far fa-comment-alt"></i>&nbsp;Comment</Button></p>
                 </Col>
-                {showComment === true ? <><AnnouncementComment refId={refId} /></>:<span></span>}
-                
+                {showComment === true && refId === feedItem?.referenceId  ? <><AnnouncementComment refId={refId} typeId={typeId} /></>:<span></span>}
               </Row>
-
             </Card.Body>
           </Card>
           </>
@@ -284,30 +284,22 @@ const getComment = (item) => {
                 <Col>
                 <hr />
                 </Col>
-              <Row>
-  
-                <Col style={{textAlign:'center'}}>
-                  <div className='inline-flex' onClick={() => toast.error("Feature under development")}>
+                <Row>
+                <Col style={{textAlign:'center'}} onClick={() => toast.error("Feature under development")}>
+                  <div className='inline-flex' >
                     <div style={{color:'#EE9337', fontSize:'25px',}}>
-                    <i class="far fa-thumbs-up"></i>&nbsp;
+                    <i class="far fa-thumbs-up"></i>
                       </div>
-                      <div style={{color:'#EE9337', fontSize:'20px', paddingTop:'6px'}}>
-                      <p>Like</p>
+                      <div>
+                      <p><Button className='btn-like' Button variant="link">Like</Button></p>
                       </div>
                   </div>
                 </Col>
                 <Col style={{textAlign:'center'}}>
-                <div className='inline-flex' onClick={() => toast.error("Feature under development")}>
-                  <div style={{color:'#EE9337', fontSize:'25px',}}>
-                    <i class="far fa-comment-alt"></i>&nbsp;
-                    </div>
-                    <div style={{color:'#EE9337', fontSize:'20px',paddingTop:'5px'}}>
-                    <p>Comment</p>
-                    </div>
-                </div>
+                  <p><Button onClick={() => getCommentAw(feedItem?.referenceId, feedItem.type)} className='btn-like' Button variant="link"><i class="far fa-comment-alt"></i>&nbsp;Comment</Button></p>
                 </Col>
+                {showComment === true && refId === feedItem?.referenceId  ? <><AnnouncementComment refId={refId} typeId={typeId} /></>:<span></span>}
               </Row>
-
             </Card.Body>
           </Card>
           </>

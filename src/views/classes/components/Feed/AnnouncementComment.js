@@ -1,54 +1,63 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {Form, InputGroup, FormControl, Card} from 'react-bootstrap'
 import { useParams } from 'react-router';
 import ClassesAPI from '../../../../api/ClassesAPI';
 
-const AnnouncementComment = ({refId}) => {
+const AnnouncementComment = ({refId, typeId}) => {
   const [comment, setComment] = useState('')
   const {id} = useParams();
+  const [commentAnnouncementItem, setCommentAnnouncementItem] = useState([])
 
+  console.log('aqwe:', typeId)
 
 
   const commentAnnouncement = async (e) => {
     e.preventDefault()
-    let typeId = 1
     let response = await new ClassesAPI().commentAnnouncement(id, refId, typeId, {comment:comment})
       if(response.ok){
         setComment('')
+        getComment()
       }else{
         alert(response.data.errorMessage)
       }
   }
 
+  const getComment = async () => {
+    let response = await new ClassesAPI().getComment(id, refId, typeId,)
+      if(response.ok){
+        setCommentAnnouncementItem(response.data)
+      }else{
+        alert(response.data.errorMessage)
+        alert(1)
+      }
+  }
+
+  useEffect(() => {
+    getComment();
+  }, [])
 
   return (
     <div>
+      {commentAnnouncementItem?.map(item => {
+        return(
+          <>
       <Card style={{margin:'20px'}}>
-  <Card.Header>
-    <div className='inline-flex'>
-    <i class="fas fa-user-circle fas-1x comment-log" ></i> 
-    <b><p style={{paddingLeft:'8px', paddingTop:'5px'}}>Kent Placia</p></b>
-    </div> 
-     </Card.Header>
-  <Card.Body>
-    <Card.Text>
-      With supporting text below as a natural lead-in to additional content.
-    </Card.Text>
-  </Card.Body>
-</Card>
-<Card style={{margin:'20px'}}>
-  <Card.Header>
-    <div className='inline-flex'>
-    <i class="fas fa-user-circle fas-1x comment-log" ></i> 
-    <b><p style={{paddingLeft:'8px', paddingTop:'5px'}}>Kent Placia</p></b>
-    </div> 
-     </Card.Header>
-  <Card.Body>
-    <Card.Text>
-      With supporting text below as a natural lead-in to additional content.
-    </Card.Text>
-  </Card.Body>
-</Card>
+        <Card.Header>
+          <div className='inline-flex'>
+          <i class="fas fa-user-circle fas-1x comment-log" ></i> 
+          <b><p style={{paddingLeft:'8px', paddingTop:'5px'}}>Kent Placia</p></b>
+          </div> 
+          </Card.Header>
+        <Card.Body>
+          <Card.Text>
+            {item?.comment}
+          </Card.Text>
+        </Card.Body>
+      </Card>
+          </>
+        )
+      })}
+
       <Form>  
         <InputGroup size="sm">
           <FormControl value={comment} onChange={(e) => setComment(e.target.value)} aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Write your comment here..." />

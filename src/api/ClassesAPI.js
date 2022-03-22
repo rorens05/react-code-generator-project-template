@@ -296,6 +296,13 @@ creatTask = async (mId, cId,  data) => {
     })
   }
 
+  getComment = async (id, refId, typeId) => {
+    return this.sendRequest({
+      path:`/api/Class/${id}/feed/${refId}/type/${typeId}/comment`,
+      method: 'GET'
+    })
+  }
+
   likeCommentAnnouncement = async (id, refId, typeId, data) => {
     return this.sendRequest({
       path: `/api/Class/${id}/feed/${refId}/type/${typeId}/like`,
