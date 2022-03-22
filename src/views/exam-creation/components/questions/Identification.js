@@ -84,7 +84,7 @@ export default function Identification({
   const [rate, setRate] = useState(1);
   const [selectedQuestion, setSelectedQuestion] = useState(null);
   const [answer, setAnswer] = useState("");
-  const { id } = useParams();
+  const { id, examid } = useParams();
 
   const submitQuestion = async (e) => {
     e.preventDefault();
@@ -155,7 +155,7 @@ export default function Identification({
 
   const addQuestion = async (data) => {
     let response = await new ExamAPI().addIdentification(
-      id,
+      examid,
       part.questionPart.id,
       data
     );

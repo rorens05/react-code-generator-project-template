@@ -132,7 +132,7 @@ export default function Enumeration({
   const [selectedQuestion, setSelectedQuestion] = useState(null);
   const [answer, setAnswer] = useState("");
   const [choices, setChoices] = useState([]);
-  const { id } = useParams();
+  const { id, examid } = useParams();
 
   const submitQuestion = async (e) => {
     e.preventDefault();
@@ -212,7 +212,7 @@ export default function Enumeration({
 
   const addQuestion = async (data) => {
     let response = await new ExamAPI().addEnumeration(
-      id,
+      examid,
       part.questionPart.id,
       data
     );
