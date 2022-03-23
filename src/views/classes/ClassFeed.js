@@ -345,16 +345,33 @@ const getCommentAw = (item, item1, item3) => {
                     <div style={{color:'#EE9337', fontSize:'25px',}}>
                       </div>
                       <div>
-                        {feedItem?.isLike === true ? <><Button onClick={() => likeComment(feedItem?.referenceId, feedItem.type)} className='btn-like' Button variant="link"><i class="fas fa-thumbs-up"></i>&nbsp;Like</Button></>:<>
-                        <p><Button onClick={() => likeComment(feedItem?.referenceId, feedItem.type)} className='btn-like' Button variant="link"><i class="far fa-thumbs-up"></i>&nbsp;Like</Button></p>
+                      {feedItem?.isLike === true ? <>
+                          <OverlayTrigger
+                            placement="right"
+                            delay={{ show: 10, hide: 25 }}
+                            overlay={renderTooltipUnlike}>
+                              <Button onClick={() => likeComment(feedItem?.referenceId, feedItem.type)} className='btn-like' Button variant="link"><i class="fas fa-thumbs-up"></i>&nbsp;<b style={{fontSize:'16px', position:"absolute" }}>{feedItem?.likes?.length}</b>&nbsp;&nbsp;Like</Button>
+                        </OverlayTrigger>
+                        </>:<>
+                        <OverlayTrigger
+                          placement="right"
+                          delay={{ show: 10, hide: 25 }}
+                          overlay={renderTooltipLike}>
+                            <Button onClick={() => likeComment(feedItem?.referenceId, feedItem.type, feedItem)} className='btn-like' Button variant="link"><i class="far fa-thumbs-up"></i>&nbsp;<b style={{fontSize:'16px', position:"absolute" }}>{feedItem?.likes?.length}</b>&nbsp;&nbsp;Like</Button>
+                        </OverlayTrigger>
                         </>}
                       </div>
                   </div>
                 </Col>
                 <Col style={{textAlign:'center'}}>
-                  <p><Button onClick={() => getCommentAw(feedItem?.referenceId, feedItem.type)} className='btn-like' Button variant="link"><i class="far fa-comment-alt"></i>&nbsp;<b style={{fontSize:'16px', position:"absolute" }}>{feedItem?.commentCount}</b>&nbsp;&nbsp;Comment</Button></p>
+                <OverlayTrigger
+                          placement="right"
+                          delay={{ show: 10, hide: 25 }}
+                          overlay={feedItem?.comments?.length ? renderTooltipViewComment : renderTooltipNoComment}>
+                  <Button onClick={() => getCommentAw(feedItem?.referenceId, feedItem.type, feedItem?.comments)} className='btn-like' Button variant="link"><i class="far fa-comment-alt"></i>&nbsp;<b style={{fontSize:'16px', position:"absolute" }}>{feedItem?.comments?.length}</b>&nbsp;&nbsp;Comment</Button>
+                </OverlayTrigger>
                 </Col>
-                {showComment === true && refId === feedItem?.referenceId  ? <><AnnouncementComment getFeedClass={getFeedClass} refId={refId} typeId={typeId} /></>:<span></span>}
+                {showComment === true && refId === feedItem?.referenceId  ? <><AnnouncementComment commentInfo={commentInfo} getFeedClass={getFeedClass} refId={refId} typeId={typeId} /></>:<span></span>}
               </Row>
             </Card.Body>
           </Card>

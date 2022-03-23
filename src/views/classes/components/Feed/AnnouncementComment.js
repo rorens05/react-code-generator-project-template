@@ -42,9 +42,9 @@ const AnnouncementComment = ({refId, typeId, getFeedClass, commentInfo}) => {
           <>
       <Card style={{margin:'20px'}}>
         <Card.Header>
-          <div className='inline-flex'>
+          <div className='inline-flex' style={{color: "#7D7D7D"}}>
           <i class="fas fa-user-circle fas-1x comment-log" ></i> 
-          <b><p style={{paddingLeft:'8px', paddingTop:'5px'}}>{item?.commentedBy}</p></b>
+          <b><p style={{paddingLeft:'8px', paddingTop:'5px', color:'#EE9337'}}>{item?.commentedBy}</p></b>
           </div> 
           </Card.Header>
         <Card.Body>
