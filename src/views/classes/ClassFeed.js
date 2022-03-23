@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
-import {Card, InputGroup, FormControl, Row, Col,Button, Form} from 'react-bootstrap'
+import {Card, InputGroup, FormControl, Row, Col,Button, Form, Tooltip, OverlayTrigger} from 'react-bootstrap'
 import ClassesAPI from '../../api/ClassesAPI'
 import SweetAlert from 'react-bootstrap-sweetalert';
 import EditAnnouncement from './components/Feed/EditAnnouncement';
@@ -28,6 +28,8 @@ function ClassFeed() {
   const [showComment, setShowComment] = useState(false)
   const [refId, setRefId] = useState()
   const [typeId, setTypeId] = useState('')
+  const [commentName, setCommentName] = useState([])
+  const [commentInfo, setCommentInfo] = useState([])
 
   const closeNotify = () =>{
     setAddNotity(false)
@@ -54,9 +56,10 @@ function ClassFeed() {
       }
   }
 
-const getCommentAw = (item, item1) => {
+const getCommentAw = (item, item1, item3) => {
   setRefId(item)
   setTypeId(item1)
+  setCommentInfo(item3)
   setShowComment(!showComment)
 }
 
@@ -65,6 +68,9 @@ const getCommentAw = (item, item1) => {
     let response = await new ClassesAPI().getFeedClass(id)
     if(response.ok){
     setFeedClass(response.data)
+      if(response.data?.feedInformations?.isLike === true){
+        setCommentName(response.data?.feedInformations?.commentedBy)
+      }
   }else{
     alert(response.data.errorMessage)
    }
@@ -73,7 +79,8 @@ const getCommentAw = (item, item1) => {
     getFeedClass();
   }, [])
 
-  console.log('feed:', feedClass)
+  console.log('commentName:', commentName)
+  console.log('commentName:', commentName)
 
   const deleteAnnouncement = async (item) => {
     let response = await new ClassesAPI().deleteAnnouncement(item)
@@ -95,7 +102,38 @@ const getCommentAw = (item, item1) => {
     setDeleteNotify(false)
   }
 
-  console.log('this is announcement:', announcementItem)
+  const likeComment = async (refId, typeId) => {
+    let response = await new ClassesAPI().likeCommentAnnouncement(id, refId, typeId)
+      if(response.ok){
+        getFeedClass()
+      }else{
+        alert(response.data.errorMessage)
+      }
+  }
+
+  const renderTooltipLike= (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Like
+    </Tooltip>
+  )
+  const renderTooltipUnlike = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+    Unlike
+    </Tooltip>
+  )
+
+  const renderTooltipViewComment = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+    View Comment
+    </Tooltip>
+  )
+
+  const renderTooltipNoComment = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+    No Comment
+    </Tooltip>
+  )
+
 
   return (
     <ClassSideNavigation>
@@ -201,27 +239,44 @@ const getCommentAw = (item, item1) => {
               </Row>
               <Row>
                 <hr />
-                <Col style={{textAlign:'center'}} onClick={() => toast.error("Feature under development")}>
+                <Col style={{textAlign:'center'}}>
                   <div className='inline-flex' >
                     <div style={{color:'#EE9337', fontSize:'25px',}}>
-                    <i class="far fa-thumbs-up"></i>
                       </div>
                       <div>
-                      <p><Button className='btn-like' Button variant="link">Like</Button></p>
+                        {feedItem?.isLike === true ? <>
+                          <OverlayTrigger
+                            placement="right"
+                            delay={{ show: 10, hide: 25 }}
+                            overlay={renderTooltipUnlike}>
+                              <Button onClick={() => likeComment(feedItem?.referenceId, feedItem.type)} className='btn-like' Button variant="link"><i class="fas fa-thumbs-up"></i>&nbsp;<b style={{fontSize:'16px', position:"absolute" }}>{feedItem?.likes?.length}</b>&nbsp;&nbsp;Like</Button>
+                        </OverlayTrigger>
+                        </>:<>
+                        <OverlayTrigger
+                          placement="right"
+                          delay={{ show: 10, hide: 25 }}
+                          overlay={renderTooltipLike}>
+                            <Button onClick={() => likeComment(feedItem?.referenceId, feedItem.type, feedItem)} className='btn-like' Button variant="link"><i class="far fa-thumbs-up"></i>&nbsp;<b style={{fontSize:'16px', position:"absolute" }}>{feedItem?.likes?.length}</b>&nbsp;&nbsp;Like</Button>
+                        </OverlayTrigger>
+                        </>}
                       </div>
                   </div>
                 </Col>
                 <Col style={{textAlign:'center'}}>
-                  <p><Button onClick={() => getCommentAw(feedItem?.referenceId, feedItem.type)} className='btn-like' Button variant="link"><i class="far fa-comment-alt"></i>&nbsp;Comment</Button></p>
+                <OverlayTrigger
+                          placement="right"
+                          delay={{ show: 10, hide: 25 }}
+                          overlay={feedItem?.comments?.length ? renderTooltipViewComment : renderTooltipNoComment}>
+                  <Button onClick={() => getCommentAw(feedItem?.referenceId, feedItem.type, feedItem?.comments)} className='btn-like' Button variant="link"><i class="far fa-comment-alt"></i>&nbsp;<b style={{fontSize:'16px', position:"absolute" }}>{feedItem?.comments?.length}</b>&nbsp;&nbsp;Comment</Button>
+                </OverlayTrigger>
                 </Col>
-                {showComment === true && refId === feedItem?.referenceId  ? <><AnnouncementComment refId={refId} typeId={typeId} /></>:<span></span>}
+                {showComment === true && refId === feedItem?.referenceId  ? <><AnnouncementComment commentInfo={commentInfo} getFeedClass={getFeedClass} refId={refId} typeId={typeId} /></>:<span></span>}
               </Row>
             </Card.Body>
           </Card>
           </>
           ):
           <>
-
           <Card className='post-card'>
             <Card.Body>
             <div className='inline-flex'>
@@ -285,20 +340,21 @@ const getCommentAw = (item, item1) => {
                 <hr />
                 </Col>
                 <Row>
-                <Col style={{textAlign:'center'}} onClick={() => toast.error("Feature under development")}>
+                <Col style={{textAlign:'center'}}>
                   <div className='inline-flex' >
                     <div style={{color:'#EE9337', fontSize:'25px',}}>
-                    <i class="far fa-thumbs-up"></i>
                       </div>
                       <div>
-                      <p><Button className='btn-like' Button variant="link">Like</Button></p>
+                        {feedItem?.isLike === true ? <><Button onClick={() => likeComment(feedItem?.referenceId, feedItem.type)} className='btn-like' Button variant="link"><i class="fas fa-thumbs-up"></i>&nbsp;Like</Button></>:<>
+                        <p><Button onClick={() => likeComment(feedItem?.referenceId, feedItem.type)} className='btn-like' Button variant="link"><i class="far fa-thumbs-up"></i>&nbsp;Like</Button></p>
+                        </>}
                       </div>
                   </div>
                 </Col>
                 <Col style={{textAlign:'center'}}>
-                  <p><Button onClick={() => getCommentAw(feedItem?.referenceId, feedItem.type)} className='btn-like' Button variant="link"><i class="far fa-comment-alt"></i>&nbsp;Comment</Button></p>
+                  <p><Button onClick={() => getCommentAw(feedItem?.referenceId, feedItem.type)} className='btn-like' Button variant="link"><i class="far fa-comment-alt"></i>&nbsp;<b style={{fontSize:'16px', position:"absolute" }}>{feedItem?.commentCount}</b>&nbsp;&nbsp;Comment</Button></p>
                 </Col>
-                {showComment === true && refId === feedItem?.referenceId  ? <><AnnouncementComment refId={refId} typeId={typeId} /></>:<span></span>}
+                {showComment === true && refId === feedItem?.referenceId  ? <><AnnouncementComment getFeedClass={getFeedClass} refId={refId} typeId={typeId} /></>:<span></span>}
               </Row>
             </Card.Body>
           </Card>

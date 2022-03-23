@@ -3,13 +3,12 @@ import {Form, InputGroup, FormControl, Card} from 'react-bootstrap'
 import { useParams } from 'react-router';
 import ClassesAPI from '../../../../api/ClassesAPI';
 
-const AnnouncementComment = ({refId, typeId}) => {
+const AnnouncementComment = ({refId, typeId, getFeedClass, commentInfo}) => {
   const [comment, setComment] = useState('')
   const {id} = useParams();
   const [commentAnnouncementItem, setCommentAnnouncementItem] = useState([])
 
-  console.log('aqwe:', typeId)
-
+ console.log('commentInfo:', commentInfo)
 
   const commentAnnouncement = async (e) => {
     e.preventDefault()
@@ -17,6 +16,7 @@ const AnnouncementComment = ({refId, typeId}) => {
       if(response.ok){
         setComment('')
         getComment()
+        getFeedClass()
       }else{
         alert(response.data.errorMessage)
       }
@@ -28,7 +28,6 @@ const AnnouncementComment = ({refId, typeId}) => {
         setCommentAnnouncementItem(response.data)
       }else{
         alert(response.data.errorMessage)
-        alert(1)
       }
   }
 
@@ -45,7 +44,7 @@ const AnnouncementComment = ({refId, typeId}) => {
         <Card.Header>
           <div className='inline-flex'>
           <i class="fas fa-user-circle fas-1x comment-log" ></i> 
-          <b><p style={{paddingLeft:'8px', paddingTop:'5px'}}>Kent Placia</p></b>
+          <b><p style={{paddingLeft:'8px', paddingTop:'5px'}}>{item?.commentedBy}</p></b>
           </div> 
           </Card.Header>
         <Card.Body>

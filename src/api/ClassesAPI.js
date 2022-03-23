@@ -303,11 +303,10 @@ creatTask = async (mId, cId,  data) => {
     })
   }
 
-  likeCommentAnnouncement = async (id, refId, typeId, data) => {
+  likeCommentAnnouncement = async (id, refId, typeId) => {
     return this.sendRequest({
       path: `/api/Class/${id}/feed/${refId}/type/${typeId}/like`,
-      method: 'POST',
-      data
+      method: 'PUT'
     })
   }
 
