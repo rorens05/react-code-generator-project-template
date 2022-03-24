@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {Form, InputGroup, FormControl, Card} from 'react-bootstrap'
+import {Form, InputGroup, FormControl, Card, Button} from 'react-bootstrap'
 import { useParams } from 'react-router';
 import ClassesAPI from '../../../../api/ClassesAPI';
 
@@ -35,8 +35,26 @@ const AnnouncementComment = ({refId, typeId, getFeedClass, commentInfo}) => {
     getComment();
   }, [])
 
+  const commentDelete = async (e, item) => {
+    e.preventDefault()
+    let commentId = item
+    let response = await new ClassesAPI().deleteCommentfeed(id, commentId)
+      if(response.ok){
+        getComment()
+      }else{
+        alert(response.data.errorMessage)
+      }
+  }
+
+  const refreshComment = () => {
+    getComment()
+  }
+
   return (
     <div>
+        <div style={{color:'#EE9337', fontSize:'18px',paddingTop:'4px'}}>            
+          <Button onClick={() => refreshComment()} className="m-r-5 color-white tficolorbg-button" size="sm"> Refresh</Button>
+        </div>
       {commentAnnouncementItem?.map(item => {
         return(
           <>
@@ -46,6 +64,9 @@ const AnnouncementComment = ({refId, typeId, getFeedClass, commentInfo}) => {
           <i class="fas fa-user-circle fas-1x comment-log" ></i> 
           <b><p style={{paddingLeft:'8px', paddingTop:'5px', color:'#EE9337'}}>{item?.commentedBy}</p></b>
           </div> 
+          <div style={{color:'#EE9337', fontSize:'15px',paddingTop:'4px', float:'right'}}>
+            <Button onClick={(e) => commentDelete(e, item?.id)} className='btn-like' size="sm" Button variant="link">&nbsp;Delete</Button>
+          </div>
           </Card.Header>
         <Card.Body>
           <Card.Text>

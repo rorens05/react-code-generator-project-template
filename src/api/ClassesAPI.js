@@ -310,6 +310,13 @@ creatTask = async (mId, cId,  data) => {
     })
   }
 
+  deleteCommentfeed = async (id, commentId) => {
+    return this.sendRequest({
+      path:`/api/Class/${id}/feed/comment/${commentId}`,
+      method: 'DELETE'
+    })
+  }
+
 //get pages
   getPages = async (cId, mId) => {
     return this.sendRequest({
