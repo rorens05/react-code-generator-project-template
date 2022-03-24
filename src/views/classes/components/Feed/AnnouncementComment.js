@@ -1,31 +1,47 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import {Form, InputGroup, FormControl, Card, Button} from 'react-bootstrap'
+import { toast } from "react-toastify";
 import { useParams } from 'react-router';
 import ClassesAPI from '../../../../api/ClassesAPI';
+import { UserContext } from '../../../../context/UserContext'
 
 const AnnouncementComment = ({refId, typeId, getFeedClass, commentInfo}) => {
   const [comment, setComment] = useState('')
+  const [commentAnnouncementItem, setAnnouncementItem] = useState([])
   const {id} = useParams();
-  const [commentAnnouncementItem, setCommentAnnouncementItem] = useState([])
+  const userContext = useContext(UserContext)
+  const {user} = userContext.data
+  const [loading, setLoading] = useState(true);
 
- console.log('commentInfo:', commentInfo)
 
   const commentAnnouncement = async (e) => {
     e.preventDefault()
-    let response = await new ClassesAPI().commentAnnouncement(id, refId, typeId, {comment:comment})
+    if(comment === ''){
+      toast.warning("Please fill out this Field")
+    }else{
+      let response = await new ClassesAPI().commentAnnouncement(id, refId, typeId, {comment:comment})
       if(response.ok){
+        toast.success("Comment was successfully")
         setComment('')
-        getComment()
         getFeedClass()
+        getComment()
       }else{
         alert(response.data.errorMessage)
       }
+    }
+
   }
+ useEffect(() => {
+    getFeedClass();
+  }, [commentInfo])
+  
 
   const getComment = async () => {
+    setLoading(true);
     let response = await new ClassesAPI().getComment(id, refId, typeId,)
+    setLoading(false);
       if(response.ok){
-        setCommentAnnouncementItem(response.data)
+        setAnnouncementItem(response.data)
       }else{
         alert(response.data.errorMessage)
       }
@@ -40,21 +56,19 @@ const AnnouncementComment = ({refId, typeId, getFeedClass, commentInfo}) => {
     let commentId = item
     let response = await new ClassesAPI().deleteCommentfeed(id, commentId)
       if(response.ok){
+        getFeedClass()
         getComment()
+        toast.success("Comment was successfully deleted")
       }else{
         alert(response.data.errorMessage)
       }
   }
 
-  const refreshComment = () => {
-    getComment()
-  }
-
   return (
     <div>
-        <div style={{color:'#EE9337', fontSize:'18px',paddingTop:'4px'}}>            
+        {/* <div style={{color:'#EE9337', fontSize:'18px',paddingTop:'4px'}}>            
           <Button onClick={() => refreshComment()} className="m-r-5 color-white tficolorbg-button" size="sm"> Refresh</Button>
-        </div>
+        </div> */}
       {commentAnnouncementItem?.map(item => {
         return(
           <>
@@ -65,7 +79,7 @@ const AnnouncementComment = ({refId, typeId, getFeedClass, commentInfo}) => {
           <b><p style={{paddingLeft:'8px', paddingTop:'5px', color:'#EE9337'}}>{item?.commentedBy}</p></b>
           </div> 
           <div style={{color:'#EE9337', fontSize:'15px',paddingTop:'4px', float:'right'}}>
-            <Button onClick={(e) => commentDelete(e, item?.id)} className='btn-like' size="sm" Button variant="link">&nbsp;Delete</Button>
+          {user.isTeacher && <Button onClick={(e) => commentDelete(e, item?.id)} className='btn-like' size="sm" Button variant="link">&nbsp;Delete</Button>}        
           </div>
           </Card.Header>
         <Card.Body>
