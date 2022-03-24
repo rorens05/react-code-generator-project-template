@@ -976,6 +976,9 @@ border-top-right-radius: 0px !important;
 .inline-flex{
   display: inline-flex;
 }
+.btn-subject-area{
+  display: inline-flex;
+}
 .text-color-bcbcbc{
   color: #BCBCBC;
 }
