@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
-import {Card, InputGroup, FormControl, Row, Col,Button, Form, Tooltip, OverlayTrigger} from 'react-bootstrap'
+import {Card, InputGroup, FormControl, Row, Col,Button, Form, Tooltip, OverlayTrigger, Fade} from 'react-bootstrap'
 import ClassesAPI from '../../api/ClassesAPI'
 import SweetAlert from 'react-bootstrap-sweetalert';
 import EditAnnouncement from './components/Feed/EditAnnouncement';
@@ -25,7 +25,7 @@ function ClassFeed() {
   const [feedClass, setFeedClass] = useState([])
   const userContext = useContext(UserContext)
   const {user} = userContext.data
-  const [showComment, setShowComment] = useState(false)
+  const [showComment, setShowComment] = useState(Fade)
   const [refId, setRefId] = useState()
   const [typeId, setTypeId] = useState('')
   const [commentName, setCommentName] = useState([])
@@ -129,7 +129,6 @@ const getComment = (item, item1, item3) => {
     No Comment
     </Tooltip>
   )
-
 
   return (
     <ClassSideNavigation>
@@ -266,7 +265,7 @@ const getComment = (item, item1, item3) => {
                   <Button onClick={() => getComment(feedItem?.referenceId, feedItem.type, feedItem?.comments)} className='btn-like' Button variant="link"><i class="far fa-comment-alt"></i>&nbsp;<b style={{fontSize:'16px', position:"absolute" }}>{feedItem?.comments?.length}</b>&nbsp;&nbsp;Comment</Button>
                 </OverlayTrigger>
                 </Col>
-                {showComment === true && refId === feedItem?.referenceId  ? <><AnnouncementComment setCommentInfo={setCommentInfo} commentInfo={commentInfo} getFeedClass={getFeedClass} refId={refId} typeId={typeId} /></>:<span></span>}
+                {showComment === true && refId === feedItem?.referenceId  ? <><AnnouncementComment commentInfo={commentInfo} getFeedClass={getFeedClass} refId={refId} typeId={typeId} /></>:<span></span>}
               </Row>
             </Card.Body>
           </Card>
@@ -364,7 +363,7 @@ const getComment = (item, item1, item3) => {
                           placement="right"
                           delay={{ show: 10, hide: 25 }}
                           overlay={feedItem?.comments?.length ? renderTooltipViewComment : renderTooltipNoComment}>
-                  <Button onClick={() => getComment(feedItem?.referenceId, feedItem.type, feedItem?.comments)} className='btn-like' Button variant="link"><i class="far fa-comment-alt"></i>&nbsp;<b style={{fontSize:'16px', position:"absolute" }}>{feedItem?.comments?.length}</b>&nbsp;&nbsp;Comment</Button>
+                  <Button onClick={() => getComment(feedItem?.referenceId, feedItem.type, feedItem.comments)} className='btn-like' Button variant="link"><i class="far fa-comment-alt"></i>&nbsp;<b style={{fontSize:'16px', position:"absolute" }}>{feedItem?.comments?.length}</b>&nbsp;&nbsp;Comment</Button>
                 </OverlayTrigger>
                 </Col>
                 {showComment === true && refId === feedItem?.referenceId  ? <><AnnouncementComment commentInfo={commentInfo} getFeedClass={getFeedClass} refId={refId} typeId={typeId} /></>:<span></span>}

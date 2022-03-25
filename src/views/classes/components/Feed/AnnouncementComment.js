@@ -21,7 +21,7 @@ const AnnouncementComment = ({refId, typeId, getFeedClass, commentInfo}) => {
     }else{
       let response = await new ClassesAPI().commentAnnouncement(id, refId, typeId, {comment:comment})
       if(response.ok){
-        toast.success("Comment was successfully")
+        toast.success("Comment was successfully Created")
         setComment('')
         getFeedClass()
         getComment()
@@ -32,6 +32,7 @@ const AnnouncementComment = ({refId, typeId, getFeedClass, commentInfo}) => {
 
   }
  useEffect(() => {
+   console.log(commentInfo)
     getFeedClass();
   }, [commentInfo])
   
@@ -48,6 +49,7 @@ const AnnouncementComment = ({refId, typeId, getFeedClass, commentInfo}) => {
   }
 
   useEffect(() => {
+
     getComment();
   }, [])
 
@@ -64,12 +66,14 @@ const AnnouncementComment = ({refId, typeId, getFeedClass, commentInfo}) => {
       }
   }
 
+  console.log('commentInfo:', commentInfo)
+
   return (
     <div>
         {/* <div style={{color:'#EE9337', fontSize:'18px',paddingTop:'4px'}}>            
           <Button onClick={() => refreshComment()} className="m-r-5 color-white tficolorbg-button" size="sm"> Refresh</Button>
         </div> */}
-      {commentAnnouncementItem?.map(item => {
+      {commentInfo?.map(item => {
         return(
           <>
       <Card style={{margin:'20px'}}>
@@ -79,7 +83,8 @@ const AnnouncementComment = ({refId, typeId, getFeedClass, commentInfo}) => {
           <b><p style={{paddingLeft:'8px', paddingTop:'5px', color:'#EE9337'}}>{item?.commentedBy}</p></b>
           </div> 
           <div style={{color:'#EE9337', fontSize:'15px',paddingTop:'4px', float:'right'}}>
-          {user.isTeacher && <Button onClick={(e) => commentDelete(e, item?.id)} className='btn-like' size="sm" Button variant="link">&nbsp;Delete</Button>}        
+          {user.isTeacher && <Button onClick={(e) => commentDelete(e, item?.id)} className='btn-like' size="sm" Button variant="link">&nbsp;Delete</Button>}  
+          {(user?.userId === item?.createdById && user?.teacher === null)?(<><Button onClick={(e) => commentDelete(e, item?.id)} className='btn-like' size="sm" Button variant="link">&nbsp;Delete</Button></>):(<></>)}       
           </div>
           </Card.Header>
         <Card.Body>
