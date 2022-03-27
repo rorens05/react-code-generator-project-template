@@ -4,7 +4,7 @@ import CoursesAPI from "../../../api/CoursesAPI";
 import SubjectAreaAPI from "../../../api/SubjectAreaAPI";
 import { UserContext } from './../../../context/UserContext'
 
-export default function CourseCreate({setCourse, openModal, setOpenModal}){
+export default function CourseCreate({getCourses, setCourse, openModal, setOpenModal}){
 
 	const [loading, setLoading] = useState(false)
 	const [courseName, setCourseName] = useState('')
@@ -33,16 +33,16 @@ export default function CourseCreate({setCourse, openModal, setOpenModal}){
     }
   }
 
-	const getCourses = async() => {
-    setLoading(true)
-    let response = await new CoursesAPI().getCourses()
-    setLoading(false)
-    if(response.ok){
-      setCourse(response.data)
-    }else{
-      alert("Something went wrong while fetching all courses")
-    }
-  }
+	// const getCourses = async() => {
+  //   setLoading(true)
+  //   let response = await new CoursesAPI().getCourses()
+  //   setLoading(false)
+  //   if(response.ok){
+  //     setCourse(response.data)
+  //   }else{
+  //     alert("Something went wrong while fetching all courses")
+  //   }
+  // }
 
 	const saveCourse = async(e) => {
     e.preventDefault()
@@ -54,7 +54,7 @@ export default function CourseCreate({setCourse, openModal, setOpenModal}){
     if(response.ok){
       alert("Saved")
 	  handleCloseModal(e)
-	  getCourses()
+		getCourses()
     }else{
       alert(response.data.errorMessage)
     }

@@ -6,8 +6,6 @@ import { Button, InputGroup, FormControl, CardGroup, Row, Col } from 'react-boot
 import CourseEdit from "./components/CourseEdit";
 import CoursesAPI from "../../api/CoursesAPI";
 import { UserContext } from './../../context/UserContext'
-import Ict from "./subjectarea/Ict";
-import English from "./subjectarea/English";
 
 
 export default function Courses() {
@@ -22,6 +20,22 @@ export default function Courses() {
   const [filter, setFilter] = useState("")
   const [ictItem, setIctItem] = useState([])
   const [englishItem, setEnglishItem] = useState([])
+  const [mathItem, setMathItem] = useState([])
+  const [filipinoitem, setFilipinoItem] = useState([])
+  const [scienceItem, setScienceItem] = useState([])
+  const [aralinPanlipunanItem, setAralinPanlipunanItem] = useState([])
+  const [subjectAreaName, setSubjectAreaName] = useState([])
+  const [stemItem, setStemItem] = useState([])
+  const [appliedItem, setAppliedItem] = useState([])
+  const [coreItem, setCoreItem] = useState([])
+  const [abmItem, setAbmItem] = useState([])
+  const [hummsItem, setHummsItem] = useState([])
+  const [roboticsItem, setRoboticsItem] = useState([])
+  const [tleItem, setTleItem] = useState([])
+  const [heleItem, setHeleitem] = useState([])
+  const [mapehItem, setMapehItem] = useState([])
+  const [cleItem, setCleItem] = useState([])
+  const [godsParkItem, setGodsParkItem] = useState([])
 	
 	const onSearch = (text) => {
     setFilter(text)
@@ -38,12 +52,44 @@ export default function Courses() {
     setLoading(false)
     if(response.ok){
       const sorted = response.data.sort((a, b) => a.subjectArea.subjectAreaName > b.subjectArea.subjectAreaName ? 1:-1);
-      setCourse(sorted);
+      setSubjectAreaName(sorted);
+      const sortedCourse = response.data.sort((a, b) => a.subjectArea.subjectAreaName > b.subjectArea.subjectAreaName ? 1:-1);
+      setCourse(sortedCourse);
 
       const dataIct = response.data.filter((item) => item.subjectArea.subjectAreaName == 'ICT')
       setIctItem(dataIct)
       const dataEnglish = response.data.filter((item) => item.subjectArea.subjectAreaName == 'English')
       setEnglishItem(dataEnglish)
+      const dataMath = response.data.filter((item) => item.subjectArea.subjectAreaName == 'Math')
+      setMathItem(dataMath)
+      const dataFilipino = response.data.filter((item) => item.subjectArea.subjectAreaName == 'Filipino')
+      setFilipinoItem(dataFilipino)
+      const dataScience = response.data.filter((item) => item.subjectArea.subjectAreaName == 'Science')
+      setScienceItem(dataScience)
+      const dataAralinPanlipunan = response.data.filter((item) => item.subjectArea.subjectAreaName == 'Aralin Panlipunan')
+      setAralinPanlipunanItem(dataAralinPanlipunan)
+      const dataStem = response.data.filter((item) => item.subjectArea.subjectAreaName == 'STEM')
+      setStemItem(dataStem)
+      const dataApplied = response.data.filter((item) => item.subjectArea.subjectAreaName == 'APPLIED')
+      setAppliedItem(dataApplied)
+      const dataCode = response.data.filter((item) => item.subjectArea.subjectAreaName == 'CORE')
+      setCoreItem(dataCode)
+      const dataAbm = response.data.filter((item) => item.subjectArea.subjectAreaName == 'ABM')
+      setAbmItem(dataAbm)
+      const dataHumms = response.data.filter((item) => item.subjectArea.subjectAreaName == 'HUMMS')
+      setHummsItem(dataHumms)
+      const dataRobotics = response.data.filter((item) => item.subjectArea.subjectAreaName == 'Robotics')
+      setRoboticsItem(dataRobotics)
+      const dataTle = response.data.filter((item) => item.subjectArea.subjectAreaName == 'TLE')
+      setTleItem(dataTle)
+      const dataHele = response.data.filter((item) => item.subjectArea.subjectAreaName == 'HELE')
+      setHeleitem(dataHele)
+      const dataMapeh = response.data.filter((item) => item.subjectArea.subjectAreaName == 'MAPEH')
+      setMapehItem(dataMapeh)
+      const dataCle = response.data.filter((item) => item.subjectArea.subjectAreaName == 'CLE')
+      setCleItem(dataCle)
+      const dataGodsPark = response.data.filter((item) => item.subjectArea.subjectAreaName == "God's Park")
+      setGodsParkItem(dataGodsPark)
     }else{
       alert("Something went wrong while fetching all courses")
     }
@@ -53,7 +99,12 @@ export default function Courses() {
     getCourses()
   }, [])
 
-  console.log('englishItem:', englishItem)
+  const handleOnclick = (subject) => {
+    setSubjectAreaName(subject)
+  }
+
+
+  console.log('aralinPanlipunanItem:', aralinPanlipunanItem)
 
   useEffect(() => {
     if (user.isStudent) return (window.location.href = "/404");
@@ -76,66 +127,30 @@ export default function Courses() {
               </InputGroup>
             </div>
           </div>
-          <Row>
-            <Col sm={10}>
-          <div className='btn-subject-area' >
-          <div style={{color:'#EE9337', fontSize:'18px',paddingTop:'4px'}}> 
-             <Button className="m-r-5 color-white tficolorbg-button" size="sm">All</Button>
-          </div>
-          <div style={{color:'#EE9337', fontSize:'18px',paddingTop:'4px'}}> 
-             <Button className="m-r-5 color-white tficolorbg-button" size="sm">ICT</Button>
-          </div>
-          <div style={{color:'#EE9337', fontSize:'18px',paddingTop:'4px'}}> 
-             <Button className="m-r-5 color-white tficolorbg-button" size="sm">English</Button>
-          </div>
-          <div style={{color:'#EE9337', fontSize:'18px',paddingTop:'4px'}}> 
-             <Button className="m-r-5 color-white tficolorbg-button" size="sm">Math</Button>
-          </div>
-          <div style={{color:'#EE9337', fontSize:'18px',paddingTop:'4px'}}> 
-             <Button className="m-r-5 color-white tficolorbg-button" size="sm">Filipino</Button>
-          </div>
-          <div style={{color:'#EE9337', fontSize:'18px',paddingTop:'4px'}}> 
-             <Button className="m-r-5 color-white tficolorbg-button" size="sm">Science</Button>
-          </div>
-          <div style={{color:'#EE9337', fontSize:'18px',paddingTop:'4px'}}> 
-             <Button className="m-r-5 color-white tficolorbg-button" size="sm">Aralin</Button>
-          </div>
-          <div style={{color:'#EE9337', fontSize:'18px',paddingTop:'4px'}}> 
-             <Button className="m-r-5 color-white tficolorbg-button" size="sm">STEM</Button>
-          </div>
-          <div style={{color:'#EE9337', fontSize:'18px',paddingTop:'4px'}}> 
-             <Button className="m-r-5 color-white tficolorbg-button" size="sm">APPLIED</Button>
-          </div>
-          <div style={{color:'#EE9337', fontSize:'18px',paddingTop:'4px'}}> 
-             <Button className="m-r-5 color-white tficolorbg-button" size="sm">HUMMS</Button>
-          </div>
-          <div style={{color:'#EE9337', fontSize:'18px',paddingTop:'4px'}}> 
-             <Button className="m-r-5 color-white tficolorbg-button" size="sm">Robotics</Button>
-          </div>
-          <div style={{color:'#EE9337', fontSize:'18px',paddingTop:'4px'}}> 
-             <Button className="m-r-5 color-white tficolorbg-button" size="sm">TLE</Button>
-          </div>
-          <div style={{color:'#EE9337', fontSize:'18px',paddingTop:'4px'}}> 
-             <Button className="m-r-5 color-white tficolorbg-button" size="sm">HELE</Button>
-          </div>
-          <div style={{color:'#EE9337', fontSize:'18px',paddingTop:'4px'}}> 
-             <Button className="m-r-5 color-white tficolorbg-button" size="sm">MAPEH</Button>
-          </div>
-          <div style={{color:'#EE9337', fontSize:'18px',paddingTop:'4px'}}> 
-             <Button className="m-r-5 color-white tficolorbg-button" size="sm">CLE</Button>
-          </div>
-          <div style={{color:'#EE9337', fontSize:'18px',paddingTop:'4px',paddingBottom:'20px'}}> 
-             <Button className="m-r-5 color-white tficolorbg-button" size="sm">God's Park</Button>
-          </div>
-          </div>
-          </Col>
-          </Row> 
+          <div style={{textAlign:'center', paddingBottom:' 20px'}}>
+             <Button onClick={() => handleOnclick(course)} className="m-r-5 color-white tficolorbg-button" size="sm">All</Button>
+             <Button onClick={() => handleOnclick(ictItem)} className="m-r-5 color-white tficolorbg-button" size="sm">ICT</Button>
+             <Button onClick={() => handleOnclick(englishItem)} className="m-r-5 color-white tficolorbg-button" size="sm">English</Button>
+             <Button onClick={() => handleOnclick(mathItem)} className="m-r-5 color-white tficolorbg-button" size="sm">Math</Button>
+             <Button onClick={() => handleOnclick(filipinoitem)} className="m-r-5 color-white tficolorbg-button" size="sm">Filipino</Button>
+             <Button onClick={() => handleOnclick(scienceItem)} className="m-r-5 color-white tficolorbg-button" size="sm">Science</Button>
+             <Button onClick={() => handleOnclick(aralinPanlipunanItem)} className="m-r-5 color-white tficolorbg-button" size="sm">Aralin Panlipunan</Button>
+             <Button onClick={() => handleOnclick(stemItem)} className="m-r-5 color-white tficolorbg-button" size="sm">STEM</Button>
+             <Button onClick={() => handleOnclick(abmItem)} className="m-r-5 color-white tficolorbg-button" size="sm">ABM</Button>
+             <Button onClick={() => handleOnclick(appliedItem)} className="m-r-5 color-white tficolorbg-button" size="sm">APPLIED</Button>
+             <Button onClick={() => handleOnclick(coreItem)} className="m-r-5 color-white tficolorbg-button" size="sm">CORE</Button>
+             <Button onClick={() => handleOnclick(hummsItem)} className="m-r-5 color-white tficolorbg-button" size="sm">HUMMS</Button>
+             <Button onClick={() => handleOnclick(roboticsItem)} className="m-r-5 color-white tficolorbg-button" size="sm">Robotics</Button>
+             <Button onClick={() => handleOnclick(tleItem)} className="m-r-5 color-white tficolorbg-button" size="sm">TLE</Button>
+             <Button onClick={() => handleOnclick(heleItem)} className="m-r-5 color-white tficolorbg-button" size="sm">HELE</Button>
+             <Button onClick={() => handleOnclick(mapehItem)} className="m-r-5 color-white tficolorbg-button" size="sm">MAPEH</Button>
+             <Button onClick={() => handleOnclick(cleItem)} className="m-r-5 color-white tficolorbg-button" size="sm">CLE</Button>
+             <Button onClick={() => handleOnclick(godsParkItem)} className="m-r-5 color-white tficolorbg-button" size="sm">God's Park</Button>
+           </div>
           <div className="row m-b-20 justify-content-center">
-            <English englishItem={englishItem} filter={filter} setFilter={setFilter} course={course} setLoading={setLoading} setOpenEditModal={setOpenEditModal} setSelectedCourse={setSelectedCourse}/>
-            {/* <Ict ictItem={ictItem} filter={filter} setFilter={setFilter} course={course} setLoading={setLoading} setOpenEditModal={setOpenEditModal} setSelectedCourse={setSelectedCourse}/> */}
-            {/* <CoursesItem filter={filter} setFilter={setFilter} course={course} setLoading={setLoading} setOpenEditModal={setOpenEditModal} setSelectedCourse={setSelectedCourse}/> */}
-            <CourseCreate setCourse={setCourse} openModal={openModal} setOpenModal={setOpenModal} /> 
-            <CourseEdit setCourse={setCourse} openEditModal={openEditModal} setOpenEditModal={setOpenEditModal} selectedCourse={selectedCourse} /> 
+            <CoursesItem subjectAreaName={subjectAreaName} filter={filter} setFilter={setFilter} course={course} setLoading={setLoading} setOpenEditModal={setOpenEditModal} setSelectedCourse={setSelectedCourse}/>
+            <CourseCreate  subjectAreaName={subjectAreaName} setSubjectAreaName={setSubjectAreaName} getCourses={getCourses} setCourse={setCourse} openModal={openModal} setOpenModal={setOpenModal} /> 
+            <CourseEdit getCourses={getCourses} handleOnclick={handleOnclick} setCourse={setCourse} openEditModal={openEditModal} setOpenEditModal={setOpenEditModal} selectedCourse={selectedCourse} /> 
           </div>
         </div>
       </div>

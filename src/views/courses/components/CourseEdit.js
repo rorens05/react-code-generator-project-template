@@ -3,7 +3,7 @@ import { Button, Form, FormControl, Modal } from 'react-bootstrap';
 import SubjectAreaAPI from "../../../api/SubjectAreaAPI";
 import CoursesAPI from "../../../api/CoursesAPI";
 
-export default function CourseEdit({setCourse, openEditModal, setOpenEditModal, selectedCourse}){
+export default function CourseEdit({getCourses, setCourse, openEditModal, setOpenEditModal, selectedCourse}){
 
 	const [loading, setLoading] = useState(false)
 	const [courseName, setCourseName] = useState('')
@@ -30,16 +30,16 @@ export default function CourseEdit({setCourse, openEditModal, setOpenEditModal, 
     }
   }
 
-	const getCourses = async() => {
-    setLoading(true)
-    let response = await new CoursesAPI().getCourses()
-    setLoading(false)
-    if(response.ok){
-      setCourse(response.data)
-    }else{
-      alert("Something went wrong while fetching all courses")
-    }
-  }
+	// const getCourses = async() => {
+  //   setLoading(true)
+  //   let response = await new CoursesAPI().getCourses()
+  //   setLoading(false)
+  //   if(response.ok){
+  //     setCourse(response.data)
+  //   }else{
+  //     alert("Something went wrong while fetching all courses")
+  //   }
+  // }
 
 	const saveEditCourse = async(e) => {
     e.preventDefault()
@@ -63,7 +63,6 @@ export default function CourseEdit({setCourse, openEditModal, setOpenEditModal, 
 
 	useEffect(() => {
     viewSubjectArea()
-		getCourses()
   }, [])
 
 	useEffect(() => {

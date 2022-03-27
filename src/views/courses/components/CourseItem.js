@@ -3,7 +3,7 @@ import { Card, Dropdown, Row, Col, Tooltip, OverlayTrigger } from 'react-bootstr
 import "../../../../node_modules/@fortawesome/fontawesome-free/css/all.css"
 import { Link } from 'react-router-dom'
 
-export default function CoursesItem({filter, setFilter, course, setLoading, setOpenEditModal, setSelectedCourse}) {
+export default function CoursesItem({subjectAreaName, filter, setFilter, course, setLoading, setOpenEditModal, setSelectedCourse}) {
   
   const [openDropdown, setOpenDropdown] = useState(false)
   const [data, setData] = useState([])
@@ -40,7 +40,7 @@ export default function CoursesItem({filter, setFilter, course, setLoading, setO
   
   return (
     <React.Fragment>
-        {course.filter(item =>
+        {subjectAreaName.filter(item =>
           item.courseName.toLowerCase().includes(filter.toLowerCase())).map
           ((item, index) => {  
         return(
