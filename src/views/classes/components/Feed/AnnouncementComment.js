@@ -35,7 +35,7 @@ const AnnouncementComment = ({refId, typeId, getFeedClass, commentInfo}) => {
    console.log(commentInfo)
     getFeedClass();
   }, [commentInfo])
-  
+
 
   const getComment = async () => {
     setLoading(true);
@@ -47,6 +47,8 @@ const AnnouncementComment = ({refId, typeId, getFeedClass, commentInfo}) => {
         alert(response.data.errorMessage)
       }
   }
+
+  console.log('refId:', refId)
 
   useEffect(() => {
 
@@ -73,7 +75,7 @@ const AnnouncementComment = ({refId, typeId, getFeedClass, commentInfo}) => {
         {/* <div style={{color:'#EE9337', fontSize:'18px',paddingTop:'4px'}}>            
           <Button onClick={() => refreshComment()} className="m-r-5 color-white tficolorbg-button" size="sm"> Refresh</Button>
         </div> */}
-      {commentInfo?.map(item => {
+      {commentAnnouncementItem?.map(item => {
         return(
           <>
       <Card style={{margin:'20px'}}>
