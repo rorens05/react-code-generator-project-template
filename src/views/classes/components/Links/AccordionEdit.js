@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Modal from 'react-bootstrap/Modal'
 import { Form, Button, } from 'react-bootstrap'
 import ClassesAPI from '../../../../api/ClassesAPI'
@@ -10,6 +10,7 @@ function AccordionEdit({openEditModal, setOpenEditModal, editLinks, getConfe, ge
   const [editNotufy, setEditNotify] = useState(false)
   const [url, setEditUrl] = useState('')
   const {id} = useParams();
+
   const handleCloseModal = (e) =>{
     e.preventDefault()
     setOpenEditModal(false)
@@ -34,6 +35,15 @@ function AccordionEdit({openEditModal, setOpenEditModal, editLinks, getConfe, ge
       alert(response.data.errorMessage)
     }
   }
+
+  useEffect(() => {
+    if(editLinks !== null) {
+      setEditDescription(editLinks?.classLink?.description)
+      setEditUrl(editLinks?.classLink?.url)
+		}
+  }, [editLinks])
+
+  console.log('editLinks:', editLinks)
   
   return (
     <div>		
