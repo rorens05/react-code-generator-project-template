@@ -90,13 +90,13 @@ function ClassWaiting({waitingStudent, getStudentEnrolled, getStudentWaiting, se
               <td className='class-waiting-icon'>
               <div style={{marginRight:'35px'}}> 
               <OverlayTrigger
-                placement="right"
+                placement="bottom"
                 delay={{ show: 1, hide: 0 }}
                 overlay={renderTooltipAdd}>
                   <Button onClick={(e) => addStudent(e, item.id)} className="m-r-5 color-white tficolorbg-button" size="sm"> <i class="fas fa-user-plus"></i> </Button>
                </OverlayTrigger>
                <OverlayTrigger
-                placement="right"
+                placement="bottom"
                 delay={{ show: 1, hide: 0 }}
                 overlay={renderTooltipDelete}>
                 <Button onClick={() => handleDeleteNotify(item.id)} className="m-r-5 color-white tficolorbg-button" size="sm"> <i class="fas fa-trash-alt"></i></Button>
