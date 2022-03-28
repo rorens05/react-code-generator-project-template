@@ -219,7 +219,7 @@ export default function CourseLearn() {
                                 placement="bottom"
                                 delay={{ show: 1, hide: 0 }}
                                 overlay={renderTooltipDelete}>
-                                  <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={() => confirmSweetError(li.id)} ><i className="fa fa-trash"></i>1</Button>
+                                  <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={() => confirmSweetError(li.id)} ><i className="fa fa-trash"></i></Button>
                               </OverlayTrigger>
                             </Col>
                           </Row>

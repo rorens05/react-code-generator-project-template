@@ -98,8 +98,7 @@ export default function CoursesItem({filter, setFilter, course, setLoading, setO
             </Link>
           </Col>
         )
-        })
-      
+        })  
     }
     </React.Fragment>
   )
