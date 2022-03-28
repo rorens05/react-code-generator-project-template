@@ -4,6 +4,7 @@ import { Form, Button, } from 'react-bootstrap'
 import ClassesAPI from '../../../../api/ClassesAPI'
 import { useParams } from 'react-router'
 import SweetAlert from 'react-bootstrap-sweetalert';
+import { toast } from 'react-toastify';
 
 function AccordionEdit({openEditModal, setOpenEditModal, editLinks, getConfe, getVideos, getLinks}) {
   const [description, setEditDescription] = useState('')
@@ -22,17 +23,30 @@ function AccordionEdit({openEditModal, setOpenEditModal, editLinks, getConfe, ge
   
   const saveEditClassLinks = async (e) =>{
     e.preventDefault()
-    let linkId = editLinks?.classLink?.id
-    let response = await new ClassesAPI().editClassLinks(id, linkId, {description, url})
-    if(response.ok){
-      // alert('Link Updated')
-      setEditNotify(true)
-      handleCloseModal(e)
-      getConfe()
-      getVideos()
-      getLinks()
+    if(description === '' || url === ''){
+      toast.error('Please fill out all fields !', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
     }else{
-      alert(response.data.errorMessage)
+      let linkId = editLinks?.classLink?.id
+      let response = await new ClassesAPI().editClassLinks(id, linkId, {description, url})
+      if(response.ok){
+        // alert('Link Updated')
+        setEditNotify(true)
+        handleCloseModal(e)
+        getConfe()
+        getVideos()
+        getLinks()
+      }else{
+        alert(response.data.errorMessage)
+      }
+
     }
   }
 
