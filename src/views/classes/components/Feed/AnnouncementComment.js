@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { useParams } from 'react-router';
 import ClassesAPI from '../../../../api/ClassesAPI';
 import { UserContext } from '../../../../context/UserContext'
+import moment from 'moment';
 
 const AnnouncementComment = ({refId, typeId, getFeedClass, commentInfo}) => {
   const [comment, setComment] = useState('')
@@ -82,7 +83,7 @@ const AnnouncementComment = ({refId, typeId, getFeedClass, commentInfo}) => {
         <Card.Header>
           <div className='inline-flex' style={{color: "#7D7D7D"}}>
           <i class="fas fa-user-circle fas-1x comment-log" ></i> 
-          <b><p style={{paddingLeft:'8px', paddingTop:'5px', color:'#EE9337'}}>{item?.commentedBy}</p></b>
+          <b><p style={{paddingLeft:'8px', paddingTop:'5px', color:'#EE9337'}}>{item?.commentedBy}</p></b> <p style={{fontSize:'14px', paddingLeft:'8px', paddingTop:'8px', color:'#707070'}}>  {moment(item?.createdDate).format('ll')}&nbsp; </p>
           </div> 
           <div style={{color:'#EE9337', fontSize:'15px',paddingTop:'4px', float:'right'}}>
           {user.isTeacher && <Button onClick={(e) => commentDelete(e, item?.id)} className='btn-like' size="sm" Button variant="link">&nbsp;Delete</Button>}  
