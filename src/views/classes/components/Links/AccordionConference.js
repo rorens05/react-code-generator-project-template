@@ -14,6 +14,7 @@ function AccordionConference({conference, getConfe, setOpenEditModal, setEditLin
   const {id} = useParams();
   const userContext = useContext(UserContext)
   const {user} = userContext.data
+  const [confiId, setConfiId] = useState()
 
   const cancelSweetAlert = () => {
     setDeleteNotify(false)
@@ -27,7 +28,7 @@ function AccordionConference({conference, getConfe, setOpenEditModal, setEditLin
 
   const handleOpeEditModal = (e, item) => {
     e.preventDefault()
-    setEditLinks(item)
+    (item)
     setOpenEditModal(true)
     
   }
@@ -91,6 +92,7 @@ function AccordionConference({conference, getConfe, setOpenEditModal, setEditLin
                 <div className='title-exam'>
                   {/* <Link style={{color:'#EE9337', textDecoration:'none'}} to={item?.url}>  {item?.description} </Link> */}
                   <a target="_blank" style={{color:'#EE9337', textDecoration:'none'}}  href={item?.url}> {item?.description}</a>
+                  {item?.url}
                 </div>
               </Col>
               {(user.teacher === null)?(
@@ -102,7 +104,7 @@ function AccordionConference({conference, getConfe, setOpenEditModal, setEditLin
                     placement="bottom"
                     delay={{ show: 1, hide: 0 }}
                     overlay={renderTooltipEdit}>
-                     <Button onClick={(e) => handleOpeEditModal(e, item)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i className="fa fa-edit"></i></Button>
+                     <Button onClick={(e) => handleOpeEditModal(e, item?.id)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i className="fa fa-edit"></i></Button>
                   </OverlayTrigger>
                   <OverlayTrigger
                     placement="bottom"

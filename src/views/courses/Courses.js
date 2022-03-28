@@ -84,11 +84,11 @@ export default function Courses() {
       setTleItem(dataTle)
       const dataHele = response.data.filter((item) => item.subjectArea.subjectAreaName == 'HELE')
       setHeleitem(dataHele)
-      const dataMapeh = response.data.filter((item) => item.subjectArea.subjectAreaName == 'MAPEH')
+      const dataMapeh = response.data.filter((item) => item.subjectArea.subjectAreaName == 'MAPEH ')
       setMapehItem(dataMapeh)
       const dataCle = response.data.filter((item) => item.subjectArea.subjectAreaName == 'CLE')
       setCleItem(dataCle)
-      const dataGodsPark = response.data.filter((item) => item.subjectArea.subjectAreaName == "God's Park")
+      const dataGodsPark = response.data.filter((item) => item.subjectArea.subjectAreaName == "God's Park ")
       setGodsParkItem(dataGodsPark)
     }else{
       alert("Something went wrong while fetching all courses")

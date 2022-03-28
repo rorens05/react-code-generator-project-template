@@ -3,6 +3,7 @@ import { Button, Form, Modal } from 'react-bootstrap';
 import CoursesAPI from "../../../api/CoursesAPI";
 import SubjectAreaAPI from "../../../api/SubjectAreaAPI";
 import { UserContext } from './../../../context/UserContext'
+import { toast } from 'react-toastify';
 
 export default function CourseCreate({getCourses, setCourse, openModal, setOpenModal}){
 
