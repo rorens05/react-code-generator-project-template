@@ -77,11 +77,11 @@ function AccordionEdit({openEditModal, setOpenEditModal, editLinks, getConfe, ge
               </Form.Group>
             <Form.Group className="mb-4">
               <Form.Label>Description</Form.Label>
-            <Form.Control onChange={(e) => setEditDescription(e.target.value)} defaultValue={editLinks?.classLink?.description} type="text" placeholder='Enter Description name here'/>
+            <Form.Control onChange={(e) => setEditDescription(e.target.value)} defaultValue={editLinks?.description} type="text" placeholder='Enter Description name here'/>
             </Form.Group>
              <Form.Group className="mb-4">
               <Form.Label >Url</Form.Label>
-              <Form.Control onChange={(e) => setEditUrl(e.target.value)} defaultValue={editLinks?.classLink?.url}  type="text" placeholder='Enter Url here'/>
+              <Form.Control onChange={(e) => setEditUrl(e.target.value)} defaultValue={editLinks?.url}  type="text" placeholder='Enter Url here'/>
             </Form.Group>
             <Form.Group className="mb-3">
             <Form.Label>Type</Form.Label>
