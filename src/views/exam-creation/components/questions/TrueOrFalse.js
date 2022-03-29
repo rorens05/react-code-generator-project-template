@@ -91,7 +91,7 @@ export default function TrueOrFalse({
   const [rate, setRate] = useState(1);
   const [selectedQuestion, setSelectedQuestion] = useState(null);
   const [answer, setAnswer] = useState("true");
-  const { id } = useParams();
+  const { id,  examid} = useParams();
   console.log(part, '..................');
   const submitQuestion = async (e) => {
     e.preventDefault();
@@ -163,7 +163,7 @@ export default function TrueOrFalse({
       part.questionPart.id,
       data)
     let response = await new ExamAPI().addTrueOrFalse(
-      id,
+      examid,
       part.questionPart.id,
       data
     );
