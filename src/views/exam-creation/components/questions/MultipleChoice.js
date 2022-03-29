@@ -181,7 +181,7 @@ export default function MultipleChoice({
   const [selectedQuestion, setSelectedQuestion] = useState(null);
   const [answer, setAnswer] = useState("");
   const [choices, setChoices] = useState(DEFAULT_CHOICES);
-  const { id } = useParams();
+  const { id, examid } = useParams();
 
   const submitQuestion = async (e) => {
     e.preventDefault();
@@ -242,7 +242,7 @@ export default function MultipleChoice({
 
   const addQuestion = async (data) => {
     let response = await new ExamAPI().addMultipleChoice(
-      id,
+      examid,
       part.questionPart.id,
       data
     );

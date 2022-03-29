@@ -3,6 +3,7 @@ import { Button, Form } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal'
 import CoursesAPI from "../../../api/CoursesAPI";
 import SubjectAreaAPI from "../../../api/SubjectAreaAPI";
+import { toast } from 'react-toastify';
 
 export default function EditLesson({openEditLessonModal, setOpenEditLessonModal, selectedLesson, setLessonInfo}){
 
@@ -23,22 +24,51 @@ export default function EditLesson({openEditLessonModal, setOpenEditLessonModal,
 
 	const saveEditLesson = async(e, id ) => {
     e.preventDefault()
-    setLoading(true)
-    let response = await new CoursesAPI().editLesson(
-      selectedLesson?.id,
-      {pageName, sequenceNo, content}
-    )
-    if(response.ok){
-      alert("Saved")
-      getCourseUnitPages()
-      console.log(getCourseUnitPages())
-    getCourseLessons(sessionCourse, sessionModule)
-
-			handleCloseModal(e)
+    if(pageName === '' || content === '' || sequenceNo === ''){
+      toast.error('Please fill out all fields!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
     }else{
-      alert(response.data.errorMessage)
+      setLoading(true)
+      let response = await new CoursesAPI().editLesson(
+        selectedLesson?.id,
+        {pageName, sequenceNo, content}
+      )
+      if(response.ok){
+        toast.success('Lesson Save!', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          });
+        getCourseUnitPages()
+        console.log(getCourseUnitPages())
+      getCourseLessons(sessionCourse, sessionModule)
+  
+        handleCloseModal(e)
+      }else{
+        toast.error('Please check the Sequence Number!', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          });
+      }
+      setLoading(false)
+
     }
-    setLoading(false)
   }
 
   const getCourseLessons = async(e, data, modulename) => {
@@ -85,7 +115,7 @@ export default function EditLesson({openEditLessonModal, setOpenEditLessonModal,
 						<Form onSubmit={saveEditLesson}>
 								<Form.Group className="m-b-20">
 										<Form.Label for="courseName">
-												Page Name
+												Page Name 1
 										</Form.Label>
 										<Form.Control 
 											defaultValue={selectedLesson?.pageName}
@@ -105,7 +135,7 @@ export default function EditLesson({openEditLessonModal, setOpenEditLessonModal,
                       defaultValue={selectedLesson?.sequenceNo}
                       className="custom-input" 
                       size="lg" 
-                      type="text" 
+                      type="number" 
                       placeholder="Enter sequence number"
                       onChange={(e) => setSequenceNo(e.target.value)}
                     />

@@ -91,7 +91,7 @@ export default function CreateLesson({openCreateLessonModal, setCreateLessonModa
 										<Form.Control 
                       className="custom-input" 
                       size="lg" 
-                      type="text" 
+                      type="number" 
                       placeholder="Enter sequence number"
                       onChange={(e) => setSequenceNo(e.target.value)}
                     />

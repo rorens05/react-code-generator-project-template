@@ -14,7 +14,7 @@ function ClassLinks() {
   const [conference, setConference] = useState([])
   const [videos, setVidoes] = useState([])
   const [links, setLinks] = useState([])
-  const [editLinks, setEditLinks] = useState()
+  const [editLinks, setEditLinks] = useState('')
   const {id} = useParams();
   const [searchTerm, setSearchTerm] = useState('')
   const [confeDescriptionItem, setConfeDescriptoinItem] = useState('')

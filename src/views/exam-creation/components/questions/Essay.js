@@ -69,7 +69,7 @@ export default function Essay({
   const [question, setQuestion] = useState("");
   const [rate, setRate] = useState(1);
   const [selectedId, setSelectedId] = useState(null);
-  const { id } = useParams();
+  const { id, examid } = useParams();
 
   const submitQuestion = async (e) => {
     e.preventDefault();
@@ -117,7 +117,7 @@ export default function Essay({
   };
 
   const addQuestion = async (data) => {
-    let response = await new ExamAPI().addEssay(id, part.questionPart.id, data);
+    let response = await new ExamAPI().addEssay(examid, part.questionPart.id, data);
     if (response.ok) {
       setShowModal(false);
       toast.success("Question added successfully");
