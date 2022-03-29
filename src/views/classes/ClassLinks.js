@@ -14,7 +14,7 @@ function ClassLinks() {
   const [conference, setConference] = useState([])
   const [videos, setVidoes] = useState([])
   const [links, setLinks] = useState([])
-  const [editLinks, setEditLinks] = useState()
+  const [editLinks, setEditLinks] = useState('')
   const {id} = useParams();
   const [searchTerm, setSearchTerm] = useState('')
 
@@ -77,7 +77,7 @@ function ClassLinks() {
       <div style={{paddingBottom:'10px'}}>
         <AccordionLinks searchTerm={searchTerm} getLinks={getLinks} links={links} setOpenEditModal={setOpenEditModal}  setEditLinks={setEditLinks}  />
       </div>
-      <AccordionEdit getConfe={getConfe} getVideos={getVideos} getLinks={getLinks}  editLinks={editLinks} openEditModal={openEditModal} setOpenEditModal={setOpenEditModal} />
+      <AccordionEdit getConfe={getConfe} setEditLinks={setEditLinks} getVideos={getVideos} getLinks={getLinks}  editLinks={editLinks} openEditModal={openEditModal} setOpenEditModal={setOpenEditModal} />
     </ClassSideNavigation>
   )
 }
