@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button, Form, FormControl, Modal } from 'react-bootstrap';
 import SubjectAreaAPI from "../../../api/SubjectAreaAPI";
 import CoursesAPI from "../../../api/CoursesAPI";
+import { toast } from 'react-toastify';
 
 export default function CourseEdit({getCourses, setCourse, openEditModal, setOpenEditModal, selectedCourse}){
 
@@ -52,11 +53,19 @@ export default function CourseEdit({getCourses, setCourse, openEditModal, setOpe
       {courseName, description, subjectAreaId, status, locked, isTechFactors}
     )
     if(response.ok){
-      alert("Saved")
+      successSave()
 			getCourses()
 			handleCloseModal(e)
     }else{
-      alert(response.data.errorMessage)
+			toast.error(response.data.errorMessage, {
+				position: "top-right",
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+				});
     }
     setLoading(false)
   }
@@ -75,6 +84,19 @@ export default function CourseEdit({getCourses, setCourse, openEditModal, setOpe
 			setStatus(selectedCourse?.status)
 		}
   }, [selectedCourse])
+
+	const successSave = () => {
+		toast.success('Done Edit', {
+			position: "top-right",
+			autoClose: 5000,
+			hideProgressBar: false,
+			closeOnClick: true,
+			pauseOnHover: true,
+			draggable: true,
+			progress: undefined,
+			});
+
+	}
 	
 	return (
 		<div>

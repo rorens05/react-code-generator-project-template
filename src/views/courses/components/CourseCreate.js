@@ -53,11 +53,24 @@ export default function CourseCreate({getCourses, setCourse, openModal, setOpenM
       {courseName, description, subjectAreaId, status, locked, isTechFactors}
     )
     if(response.ok){
-      alert("Saved")
+		successSave()
 	  handleCloseModal(e)
+		setCourseName('')
+		setDescription('')
+		setSubjectArea('')
+		setStatus('')
+		setLockStatus('')
 		getCourses()
     }else{
-      alert(response.data.errorMessage)
+			toast.error(response.data.errorMessage, {
+				position: "top-right",
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+				});
     }
     setLoading(false)
   }
@@ -65,6 +78,19 @@ export default function CourseCreate({getCourses, setCourse, openModal, setOpenM
 	useEffect(() => {
     viewSubjectArea()
   }, [])
+
+	const successSave = () => {
+		toast.success('Course creater', {
+			position: "top-right",
+			autoClose: 5000,
+			hideProgressBar: false,
+			closeOnClick: true,
+			pauseOnHover: true,
+			draggable: true,
+			progress: undefined,
+			});
+
+	}
 
 	return (
 		<div>
