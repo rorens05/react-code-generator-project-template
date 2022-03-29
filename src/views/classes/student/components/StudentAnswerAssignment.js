@@ -5,6 +5,7 @@ import { useParams } from 'react-router'
 import ClassesAPI from '../../../../api/ClassesAPI'
 import { UserContext } from '../../../../context/UserContext'
 import SweetAlert from 'react-bootstrap-sweetalert';
+import { toast } from 'react-toastify';
 
 function StudentAnswerAssignment({answerAnswerToggle, answerModal, assignmentId}) {
   const {id} = useParams();
@@ -24,18 +25,30 @@ function StudentAnswerAssignment({answerAnswerToggle, answerModal, assignmentId}
 
   const submitStudentAssignmentAnswer = async (e) => {
     e.preventDefault()
-    setUploadingFiles('uploading');
-    let studentId = user?.student?.id
-    let response = await new ClassesAPI().submitStudentAssignmentAnswer(studentId, id, assignmentId, {assignmentAnswer, fileDetails: files})
-      if(response.data){
-        setAssignNotify(true)
-        setAssignmentAnswer('');
-        setUploadingFiles('done');
-        setFiles([]);
-        answerAnswerToggle()
-      }else{
-        alert(response.data.errorMessage)
-      }
+    if(assignmentAnswer === ''){
+      toast.error('Please fill out the field!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
+    }else{
+      setUploadingFiles('uploading');
+      let studentId = user?.student?.id
+      let response = await new ClassesAPI().submitStudentAssignmentAnswer(studentId, id, assignmentId, {assignmentAnswer, fileDetails: files})
+        if(response.data){
+          setAssignNotify(true)
+          setAssignmentAnswer('');
+          setUploadingFiles('done');
+          setFiles([]);
+          answerAnswerToggle()
+        }else{
+          alert(response.data.errorMessage)
+        }
+    }
   }
 
   const handlefilesUpload = (file) => {

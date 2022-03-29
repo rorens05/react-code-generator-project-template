@@ -99,7 +99,7 @@ export default function CourseCreateUnit({moduleInfo, setModuleInfo, openCreateU
 							<Form.Control 
 								className="custom-input" 
 								size="lg" 
-								type="text" 
+								type="number" 
 								placeholder="Enter sequence"
 								onChange={(e) => setSequenceNumber(e.target.value)}
 							/>

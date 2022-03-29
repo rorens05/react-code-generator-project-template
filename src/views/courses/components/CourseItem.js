@@ -98,8 +98,7 @@ export default function CoursesItem({subjectAreaName, filter, setFilter, course,
             </Link>
           </Col>
         )
-        })
-      
+        })  
     }
     </React.Fragment>
   )
