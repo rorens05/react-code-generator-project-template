@@ -47,22 +47,8 @@ export default function CourseCreate({getCourses, setCourse, openModal, setOpenM
 
 	const saveCourse = async(e) => {
     e.preventDefault()
-    setLoading(true)
-		let isTechFactors = user.role !== "Teacher" && true
-    let response = await new CoursesAPI().createCourse(
-      {courseName, description, subjectAreaId, status, locked, isTechFactors}
-    )
-    if(response.ok){
-		successSave()
-	  handleCloseModal(e)
-		setCourseName('')
-		setDescription('')
-		setSubjectArea('')
-		setStatus('')
-		setLockStatus('')
-		getCourses()
-    }else{
-			toast.error(response.data.errorMessage, {
+		if(description === ''){
+			toast.error('Please insert all the required fields', {
 				position: "top-right",
 				autoClose: 5000,
 				hideProgressBar: false,
@@ -71,8 +57,34 @@ export default function CourseCreate({getCourses, setCourse, openModal, setOpenM
 				draggable: true,
 				progress: undefined,
 				});
-    }
-    setLoading(false)
+		}else{
+			setLoading(true)
+			let isTechFactors = user.role !== "Teacher" && true
+			let response = await new CoursesAPI().createCourse(
+				{courseName, description, subjectAreaId, status, locked, isTechFactors}
+			)
+			if(response.ok){
+			successSave()
+			handleCloseModal(e)
+			setCourseName('')
+			setDescription('')
+			setSubjectArea('')
+			setStatus('')
+			setLockStatus('')
+			getCourses()
+			}else{
+				toast.error(response.data.errorMessage, {
+					position: "top-right",
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					});
+			}
+			setLoading(false)
+		}
   }
 
 	useEffect(() => {
