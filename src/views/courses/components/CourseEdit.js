@@ -44,20 +44,8 @@ export default function CourseEdit({getCourses, setCourse, openEditModal, setOpe
 
 	const saveEditCourse = async(e) => {
     e.preventDefault()
-    setLoading(true)
-		let isTechFactors = true
-		let sessionCourse = sessionStorage.getItem('courseid')
-    let response = await new CoursesAPI().editCourse
-		(
-			sessionCourse,
-      {courseName, description, subjectAreaId, status, locked, isTechFactors}
-    )
-    if(response.ok){
-      successSave()
-			getCourses()
-			handleCloseModal(e)
-    }else{
-			toast.error(response.data.errorMessage, {
+		if(description === ''){
+			toast.error('Please insert all the required fields', {
 				position: "top-right",
 				autoClose: 5000,
 				hideProgressBar: false,
@@ -66,8 +54,32 @@ export default function CourseEdit({getCourses, setCourse, openEditModal, setOpe
 				draggable: true,
 				progress: undefined,
 				});
-    }
-    setLoading(false)
+		}else{
+			setLoading(true)
+			let isTechFactors = true
+			let sessionCourse = sessionStorage.getItem('courseid')
+			let response = await new CoursesAPI().editCourse
+			(
+				sessionCourse,
+				{courseName, description, subjectAreaId, status, locked, isTechFactors}
+			)
+			if(response.ok){
+				successSave()
+				getCourses()
+				handleCloseModal(e)
+			}else{
+				toast.error(response.data.errorMessage, {
+					position: "top-right",
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					});
+			}
+			setLoading(false)	
+		}
   }
 
 	useEffect(() => {
