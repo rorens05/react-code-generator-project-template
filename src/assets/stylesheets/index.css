@@ -772,12 +772,12 @@ border-top-right-radius: 0px !important;
 
 .btn-primary{
   background-color: var(--primary-color) !important;
-  border-color: var(--primary-color)03 !important;
+  border-color: var(--primary-color) !important;
 }
 
 .btn-auth{
   background-color: var(--primary-color) !important;
-  border-color: var(--primary-color)03 !important;
+  border-color: var(--primary-color) !important;
   font-size: 36px !important;
 }
 
@@ -1260,7 +1260,7 @@ hr{
 }
 
 .exam-actions a{
-  color: var(--primary-color)03 !important;
+  color: var(--primary-color) !important;
   font-size: 22px;
   margin-right: 12px;
 }
@@ -1310,7 +1310,7 @@ hr{
 }
 
 .choice-delete{
-  color: var(--primary-color)03 !important;
+  color: var(--primary-color)!important;
   font-size: 22px;
   margin-right: 12px;
   margin-left: 32px;
@@ -1400,4 +1400,11 @@ hr{
   height: 200px;
   object-fit: cover;
   border: 1px solid #E5E5E5;
+}
+
+select {
+  color: var(--primary-color) !important;
+}
+option:not(:first-of-type) {
+  color: black !important;
 }

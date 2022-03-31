@@ -75,6 +75,27 @@ export default function CourseCreate({getCourses, setCourse, openModal, setOpenM
 				</Modal.Header>
 				<Modal.Body className="modal-label b-0px">
 						<Form onSubmit={saveCourse}>
+						<Form.Group className="m-b-20">
+										<Form.Label for="subjectArea">
+												Subject Area
+										</Form.Label>
+										<Form.Select size="lg" onChange={(e) => setSubjectArea(e.target.value)}>
+											<option>
+											----SELECT SUBJECT AREA----
+											</option>
+											{
+												sarea.map(item => {
+													return(
+														<option value={item.id}>
+															{item.subjectAreaName}
+														</option>
+													)
+												})
+											}
+										</Form.Select>
+								</Form.Group>
+								{' '}
+								
 								<Form.Group className="m-b-20">
 										<Form.Label for="courseName">
 												Course Name
@@ -100,27 +121,6 @@ export default function CourseCreate({getCourses, setCourse, openModal, setOpenM
                       placeholder="Enter course description"
                       onChange={(e) => setDescription(e.target.value)}
                     />
-								</Form.Group>
-								{' '}
-
-								<Form.Group className="m-b-20">
-										<Form.Label for="subjectArea">
-												Subject Area
-										</Form.Label>
-										<Form.Select size="lg" onChange={(e) => setSubjectArea(e.target.value)}>
-											<option>
-											----SELECT SUBJECT AREA----
-											</option>
-											{
-												sarea.map(item => {
-													return(
-														<option value={item.id}>
-															{item.subjectAreaName}
-														</option>
-													)
-												})
-											}
-										</Form.Select>
 								</Form.Group>
 								{' '}
 
