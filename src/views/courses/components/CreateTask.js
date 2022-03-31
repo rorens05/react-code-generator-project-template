@@ -88,7 +88,7 @@ export default function CreateTask({openCreateTaskModal, setCreateTaskModal, set
     // setLoading(false)
     if(response.ok){
       console.log(response, '-----------------------')
-      setDisplayFiles(response.data)
+      setDisplayFiles(response.data.files)
     }else{
       alert("Something went wrong while fetching class files ----------.")
     }
@@ -106,7 +106,7 @@ export default function CreateTask({openCreateTaskModal, setCreateTaskModal, set
                 {
                   displayFiles.map( (item,ind) => {
                     return(
-                      <img src={item.path_Base.replace('http:', 'https:')} className='p-1' alt={item.fileName} height={30} width={30}/>
+                      <img src={item.pathBase.replace('http:', 'https:')} className='p-1' alt={item.fileName} height={30} width={30}/>
                     )
                   })
                 }

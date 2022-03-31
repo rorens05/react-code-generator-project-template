@@ -85,7 +85,7 @@ export default function CreateAssignment({openCreateAssignmentModal, setOpenCrea
     // setLoading(false)
     if(response.ok){
       console.log(response, '-----------------------')
-      setDisplayFiles(response.data)
+      setDisplayFiles(response.data.files)
     }else{
       alert("Something went wrong while fetching class files ,,,.")
     }
@@ -103,7 +103,7 @@ export default function CreateAssignment({openCreateAssignmentModal, setOpenCrea
               {
                 displayFiles.map( (item,ind) => {
                   return(
-                    <img key={ind+item.filename} src={item.path_Base.replace('http:', 'https:')} className='p-1' alt={item.fileName} height={30} width={30}/>
+                    <img key={ind+item.filename} src={item.pathBase.replace('http:', 'https:')} className='p-1' alt={item.fileName} height={30} width={30}/>
                   )
                 })
               }

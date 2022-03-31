@@ -31,7 +31,7 @@ function CreateTask({modal, toggle, module, getTaskModule, classId}) {
     let response = await new FilesAPI().getClassFiles(classId)
     // setLoading(false)
     if(response.ok){
-      setDisplayFiles(response.data)
+      setDisplayFiles(response.data.files)
     }else{
       alert("Something went wrong while fetching class files ;;.")
     }
@@ -67,7 +67,7 @@ function CreateTask({modal, toggle, module, getTaskModule, classId}) {
             {
               displayFiles.map( (item,ind) => {
                 return(
-                  <img src={item.path_Base.replace('http:', 'https:')} className='p-1' alt={item.fileName} height={30} width={30}/>
+                  <img src={item.pathBase.replace('http:', 'https:')} className='p-1' alt={item.fileName} height={30} width={30}/>
                 )
               })
             }
