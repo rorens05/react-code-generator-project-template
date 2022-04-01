@@ -14,7 +14,8 @@ function ClassEnrolled({enrolledStudent, getStudentEnrolled, getStudentWaiting, 
   const [studentinfo, setStudentInfo] = useState()
   const [classInfo, setClassinfo] = useState()
   const [studentClasses, setStudentClasses] = useState()
-  const [studentInformation, setStudentInformation] = useState([])
+  const [studentInformation, setStudentInformation] = useState([]);
+  const [alphabetical, setAlphabetical] = useState(true);
 
   const cancelSweetAlert = () => {
     setDeleteNotify(false)
@@ -71,20 +72,50 @@ function ClassEnrolled({enrolledStudent, getStudentEnrolled, getStudentWaiting, 
   }
   
   useEffect(()=>{
-    arrageAlphabetical()
+    // if(alphabetical){
+      arrageNoneAlphabetical();
+      arrageAlphabetical();
+    // }
+    // else{
+    // }
   }, [enrolledStudent])
+
 
   const arrageAlphabetical = () => {
       let data = enrolledStudent?.students;
       let temp = data?.sort(function(a, b){
         let nameA = a.fname.toLocaleLowerCase();
         let nameB = b.fname.toLocaleLowerCase();
-        if(nameA < nameB)
-          return -1
+        if (nameA < nameB) {
+            return -1;
+        }
       });
-      setSortedData(temp);
+      console.log(temp, 'herererere')
+      setSortedData(temp)
   }
 
+  const arrageNoneAlphabetical = () => {
+    let data = enrolledStudent?.students;
+    let temp = data?.sort(function(a, b){
+      let nameA = a.fname.toLocaleLowerCase();
+      let nameB = b.fname.toLocaleLowerCase();
+      if (nameA > nameB) {
+          return -1;
+      }
+    });
+    console.log(temp, 'herererere')
+    setSortedData(temp)
+}
+
+  const handleClickIcon = () =>{
+    setAlphabetical(!alphabetical);
+    if(!alphabetical){
+      arrageAlphabetical();
+    }
+    else{
+      arrageNoneAlphabetical();
+    }
+  }
   return (
     <div>
       <SweetAlert
@@ -102,7 +133,7 @@ function ClassEnrolled({enrolledStudent, getStudentEnrolled, getStudentWaiting, 
       <Table >
         <thead>
           <tr> 
-            <th><div className='class-enrolled-header'> Student{' '}</div></th>
+            <th><div className='class-enrolled-header'> Student{' '} <i onClick={() => handleClickIcon()} className={`${!alphabetical ? 'fas fa-sort-alpha-down' : 'fas fa-sort-alpha-up'} td-file-page`}></i></div></th>
           </tr>
         </thead>
         <tbody>
