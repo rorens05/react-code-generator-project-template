@@ -72,7 +72,7 @@ function FilesContent(props) {
     let response = await new FilesAPI().deleteClassFile(props.id, data)
     if(response.ok){
       setDeleteNotify(false)
-      props.deleted()
+      props.deleted();
       toast.success("File deleted successfully");
     }else{
       setDeleteNotify(false)
@@ -88,7 +88,7 @@ function FilesContent(props) {
     let response = await new FilesAPI().deleteCourseFile(props.id, data)
     if(response.ok){
       setDeleteNotify(false)
-      props.deleted()
+      props.deleted();
       toast.success("File deleted successfully");
     }else{
       setDeleteNotify(false)

@@ -81,7 +81,6 @@ export default function FilesClass() {
       value: ''
     }
     breadCrumbsItemClass.push(temp)
-    setSelectedName(item.className);
     setSelectedId(item.classId)
     handleGetClassFiles(item.classId, '');
     setOpenIndexClass(true)
@@ -140,7 +139,7 @@ export default function FilesClass() {
                     })
                   }
                 </div>
-                <FilesContent filter={filter} data={filesToDisplay} folders={foldersToDisplay} clickedFolder={(data) => handleClickedFolder(selectedId ,data.name, 'Class')}  type={'Class'} id={selectedId} deleted={()=> handleRefetch('Course') }/>
+                <FilesContent filter={filter} data={filesToDisplay} subFolder={selectedName} folders={foldersToDisplay} clickedFolder={(data) => handleClickedFolder(selectedId ,data.name, 'Class')}  type={'Class'} id={selectedId} deleted={()=> handleRefetch('Class') }/>
               </>
               :
               <>

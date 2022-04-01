@@ -3,7 +3,7 @@ import Modal from 'react-bootstrap/Modal'
 import { Form, Button, } from 'react-bootstrap'
 import ClassesAPI from '../../../../api/ClassesAPI'
 import FilesAPI from '../../../../api/FilesApi';
-import FileHeader from '../../../files/FileHeader';
+import FileHeader from './TaskFileHeader';
 import { useParams } from 'react-router'
 import SweetAlert from 'react-bootstrap-sweetalert';
 import ContentField from '../../../../components/content_field/ContentField';
@@ -14,7 +14,8 @@ function CreateTask({modal, toggle, module, getTaskModule, classId}) {
   const [instructions, setInstructions] = useState('')
   const [addNotify, setAddNotity] = useState(false);
   const [displayFiles, setDisplayFiles] = useState([]);
-  const [showFiles, setShowFiles] = useState(false)
+  const [showFiles, setShowFiles] = useState(false);
+  const [displayFolder, setDisplayFolder] = useState([]);
   const allowLate = true
   const {id} = useParams();
 
@@ -32,6 +33,7 @@ function CreateTask({modal, toggle, module, getTaskModule, classId}) {
     // setLoading(false)
     if(response.ok){
       setDisplayFiles(response.data.files)
+      setDisplayFolder(response.data.folders)
     }else{
       alert("Something went wrong while fetching class files ;;.")
     }
@@ -63,14 +65,31 @@ function CreateTask({modal, toggle, module, getTaskModule, classId}) {
         <Modal.Body>
         <Form onSubmit={saveTask} >  
           <div className={showFiles ? 'mb-3' : 'd-none'}>
-            <FileHeader type='Class' id={classId} doneUpload={()=> handleGetClassFiles()} />
-            {
+            <FileHeader type='Class' id={classId}  subFolder={''}  doneUpload={()=> handleGetClassFiles()} />
+            {/* {
               displayFiles.map( (item,ind) => {
                 return(
                   <img src={item.pathBase.replace('http:', 'https:')} className='p-1' alt={item.fileName} height={30} width={30}/>
                 )
               })
-            }
+            } */}
+             {
+                displayFiles.map( (item,ind) => {
+                  return(
+                    item.pathBase?.match(/.(jpg|jpeg|png|gif|pdf)$/i) ? 
+                    <img key={ind+item.name} src={item.pathBase.replace('http:', 'https:')} className='p-1' alt={item.name} height={30} width={30}/>
+                    :
+                    <i className="fas fa-sticky-note" style={{paddingRight: 5}}/>
+                  )
+                })
+              }
+              {
+                displayFolder.map((itm) => {
+                  return(
+                    <i className='fas fa-folder-open' style={{height: 30, width: 30}}/>
+                  )
+                })
+              }
           </div>
           <Form.Group className="mb-3">
           <Form.Label>Unit</Form.Label>
