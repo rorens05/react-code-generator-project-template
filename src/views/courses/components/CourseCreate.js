@@ -104,7 +104,7 @@ export default function CourseCreate({getCourses, setCourse, openModal, setOpenM
                       className="custom-input" 
                       size="lg" 
                       type="text" 
-                      placeholder="Enter course name"
+                      placeholder="Enter course name here"
                       onChange={(e) => setCourseName(e.target.value)}
                     />
 								</Form.Group>
@@ -118,7 +118,7 @@ export default function CourseCreate({getCourses, setCourse, openModal, setOpenM
                       className="custom-input" 
                       size="lg" 
                       type="text" 
-                      placeholder="Enter course description"
+                      placeholder="Enter course description here"
                       onChange={(e) => setDescription(e.target.value)}
                     />
 								</Form.Group>
