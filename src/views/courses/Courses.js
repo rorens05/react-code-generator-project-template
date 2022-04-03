@@ -115,14 +115,14 @@ export default function Courses() {
       <div className="page-container">
         <div className="containerpages">
           <div className="row m-b-20">
-              <div className="col-md-10 pages-header"><h1>Courses <Button variant="outline-warning" onClick={handleOpenModal}><i className="fa fa-plus"></i> Create Course</Button></h1></div>
-              <div className="col-md-2">
-              </div>
+              <p className='title-header' >Courses <Button className='btn-create-class' variant="link" onClick={handleOpenModal} > <i className="fa fa-plus"></i>  Create Courses  </Button></p> 
+            <div className="col-md-2">
+          </div>
           </div>
           <div className="row m-b-20 m-t-30" onSearch={onSearch}>
             <div className="col-md-12">
               <InputGroup size="lg">
-                <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Search here for availabe courses" type="search" onChange={(e) => onSearch(e.target.value)} />
+                <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Search here for available courses" type="search" onChange={(e) => onSearch(e.target.value)} />
                 <InputGroup.Text id="basic-addon2" className="search-button"><i className="fas fa-search fa-1x"></i></InputGroup.Text>
               </InputGroup>
             </div>
