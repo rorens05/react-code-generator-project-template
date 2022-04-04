@@ -39,7 +39,6 @@ const Field = (props) => {
           type='text'
           placeholder={placeholder}
           onChange={(e) => onChange(e.target.value)}
-          required
         />
       );
   }

@@ -7,6 +7,7 @@ import FileHeader from '../../../files/FileHeader';
 import { useParams } from 'react-router'
 import SweetAlert from 'react-bootstrap-sweetalert';
 import ContentField from '../../../../components/content_field/ContentField';
+import { toast } from 'react-toastify';
 
 function CreateTask({modal, toggle, module, getTaskModule, classId}) {
   const [moduleId, setModuleId] = useState('')
@@ -39,16 +40,28 @@ function CreateTask({modal, toggle, module, getTaskModule, classId}) {
 
   const saveTask = async (e) =>{
     e.preventDefault()
-    let response = await new ClassesAPI().creatTask(moduleId, id, {task:{taskName, instructions,}, taskAssignment:{allowLate}} )
-    if(response.ok){
-      setAddNotity(true)
-      setModuleId("")
-      setTaskName("")
-      setInstructions("")
-      getTaskModule(null, moduleId)
-      toggle(e)
+    if(instructions === '' || instructions === '{{type=equation}}'){
+      toast.error('Please fill out all fields!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
     }else{
-      alert(response.data.errorMessage)
+      let response = await new ClassesAPI().creatTask(moduleId, id, {task:{taskName, instructions,}, taskAssignment:{allowLate}} )
+      if(response.ok){
+        setAddNotity(true)
+        setModuleId("")
+        setTaskName("")
+        setInstructions("")
+        getTaskModule(null, moduleId)
+        toggle(e)
+      }else{
+        alert(response.data.errorMessage)
+      }
     }
   }
 
