@@ -115,7 +115,8 @@ export default function Courses() {
       <div className="page-container">
         <div className="containerpages">
           <div className="row m-b-20">
-              <div className="col-md-10 pages-header"><h1>Courses <Button variant="outline-warning" onClick={handleOpenModal}><i className="fa fa-plus"></i> Create Course</Button></h1></div>
+              {/* <div className="col-md-10 pages-header"><h1>Courses <Button variant="outline-warning" onClick={handleOpenModal}><i className="fa fa-plus"></i> Create Course</Button></h1></div> */}
+              <div className="col-md-10 pages-header"><h1>Courses <Button variant='link' className="btn-create-class" onClick={handleOpenModal}><i className="fa fa-plus"></i> Create Course</Button></h1></div>
               <div className="col-md-2">
               </div>
           </div>
