@@ -81,7 +81,7 @@ export default function CourseCreate({getCourses, setCourse, openModal, setOpenM
 										</Form.Label>
 										<Form.Select size="lg" onChange={(e) => setSubjectArea(e.target.value)}>
 											<option>
-											----SELECT SUBJECT AREA----
+											Select subject area...
 											</option>
 											{
 												sarea.map(item => {
@@ -112,7 +112,7 @@ export default function CourseCreate({getCourses, setCourse, openModal, setOpenM
 
 								<Form.Group className="m-b-20">
 										<Form.Label for="description">
-												Description
+										Course Description
 										</Form.Label>
 										<Form.Control 
                       className="custom-input" 
@@ -130,7 +130,7 @@ export default function CourseCreate({getCourses, setCourse, openModal, setOpenM
 										</Form.Label>
 										<Form.Select size="lg" onChange={(e) => setStatus(e.target.value)}>
 											<option>
-												----SELECT STATUS----
+												Select status here...
 											</option>
 											<option value={true}>
 												Active
@@ -148,7 +148,7 @@ export default function CourseCreate({getCourses, setCourse, openModal, setOpenM
 										</Form.Label>
 										<Form.Select size="lg" onChange={(e) => setLockStatus(e.target.value)}>
 											<option>
-											----SELECT LOCK STATUS----
+											Select lock status here...
 											</option>
 											<option value={true}>
 												Locked
