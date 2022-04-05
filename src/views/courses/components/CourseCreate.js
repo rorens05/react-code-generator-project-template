@@ -113,41 +113,13 @@ export default function CourseCreate({getCourses, setCourse, openModal, setOpenM
 				</Modal.Header>
 				<Modal.Body className="modal-label b-0px">
 						<Form onSubmit={saveCourse}>
-								<Form.Group className="m-b-20">
-										<Form.Label for="courseName">
-												Course Name
-										</Form.Label>
-										<Form.Control 
-                      className="custom-input" 
-                      size="lg" 
-                      type="text" 
-                      placeholder="Enter course name"
-                      onChange={(e) => setCourseName(e.target.value)}
-                    />
-								</Form.Group>
-								{' '}
-
-								<Form.Group className="m-b-20">
-										<Form.Label for="description">
-												Description
-										</Form.Label>
-										<Form.Control 
-                      className="custom-input" 
-                      size="lg" 
-                      type="text" 
-                      placeholder="Enter course description"
-                      onChange={(e) => setDescription(e.target.value)}
-                    />
-								</Form.Group>
-								{' '}
-
-								<Form.Group className="m-b-20">
+						<Form.Group className="m-b-20">
 										<Form.Label for="subjectArea">
 												Subject Area
 										</Form.Label>
 										<Form.Select size="lg" onChange={(e) => setSubjectArea(e.target.value)}>
 											<option>
-											----SELECT SUBJECT AREA----
+											Select subject area...
 											</option>
 											{
 												sarea.map(item => {
@@ -161,6 +133,34 @@ export default function CourseCreate({getCourses, setCourse, openModal, setOpenM
 										</Form.Select>
 								</Form.Group>
 								{' '}
+								
+								<Form.Group className="m-b-20">
+										<Form.Label for="courseName">
+												Course Name
+										</Form.Label>
+										<Form.Control 
+                      className="custom-input" 
+                      size="lg" 
+                      type="text" 
+                      placeholder="Enter course name here"
+                      onChange={(e) => setCourseName(e.target.value)}
+                    />
+								</Form.Group>
+								{' '}
+
+								<Form.Group className="m-b-20">
+										<Form.Label for="description">
+										Course Description
+										</Form.Label>
+										<Form.Control 
+                      className="custom-input" 
+                      size="lg" 
+                      type="text" 
+                      placeholder="Enter course description here"
+                      onChange={(e) => setDescription(e.target.value)}
+                    />
+								</Form.Group>
+								{' '}
 
 								<Form.Group className="m-b-20">
 										<Form.Label for="status">
@@ -168,7 +168,7 @@ export default function CourseCreate({getCourses, setCourse, openModal, setOpenM
 										</Form.Label>
 										<Form.Select size="lg" onChange={(e) => setStatus(e.target.value)}>
 											<option>
-												----SELECT STATUS----
+												Select status here...
 											</option>
 											<option value={true}>
 												Active
@@ -186,7 +186,7 @@ export default function CourseCreate({getCourses, setCourse, openModal, setOpenM
 										</Form.Label>
 										<Form.Select size="lg" onChange={(e) => setLockStatus(e.target.value)}>
 											<option>
-											----SELECT LOCK STATUS----
+											Select lock status here...
 											</option>
 											<option value={true}>
 												Locked
