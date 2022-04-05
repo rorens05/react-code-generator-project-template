@@ -169,7 +169,8 @@ function FileHeader(props) {
         props.doneUpload()
         setShowAddFolderModal(false)
       }else{
-        toast.error('Something went wrong while creating folder.'); 
+        setShowAddFolderModal(false)
+        toast.error(response.data?.errorMessage.replace('distributor', 'contributor')); 
       }
     }
     if(props.type == 'Class'){
@@ -183,7 +184,8 @@ function FileHeader(props) {
         props.doneUpload()
         setShowAddFolderModal(false)
       }else{
-        toast.error('Something went wrong while creating folder.'); 
+        setShowAddFolderModal(false)
+        toast.error(response.data?.errorMessage.replace('distributor', 'contributor'));
       }
     }
   }
