@@ -110,7 +110,6 @@ function ClassCard({item, setOpenEditModal, setSeletedClass, getClasses}) {
           </Card.Header>
           <Card.Body>
             <Card.Title>
-             
             </Card.Title>
             <Card.Subtitle>
               {item.courseName} 

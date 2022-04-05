@@ -245,20 +245,18 @@ function ClassAssignment() {
                 {/* <Button onClick={() => submittedAssignmentToggle()} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button>
                 <Button onClick={() => answerAnswerToggle()} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-user-edit"></i></Button>
                 Student Modal Answers */}
-                <Button onClick={() => viewAssignmentToggle(assigItem?.assignment, assigItem?.classAssignment)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button>
-                <Button onClick={(e) => toggle(e, assigItem?.assignment?.instructions, assigItem?.assignment?.assignmentName, item?.moduleName, assigItem?.assignment?.id, assigItem?.module?.id)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-edit"></i></Button>
-              <OverlayTrigger
-                placement="bottom"
-                delay={{ show: 1, hide: 0 }}
-                overlay={renderTooltipView}>
-                  <Button onClick={() => viewAssignmentToggle(assigItem?.assignment, assigItem?.classAssignment)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button>
-                </OverlayTrigger>
-                <OverlayTrigger
-                  placement="bottom"
-                  delay={{ show: 1, hide: 0 }}
-                  overlay={renderTooltipEdit}>
-                <Button onClick={(e) => toggle(e, assigItem)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-edit"></i></Button>
-                </OverlayTrigger>
+                  <OverlayTrigger
+                    placement="bottom"
+                    delay={{ show: 1, hide: 0 }}
+                    overlay={renderTooltipView}>
+                    <Button onClick={() => viewAssignmentToggle(assigItem?.assignment, assigItem?.classAssignment)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button>
+                  </OverlayTrigger>
+                  <OverlayTrigger
+                      placement="bottom"
+                      delay={{ show: 1, hide: 0 }}
+                      overlay={renderTooltipEdit}>
+                    <Button onClick={(e) => toggle(e, assigItem?.assignment?.instructions, assigItem?.assignment?.assignmentName, item?.moduleName, assigItem?.assignment?.id, assigItem?.module?.id)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-edit"></i></Button>
+                  </OverlayTrigger>
                 {assigItem?.classAssignment?(
                   <OverlayTrigger
                     placement="bottom"
