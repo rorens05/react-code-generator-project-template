@@ -142,7 +142,7 @@ export default function CoursesTask() {
       <div className="row m-b-20 m-t-30" onSearch={onSearch}>
         <div className="col-md-12">
           <InputGroup size="lg">
-            <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Search..." type="search" onChange={(e) => onSearch(e.target.value)}/>
+            <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Search unit or task here" type="search" onChange={(e) => onSearch(e.target.value)}/>
             <InputGroup.Text id="basic-addon2" className="search-button"><i className="fas fa-search fa-1x"></i></InputGroup.Text>
           </InputGroup>
         </div>
@@ -155,7 +155,7 @@ export default function CoursesTask() {
             <>
             <Accordion.Item eventKey={item.id}> 
               <Accordion.Header onClick={(e) => {getTaskInfo(e, item.id)}}>
-                <span className="unit-title">{item.moduleName} <Button className="m-l-10" variant="outline-warning" onClick={handleOpenCreateTaskModal}><i className="fa fa-plus"></i> Add Task</Button>
+                <span className="unit-title">{item.moduleName} <Button className="btn-create-class" variant="link" onClick={handleOpenCreateTaskModal}><i className="fa fa-plus"></i> Add Task</Button>
                 </span>
               </Accordion.Header>
               <Accordion.Body>

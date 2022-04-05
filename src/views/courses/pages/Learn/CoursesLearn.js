@@ -172,13 +172,13 @@ export default function CourseLearn() {
         :
         <React.Fragment>
           <span className="content-pane-title">
-            Learn <Button variant="outline-warning" onClick={handleOpenCreateUnitModal}><i className="fa fa-plus"></i> Add Unit</Button>
+            Learn <Button className="btn-create-class" variant="link" onClick={handleOpenCreateUnitModal}><i className="fa fa-plus"></i> Add Unit</Button>
             <CourseCreateUnit moduleInfo={moduleInfo} setModuleInfo={setModuleInfo} openCreateUnitModal={openCreateUnitModal} setOpenCreateUnitModal={setOpenCreateUnitModal}/>
           </span>
           <div className="row m-b-20 m-t-30">
             <div className="col-md-12">
               <InputGroup size="lg">
-                <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Search..." type="search" onChange={(e) => onSearch(e.target.value)}/>
+                <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Search unit or lesson here" type="search" onChange={(e) => onSearch(e.target.value)}/>
                 <InputGroup.Text id="basic-addon2" className="search-button"><i className="fas fa-search fa-1x"></i></InputGroup.Text>
               </InputGroup>
             </div>
@@ -196,7 +196,7 @@ export default function CourseLearn() {
               return(
                   <Accordion.Item eventKey={item.id}> 
                     <Accordion.Header onClick={(e) => {getCourseLessons(e, item.id, item.moduleName)}}>
-                      <span className="unit-title">{item.moduleName} <Button className="m-l-10" variant="outline-warning" onClick={handleOpenCreateLessonModal}><i className="fa fa-plus"></i> Add Lesson</Button>
+                      <span className="unit-title">{item.moduleName} <Button className="btn-create-class" variant="link"  onClick={handleOpenCreateLessonModal}><i className="fa fa-plus"></i> Add Lesson</Button>
                       </span>
                     </Accordion.Header>
                     <Accordion.Body>                         

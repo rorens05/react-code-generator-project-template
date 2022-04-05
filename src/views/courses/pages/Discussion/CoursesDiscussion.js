@@ -146,7 +146,7 @@ export default function CoursesDiscussion() {
           <div className="row m-b-20 m-t-30">
             <div className="col-md-12">
               <InputGroup size="lg">
-                <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Search..." type="search" onChange={(e) => onSearch(e.target.value)}/>
+                <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Search unit or discussion here" type="search" onChange={(e) => onSearch(e.target.value)}/>
                 <InputGroup.Text id="basic-addon2" className="search-button"><i className="fas fa-search fa-1x"></i></InputGroup.Text>
               </InputGroup>
             </div>
@@ -159,7 +159,7 @@ export default function CoursesDiscussion() {
                 <>
                 <Accordion.Item eventKey={item.id}> 
                   <Accordion.Header onClick={(e) => {getDiscussionInfo(e, item.id)}}>
-                    <span className="unit-title">{item.moduleName} <Button className="m-l-10" variant="outline-warning" onClick={handleopenCreateDiscussionModal}><i className="fa fa-plus"></i> Add Discussion</Button>
+                    <span className="unit-title">{item.moduleName} <Button className="btn-create-class" variant="link" onClick={handleopenCreateDiscussionModal}><i className="fa fa-plus"></i> Add Discussion</Button>
                     </span>
                   </Accordion.Header>
                   <Accordion.Body>

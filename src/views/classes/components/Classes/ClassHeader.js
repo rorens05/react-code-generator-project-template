@@ -22,7 +22,7 @@ function ClassHeader({getClasses, onSearch}) {
 		<div>
 			<Row style={{paddingTop:'15px'}}>
       <Col className='title-header' >
-      <p className='title-header' >Classes <Button className='btn-create-class' Button variant="link" onClick={() => setModal(true) }> <i className="fa fa-plus"></i>  Create Class  </Button></p> 
+      <p className='title-header' >Classes <Button className='btn-create-class' variant="link" onClick={() => setModal(true) }> <i className="fa fa-plus"></i>  Create Class  </Button></p> 
       </Col>
       <Col style={{textAlign:'right'}}>
         <Button className='btn-Enrolled' onClick={() => handleHistoryList()} size='lg' variant="outline-warning"><b>Active</b></Button>

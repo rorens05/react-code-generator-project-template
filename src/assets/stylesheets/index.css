@@ -1339,7 +1339,7 @@ hr{
 }
 
 .choice-delete{
-  color: var(--primary-color)!important;
+  color: var(--primary-color) !important;
   font-size: 22px;
   margin-right: 12px;
   margin-left: 32px;
