@@ -225,20 +225,18 @@ function ClassTask() {
                     {moduleitem.task.classId?( 
                     <Col sm={3} className='icon-exam'>
                       {/* Student Modal Answers */}
-                      <Button onClick={() => viewTaskTaggle(moduleitem?.task, moduleitem?.taskAssignment)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button>
-                        <Button onClick={(e) => toggle(e, moduleitem?.task?.taskName,  moduleitem?.task?.instructions, moduleitem?.task?.id, moduleitem?.module?.moduleName)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-edit"></i></Button>
-                      <OverlayTrigger
-                        placement="bottom"
-                        delay={{ show: 1, hide: 0 }}
-                        overlay={renderTooltipView}>
+                          <OverlayTrigger
+                            placement="bottom"
+                            delay={{ show: 1, hide: 0 }}
+                            overlay={renderTooltipView}>
                           <Button onClick={() => viewTaskTaggle(moduleitem?.task, moduleitem?.taskAssignment)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-eye" ></i>{' '}</Button>
-                      </OverlayTrigger>
-                      <OverlayTrigger
-                        placement="bottom"
-                        delay={{ show: 1, hide: 0 }}
-                        overlay={renderTooltipEdit}>
-                        <Button onClick={(e) => toggle(e, moduleitem)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-edit"></i></Button>
-                      </OverlayTrigger> 
+                        </OverlayTrigger>
+                        <OverlayTrigger
+                            placement="bottom"
+                            delay={{ show: 1, hide: 0 }}
+                            overlay={renderTooltipEdit}>
+                          <Button onClick={(e) => toggle(e, moduleitem?.task?.taskName,  moduleitem?.task?.instructions, moduleitem?.task?.id, moduleitem?.module?.moduleName)} className="m-r-5 color-white tficolorbg-button" size="sm"><i class="fas fa-edit"></i></Button>
+                        </OverlayTrigger>
                         {moduleitem?.taskAssignment?(
                           <>
                           <OverlayTrigger

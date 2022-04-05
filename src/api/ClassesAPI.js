@@ -288,6 +288,35 @@ creatTask = async (mId, cId,  data) => {
     })
   }
 
+  commentAnnouncement = async (id, refId, typeId, data) => {
+    return this.sendRequest({
+      path:`/api/Class/${id}/feed/${refId}/type/${typeId}/comment`,
+      method: 'POST',
+      data
+    })
+  }
+
+  getComment = async (id, refId, typeId) => {
+    return this.sendRequest({
+      path:`/api/Class/${id}/feed/${refId}/type/${typeId}/comment`,
+      method: 'GET'
+    })
+  }
+
+  likeCommentAnnouncement = async (id, refId, typeId) => {
+    return this.sendRequest({
+      path: `/api/Class/${id}/feed/${refId}/type/${typeId}/like`,
+      method: 'PUT'
+    })
+  }
+
+  deleteCommentfeed = async (id, commentId) => {
+    return this.sendRequest({
+      path:`/api/Class/${id}/feed/comment/${commentId}`,
+      method: 'DELETE'
+    })
+  }
+
 //get pages
   getPages = async (cId, mId) => {
     return this.sendRequest({
