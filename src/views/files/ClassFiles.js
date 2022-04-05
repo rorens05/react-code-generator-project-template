@@ -30,6 +30,8 @@ export default function FilesClass() {
   const [breadCrumbsItemClass, setBreadCrumbsItemClass] = useState([]);
   const [filter, setFilter] = useState("");
   const [classFilter, setClassFilter] = useState('');
+  const subFolderDirectory = breadCrumbsItemClass.map(item => { return `/${item.value}`})
+  subFolderDirectory.shift();
 
   const getClasses = async() => {
     setLoading(true)
@@ -46,7 +48,7 @@ export default function FilesClass() {
 
   const handleRefetch = (type) => {
     if(type == 'Class'){
-      handleGetClassFiles(selectedId, selectedName);
+      handleGetClassFiles(selectedId, subFolderDirectory.join(''));
     }
   }
 
@@ -63,7 +65,7 @@ export default function FilesClass() {
   const handleGetClassFiles = async(id, name) => {
     // setLoading(true)
     let data = {
-      "subFolderLocation": name
+      "subFolderLocation":  name
     }
     let response = await new FilesAPI().getClassFiles(id, data)
     // setLoading(false)
@@ -88,8 +90,10 @@ export default function FilesClass() {
 
   const handleClickedBreadcrumbsItem = (value, index, type) => {
     if(type == 'Class'){
+
+      subFolderDirectory.length = index;
       breadCrumbsItemClass.length = index+1;
-      handleGetClassFiles(selectedId, value);
+      handleGetClassFiles(selectedId, subFolderDirectory.join(''));
       setSelectedName(value)
     }
   }
@@ -106,11 +110,12 @@ export default function FilesClass() {
         value: name
       }
       breadCrumbsItemClass.push(temp)
-      handleGetClassFiles(id, name);
+      handleGetClassFiles(id,`${subFolderDirectory.join('')}/${name}`);
       setSelectedName(name);
     }
   }
 
+ 
   return (
     <Files>
       <Col className='mt-5 scrollable pb-3 vh-85'>
@@ -119,7 +124,7 @@ export default function FilesClass() {
             {
               openIndexClass ?
               <>
-                <FileHeader type={'Class'}  title='Class Files' id={selectedId} subFolder={selectedName} doneUpload={()=> handleRefetch('Class')}/>
+                <FileHeader type={'Class'}  title='Class Files' id={selectedId} subFolder={subFolderDirectory.join('')} doneUpload={()=> handleRefetch('Class')}/>
                 <div className="col-md-12 m-b-20">
                   <InputGroup size="lg">
                     <FormControl  aria-label="Large" onChange={(e) => setFilter(e.target.value)} aria-describedby="inputGroup-sizing-sm" placeholder="Search files here" type="search"/>

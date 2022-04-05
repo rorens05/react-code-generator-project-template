@@ -14,13 +14,14 @@ function CourseFiles() {
   const [selectedName, setSelectedName] = useState('');
   const [breadCrumbsItemCourse, setBreadCrumbsItemCourse] = useState([])
   const [filter, setFilter] = useState('');
+  const subFolderDirectory = breadCrumbsItemCourse.map(item => { return `/${item.value}`})
 
   useEffect(() => {
     handleGetCourseFiles('')
   }, [])
 
   const handleRefetch = () => {
-    handleGetCourseFiles(selectedName)
+    handleGetCourseFiles(subFolderDirectory.join(''))
   }
 
   const handleGetCourseFiles = async(name) => {
@@ -32,7 +33,6 @@ function CourseFiles() {
     let response = await new FilesAPI().getCourseFiles(id, data)
     // setLoading(false)
     if(response.ok){
-      console.log(response, '-------------------')
       setFilesToDisplay(response.data.files);
       setFolderToDisplay(response.data.folders);
     }else{
@@ -51,13 +51,14 @@ function CourseFiles() {
       value: name
     }
     breadCrumbsItemCourse.push(temp)
-    handleGetCourseFiles(name);
+    handleGetCourseFiles(`${subFolderDirectory.join('')}/${name}`);
   }
 
   const handleClickedBreadcrumbsItem = (value, index, type) => {
     if(type == 'Course'){
+     subFolderDirectory.length = index+1
       breadCrumbsItemCourse.length = index+1;
-      handleGetCourseFiles(value);
+      handleGetCourseFiles(subFolderDirectory.join(''));
     }
   }
 
@@ -65,7 +66,7 @@ function CourseFiles() {
     <CourseContent>
       <CourseBreadcrumbs title={''} clicked={() => console.log('')}/>
       <div className="row m-b-20 file-content">
-        <FileHeader type='Course'  title='Course Files' id={id} subFolder={selectedName}  doneUpload={()=> handleRefetch()}/>
+        <FileHeader type='Course'  title='Course Files' id={id} subFolder={subFolderDirectory.join('')}  doneUpload={()=> handleRefetch()}/>
         <div className="row m-b-20">
           <div className="col-md-12">
             <InputGroup size="lg">

@@ -24,6 +24,8 @@ export default function FilesCourse() {
   const [breadCrumbsItemCourse, setBreadCrumbsItemCourse] = useState([])
   const [filter, setFilter] = useState("");
   const [courseFilter, setCourseFilter] = useState("");
+  const subFolderDirectory = breadCrumbsItemCourse.map(item => { return `/${item.value}`})
+  subFolderDirectory.shift();
 
   const getCourses = async() => {
     setLoading(true)
@@ -55,7 +57,7 @@ export default function FilesCourse() {
 
   const handleRefetch = (type) => {
     if(type == 'Course'){
-      handleGetCourseFiles(selectedId, selectedName)
+      handleGetCourseFiles(selectedId, subFolderDirectory.join(''))
     }
   }
 
@@ -78,26 +80,13 @@ export default function FilesCourse() {
     setOpenIndexCourse(true)
   }
 
-  const handleGetClassFiles = async(id, name) => {
-    // setLoading(true)
-    let data = {
-      "subFolderLocation": name
-    }
-    let response = await new FilesAPI().getClassFiles(id, data)
-    // setLoading(false)
-    if(response.ok){
-      setFilesToDisplay(response.data.files);
-      setFolderToDisplay(response.data.folders)
-    }else{
-      alert("Something went wrong while fetching class files ---.")
-    }
-  }
-
 
   const handleClickedBreadcrumbsItem = (value, index, type) => {
     if(type == 'Course'){
+      subFolderDirectory.length = index;
       breadCrumbsItemCourse.length = index+1;
-      handleGetCourseFiles(selectedId, value);
+      handleGetCourseFiles(selectedId, subFolderDirectory.join(''));
+      setSelectedName(value)
     }
   }
 
@@ -113,7 +102,7 @@ export default function FilesCourse() {
         value: name
       }
       breadCrumbsItemCourse.push(temp)
-      handleGetCourseFiles(id, name);
+      handleGetCourseFiles(id, `${subFolderDirectory.join('')}/${name}`);
     }
   }
 
@@ -126,7 +115,7 @@ export default function FilesCourse() {
             {
               openIndexCourse ?
               <>
-                <FileHeader type={'Course'} title='Course Files' id={selectedId} subFolder={selectedName} doneUpload={()=> handleRefetch('Course')}/>
+                <FileHeader type={'Course'} title='Course Files' id={selectedId} subFolder={subFolderDirectory.join('')} doneUpload={()=> handleRefetch('Course')}/>
                 <div className="row m-b-20">
                   <div className="col-md-12">
                     <InputGroup size="lg">

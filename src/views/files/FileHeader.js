@@ -16,12 +16,11 @@ function FileHeader(props) {
     return itm.progress != 100
   })
 
-  console.log(props.subFolder, 'heeeeeeeere')
   const handlefilesUpload = (file) => {
     if(file != ''){
       
       Object.values(file).map((itm, index) => {
-        console.log(itm, index)
+        // console.log(itm, index)
         let temp = []
         getBase64(itm).then(
           data => {
@@ -79,7 +78,6 @@ function FileHeader(props) {
             setFiles([])
             setDoneUpload(false)
             setUploadStarted(false)
-            console.log(response.data?.errorMessage.includes('exist'), 'hehehehehehe')
             if(response.data?.errorMessage.includes('exist')){
               files[index].progress = 100;
               files[index].status = 'failed'
@@ -119,11 +117,9 @@ function FileHeader(props) {
             setFiles([])
             setDoneUpload(false)
             setUploadStarted(false)
-            console.log(response.data?.errorMessage.includes('exist'), 'hehehehehehe')
             if(response.data?.errorMessage.includes('exist')){
               files[index].progress = 100;
               files[index].status = 'failed';
-              console.log(files, '-----------------------')
               setFiles([...files])
             }else{
               setShowUploadModal(false)
@@ -165,7 +161,6 @@ function FileHeader(props) {
       }
       let response = await new FilesAPI().createCourseFolder(props.id, data)
       if(response.ok){
-        console.log(response, 'herrrrrrrree')
         props.doneUpload()
         setShowAddFolderModal(false)
       }else{
@@ -180,7 +175,6 @@ function FileHeader(props) {
       }
       let response = await new FilesAPI().createCLassFolder(props.id, data)
       if(response.ok){
-        console.log(response, 'herrrrrrrree')
         props.doneUpload()
         setShowAddFolderModal(false)
       }else{

@@ -14,13 +14,14 @@ function ClassFiles() {
   const [breadCrumbsItemClass, setBreadCrumbsItemClass] = useState([])
   const [selectedName, setSelectedName] = useState('');
   const [filter, setFilter] = useState("");
+  const subFolderDirectory = breadCrumbsItemClass.map(item => { return `/${item.value}`})
 
   useEffect(() => {
     handleGetClassFiles('')
   }, [])
 
   const handleRefetch = () => {
-    handleGetClassFiles('')
+    handleGetClassFiles(subFolderDirectory.join(''))
   }
 
   const handleGetClassFiles = async(name) => {
@@ -30,7 +31,6 @@ function ClassFiles() {
     }
     let response = await new FilesAPI().getClassFiles(id, data)
     // setLoading(false)
-    console.log('sasa----------------', response)
     if(response.ok){
       setFilesToDisplay(response.data.files);
       setFolderToDisplay(response.data.folders)
@@ -47,9 +47,10 @@ function ClassFiles() {
 
   const handleClickedBreadcrumbsItem = (value, index, type) => {
     if(type == 'Class'){
+      subFolderDirectory.length = index+1;
       breadCrumbsItemClass.length = index+1;
-      handleGetClassFiles(value);
-      setSelectedName(value);
+      handleGetClassFiles(subFolderDirectory.join(''));
+      setSelectedName(value)
     }
   }
 
@@ -60,7 +61,7 @@ function ClassFiles() {
         value: name
       }
       breadCrumbsItemClass.push(temp)
-      handleGetClassFiles(name);
+      handleGetClassFiles(`${subFolderDirectory.join('')}/${name}`);
       setSelectedName(name); //subfolder name
     }
   }
@@ -69,7 +70,7 @@ function ClassFiles() {
     <ClassSideNavigation>
       <ClassBreadcrumbs title='' clicked={() => console.log('')} />
       <div className="row m-b-20 file-content">
-        <FileHeader type='Class'  title='Class Files' subFolder={selectedName} id={id} doneUpload={()=> handleRefetch()}/>
+        <FileHeader type='Class'  title='Class Files' subFolder={subFolderDirectory.join('')} id={id} doneUpload={()=> handleRefetch()}/>
         <div className="col-md-12 m-b-20">
           <InputGroup size="lg">
             <FormControl onChange={(e) => setFilter(e.target.value)} aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Search files here" type="search"/>
