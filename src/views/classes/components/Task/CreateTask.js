@@ -9,7 +9,7 @@ import SweetAlert from 'react-bootstrap-sweetalert';
 import ContentField from '../../../../components/content_field/ContentField';
 import { toast } from 'react-toastify';
 
-function CreateTask({modal, toggle, module, getTaskModule, classId}) {
+function CreateTask({setModal, modal, toggle, module, getTaskModule, classId}) {
   const [moduleId, setModuleId] = useState('')
   const [taskName, setTaskName] = useState('')
   const [instructions, setInstructions] = useState('')
@@ -21,6 +21,13 @@ function CreateTask({modal, toggle, module, getTaskModule, classId}) {
 
   const closeNotify = () =>{
     setAddNotity(false)
+  }
+
+  const handleCloseModal = () => {
+    setModal(false)
+    setModuleId('')
+    setTaskName('')
+    setInstructions('')
   }
 
   useEffect(() => {
@@ -40,8 +47,8 @@ function CreateTask({modal, toggle, module, getTaskModule, classId}) {
 
   const saveTask = async (e) =>{
     e.preventDefault()
-    if(instructions === '' || instructions === '{{type=equation}}'){
-      toast.error('Please fill out all fields!', {
+    if(instructions === '' || instructions === '{{type=equation}}' || moduleId === ''){
+      toast.error('Please input all the required fields.', {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -60,14 +67,23 @@ function CreateTask({modal, toggle, module, getTaskModule, classId}) {
         getTaskModule(null, moduleId)
         toggle(e)
       }else{
-        alert(response.data.errorMessage)
+        // alert(response.data.errorMessage)
+        toast.error(response.data.errorMessage, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          });
       }
     }
   }
 
 	return (
     <div>
-    	<Modal size="lg" show={modal} onHide={toggle} aria-labelledby="example-modal-sizes-title-lg">
+    	<Modal size="lg" show={modal} onHide={handleCloseModal} aria-labelledby="example-modal-sizes-title-lg">
         <Modal.Header className='class-modal-header' closeButton>
           <Modal.Title id="example-modal-sizes-title-lg" >
             Create Task
@@ -106,7 +122,7 @@ function CreateTask({modal, toggle, module, getTaskModule, classId}) {
                     <ContentField value={instructions} onChange={value => setInstructions(value)} />
                   </Form.Group>
               <Form.Group className='right-btn'>
-              <Button className={moduleId == '' ? 'disabled' : 'tficolorbg-button'} type='submit' >Save</Button>
+              <Button className='tficolorbg-button' type='submit' >Save</Button>
             </Form.Group>
         </Form> 
         </Modal.Body>

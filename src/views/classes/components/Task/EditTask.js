@@ -4,6 +4,7 @@ import { Form, Button, } from 'react-bootstrap'
 import ClassesAPI from '../../../../api/ClassesAPI'
 import SweetAlert from 'react-bootstrap-sweetalert';
 import ContentField from '../../../../components/content_field/ContentField';
+import { toast } from 'react-toastify';
 
 function EditTask({moduleName, setTaskName, taskName, setInstructions, instructions, taskId, modal, toggle, module, editTask, getTaskModule, moduleId, setModal}){
   const isShared = null
@@ -15,16 +16,37 @@ function EditTask({moduleName, setTaskName, taskName, setInstructions, instructi
 
   const updateTask = async (e) =>{
     e.preventDefault()
-    let id = taskId
-    let response = await new ClassesAPI().updateTask(id, {taskName, instructions, isShared})
-      if(response.ok){
-        // alert('Task Updated')
-        setEditNotify(true)
-        getTaskModule(null, moduleId)
-        setModal(false)
-      }else{
-        alert(response.data.errorMessage)
-      }
+    if(instructions === '' || instructions === '{{type=equation}}'){
+      toast.error('Please input all the required fields.', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
+    }else{
+      let id = taskId
+      let response = await new ClassesAPI().updateTask(id, {taskName, instructions, isShared})
+        if(response.ok){
+          // alert('Task Updated')
+          setEditNotify(true)
+          getTaskModule(null, moduleId)
+          setModal(false)
+        }else{
+          // alert(response.data.errorMessage)
+          toast.error(response.data.errorMessage, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            });
+        }
+    }
   }
 
 
