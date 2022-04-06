@@ -31,4 +31,19 @@ export default class SchoolAPI extends Base {
       data
     })
   }
+
+  getAllTeacher = async() => {
+    return this.sendRequest({
+      path: `/api/Account?userroleid=3`,
+      method: 'GET'
+    })
+  }
+
+  resetDefaultPassword = async(id) => {
+    return this.sendRequest({
+      path: `/api/Account/${id}/password/default`,
+      method: 'PUT'
+    })
+  }
+
 }
