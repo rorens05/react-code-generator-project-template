@@ -72,11 +72,11 @@ function EditDiscussion({modal, toggle, editDiscussionItem, getDiscussionUnit}) 
               </Form.Group>
               <Form.Group className="mb-4">
                 <Form.Label>Discussion Name</Form.Label>
-              <Form.Control   type="text" defaultValue={editDiscussionItem?.discussion?.discussionName} onChange={(e) => setDiscussionName(e.target.value)} />
+              <Form.Control   type="text" placeholder='Enter discussion name here' defaultValue={editDiscussionItem?.discussion?.discussionName} onChange={(e) => setDiscussionName(e.target.value)} />
                 </Form.Group>
                 <Form.Group className="mb-4">
                   <Form.Label >Instruction</Form.Label>
-                    <Form.Control type="text" defaultValue={editDiscussionItem?.discussion?.instructions} onChange={(e) => setInstructions(e.target.value)} />
+                    <Form.Control type="text" placeholder='Enter instruction here' defaultValue={editDiscussionItem?.discussion?.instructions} onChange={(e) => setInstructions(e.target.value)} />
                   </Form.Group>
               <Form.Group className='right-btn'>
               <Button className='tficolorbg-button' type='submit' >Save</Button>
