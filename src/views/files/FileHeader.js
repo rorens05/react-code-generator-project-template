@@ -80,7 +80,8 @@ function FileHeader(props) {
             setUploadStarted(false)
             if(response.data?.errorMessage.includes('exist')){
               files[index].progress = 100;
-              files[index].status = 'failed'
+              files[index].status = 'failed';
+              setFiles([...files])
             }else{
               setShowUploadModal(false)
               toast.error(response.data?.errorMessage.replace('distributor', 'contributor')); 
@@ -244,7 +245,7 @@ function FileHeader(props) {
               return(
                 <tr key={item.fileName}>
                   <td>{item.fileName}</td>
-                  {item.status == 'failed' ? <td style={{fontSize: 10}}>Failed to upload.File already exist.</td> : <td><ProgressBar variant="warning" now={item.progress} /></td>}
+                  {item.status == 'failed' ? <td style={{fontSize: 14, color: 'red'}}>Failed to upload.File already exist.</td> : <td><ProgressBar variant="warning" now={item.progress} /></td>}
                   {/* <td><ProgressBar variant="warning" now={item.progress} /></td> */}
                   <td>{item.size} KB <i class="fas fa-times td-file-page" onClick={()=> handelRemoveSelectedFiles(index)}></i></td>
                 </tr>
@@ -297,7 +298,7 @@ function FileHeader(props) {
                 return(
                   <tr key={item.fileName}>
                     <td>{item.fileName}</td>
-                   {item.status == 'failed' ? <td>Failed to upload.File already exist.</td> : <td><ProgressBar variant="warning" now={item.progress} /></td>}
+                   {item.status == 'failed' ? <td style={{fontSize: 14, color: 'red'}}>Failed to upload.File already exist.</td> : <td><ProgressBar variant="warning" now={item.progress} /></td>}
                     <td>{item.size} KB <i class="fas fa-times td-file-page" onClick={()=> handelRemoveSelectedFiles(index)}></i></td>
                   </tr>
                 );
