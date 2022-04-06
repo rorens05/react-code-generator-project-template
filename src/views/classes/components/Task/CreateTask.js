@@ -115,11 +115,11 @@ function CreateTask({setModal, modal, toggle, module, getTaskModule, classId}) {
               </Form.Group>
               <Form.Group className="mb-4">
                 <Form.Label>Task Name</Form.Label>
-              <Form.Control onChange={(e) => setTaskName(e.target.value)} type="text" placeholder='Enter discussion name here'/>
+              <Form.Control onChange={(e) => setTaskName(e.target.value)} type="text" placeholder='Enter Task name here'/>
                 </Form.Group>
                 <Form.Group className="mb-4">
                   <Form.Label >Instruction</Form.Label>
-                    <ContentField value={instructions} onChange={value => setInstructions(value)} />
+                    <ContentField value={instructions} placeholder='Enter instrucion here'  onChange={value => setInstructions(value)} />
                   </Form.Group>
               <Form.Group className='right-btn'>
               <Button className='tficolorbg-button' type='submit' >Save</Button>

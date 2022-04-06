@@ -71,11 +71,11 @@ function EditTask({moduleName, setTaskName, taskName, setInstructions, instructi
               </Form.Group>
               <Form.Group className="mb-4">
                 <Form.Label>Task Name</Form.Label>
-              <Form.Control onChange={(e) => setTaskName(e.target.value)}  type="text" defaultValue={taskName}/>
+              <Form.Control placeholder='Enter Task name here' onChange={(e) => setTaskName(e.target.value)}  type="text" defaultValue={taskName}/>
                 </Form.Group>
                 <Form.Group className="mb-4">
                   <Form.Label >Instruction</Form.Label>
-                  <ContentField value={instructions} onChange={value => setInstructions(value)} />
+                  <ContentField value={instructions} placeholder='Enter instrucion here' onChange={value => setInstructions(value)} />
                   </Form.Group>
               <Form.Group className='right-btn'>
               <Button className='tficolorbg-button' type='submit' >Save</Button>
