@@ -10,10 +10,11 @@ import { UserContext } from '../../../../context/UserContext'
 
 function AccordionConference({conference, getConfe, setOpenEditModal, setEditLinks, searchTerm}) {
   const [deleteNotify, setDeleteNotify] = useState(false)
-  const [itemId, setItemId] = useState('')
+  const [deleteitemId, setDeleteItemId] = useState('')
   const {id} = useParams();
   const userContext = useContext(UserContext)
   const {user} = userContext.data
+  const [confiId, setConfiId] = useState()
 
   const cancelSweetAlert = () => {
     setDeleteNotify(false)
@@ -21,13 +22,13 @@ function AccordionConference({conference, getConfe, setOpenEditModal, setEditLin
 
   const handleDeleteNotify = (item) =>{
     setDeleteNotify(true)
-    setItemId(item)
+    setDeleteItemId(item)
   }
  
 
-  const handleOpeEditModal = (e, item) => {
+  const handleOpeEditModal = (e, confeItems) => {
     e.preventDefault()
-    setEditLinks(item)
+    setEditLinks(confeItems)
     setOpenEditModal(true)
     
   }
@@ -65,7 +66,7 @@ function AccordionConference({conference, getConfe, setOpenEditModal, setEditLin
           confirmBtnText="Yes, delete it!"
           confirmBtnBsStyle="danger"
           title="Are you sure?"
-          onConfirm={() => deleteConference(itemId)}
+          onConfirm={() => deleteConference(deleteitemId)}
           onCancel={cancelSweetAlert}
           focusCancelBtn
         >

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Table, Button, Tooltip, OverlayTrigger } from 'react-bootstrap'
 import ClassesAPI from '../../../../api/ClassesAPI'
 import { useParams} from 'react-router'
@@ -8,8 +8,10 @@ import SweetAlert from 'react-bootstrap-sweetalert';
 function ClassWaiting({waitingStudent, getStudentEnrolled, getStudentWaiting, searchTerm}) {
   const [addNotify, setAddNotify] = useState(false)
   const [deleteNotify, setDeleteNotify] = useState(false)
+  const [sortedData, setSortedData] = useState(waitingStudent.students);
   const [itemId, setItemId] = useState('')
   const {id} = useParams();
+  const [alphabetical, setAlphabetical] = useState(true);
 
   const cancelSweetAlert = () => {
     setDeleteNotify(false)
@@ -63,16 +65,61 @@ function ClassWaiting({waitingStudent, getStudentEnrolled, getStudentWaiting, se
     </Tooltip>
   )
 
+  useEffect(()=>{
+    // if(alphabetical){
+      arrageNoneAlphabetical();
+      arrageAlphabetical();
+    // }
+    // else{
+    // }
+  }, [waitingStudent]);
+
+  const arrageAlphabetical = () => {
+    let data = waitingStudent?.students;
+    let temp = data?.sort(function(a, b){
+      let nameA = a.fname.toLocaleLowerCase();
+      let nameB = b.fname.toLocaleLowerCase();
+      if (nameA < nameB) {
+          return -1;
+      }
+    });
+    console.log(temp, 'herererere')
+    setSortedData(temp)
+}
+
+const arrageNoneAlphabetical = () => {
+  let data = waitingStudent?.students;
+  let temp = data?.sort(function(a, b){
+    let nameA = a.fname.toLocaleLowerCase();
+    let nameB = b.fname.toLocaleLowerCase();
+    if (nameA > nameB) {
+        return -1;
+    }
+  });
+  console.log(temp, 'herererere')
+  setSortedData(temp)
+}
+
+const handleClickIcon = () =>{
+  setAlphabetical(!alphabetical);
+  if(!alphabetical){
+    arrageAlphabetical();
+  }
+  else{
+    arrageNoneAlphabetical();
+  }
+}
+
   return (
     <div>
       <Table>
         <thead>
           <tr> 
-          <th><div className='class-waiting-header'> Student{' '}</div></th>  
+          <th><div className='class-waiting-header'> Student{' '} <i onClick={() => handleClickIcon()} className={`${!alphabetical ? 'fas fa-sort-alpha-down' : 'fas fa-sort-alpha-up'} td-file-page`}></i></div></th>  
           </tr>
         </thead>
         <tbody>
-        {waitingStudent?.students?.filter((item) => {
+        {sortedData?.filter((item) => {
           if(searchTerm == ''){
             return item
           }else if(item.lname.toLowerCase().includes(searchTerm.toLowerCase())){
@@ -90,13 +137,13 @@ function ClassWaiting({waitingStudent, getStudentEnrolled, getStudentWaiting, se
               <td className='class-waiting-icon'>
               <div style={{marginRight:'35px'}}> 
               <OverlayTrigger
-                placement="right"
+                placement="bottom"
                 delay={{ show: 1, hide: 0 }}
                 overlay={renderTooltipAdd}>
                   <Button onClick={(e) => addStudent(e, item.id)} className="m-r-5 color-white tficolorbg-button" size="sm"> <i class="fas fa-user-plus"></i> </Button>
                </OverlayTrigger>
                <OverlayTrigger
-                placement="right"
+                placement="bottom"
                 delay={{ show: 1, hide: 0 }}
                 overlay={renderTooltipDelete}>
                 <Button onClick={() => handleDeleteNotify(item.id)} className="m-r-5 color-white tficolorbg-button" size="sm"> <i class="fas fa-trash-alt"></i></Button>

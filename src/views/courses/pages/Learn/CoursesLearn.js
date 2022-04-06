@@ -30,10 +30,13 @@ export default function CourseLearn() {
   const [courseInfo, setCourseInfo] = useState("")
   const [viewLesson, setViewLesson] = useState(false)
   const [moduleInfo, setModuleInfo] = useState([]);
+  const [itemId, setItemId] = useState('')
   const [clickedModule, setClickedModule] = useState('');
 
   const courseid = sessionStorage.getItem('courseid')
   const moduleid = sessionStorage.getItem('moduleid')
+
+  console.log('lessonInfo:', lessonInfo)
 
   const handleOpenCreateUnitModal = () =>{
     setOpenCreateUnitModal(!openCreateUnitModal)
@@ -54,10 +57,11 @@ export default function CourseLearn() {
     setSweetError(false)
   }
 
+
+
   const confirmSweetError = (id) => {
-    notifyDeleteLesson()
-    deleteCourseLesson(id)
-    setSweetError(false)
+    setItemId(id)
+    setSweetError(true)
   } 
 
   const getCourseLessons = async(e, data, modulename) => {
@@ -99,10 +103,10 @@ export default function CourseLearn() {
   }
 
   const deleteCourseLesson = async(data) => {
-    setLoading(true)
     let response = await new CoursesAPI().deleteLesson(data)
-    setLoading(false)
     if(response.ok){
+      notifyDeleteLesson()
+      setSweetError(false)
       getCourseLessons(null, moduleid)
       console.log(response.data)
     }else{
@@ -168,13 +172,13 @@ export default function CourseLearn() {
         :
         <React.Fragment>
           <span className="content-pane-title">
-            Learn <Button variant="outline-warning" onClick={handleOpenCreateUnitModal}><i className="fa fa-plus"></i> Add Unit</Button>
+            Learn <Button className="btn-create-class" variant="link" onClick={handleOpenCreateUnitModal}><i className="fa fa-plus"></i> Add Unit</Button>
             <CourseCreateUnit moduleInfo={moduleInfo} setModuleInfo={setModuleInfo} openCreateUnitModal={openCreateUnitModal} setOpenCreateUnitModal={setOpenCreateUnitModal}/>
           </span>
           <div className="row m-b-20 m-t-30">
             <div className="col-md-12">
               <InputGroup size="lg">
-                <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Search..." type="search" onChange={(e) => onSearch(e.target.value)}/>
+                <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Search unit or lesson here" type="search" onChange={(e) => onSearch(e.target.value)}/>
                 <InputGroup.Text id="basic-addon2" className="search-button"><i className="fas fa-search fa-1x"></i></InputGroup.Text>
               </InputGroup>
             </div>
@@ -192,7 +196,7 @@ export default function CourseLearn() {
               return(
                   <Accordion.Item eventKey={item.id}> 
                     <Accordion.Header onClick={(e) => {getCourseLessons(e, item.id, item.moduleName)}}>
-                      <span className="unit-title">{item.moduleName} <Button className="m-l-10" variant="outline-warning" onClick={handleOpenCreateLessonModal}><i className="fa fa-plus"></i> Add Lesson</Button>
+                      <span className="unit-title">{item.moduleName} <Button className="btn-create-class" variant="link"  onClick={handleOpenCreateLessonModal}><i className="fa fa-plus"></i> Add Lesson</Button>
                       </span>
                     </Accordion.Header>
                     <Accordion.Body>                         
@@ -215,24 +219,9 @@ export default function CourseLearn() {
                                 placement="bottom"
                                 delay={{ show: 1, hide: 0 }}
                                 overlay={renderTooltipDelete}>
-                                  <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={() => {setSweetError(true) }}><i className="fa fa-trash"></i></Button>
+                                  <Button className="m-r-5 color-white tficolorbg-button" size="sm" onClick={() => confirmSweetError(li.id)} ><i className="fa fa-trash"></i></Button>
                               </OverlayTrigger>
-                              <SweetAlert
-                                warning
-                                showCancel
-                                show={sweetError}
-                                confirmBtnText="Yes, delete it!"  
-                                confirmBtnBsStyle="danger"
-                                title="Are you sure?"
-                                onConfirm={() => confirmSweetError(li.id)}
-                                onCancel={cancelSweetError}
-                                focusCancelBtn
-                              >
-                                You will not be able to recover this Lesson!
-                              </SweetAlert>
                             </Col>
-                            
-
                           </Row>
                         )
                       })}
@@ -241,6 +230,19 @@ export default function CourseLearn() {
                 )
               })
             }
+          <SweetAlert
+            warning
+            showCancel
+            show={sweetError}
+            confirmBtnText="Yes, delete it!"  
+            confirmBtnBsStyle="danger"
+            title="Are you sure?"
+            onConfirm={() => deleteCourseLesson(itemId)}
+            onCancel={cancelSweetError}
+            focusCancelBtn
+          >
+            You will not be able to recover this Lesson!
+        </SweetAlert>
           </Accordion>
         </React.Fragment>}
     </CourseContent>

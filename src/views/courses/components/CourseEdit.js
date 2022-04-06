@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Button, Form, FormControl, Modal } from 'react-bootstrap';
 import SubjectAreaAPI from "../../../api/SubjectAreaAPI";
 import CoursesAPI from "../../../api/CoursesAPI";
+import { toast } from 'react-toastify';
 
-export default function CourseEdit({setCourse, openEditModal, setOpenEditModal, selectedCourse}){
+export default function CourseEdit({getCourses, setCourse, openEditModal, setOpenEditModal, selectedCourse}){
 
 	const [loading, setLoading] = useState(false)
 	const [courseName, setCourseName] = useState('')
@@ -30,40 +31,59 @@ export default function CourseEdit({setCourse, openEditModal, setOpenEditModal, 
     }
   }
 
-	const getCourses = async() => {
-    setLoading(true)
-    let response = await new CoursesAPI().getCourses()
-    setLoading(false)
-    if(response.ok){
-      setCourse(response.data)
-    }else{
-      alert("Something went wrong while fetching all courses")
-    }
-  }
+	// const getCourses = async() => {
+  //   setLoading(true)
+  //   let response = await new CoursesAPI().getCourses()
+  //   setLoading(false)
+  //   if(response.ok){
+  //     setCourse(response.data)
+  //   }else{
+  //     alert("Something went wrong while fetching all courses")
+  //   }
+  // }
 
 	const saveEditCourse = async(e) => {
     e.preventDefault()
-    setLoading(true)
-		let isTechFactors = true
-		let sessionCourse = sessionStorage.getItem('courseid')
-    let response = await new CoursesAPI().editCourse
-		(
-			sessionCourse,
-      {courseName, description, subjectAreaId, status, locked, isTechFactors}
-    )
-    if(response.ok){
-      alert("Saved")
-			getCourses()
-			handleCloseModal(e)
-    }else{
-      alert(response.data.errorMessage)
-    }
-    setLoading(false)
+		if(description === ''){
+			toast.error('Please insert all the required fields', {
+				position: "top-right",
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+				});
+		}else{
+			setLoading(true)
+			let isTechFactors = true
+			let sessionCourse = sessionStorage.getItem('courseid')
+			let response = await new CoursesAPI().editCourse
+			(
+				sessionCourse,
+				{courseName, description, subjectAreaId, status, locked, isTechFactors}
+			)
+			if(response.ok){
+				successSave()
+				getCourses()
+				handleCloseModal(e)
+			}else{
+				toast.error(response.data.errorMessage, {
+					position: "top-right",
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					});
+			}
+			setLoading(false)	
+		}
   }
 
 	useEffect(() => {
     viewSubjectArea()
-		getCourses()
   }, [])
 
 	useEffect(() => {
@@ -76,6 +96,19 @@ export default function CourseEdit({setCourse, openEditModal, setOpenEditModal, 
 			setStatus(selectedCourse?.status)
 		}
   }, [selectedCourse])
+
+	const successSave = () => {
+		toast.success('Done Edit', {
+			position: "top-right",
+			autoClose: 5000,
+			hideProgressBar: false,
+			closeOnClick: true,
+			pauseOnHover: true,
+			draggable: true,
+			progress: undefined,
+			});
+
+	}
 	
 	return (
 		<div>

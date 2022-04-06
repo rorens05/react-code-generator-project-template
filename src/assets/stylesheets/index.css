@@ -157,8 +157,31 @@ color:#BCBCBC !important;
 .comment-btn {
   background-color: transparent !important;
   border-left:0px !important;
-  color:#BCBCBC !important;
+  color:var(--primary-color) !important;
   cursor: pointer !important;
+  font-size: 20px!important;
+}
+
+.comment {
+  background-color: #707070 !important;
+}
+
+.comment-log{
+  font-size: 30px;
+}
+
+.comment-content{
+  background-color: transparent !important;
+  /* padding: 10px;
+  margin-bottom: 20px; */
+}
+
+.comment-count{
+  background-color: #EE9337;
+  width: 3% !important;
+  height: 40% !important;
+  margin-left: 5px;
+  border-radius: 10px 10px 10px 10px !important;
 }
 
 .search-box{
@@ -773,12 +796,12 @@ border-top-right-radius: 0px !important;
 
 .btn-primary{
   background-color: var(--primary-color) !important;
-  border-color: var(--primary-color)03 !important;
+  border-color: var(--primary-color) !important;
 }
 
 .btn-auth{
   background-color: var(--primary-color) !important;
-  border-color: var(--primary-color)03 !important;
+  border-color: var(--primary-color) !important;
   font-size: 36px !important;
 }
 
@@ -963,6 +986,12 @@ border-top-right-radius: 0px !important;
   font-size: 18px!important;
   text-decoration: none!important
 }
+.btn-like{
+  /* color: var(--primary-color)!important; */
+  color: #EE9337!important;
+  font-size: 20px!important;
+  text-decoration: none!important
+}
 .btn-student-portfolio{
   color: #7D7D7D!important;
   font-size: 18px!important;
@@ -975,6 +1004,9 @@ border-top-right-radius: 0px !important;
   text-decoration: none!important
 }
 .inline-flex{
+  display: inline-flex;
+}
+.btn-subject-area{
   display: inline-flex;
 }
 .text-color-bcbcbc{
@@ -1258,7 +1290,7 @@ hr{
 }
 
 .exam-actions a{
-  color: var(--primary-color)03 !important;
+  color: var(--primary-color) !important;
   font-size: 22px;
   margin-right: 12px;
 }
@@ -1308,7 +1340,7 @@ hr{
 }
 
 .choice-delete{
-  color: var(--primary-color)03 !important;
+  color: var(--primary-color) !important;
   font-size: 22px;
   margin-right: 12px;
   margin-left: 32px;
@@ -1398,4 +1430,11 @@ hr{
   height: 200px;
   object-fit: cover;
   border: 1px solid #E5E5E5;
+}
+
+select {
+  color: var(--primary-color) !important;
+}
+option:not(:first-of-type) {
+  color: black !important;
 }
