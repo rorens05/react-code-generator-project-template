@@ -6,13 +6,12 @@ import SchoolTeachersTable from './components/SchoolTeachersTable'
 
 export default function SchoolTeachers() {
   return (
-    <MainContainer title="School" activeHeader={"school"}>
+    <MainContainer title="School" activeHeader={"school"} style='not-scrollable'>
       <Row className="mt-4">
         <Col sm={3}>
           <AdminSideNavigation active="schoolTeacher"/>
         </Col>
-        <Col sm={9}>
-            {/* <p>sample</p> */}
+        <Col sm={9} className='scrollable vh-85 pb-5'>
           <SchoolTeachersTable />
         </Col>
       </Row>

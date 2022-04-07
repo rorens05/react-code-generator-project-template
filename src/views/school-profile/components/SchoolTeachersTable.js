@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Col, Row } from 'react-bootstrap'
+import { Col, Row, Modal} from 'react-bootstrap'
 import ReactTable from 'react-table-v6'
 import 'react-table-v6/react-table.css'
 import SchoolAPI from '../../../api/SchoolAPI'
@@ -12,6 +12,10 @@ export default function SchoolTeacher() {
   const [ resetNotify, setResetNotify ] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [toResetId, setToResetId] = useState('');
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [currentPass, setCurrentPass] = useState('');
+  const [newPass, setNewPass] = useState('');
+  const [toChangePassId, setToChangePassId] =  useState('');
   
 	useEffect(() => {
     handleGetAllTeachers()
@@ -21,6 +25,7 @@ export default function SchoolTeacher() {
     let response = await new SchoolAPI().resetDefaultPassword(toResetId);
     if(response.ok){
       toast.success("Password reset!")
+      handleGetAllTeachers();
     }else{
       toast.error("Something went wrong while reseting teacher's password.")
     }
@@ -43,11 +48,32 @@ export default function SchoolTeacher() {
     }
     console.log(response)
   }
+
+  const handleChangePassword = async() => {
+    let data = {
+      currentPassword: currentPass,
+      newPassword: newPass
+    }
+    let response = await new SchoolAPI().changePassword(toChangePassId, data);
+    if(response.ok){
+      console.log(response.data);
+      setShowEditModal(false);
+      toast.success("Password updated!")
+      handleGetAllTeachers();
+    }else{
+      toast.error(response.data?.errorMessage ? response.data?.errorMessage : 'Something went wrong while changing password.')
+    }
+  }
+
+  const handleClickedit = (id) => {
+    setShowEditModal(true);
+    setToChangePassId(id)
+  }
+
   return (
     <>
-    {/* <p>sample</p> */}
-    <span className='m-t-5'>Teachers List</span> | <input type="checkbox" id={'cboxspassword'} name={'cboxspassword'} checked={showPassword} onChange={() => setShowPassword(!showPassword) } />
-                                                <label className="form-check-label" for={'cboxspassword'} >Show passwords</label>
+      <span className='m-t-5'>Teachers List</span> | <input type="checkbox" id={'cboxspassword'} name={'cboxspassword'} checked={showPassword} onChange={() => setShowPassword(!showPassword) } />
+      <label className="form-check-label" for={'cboxspassword'} >Show passwords</label>
       <ReactTable pageCount={100}
         list={teachers}
         filterable
@@ -55,7 +81,6 @@ export default function SchoolTeacher() {
         columns={[{
           Header: '',
           columns:
-          // Start Columns
           [
             {
               Header: 'Username',
@@ -77,18 +102,12 @@ export default function SchoolTeacher() {
               accessor: d => d.id,
               Cell: row => (
                 <div className="">
-                    <button onClick={() => {
-                        this.setState(row.original);
-                        this.toggleModal("modalMessage", row.original.id);
-                    }}
-                        className="btn btn-info btn-sm m-r-5"
-                    >
-                        Change Password
-                    </button>
-                    {/* //'info', row.original.id) */}
-                    <button onClick={() => handleClikedReset(row.original.id)} className="btn btn-warning btn-sm m-r-5">
-                      Reset Password
-                    </button>
+                  <button onClick={() => handleClickedit(row.original.id)} className="btn btn-info btn-sm m-r-5" >
+                    Change Password
+                  </button>
+                  <button onClick={() => handleClikedReset(row.original.id)} className="btn btn-warning btn-sm m-r-5">
+                    Reset Password
+                  </button>
                 </div>
               )
             }
@@ -108,6 +127,23 @@ export default function SchoolTeacher() {
       >
         Are you sure? resetting this password!
       </SweetAlert>
+
+      <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
+        <Modal.Header className="font-10" closeButton><span className='font-20'>Edit Password</span></Modal.Header>
+        <Modal.Body>
+          <div className="col-md-12 m-b-15">
+            <label className="control-label">Current Password <span className="text-danger">*</span></label>
+            <input type="text" size="30" className="form-control" value={currentPass} onChange={(e) => setCurrentPass(e.target.value)} placeholder="Current Password" name="currentPassword" required="" />
+          </div>
+          <div className="col-md-12 m-b-15">
+            <label className="control-label">New Password <span className="text-danger">*</span></label>
+            <input type="text" size="30" className="form-control" value={newPass}  onChange={(e) => setNewPass(e.target.value)} placeholder="New Password" name="newPassword" required="" />
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <button onClick={() => handleChangePassword()} className="btn btn-sm btn-success">Save</button>
+        </Modal.Footer>
+      </Modal>
     </>
   )
 }

@@ -377,3 +377,7 @@ code {
 .mq-scaled.mq-paren{
   transform: scale(1) !important;
 }
+
+.font-10{
+  font-size: 10px;
+}

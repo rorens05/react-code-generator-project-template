@@ -46,4 +46,12 @@ export default class SchoolAPI extends Base {
     })
   }
 
+  changePassword = async(id, data) => {
+    return this.sendRequest({
+      path: `/api/Account/${id}/password`,
+      method: 'PUT',
+      data
+    })
+  }
+
 }
