@@ -39,7 +39,7 @@ export default class CoursesAPI extends Base {
     });
   };
 
-  getCourseUnit = async (id, data) => {
+  getCourseUnit = async (id) => {
     return this.sendRequest({
       path: `/api/Module/course/${id}/item/1`,
       method: 'GET',
