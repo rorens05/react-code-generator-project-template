@@ -94,9 +94,9 @@ export default function StudentsTable() {
               id: 'password',
               accessor: 
               showPassword ?
-              d => <input type="text" className="form-control form-control-lg" placeholder="Password" name="password" value={d.password} required disabled />
+              d => <input type="text" className="form-control form-control-lg font-16" placeholder="Password" name="password" value={d.password} required disabled />
               :
-              d => <input type="password" className="form-control form-control-lg" placeholder="Password" name="password" value={d.password} required disabled />
+              d => <input type="password" className="form-control form-control-lg font-16" placeholder="Password" name="password" value={d.password} required disabled />
             },
             {
               Header: 'Actions',
