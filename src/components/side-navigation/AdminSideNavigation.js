@@ -9,8 +9,7 @@ export default function AdminSideNavigation({active}) {
       <Link to="schoolTeacher" className={`side-navigation-item ${active === "schoolTeacher" ? "active" : ""}`}>Teachers</Link>
       <Link to="school" className={`side-navigation-item ${active === "courses" ? "active" : ""}`}>Courses</Link>
       <Link to="school" className={`side-navigation-item ${active === "classes" ? "active" : ""}`}>Classes</Link>
-      <Link to="school" className={`side-navigation-item ${active === "schoadmins" ? "active" : ""}`}>School Admins</Link>
-      <Link to="school" className={`side-navigation-item ${active === "profile" ? "active" : ""}`}>Profile</Link>
+      <Link to="schoolAdmin" className={`side-navigation-item ${active === "schooladmins" ? "active" : ""}`}>School Admins</Link>
     </div>
   )
 }
