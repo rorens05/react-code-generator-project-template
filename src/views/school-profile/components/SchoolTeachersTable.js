@@ -60,6 +60,8 @@ export default function SchoolTeacher() {
       setShowEditModal(false);
       toast.success("Password updated!")
       handleGetAllTeachers();
+      setCurrentPass('');
+      setNewPass('');
     }else{
       toast.error(response.data?.errorMessage ? response.data?.errorMessage : 'Something went wrong while changing password.')
     }
