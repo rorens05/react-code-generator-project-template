@@ -6,7 +6,7 @@ import SchoolAPI from '../../../api/SchoolAPI'
 import SweetAlert from 'react-bootstrap-sweetalert';
 import { toast } from "react-toastify";
 
-export default function SchoolTeacher() {
+export default function StudentsList() {
 
   const [teachers, setTeachers ] = useState([]);
   const [ resetNotify, setResetNotify ] = useState(false);
@@ -18,14 +18,14 @@ export default function SchoolTeacher() {
   const [toChangePassId, setToChangePassId] =  useState('');
   
 	useEffect(() => {
-    handleGetAllTeachers()
+    handleGetAllStudents()
   }, [])
 
   const handleResetPassword = async() => {
     let response = await new SchoolAPI().resetDefaultPassword(toResetId);
     if(response.ok){
       toast.success("Password reset!")
-      handleGetAllTeachers();
+      handleGetAllStudents();
     }else{
       toast.error("Something went wrong while reseting teacher's password.")
     }
@@ -38,7 +38,7 @@ export default function SchoolTeacher() {
     setToResetId(id)
   }
 
-  const handleGetAllTeachers = async() => {
+  const handleGetAllStudents = async() => {
     let response = await new SchoolAPI().getAllTeacher();
     if(response.ok){
       setTeachers(response.data)
@@ -59,7 +59,7 @@ export default function SchoolTeacher() {
       console.log(response.data);
       setShowEditModal(false);
       toast.success("Password updated!")
-      handleGetAllTeachers();
+      handleGetAllStudents();
     }else{
       toast.error(response.data?.errorMessage ? response.data?.errorMessage : 'Something went wrong while changing password.')
     }
