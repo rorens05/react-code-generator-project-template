@@ -74,7 +74,7 @@ export default function SchoolAdmin() {
 
   return (
     <>
-      <span className='m-t-5'>School Admin List</span> | <input type="checkbox" id={'cboxspassword'} name={'cboxspassword'} checked={showPassword} onChange={() => setShowPassword(!showPassword) } />
+      <span className='m-t-5'>School Admins List</span> | <input type="checkbox" id={'cboxspassword'} name={'cboxspassword'} checked={showPassword} onChange={() => setShowPassword(!showPassword) } />
       <label className="form-check-label" for={'cboxspassword'} >Show passwords</label>
       <ReactTable pageCount={100}
         list={teachers}
