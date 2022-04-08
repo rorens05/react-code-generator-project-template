@@ -88,7 +88,7 @@ function CourseFiles() {
               })
           }
         </p>
-        <FilesContent filter={filter} data={filesToDisplay} folders={foldersToDisplay} clickedFolder={(data) => handleClickedFolder(data.name)} deleted={() => handleRefetch()} type='Course' id={id}/>
+        <FilesContent filter={filter} data={filesToDisplay} folders={foldersToDisplay} subFolder={subFolderDirectory.join('')} clickedFolder={(data) => handleClickedFolder(data.name)} deleted={() => handleRefetch()} type='Course' id={id}/>
       </div>
     </CourseContent>
   )

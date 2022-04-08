@@ -144,7 +144,7 @@ export default function FilesClass() {
                     })
                   }
                 </div>
-                <FilesContent filter={filter} data={filesToDisplay} subFolder={selectedName} folders={foldersToDisplay} clickedFolder={(data) => handleClickedFolder(selectedId ,data.name, 'Class')}  type={'Class'} id={selectedId} deleted={()=> handleRefetch('Class') }/>
+                <FilesContent filter={filter} data={filesToDisplay} subFolder={subFolderDirectory.join('')} folders={foldersToDisplay} clickedFolder={(data) => handleClickedFolder(selectedId ,data.name, 'Class')}  type={'Class'} id={selectedId} deleted={()=> handleRefetch('Class') }/>
               </>
               :
               <>

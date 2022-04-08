@@ -137,7 +137,7 @@ export default function FilesCourse() {
                     })
                   }
                 </p>
-                <FilesContent filter={filter} data={filesToDisplay} folders={foldersToDisplay} subFolder={selectedName} clickedFolder={(data) => handleClickedFolder(selectedId ,data.name, 'Course')}  type={'Course'} id={selectedId} deleted={()=> handleRefetch('Course') }/>
+                <FilesContent filter={filter} data={filesToDisplay} folders={foldersToDisplay} subFolder={subFolderDirectory.join('')} clickedFolder={(data) => handleClickedFolder(selectedId ,data.name, 'Course')}  type={'Course'} id={selectedId} deleted={()=> handleRefetch('Course') }/>
             </>
             :
             <>

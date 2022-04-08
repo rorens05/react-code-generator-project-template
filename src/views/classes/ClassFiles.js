@@ -85,7 +85,7 @@ function ClassFiles() {
             })
           }
         </div>
-        <FilesContent filter={filter} data={filesToDisplay} folders={foldersToDisplay} clickedFolder={(data) => handleClickedFolder(data.name, 'Class')} type='Class' id={id} deleted={()=> handleRefetch()} />
+        <FilesContent filter={filter} data={filesToDisplay} subFolder={subFolderDirectory.join('')} folders={foldersToDisplay} clickedFolder={(data) => handleClickedFolder(data.name, 'Class')} type='Class' id={id} deleted={()=> handleRefetch()} />
       </div>
     </ClassSideNavigation>
   )

@@ -67,7 +67,7 @@ function FilesContent(props) {
   const handleDeleteClassFile = async() => {
     let data = {
       "fileName": itemToDelete.name,
-      "subFolderLocation": '',
+      "subFolderLocation":  props.subFolder,
     }
     let response = await new FilesAPI().deleteClassFile(props.id, data)
     if(response.ok){
@@ -204,11 +204,11 @@ function FilesContent(props) {
         </tr>
       </thead>
       <tbody>
-        <tr colSpan={3} className={props.data?.length == 0 ? 'text-center p-3' : 'd-none'}>
+        {/* <tr colSpan={3} className={props.data?.length == 0 ? 'text-center p-3' : 'd-none'}>
           <td colSpan={3}>
             No items to display
           </td>
-        </tr>
+        </tr> */}
         {
           props.data?.filter(item =>
               item.name.toLowerCase().includes(props.filter?.toLowerCase())).map((item, index) => {
