@@ -59,8 +59,12 @@ export default function StudentsList() {
       console.log(response.data);
       setShowEditModal(false);
       toast.success("Password updated!")
+      setCurrentPass('');
+      setNewPass('');
       handleGetAllStudents();
     }else{
+      setCurrentPass('');
+      setNewPass('');
       toast.error(response.data?.errorMessage ? response.data?.errorMessage : 'Something went wrong while changing password.')
     }
   }
@@ -68,6 +72,12 @@ export default function StudentsList() {
   const handleClickedit = (id) => {
     setShowEditModal(true);
     setToChangePassId(id)
+  }
+
+  const handleCloseModal = () => {
+    setCurrentPass('');
+    setNewPass('');
+    setShowEditModal(false);
   }
 
   return (
@@ -128,7 +138,7 @@ export default function StudentsList() {
         Are you sure? resetting this password!
       </SweetAlert>
 
-      <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
+      <Modal show={showEditModal} onHide={() => handleCloseModal()}>
         <Modal.Header className="font-10" closeButton><span className='font-20'>Edit Password</span></Modal.Header>
         <Modal.Body>
           <div className="col-md-12 m-b-15">
