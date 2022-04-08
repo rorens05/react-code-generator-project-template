@@ -63,6 +63,8 @@ export default function SchoolAdmin() {
       setCurrentPass('');
       setNewPass('');
     }else{
+      setCurrentPass('');
+      setNewPass('');
       toast.error(response.data?.errorMessage ? response.data?.errorMessage : 'Something went wrong while changing password.')
     }
   }
@@ -70,6 +72,12 @@ export default function SchoolAdmin() {
   const handleClickedit = (id) => {
     setShowEditModal(true);
     setToChangePassId(id)
+  }
+
+  const handleCloseModal = () => {
+    setCurrentPass('');
+    setNewPass('');
+    setShowEditModal(false)
   }
 
   return (
@@ -130,7 +138,7 @@ export default function SchoolAdmin() {
         Are you sure? resetting this password!
       </SweetAlert>
 
-      <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
+      <Modal show={showEditModal} onHide={() => handleCloseModal()}>
         <Modal.Header className="font-10" closeButton><span className='font-20'>Edit Password</span></Modal.Header>
         <Modal.Body>
           <div className="col-md-12 m-b-15">
