@@ -75,7 +75,7 @@ function EditTask({moduleName, setTaskName, taskName, setInstructions, instructi
                 </Form.Group>
                 <Form.Group className="mb-4">
                   <Form.Label >Instruction</Form.Label>
-                  <ContentField value={instructions} placeholder='Enter instrucion here' onChange={value => setInstructions(value)} />
+                  <ContentField value={instructions} placeholder='Enter instruction here' onChange={value => setInstructions(value)} />
                   </Form.Group>
               <Form.Group className='right-btn'>
               <Button className='tficolorbg-button' type='submit' >Save</Button>
