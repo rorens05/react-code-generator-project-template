@@ -231,4 +231,18 @@ export default class CoursesAPI extends Base {
     });
   };
 
+  getInterActive = async (moduleId) => {
+    return this.sendRequest({
+      path:`/api/Interactive/module/${moduleId}`,
+      method: 'GET'
+    })
+  }
+
+  getFiles = async (id) => {
+    return this.sendRequest({
+      path: `/api/Course/${id}/files`,
+      method: 'GET'
+    })
+  }
+
 }

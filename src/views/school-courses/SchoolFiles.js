@@ -7,6 +7,7 @@ import CourseSideNav from '../../components/side-navigation/CourseSideNav'
 import SchoolCoursesContent from './component/SchoolCoursesContent'
 import { useParams } from "react-router";
 import CoursesAPI from '../../api/CoursesAPI'
+import SchoolCourseFiles from './component/SchoolCourseFiles'
 
 function SchoolFiles() {
   const userContext = useContext(UserContext)
@@ -36,7 +37,7 @@ function SchoolFiles() {
         <CourseSideNav courseInfos={courseInfos} active="Files" />
       </Col>
       <Col sm={9}>
-        
+        <SchoolCourseFiles />
       </Col>
     </Row>
   </MainContainer>

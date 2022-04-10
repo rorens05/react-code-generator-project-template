@@ -7,6 +7,7 @@ import CourseSideNav from '../../components/side-navigation/CourseSideNav'
 import SchoolCoursesContent from './component/SchoolCoursesContent'
 import { useParams } from "react-router";
 import CoursesAPI from '../../api/CoursesAPI'
+import SchoolCourseTask from './component/SchoolCourseTask'
 
 function SchoolTask() {
   const userContext = useContext(UserContext)
@@ -36,7 +37,7 @@ function SchoolTask() {
         <CourseSideNav courseInfos={courseInfos} active="Task" />
       </Col>
       <Col sm={9}>
-        
+        <SchoolCourseTask />
       </Col>
     </Row>
   </MainContainer>
