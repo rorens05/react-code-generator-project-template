@@ -2,11 +2,19 @@ import React, {useState, useEffect} from 'react'
 import {Row, Col, Accordion, Button} from 'react-bootstrap'
 import CoursesAPI from '../../../api/CoursesAPI'
 import { useParams } from "react-router";
+import { Link } from "react-router-dom";
+import SchoolCourseExamItem from './SchoolCourseExamItem';
+import ExamCreation from '../../exam-creation/ExamCreation';
 
-function SchoolCourseInteractive({setLoading}) {
+function SchoolCourseExam({setLoading}) {
   const [modules, setModules] = useState([])
   const [moduleId, setModuleId] = useState(null)
-  const [interactive, setInteractive] = useState([])
+  const [examInfo, setExamInfo] = useState([])
+  const [examId, setExamId] = useState(null)
+  const [viewExam, setViewExam] = useState(false)
+  const [discussionName, setDiscussionName] = useState('')
+  const [discussionIntruction, setdiscussionIntruction] = useState('')
+  const [moduleName, setModuleName] = useState('')
   const {id} = useParams()
 
   const getCourseUnit = async () =>{
@@ -24,11 +32,11 @@ function SchoolCourseInteractive({setLoading}) {
     getCourseUnit()
   }, [])
 
-  const getInterActive = async (e, id) =>{
+  const getExamInfo = async (e, id) =>{
     setLoading(true)
-    let response = await new CoursesAPI().getInterActive(id)
+    let response = await new CoursesAPI().getExamInformation(id)
     if(response.ok){
-      setInteractive(response.data)
+      setExamInfo(response.data)
       setModuleId(id)
     }else{
       alert(response.data.errorMessage)
@@ -39,42 +47,56 @@ function SchoolCourseInteractive({setLoading}) {
   useEffect(() => {
     if(moduleId !== null){
       return(
-        getInterActive() 
+        getExamInfo() 
       )
     }  
   }, [])
 
   return (
+    <>
+    {viewExam ?
+     <>
+      <SchoolCourseExamItem examId={examId} />
+    </>
+    :
+    <>
     <div className='rounded-white-container'>
-      <div className="col-md-10 pages-header"><p className='title-header'>Interactive </p>
+      <div className="col-md-10 pages-header"><p className='title-header'>Exam </p>
 			</div>
       <Accordion>
         {modules.map((item, index) => {
           return(
-            <Accordion.Item eventKey={index} onClick={(e) => getInterActive(e, item?.id)}>
+            <Accordion.Item eventKey={index} onClick={(e) => getExamInfo(e, item?.id)}>
             <Accordion.Header><div style={{fontSize:'20px'}}>{item.moduleName}</div></Accordion.Header>
             <Accordion.Body>
-              {interactive.map(item =>{
+              {examInfo.map(item =>{
                 return(
                   <>
                     <div className='title-exam' >
                       <Row>
                         <Col >
-                        <a target="_blank" className='href-link' href={item?.path}>{item?.interactiveName}</a>
+                        <Link className="lesson-header" to={`/course/${id}/exam/${item.id}`}>
+                              {item?.testName} 
+                            </Link>
+                          
                         </Col>
                       </Row>
-                     
                     </div>
                   </>
                 )
               })}
             </Accordion.Body>
+            
           </Accordion.Item>
           )
         })}
      </Accordion>
     </div>
+    </>
+    }
+    
+    </>
   )
 }
 
-export default SchoolCourseInteractive
+export default SchoolCourseExam

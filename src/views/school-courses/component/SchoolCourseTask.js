@@ -7,10 +7,10 @@ import CourseBreadcrumbs from '../../courses/components/CourseBreadcrumbs';
 function SchoolCourseTask() {
   const [modules, setModules] = useState([])
   const [moduleId, setModuleId] = useState(null)
-  const [assignment, setAssignment] = useState([])
-  const [viewAssignment, setViewAssignment] = useState(false)
-  const [assignmentName, setAssignmentName] = useState('')
-  const [assignmentIntruction, setAssignmentIntruction] = useState('')
+  const [task, setTask] = useState([])
+  const [viewTask, setViewTask] = useState(false)
+  const [taskName, setTaskName] = useState('')
+  const [taskInstruction, setTaskInstruction] = useState('')
   const {id} = useParams()
 
   const getCourseUnit = async () =>{
@@ -29,7 +29,7 @@ function SchoolCourseTask() {
   const getTaskInformation = async (e, moduleId) => {
     let response =  await new CoursesAPI().getTaskInformation(moduleId)
     if(response.ok){
-      setAssignment(response.data)
+      setTask(response.data)
       setModuleId(moduleId)
     }else{
       alert(response.data.errorMessage)
@@ -44,25 +44,25 @@ function SchoolCourseTask() {
     }  
   }, [])
 
-  const handleOnclick = (e, assignmentName, assignmentIntruction) => {
-    setViewAssignment(true)
-    setAssignmentName(assignmentName)
-    setAssignmentIntruction(assignmentIntruction)
+  const handleOnclick = (e, taskName, taskInstruction) => {
+    setViewTask(true)
+    setTaskName(taskName)
+    setTaskInstruction(taskInstruction)
   }
 
   return (
             <>
-      {viewAssignment ? 
+      {viewTask ? 
       <>
-    <Button onClick={() => setViewAssignment(false)} className="m-r-5 color-white tficolorbg-button" size="sm">Back</Button><br /><br />
+    <Button onClick={() => setViewTask(false)} className="m-r-5 color-white tficolorbg-button" size="sm">Back</Button><br /><br />
       {/* {moduleName}<br /> */}
-      {assignmentName}<br />
+      {taskName}<br />
       <hr></hr>
-      {assignmentIntruction}<br />
+      <div style={{position:"relative"}} dangerouslySetInnerHTML={{__html: taskInstruction}} /><br />
       </>:
       <>
       <div className='rounded-white-container'>
-      <div className="col-md-10 pages-header"><p className='title-header'>Assignment </p>
+      <div className="col-md-10 pages-header"><p className='title-header'>Task </p>
 			</div>
       <Accordion>
         {modules.map((item, index) => {
@@ -70,7 +70,7 @@ function SchoolCourseTask() {
             <Accordion.Item eventKey={index} onClick={(e) => getTaskInformation(e, item?.id)}>
             <Accordion.Header><div style={{fontSize:'20px'}}>{item.moduleName}</div></Accordion.Header>
             <Accordion.Body>
-              {assignment.map(item =>{
+              {task.map(item =>{
                 return(
                   <>
                     <div className='title-exam' >

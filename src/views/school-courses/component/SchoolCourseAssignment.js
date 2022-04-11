@@ -4,7 +4,7 @@ import CoursesAPI from '../../../api/CoursesAPI'
 import { useParams } from "react-router";
 import CourseBreadcrumbs from '../../courses/components/CourseBreadcrumbs';
 
-function SchoolCourseAssignment() {
+function SchoolCourseAssignment({setLoading}) {
   const [modules, setModules] = useState([])
   const [moduleId, setModuleId] = useState(null)
   const [assignment, setAssignment] = useState([])
@@ -14,12 +14,14 @@ function SchoolCourseAssignment() {
   const {id} = useParams()
 
   const getCourseUnit = async () =>{
+    setLoading(true)
     let response = await new CoursesAPI().getCourseUnit(id)
       if(response.ok){
         setModules(response.data)
       }else{
         alert(response.data.errorMessage)
       }
+      setLoading(false)
   }
 
   useEffect(() => {
@@ -27,6 +29,7 @@ function SchoolCourseAssignment() {
   }, [])
 
   const getAssignmentInformation = async (e, moduleId) => {
+    setLoading(true)
     let response =  await new CoursesAPI().getAssignmentInformation(moduleId)
     if(response.ok){
       setAssignment(response.data)
@@ -34,6 +37,7 @@ function SchoolCourseAssignment() {
     }else{
       alert(response.data.errorMessage)
     }
+    setLoading(false)
   }
 
   useEffect(() => {
@@ -58,7 +62,7 @@ function SchoolCourseAssignment() {
       {/* {moduleName}<br /> */}
       {assignmentName}<br />
       <hr></hr>
-      {assignmentIntruction}<br />
+      <div style={{position:"relative"}} dangerouslySetInnerHTML={{__html: assignmentIntruction}} /><br />
       </>:
       <>
       <div className='rounded-white-container'>

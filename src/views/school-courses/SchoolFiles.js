@@ -14,12 +14,15 @@ function SchoolFiles() {
   const {user} = userContext.data
   const {id} = useParams()
   const [courseInfos, setCourseInfos] = useState([])
+  const [loading, setLoading] = useState(true)
   
   const getCourseInformation = async () =>{
+    setLoading(true)
     let response = await new CoursesAPI().getCourseInformation(id)
     if(response.ok){
       setCourseInfos(response.data)
     }
+    setLoading(false)
   }
 
   useEffect(() => {
@@ -30,14 +33,16 @@ function SchoolFiles() {
     if (user.isStudent) return (window.location.href = "/404");
   }, []);
 
+  console.log('courseInfoscourseInfoscourseInfos:', courseInfos)
+
   return (
-  <MainContainer title="Files" activeHeader={"files"}>
+  <MainContainer title="Files" activeHeader={"files"} loading={loading}>
     <Row className="mt-4">
       <Col sm={3}>
         <CourseSideNav courseInfos={courseInfos} active="Files" />
       </Col>
       <Col sm={9}>
-        <SchoolCourseFiles />
+        <SchoolCourseFiles setLoading={setLoading} />
       </Col>
     </Row>
   </MainContainer>

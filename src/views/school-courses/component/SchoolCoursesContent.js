@@ -5,7 +5,7 @@ import { useParams } from "react-router";
 import CourseBreadcrumbs from '../../courses/components/CourseBreadcrumbs';
 
 
-function SchoolCoursesContent({courseInfos}) {
+function SchoolCoursesContent({setLoading}) {
   const [modules, setModules] = useState([])
   const [moduleId, setModuleId] = useState(null)
   const [lessons, setLessons] = useState([])
@@ -14,12 +14,14 @@ function SchoolCoursesContent({courseInfos}) {
   const {id} = useParams()
 
   const getCourseUnit = async () =>{
+    setLoading(true)
     let response = await new CoursesAPI().getCourseUnit(id)
       if(response.ok){
         setModules(response.data)
       }else{
         alert(response.data.errorMessage)
       }
+      setLoading(false)
   }
 
   useEffect(() => {
@@ -27,6 +29,7 @@ function SchoolCoursesContent({courseInfos}) {
   }, [])
 
   const getCourseUnitPages = async (e, moduleId) => {
+    setLoading(true)
     let response =  await new CoursesAPI().getCourseUnitPages(id, moduleId)
     if(response.ok){
       setLessons(response.data)
@@ -34,6 +37,7 @@ function SchoolCoursesContent({courseInfos}) {
     }else{
       alert(response.data.errorMessage)
     }
+    setLoading(false)
   }
 
   useEffect(() => {
@@ -45,6 +49,7 @@ function SchoolCoursesContent({courseInfos}) {
   }, [])
 
   const getModuleContent = async(e, data, pagesid) => {
+    setLoading(true)
     setViewLesson(true)
     let response = await new CoursesAPI().getCourseUnitPagesContent(id, data, pagesid)
     if(response.ok){
@@ -52,9 +57,8 @@ function SchoolCoursesContent({courseInfos}) {
     }else{
       alert("Something went wrong while fetching all courses")
     }
+    setLoading(false)
   }
-
-  console.log('lessonContent:', lessonContent)
 
 
   return (

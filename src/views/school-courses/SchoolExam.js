@@ -7,18 +7,23 @@ import CourseSideNav from '../../components/side-navigation/CourseSideNav'
 import SchoolCoursesContent from './component/SchoolCoursesContent'
 import { useParams } from "react-router";
 import CoursesAPI from '../../api/CoursesAPI'
+import CoursesExam from '../courses/pages/Exam/CoursesExam'
+import SchoolCourseExam from './component/SchoolCourseExam'
 
 function SchoolExam() {
   const userContext = useContext(UserContext)
   const {user} = userContext.data
   const {id} = useParams()
   const [courseInfos, setCourseInfos] = useState([])
+  const [loading, setLoading] = useState(true)
   
   const getCourseInformation = async () =>{
+    setLoading(true)
     let response = await new CoursesAPI().getCourseInformation(id)
     if(response.ok){
       setCourseInfos(response.data)
     }
+    setLoading(false)
   }
 
   useEffect(() => {
@@ -30,13 +35,13 @@ function SchoolExam() {
   }, []);
 
   return (
-  <MainContainer title="Exam" activeHeader={"exam"}>
+  <MainContainer title="Exam" activeHeader={"exam"} loading={loading}>
     <Row className="mt-4">
       <Col sm={3}>
         <CourseSideNav courseInfos={courseInfos} active="Exam" />
       </Col>
       <Col sm={9}>
-        
+       <SchoolCourseExam setLoading={setLoading} />
       </Col>
     </Row>
   </MainContainer>

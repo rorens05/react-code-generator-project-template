@@ -14,12 +14,15 @@ function SchoolTask() {
   const {user} = userContext.data
   const {id} = useParams()
   const [courseInfos, setCourseInfos] = useState([])
+  const [loading, setLoading] = useState(true)
   
   const getCourseInformation = async () =>{
+    setLoading(true)
     let response = await new CoursesAPI().getCourseInformation(id)
     if(response.ok){
       setCourseInfos(response.data)
     }
+    setLoading(false)
   }
 
   useEffect(() => {
@@ -31,7 +34,7 @@ function SchoolTask() {
   }, []);
 
   return (
-  <MainContainer title="Task" activeHeader={"task"}>
+  <MainContainer title="Task" activeHeader={"task"} loading={loading}>
     <Row className="mt-4">
       <Col sm={3}>
         <CourseSideNav courseInfos={courseInfos} active="Task" />

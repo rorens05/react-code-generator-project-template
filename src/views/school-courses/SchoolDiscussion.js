@@ -14,12 +14,15 @@ function SchoolDiscussion() {
   const {user} = userContext.data
   const {id} = useParams()
   const [courseInfos, setCourseInfos] = useState([])
+  const [loading, setLoading] = useState(true)
   
   const getCourseInformation = async () =>{
+    setLoading(true)
     let response = await new CoursesAPI().getCourseInformation(id)
     if(response.ok){
       setCourseInfos(response.data)
     }
+    setLoading(false)
   }
 
   useEffect(() => {
@@ -30,13 +33,13 @@ function SchoolDiscussion() {
     if (user.isStudent) return (window.location.href = "/404");
   }, []);
   return (
-    <MainContainer title="Courses" activeHeader={"courses"}>
+    <MainContainer title="Courses" activeHeader={"courses"} loading={loading}>
     <Row className="mt-4">
       <Col sm={3}>
         <CourseSideNav courseInfos={courseInfos} active="Discussion" />
       </Col>
       <Col sm={9}>
-        <SchoolCoursesDiscussionContent />
+        <SchoolCoursesDiscussionContent setLoading={setLoading} />
       </Col>
     </Row>
   </MainContainer>

@@ -14,12 +14,15 @@ function SchoolAssignment() {
   const {user} = userContext.data
   const {id} = useParams()
   const [courseInfos, setCourseInfos] = useState([])
+  const [loading, setLoading] = useState(true)
   
   const getCourseInformation = async () =>{
+    setLoading(true)
     let response = await new CoursesAPI().getCourseInformation(id)
     if(response.ok){
       setCourseInfos(response.data)
     }
+    setLoading(false)
   }
 
   useEffect(() => {
@@ -31,13 +34,13 @@ function SchoolAssignment() {
   }, []);
 
   return (
-        <MainContainer title="Assignment" activeHeader={"assignment"}>
+        <MainContainer title="Assignment" activeHeader={"assignment"} loading={loading}>
     <Row className="mt-4">
       <Col sm={3}>
         <CourseSideNav courseInfos={courseInfos} active="Assignment" />
       </Col>
       <Col sm={9}>
-        <SchoolCourseAssignment />
+        <SchoolCourseAssignment setLoading={setLoading} />
       </Col>
     </Row>
   </MainContainer>

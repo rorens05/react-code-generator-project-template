@@ -3,7 +3,7 @@ import {Row, Col, Accordion, Button} from 'react-bootstrap'
 import CoursesAPI from '../../../api/CoursesAPI'
 import { useParams } from "react-router";
 
-function SchoolCoursesDiscussionContent() {
+function SchoolCoursesDiscussionContent({setLoading}) {
   const [modules, setModules] = useState([])
   const [moduleId, setModuleId] = useState(null)
   const [discussioninfo, setDiscussionInfo] = useState([])
@@ -14,12 +14,14 @@ function SchoolCoursesDiscussionContent() {
   const {id} = useParams()
 
   const getCourseUnit = async () =>{
+    setLoading(true)
     let response = await new CoursesAPI().getCourseUnit(id)
       if(response.ok){
         setModules(response.data)
       }else{
         alert(response.data.errorMessage)
       }
+      setLoading(false)
   }
 
   useEffect(() => {
@@ -27,6 +29,7 @@ function SchoolCoursesDiscussionContent() {
   }, [])
 
   const getDiscussionInformation = async (e, id) =>{
+    setLoading(true)
     let response = await new CoursesAPI().getDiscussionInformation(id)
     if(response.ok){
       setDiscussionInfo(response.data)
@@ -34,6 +37,7 @@ function SchoolCoursesDiscussionContent() {
     }else{
       alert(response.data.errorMessage)
     }
+    setLoading(false)
   }
 
   useEffect(() => {
@@ -62,7 +66,7 @@ function SchoolCoursesDiscussionContent() {
       {/* {moduleName}<br /> */}
       {discussionName}<br />
       <hr></hr>
-      {discussionIntruction}<br />
+      <div style={{position:"relative"}} dangerouslySetInnerHTML={{__html: discussionIntruction}} /><br />
     </>
     :
     <>

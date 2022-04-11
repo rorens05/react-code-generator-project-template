@@ -14,12 +14,15 @@ function SchoolInteractive() {
   const {user} = userContext.data
   const {id} = useParams()
   const [courseInfos, setCourseInfos] = useState([])
+  const [loading, setLoading] = useState(true)
   
   const getCourseInformation = async () =>{
+    setLoading(true)
     let response = await new CoursesAPI().getCourseInformation(id)
     if(response.ok){
       setCourseInfos(response.data)
     }
+    setLoading(false)
   }
 
   useEffect(() => {
@@ -31,13 +34,13 @@ function SchoolInteractive() {
   }, []);
 
   return (
-  <MainContainer title="Interactive" activeHeader={"interactive"}>
+  <MainContainer title="Interactive" activeHeader={"interactive"} loading={loading}>
     <Row className="mt-4">
       <Col sm={3}>
         <CourseSideNav courseInfos={courseInfos} active="Interactive" />
       </Col>
       <Col sm={9}>
-        <SchoolCourseInteractive />
+        <SchoolCourseInteractive setLoading={setLoading} />
       </Col>
     </Row>
   </MainContainer>
