@@ -34,7 +34,6 @@ const Field = (props) => {
     default:
       return (
         <Form.Control
-          size='lg'
           value={value}
           type='text'
           placeholder={placeholder}
