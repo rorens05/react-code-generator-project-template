@@ -39,6 +39,13 @@ export default class SchoolAPI extends Base {
     })
   }
 
+  getAllStudents = async() => {
+    return this.sendRequest({
+      path: `/api/Account?userroleid=4`,
+      method: 'GET'
+    })
+  }
+  
   getSchoolAdmin = async() => {
     return this.sendRequest({
       path: `/api/Account?userroleid=2`,

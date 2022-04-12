@@ -6,7 +6,7 @@ import SchoolAPI from '../../../api/SchoolAPI'
 import SweetAlert from 'react-bootstrap-sweetalert';
 import { toast } from "react-toastify";
 
-export default function StudentsList() {
+export default function StudentsTable() {
 
   const [teachers, setTeachers ] = useState([]);
   const [ resetNotify, setResetNotify ] = useState(false);
@@ -39,7 +39,7 @@ export default function StudentsList() {
   }
 
   const handleGetAllTeachers = async() => {
-    let response = await new SchoolAPI().getAllTeacher();
+    let response = await new SchoolAPI().getAllStudents();
     if(response.ok){
       setTeachers(response.data)
       console.log(response.data)
@@ -62,6 +62,7 @@ export default function StudentsList() {
       handleGetAllTeachers();
       setCurrentPass('');
       setNewPass('');
+      setShowEditModal(false);
     }else{
       setCurrentPass('');
       setNewPass('');
@@ -75,14 +76,14 @@ export default function StudentsList() {
   }
 
   const handleCloseModal = () => {
+    setShowEditModal(false);
     setCurrentPass('');
     setNewPass('');
-    setShowEditModal(false)
   }
 
   return (
     <>
-      <span className='m-t-5'>Teachers List</span> | <input type="checkbox" id={'cboxspassword'} name={'cboxspassword'} checked={showPassword} onChange={() => setShowPassword(!showPassword) } />
+      <span className='m-t-5'>Students List</span> | <input type="checkbox" id={'cboxspassword'} name={'cboxspassword'} checked={showPassword} onChange={() => setShowPassword(!showPassword) } />
       <label className="form-check-label" for={'cboxspassword'} >Show passwords</label>
       <ReactTable pageCount={100}
         list={teachers}
