@@ -55,6 +55,7 @@ import SchoolAssignment from "../views/school-courses/SchoolAssignment";
 import SchoolTask from "../views/school-courses/SchoolTask";
 import SchoolInteractive from "../views/school-courses/SchoolInteractive";
 import SchoolFiles from "../views/school-courses/SchoolFiles";
+import SchoolTeacher from "../views/school-profile/SchoolTeachers";
 import FilesClass from '../views/files/ClassFiles';
 import FilesCourse from '../views/files/CourseFiles';
 
@@ -122,6 +123,7 @@ export default function Routes() {
             <PrivateRoute path='/school_courses/:id/task' exact component={SchoolTask}/>
             <PrivateRoute path='/school_courses/:id/interactive' exact component={SchoolInteractive}/>
             <PrivateRoute path='/school_courses/:id/files' exact component={SchoolFiles}/>
+            <PrivateRoute path='/schoolTeacher' exact component={SchoolTeacher} />
             <AuthRoute path='/login' exact component={Login}/>
             <AuthRoute path='/forgot_password' exact component={ForgotPassword}/>
             <PublicRoute path='/404' exact component={PageNotFound}/>
