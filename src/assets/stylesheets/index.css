@@ -1438,3 +1438,9 @@ select {
 option:not(:first-of-type) {
   color: black !important;
 }
+
+.href-link{
+  color: var(--primary-color) !important;
+  text-decoration: none !important;
+
+}
