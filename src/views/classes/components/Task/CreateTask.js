@@ -7,8 +7,9 @@ import FileHeader from './TaskFileHeader';
 import { useParams } from 'react-router'
 import SweetAlert from 'react-bootstrap-sweetalert';
 import ContentField from '../../../../components/content_field/ContentField';
+import { toast } from 'react-toastify';
 
-function CreateTask({modal, toggle, module, getTaskModule, classId}) {
+function CreateTask({setModal, modal, toggle, module, getTaskModule, classId}) {
   const [moduleId, setModuleId] = useState('')
   const [taskName, setTaskName] = useState('')
   const [instructions, setInstructions] = useState('')
@@ -21,6 +22,13 @@ function CreateTask({modal, toggle, module, getTaskModule, classId}) {
 
   const closeNotify = () =>{
     setAddNotity(false)
+  }
+
+  const handleCloseModal = () => {
+    setModal(false)
+    setModuleId('')
+    setTaskName('')
+    setInstructions('')
   }
 
   useEffect(() => {
@@ -41,22 +49,43 @@ function CreateTask({modal, toggle, module, getTaskModule, classId}) {
 
   const saveTask = async (e) =>{
     e.preventDefault()
-    let response = await new ClassesAPI().creatTask(moduleId, id, {task:{taskName, instructions,}, taskAssignment:{allowLate}} )
-    if(response.ok){
-      setAddNotity(true)
-      setModuleId("")
-      setTaskName("")
-      setInstructions("")
-      getTaskModule(null, moduleId)
-      toggle(e)
+    if(instructions === '' || instructions === '{{type=equation}}' || moduleId === ''){
+      toast.error('Please input all the required fields.', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
     }else{
-      alert(response.data.errorMessage)
+      let response = await new ClassesAPI().creatTask(moduleId, id, {task:{taskName, instructions,}, taskAssignment:{allowLate}} )
+      if(response.ok){
+        setAddNotity(true)
+        setModuleId("")
+        setTaskName("")
+        setInstructions("")
+        getTaskModule(null, moduleId)
+        toggle(e)
+      }else{
+        // alert(response.data.errorMessage)
+        toast.error(response.data.errorMessage, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          });
+      }
     }
   }
 
 	return (
     <div>
-    	<Modal size="lg" show={modal} onHide={toggle} aria-labelledby="example-modal-sizes-title-lg">
+    	<Modal size="lg" show={modal} onHide={handleCloseModal} aria-labelledby="example-modal-sizes-title-lg">
         <Modal.Header className='class-modal-header' closeButton>
           <Modal.Title id="example-modal-sizes-title-lg" >
             Create Task
@@ -105,14 +134,14 @@ function CreateTask({modal, toggle, module, getTaskModule, classId}) {
               </Form.Group>
               <Form.Group className="mb-4">
                 <Form.Label>Task Name</Form.Label>
-              <Form.Control onChange={(e) => setTaskName(e.target.value)} type="text" placeholder='Enter discussion name here'/>
+              <Form.Control onChange={(e) => setTaskName(e.target.value)} type="text" placeholder='Enter Task name here'/>
                 </Form.Group>
                 <Form.Group className="mb-4">
                   <Form.Label >Instruction</Form.Label>
-                    <ContentField value={instructions} onChange={value => setInstructions(value)} />
+                    <ContentField value={instructions}  placeholder='Enter instruction here'  onChange={value => setInstructions(value)} />
                   </Form.Group>
               <Form.Group className='right-btn'>
-              <Button className={moduleId == '' ? 'disabled' : 'tficolorbg-button'} type='submit' >Save</Button>
+              <Button className='tficolorbg-button' type='submit' >Save</Button>
             </Form.Group>
         </Form> 
         </Modal.Body>
