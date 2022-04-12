@@ -49,6 +49,9 @@ import  Profile from "../views/profile/Profile";
 import Dashboard from "../views/dashboard/Dashboard";
 import SchoolProfile from "../views/school-profile/SchoolProfile";
 import SchoolTeacher from "../views/school-profile/SchoolTeachers";
+import FilesClass from '../views/files/ClassFiles';
+import FilesCourse from '../views/files/CourseFiles';
+
 
 export default function Routes() {
   const userContext = useContext(UserContext);
@@ -89,7 +92,6 @@ export default function Routes() {
             <PrivateRoute path='/classes/:id/files' exact component={ClassFiles} />
 
             <PrivateRoute path='/exam' exact component={Exam}/>
-            <PrivateRoute path='/files' exact component={Files}/>
             <PrivateRoute path='/reports' exact component={Reports}/>
             {/* <PrivateRoute path='/classlist' exact component={ClassList}/> */}
             <PrivateRoute path='/archive' exact component={ArchiveClass}/>
@@ -102,6 +104,9 @@ export default function Routes() {
             <PrivateRoute path='/profile/:id' exact component={Profile}/>
             <PrivateRoute path='/exam_creation/:id' exact component={ExamCreation}/>
             
+            <PrivateRoute path='/files' exact component={FilesClass}/>
+            <PrivateRoute path='/files/course' exact component={FilesCourse} />
+
             <PrivateRoute path='/dashboard' exact component={Dashboard}/>
             <PrivateRoute path='/school' exact component={SchoolProfile}/>
             <PrivateRoute path='/schoolTeacher' exact component={SchoolTeacher} />
