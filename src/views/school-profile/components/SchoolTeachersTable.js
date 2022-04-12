@@ -18,14 +18,14 @@ export default function StudentsList() {
   const [toChangePassId, setToChangePassId] =  useState('');
   
 	useEffect(() => {
-    handleGetAllStudents()
+    handleGetAllTeachers()
   }, [])
 
   const handleResetPassword = async() => {
     let response = await new SchoolAPI().resetDefaultPassword(toResetId);
     if(response.ok){
       toast.success("Password reset!")
-      handleGetAllStudents();
+      handleGetAllTeachers();
     }else{
       toast.error("Something went wrong while reseting teacher's password.")
     }
@@ -38,7 +38,7 @@ export default function StudentsList() {
     setToResetId(id)
   }
 
-  const handleGetAllStudents = async() => {
+  const handleGetAllTeachers = async() => {
     let response = await new SchoolAPI().getAllTeacher();
     if(response.ok){
       setTeachers(response.data)
@@ -59,9 +59,9 @@ export default function StudentsList() {
       console.log(response.data);
       setShowEditModal(false);
       toast.success("Password updated!")
+      handleGetAllTeachers();
       setCurrentPass('');
       setNewPass('');
-      handleGetAllStudents();
     }else{
       setCurrentPass('');
       setNewPass('');
@@ -77,7 +77,7 @@ export default function StudentsList() {
   const handleCloseModal = () => {
     setCurrentPass('');
     setNewPass('');
-    setShowEditModal(false);
+    setShowEditModal(false)
   }
 
   return (
@@ -102,9 +102,9 @@ export default function StudentsList() {
               id: 'password',
               accessor: 
               showPassword ?
-              d => <input type="text" className="form-control form-control-lg" placeholder="Password" name="password" value={d.password} required disabled />
+              d => <input type="text" className="form-control form-control-lg font-16" placeholder="Password" name="password" value={d.password} required disabled />
               :
-              d => <input type="password" className="form-control form-control-lg" placeholder="Password" name="password" value={d.password} required disabled />
+              d => <input type="password" className="form-control form-control-lg font-16" placeholder="Password" name="password" value={d.password} required disabled />
             },
             {
               Header: 'Actions',
