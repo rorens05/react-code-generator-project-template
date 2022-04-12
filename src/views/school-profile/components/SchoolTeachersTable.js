@@ -63,6 +63,8 @@ export default function SchoolTeacher() {
       setCurrentPass('');
       setNewPass('');
     }else{
+      setCurrentPass('');
+      setNewPass('');
       toast.error(response.data?.errorMessage ? response.data?.errorMessage : 'Something went wrong while changing password.')
     }
   }
@@ -70,6 +72,12 @@ export default function SchoolTeacher() {
   const handleClickedit = (id) => {
     setShowEditModal(true);
     setToChangePassId(id)
+  }
+
+  const handleCloseModal = () => {
+    setCurrentPass('');
+    setNewPass('');
+    setShowEditModal(false)
   }
 
   return (
@@ -94,9 +102,9 @@ export default function SchoolTeacher() {
               id: 'password',
               accessor: 
               showPassword ?
-              d => <input type="text" className="form-control form-control-lg" placeholder="Password" name="password" value={d.password} required disabled />
+              d => <input type="text" className="form-control form-control-lg font-16" placeholder="Password" name="password" value={d.password} required disabled />
               :
-              d => <input type="password" className="form-control form-control-lg" placeholder="Password" name="password" value={d.password} required disabled />
+              d => <input type="password" className="form-control form-control-lg font-16" placeholder="Password" name="password" value={d.password} required disabled />
             },
             {
               Header: 'Actions',
@@ -130,7 +138,7 @@ export default function SchoolTeacher() {
         Are you sure? resetting this password!
       </SweetAlert>
 
-      <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
+      <Modal show={showEditModal} onHide={() => handleCloseModal()}>
         <Modal.Header className="font-10" closeButton><span className='font-20'>Edit Password</span></Modal.Header>
         <Modal.Body>
           <div className="col-md-12 m-b-15">
