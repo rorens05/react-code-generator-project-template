@@ -4,7 +4,7 @@ import { Form, Button, Row, Col } from 'react-bootstrap'
 import moment from 'moment'
 import ProfileInfoAPI from '../../api/ProfileInfoAPI'
 import { useParams } from "react-router-dom";
-import SweetAlert from 'react-bootstrap-sweetalert'
+import { toast } from 'react-toastify';
 
 function ProfileTeacherEdit({openTeacherInfoToggle, openTeacherInfoModal, userInfo, getTeacherInfo}) {
   const [fname, setFname] = useState('')
@@ -16,11 +16,7 @@ function ProfileTeacherEdit({openTeacherInfoToggle, openTeacherInfoModal, userIn
   const [emailAdd, setemailAdd] = useState('')
   let employeeNo = userInfo?.employeeNo
   const { id } = useParams()
-  const [editNotufy, setEditNotify] = useState(false)
-
-  const closeNotify = () =>{
-    setEditNotify(false)
-  }
+  
 
   const updateTeacherInfo = async(e) => {
     e.preventDefault()
@@ -28,7 +24,7 @@ function ProfileTeacherEdit({openTeacherInfoToggle, openTeacherInfoModal, userIn
       if(response.ok){
         getTeacherInfo()
         openTeacherInfoToggle(e)
-        setEditNotify(true)
+        successUpdate()
       }else{
         alert(response.data.errorMessag)
       }
@@ -77,6 +73,18 @@ function ProfileTeacherEdit({openTeacherInfoToggle, openTeacherInfoModal, userIn
     }
   }, [permanentAddress])
 
+  const successUpdate = () =>{
+    toast.success('Succesfully updated your profile', {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      });
+  }
+
 
   return (
     <div><Modal  size="lg" show={openTeacherInfoModal} onHide={openTeacherInfoToggle} aria-labelledby="example-modal-sizes-title-lg">
@@ -116,7 +124,7 @@ function ProfileTeacherEdit({openTeacherInfoToggle, openTeacherInfoModal, userIn
           <div style={{fontSize:'24px', color:'#BCBCBC'}}>
             <Form.Group className="mb-4">
             <Form.Label>Contact Number</Form.Label>
-          <Form.Control required defaultValue={userInfo?.contactNo} onChange={(e) => setContactNo(e.target.value)}/>
+          <Form.Control type='number' required defaultValue={userInfo?.contactNo} onChange={(e) => setContactNo(e.target.value)}/>
             </Form.Group>
           </div>
         </Col>
@@ -162,12 +170,6 @@ function ProfileTeacherEdit({openTeacherInfoToggle, openTeacherInfoModal, userIn
     </Form> 
     </Modal.Body>
   </Modal>
-  <SweetAlert 
-    success
-    show={editNotufy} 
-    title="Done!" 
-    onConfirm={closeNotify}>
-  </SweetAlert>
   
   </div>
   )
