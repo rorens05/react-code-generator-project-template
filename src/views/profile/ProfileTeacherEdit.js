@@ -100,7 +100,7 @@ function ProfileTeacherEdit({openTeacherInfoToggle, openTeacherInfoModal, userIn
           <div style={{fontSize:'24px', color:'#BCBCBC'}}>
           <Form.Group className="mb-4">
             <Form.Label>First Name</Form.Label>
-          <Form.Control required defaultValue={userInfo?.fname} onChange={(e) => setFname(e.target.value)} />
+          <Form.Control placeholder='First Name' required defaultValue={userInfo?.fname} onChange={(e) => setFname(e.target.value)} />
             </Form.Group>
           </div>
         </Col>
@@ -108,7 +108,7 @@ function ProfileTeacherEdit({openTeacherInfoToggle, openTeacherInfoModal, userIn
           <div style={{fontSize:'24px', color:'#BCBCBC'}}>
           <Form.Group className="mb-4">
             <Form.Label>Last Name</Form.Label>
-          <Form.Control required defaultValue={userInfo?.lname} onChange={(e) => setLname(e.target.value)}/>
+          <Form.Control placeholder='Last Name' required defaultValue={userInfo?.lname} onChange={(e) => setLname(e.target.value)}/>
             </Form.Group>
           </div>
         </Col>
@@ -116,7 +116,7 @@ function ProfileTeacherEdit({openTeacherInfoToggle, openTeacherInfoModal, userIn
           <div style={{fontSize:'24px', color:'#BCBCBC'}}>
             <Form.Group className="mb-4">
             <Form.Label>Employee Number</Form.Label>
-          <Form.Control required disabled defaultValue={userInfo?.employeeNo}/>
+          <Form.Control placeholder='Employee Number' required disabled defaultValue={userInfo?.employeeNo}/>
             </Form.Group>
           </div>
         </Col>
@@ -124,7 +124,7 @@ function ProfileTeacherEdit({openTeacherInfoToggle, openTeacherInfoModal, userIn
           <div style={{fontSize:'24px', color:'#BCBCBC'}}>
             <Form.Group className="mb-4">
             <Form.Label>Contact Number</Form.Label>
-          <Form.Control type='number' required defaultValue={userInfo?.contactNo} onChange={(e) => setContactNo(e.target.value)}/>
+          <Form.Control placeholder='Contact Number' type='number' required defaultValue={userInfo?.contactNo} onChange={(e) => setContactNo(e.target.value)}/>
             </Form.Group>
           </div>
         </Col>
@@ -151,7 +151,7 @@ function ProfileTeacherEdit({openTeacherInfoToggle, openTeacherInfoModal, userIn
           <div style={{fontSize:'24px', color:'#BCBCBC'}}>
             <Form.Group className="mb-4">
             <Form.Label>E-mail Address</Form.Label>
-          <Form.Control required defaultValue={userInfo?.emailAdd} onChange={(e) => setemailAdd(e.target.value)}/>
+          <Form.Control placeholder='E-mail Address' required defaultValue={userInfo?.emailAdd} onChange={(e) => setemailAdd(e.target.value)}/>
             </Form.Group>
           </div>
         </Col>
@@ -159,7 +159,7 @@ function ProfileTeacherEdit({openTeacherInfoToggle, openTeacherInfoModal, userIn
           <div style={{fontSize:'24px', color:'#BCBCBC'}}>
             <Form.Group className="mb-4">
             <Form.Label>Address</Form.Label>
-          <Form.Control required defaultValue={userInfo?.permanentAddress} onChange={(e) => setPermanentAddress(e.target.value)}/>
+          <Form.Control placeholder='Address' required defaultValue={userInfo?.permanentAddress} onChange={(e) => setPermanentAddress(e.target.value)}/>
             </Form.Group>
           </div>
         </Col>
