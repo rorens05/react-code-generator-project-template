@@ -83,7 +83,7 @@ const ProfileEdit = ({openUserInfoModal, openUserInfoToggle, userInfo, getStuden
   }, [permanentAddress])
 
   const successUpdate = () =>{
-    toast.success('Succesfully updated your profile', {
+    toast.success('Successfully updated your profile', {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,
