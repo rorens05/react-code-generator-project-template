@@ -86,7 +86,7 @@ export default function EditDiscussion({setDiscussionInfo, openEditDiscussionMod
                       className="custom-input" 
                       size="lg" 
                       type="text" 
-                      placeholder="Enter test name"
+                      placeholder="Enter discussion name"
                       onChange={(e) => setDiscussionName(e.target.value)}
                     />
 								</Form.Group>
@@ -100,7 +100,7 @@ export default function EditDiscussion({setDiscussionInfo, openEditDiscussionMod
                       className="custom-input" 
                       size="lg" 
                       type="text" 
-                      placeholder="Enter test instructions"
+                      placeholder="Enter discussion instructions"
                       onChange={(e) => setInstructions(e.target.value)}
                     />
 								</Form.Group>

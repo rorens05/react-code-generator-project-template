@@ -99,7 +99,7 @@ export default function EditTask({openEditTaskModal, setOpenEditTaskModal, selec
                       className="custom-input" 
                       size="lg" 
                       type="text" 
-                      placeholder="Enter test name"
+                      placeholder="Enter task name"
                       onChange={(e) => setTaskName(e.target.value)}
                     />
 								</Form.Group>
@@ -113,7 +113,7 @@ export default function EditTask({openEditTaskModal, setOpenEditTaskModal, selec
                       className="custom-input" 
                       size="lg" 
                       type="text" 
-                      placeholder="Enter test instructions"
+                      placeholder="Enter task instructions"
                       onChange={(e) => setInstructions(e.target.value)}
                     />
 								</Form.Group>

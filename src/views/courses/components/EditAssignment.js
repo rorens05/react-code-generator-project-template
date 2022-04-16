@@ -99,7 +99,7 @@ export default function EditAssignment({openEditAssignmentModal, setOpenEditAssi
                       className="custom-input" 
                       size="lg" 
                       type="text" 
-                      placeholder="Enter test name"
+                      placeholder="Enter assignment name"
                       onChange={(e) => setAssignmentName(e.target.value)}
                     />
 								</Form.Group>
@@ -113,7 +113,7 @@ export default function EditAssignment({openEditAssignmentModal, setOpenEditAssi
                       className="custom-input" 
                       size="lg" 
                       type="text" 
-                      placeholder="Enter test instructions"
+                      placeholder="Enter assignment instructions"
                       onChange={(e) => setInstructions(e.target.value)}
                     />
 								</Form.Group>
