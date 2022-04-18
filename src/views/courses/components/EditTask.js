@@ -99,11 +99,10 @@ export default function EditTask({openEditTaskModal, setOpenEditTaskModal, selec
                       className="custom-input" 
                       size="lg" 
                       type="text" 
-                      placeholder="Enter task name"
+                      placeholder="Edit Task Name"
                       onChange={(e) => setTaskName(e.target.value)}
                     />
 								</Form.Group>
-
 								<Form.Group className="m-b-20">
 										<Form.Label for="description">
 												Instructions
@@ -113,11 +112,10 @@ export default function EditTask({openEditTaskModal, setOpenEditTaskModal, selec
                       className="custom-input" 
                       size="lg" 
                       type="text" 
-                      placeholder="Enter task instructions"
+                      placeholder="Edit Task Instructions"
                       onChange={(e) => setInstructions(e.target.value)}
                     />
 								</Form.Group>
-
 								<span style={{float:"right"}}>
 										<Button className="tficolorbg-button" type="submit">
 												Save

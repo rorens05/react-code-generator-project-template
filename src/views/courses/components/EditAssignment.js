@@ -99,11 +99,10 @@ export default function EditAssignment({openEditAssignmentModal, setOpenEditAssi
                       className="custom-input" 
                       size="lg" 
                       type="text" 
-                      placeholder="Enter assignment name"
+                      placeholder="Edit Assignment Name"
                       onChange={(e) => setAssignmentName(e.target.value)}
                     />
 								</Form.Group>
-
 								<Form.Group className="m-b-20">
 										<Form.Label for="description">
 												Instructions
@@ -113,11 +112,10 @@ export default function EditAssignment({openEditAssignmentModal, setOpenEditAssi
                       className="custom-input" 
                       size="lg" 
                       type="text" 
-                      placeholder="Enter assignment instructions"
+                      placeholder="Edit Assignment Instructions"
                       onChange={(e) => setInstructions(e.target.value)}
                     />
 								</Form.Group>
-
 								<span style={{float:"right"}}>
 										<Button className="tficolorbg-button" type="submit">
 												Save
