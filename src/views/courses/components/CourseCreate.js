@@ -92,7 +92,7 @@ export default function CourseCreate({getCourses, setCourse, openModal, setOpenM
   }, [])
 
 	const successSave = () => {
-		toast.success('Successsfully created course', {
+		toast.success('Successfully created course', {
 			position: "top-right",
 			autoClose: 5000,
 			hideProgressBar: false,
