@@ -78,9 +78,9 @@ if(viewAssignmentReport === true){
                       <p>{item.instructions}</p>
                     </Col>
                     <Col sm={3} className='icon-exam'>
-                      <i class="fas fa-eye" style={{paddingRight:'10px'}} ></i>{' '}
+                      {/* <i class="fas fa-eye" style={{paddingRight:'10px'}} ></i>{' '}
                       <i class="fas fa-edit"style={{paddingRight:'10px'}}></i>
-                      <i class="fas fa-trash-alt" style={{paddingRight:'10px'}}></i>
+                      <i class="fas fa-trash-alt" style={{paddingRight:'10px'}}></i> */}
                     </Col>
                     <hr></hr>
                   </Row>
