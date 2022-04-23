@@ -20,21 +20,26 @@ function FileHeader(props) {
     if(file != ''){
       
       Object.values(file).map((itm, index) => {
-        // console.log(itm, index)
-        let temp = []
-        getBase64(itm).then(
-          data => {
-            let toAdd = {
-              fileName: itm.name,
-              base64String: data,
-              size: itm.size,
-              progress: 0,
-              status: ''
-            };
-            files.push(toAdd)
-            setFiles([...files]);
-          }
-        );
+        let maxSize = 25000000;
+        if(itm.size <= maxSize){
+          console.log(itm, index)
+          let temp = []
+          getBase64(itm).then(
+            data => {
+              let toAdd = {
+                fileName: itm.name,
+                base64String: data,
+                size: itm.size,
+                progress: 0,
+                status: ''
+              };
+              files.push(toAdd)
+              setFiles([...files]);
+            }
+          );
+        }else(
+          toast.error('Please selsct files below 25mb.')
+        )
       })
     }
   }
@@ -93,6 +98,7 @@ function FileHeader(props) {
     // class uploading
     if(props.type == 'Class'){
       files.map( async(item, index) => {
+        console.log(item)
         if(item.progress == 0){
           let tempData = {
             fileName: item.fileName,
@@ -247,7 +253,7 @@ function FileHeader(props) {
                   <td>{item.fileName}</td>
                   {item.status == 'failed' ? <td style={{fontSize: 14, color: 'red'}}>Failed to upload.File already exist.</td> : <td><ProgressBar variant="warning" now={item.progress} /></td>}
                   {/* <td><ProgressBar variant="warning" now={item.progress} /></td> */}
-                  <td>{item.size} KB <i class="fas fa-times td-file-page" onClick={()=> handelRemoveSelectedFiles(index)}></i></td>
+                  <td>{item.size} B <i class="fas fa-times td-file-page" onClick={()=> handelRemoveSelectedFiles(index)}></i></td>
                 </tr>
               );
              })}
@@ -299,7 +305,7 @@ function FileHeader(props) {
                   <tr key={item.fileName}>
                     <td>{item.fileName}</td>
                    {item.status == 'failed' ? <td style={{fontSize: 14, color: 'red'}}>Failed to upload.File already exist.</td> : <td><ProgressBar variant="warning" now={item.progress} /></td>}
-                    <td>{item.size} KB <i class="fas fa-times td-file-page" onClick={()=> handelRemoveSelectedFiles(index)}></i></td>
+                    <td>{item.size} B <i class="fas fa-times td-file-page" onClick={()=> handelRemoveSelectedFiles(index)}></i></td>
                   </tr>
                 );
               })

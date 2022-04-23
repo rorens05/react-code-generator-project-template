@@ -53,6 +53,7 @@ function FileHeader(props) {
     //course uploading
     if(props.type == 'Course'){
       files.map( async(item, index) => {
+        console.log(item);
         if(item.progress == 0){
           let tempData = {
             fileName: item.fileName,
@@ -233,7 +234,7 @@ function FileHeader(props) {
                 <tr key={item.fileName}>
                   <td>{item.fileName}</td>
                   <td><ProgressBar variant="warning" now={item.progress} /></td>
-                  <td>{item.size} KB <i class="fas fa-times td-file-page" onClick={()=> handelRemoveSelectedFiles(index)}></i></td>
+                  <td>{item.size} b <i class="fas fa-times td-file-page" onClick={()=> handelRemoveSelectedFiles(index)}></i></td>
                 </tr>
               );
              })}
@@ -285,7 +286,7 @@ function FileHeader(props) {
                   <tr key={item.fileName}>
                     <td>{item.fileName}</td>
                     <td><ProgressBar variant="warning" now={item.progress} /></td>
-                    <td>{item.size} KB <i class="fas fa-times td-file-page" onClick={()=> handelRemoveSelectedFiles(index)}></i></td>
+                    <td>{item.size} B <i class="fas fa-times td-file-page" onClick={()=> handelRemoveSelectedFiles(index)}></i></td>
                   </tr>
                 );
               })
