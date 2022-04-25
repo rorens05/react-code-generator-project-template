@@ -113,7 +113,7 @@ export default function CourseContent({children}) {
   )
 
   return (
-    <MainContainer loading={loading} fluid activeHeader={'courses'} style='not-scrollable'>
+    <MainContainer loading={loading} fluid activeHeader={'courses'} style=''>
         <Col style={{height: 100}} />
         <Row>
           {showTab ? <Col className="row-course-bg course-widget-font" sm={3}>

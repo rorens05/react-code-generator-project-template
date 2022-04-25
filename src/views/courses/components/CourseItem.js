@@ -51,7 +51,8 @@ export default function CoursesItem({subjectAreaName, filter, setFilter, course,
             <Link to={user.isTeacher ? `coursecontent/${item.id}/learn` : `/school_courses/${item.id}`} onClick={() => setCourseId(item.id)} course={course} setLoading={setLoading} className="active card-title">
             
             <Card className="card-design b-0px">
-              <Card.Header className="card-header-courses">
+              {/* <Card.Header className="card-header-courses" style={{backgroundImage: `url(${"https://cdn.tekteachlms.com/tficontent/_cover/Basic_calculus.jpg"})`}}> */}
+                  <Card.Header className="card-header-courses" style={{ backgroundImage: `url(${"item.courseCover"})` }}>
                 <Row style={{color:"white"}}>
                     {user.isTeacher &&
                         <>
@@ -81,7 +82,7 @@ export default function CoursesItem({subjectAreaName, filter, setFilter, course,
                         </>
                       }
                     <Col md={12} className="t-a-c m-t-20">
-                      <i className="fa fa-book-open fa-7x"></i>
+                      {/* <i className="fa fa-book-open fa-7x"></i> */}
                     </Col>
                 </Row>
               </Card.Header>
@@ -97,6 +98,7 @@ export default function CoursesItem({subjectAreaName, filter, setFilter, course,
                     </Card.Subtitle>
                     <Card.Text>
                       {item.description}
+                      {item.courseCover === null && "No Cover"}
                     </Card.Text>
                     <Card.Text>
                       {item.authorName}
