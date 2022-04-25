@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Tab, Row, Col, Button, InputGroup, FormControl, Accordion } from 'react-bootstrap';
 import CoursesAPI from "../../../../api/CoursesAPI";
-
+import ReactPlayer from 'react-player'
 export default function ViewVideo({selectedVideo, setShowVideo}) {
 
   const [loading, setLoading] = useState(false)
@@ -12,6 +12,8 @@ export default function ViewVideo({selectedVideo, setShowVideo}) {
     setShowVideo(false)
   }
 
+  console.log(selectedVideo)
+
   return (
     <React.Fragment>
       <span className="content-pane-title">
@@ -21,6 +23,10 @@ export default function ViewVideo({selectedVideo, setShowVideo}) {
       <span className="course-subtitle"><small>{modulename}</small></span>
       <hr></hr>
       <div dangerouslySetInnerHTML={{__html: selectedVideo.fileName}} />
+      <div>
+        <ReactPlayer playing={true} controls={true} url={selectedVideo.path} />
+      </div>
+
     </React.Fragment>
   )
 }

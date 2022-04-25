@@ -72,18 +72,18 @@ export default function CoursesVideos() {
   }
 
   const confirmSweetError = (id) => {
-    notifyDeleteVideo()
     deleteCourseVideo(id)
     setSweetError(false)
   } 
 
-  const deleteCourseVideo = async(data) => {
+  const deleteCourseVideo = async(vidID) => {
     setLoading(true)
     const sessionModule = sessionStorage.getItem('moduleid')
-    let response = await new CoursesAPI().deleteVideo(videoId)
+    let response = await new CoursesAPI().deleteVideo(id, videoId)
     setLoading(false)
     if(response.ok){
       // setLessonInfo(response.data)
+      notifyDeleteVideo()
       getVideoInfo(null, localModuleId)
     }else{
       alert(response.data.errorMessage)
@@ -105,7 +105,7 @@ export default function CoursesVideos() {
   }, [])
 
   const notifyDeleteVideo= () => 
-  toast.error('Task Deleted!', {
+  toast.error('Video Deleted!', {
     position: "top-right",
     autoClose: 5000,
     hideProgressBar: false,

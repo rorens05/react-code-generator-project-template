@@ -118,7 +118,7 @@ export default class CoursesAPI extends Base {
 
   createVideo = async (courseid, moduleid, data) => {
     return this.sendRequest({
-      path: `api/Upload/course/${courseid}/video?moduleid=${moduleid}`,
+      path: `/api/Upload/course/${courseid}/video?moduleid=${moduleid}`,
       method: 'POST',
       data
     });
@@ -297,5 +297,12 @@ export default class CoursesAPI extends Base {
       method: 'GET',
     });
   };
+
+  deleteVideo = async(id, videoid) => {
+    return this.sendRequest({
+      path: `/api/Course/${id}/video/${videoid}`,
+      method: 'DELETE'
+    })
+  }
 
 }

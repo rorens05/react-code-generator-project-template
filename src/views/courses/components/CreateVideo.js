@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Form, Modal } from 'react-bootstrap';
+import { Button, Form, Modal, InputGroup } from 'react-bootstrap';
 import CoursesAPI from "../../../api/CoursesAPI";
 import SubjectAreaAPI from "../../../api/SubjectAreaAPI";
 import { toast } from 'react-toastify';
@@ -15,7 +15,9 @@ export default function CreateVideos({openCreateVideoModal, setCreateVideoModal,
   const [fileName, setFileName] = useState('')
 	const [sequenceNo, setSequenceNo] = useState('')
   const [title, setTitle] = useState('')
-  const [path, setPath] = useState([]);
+  const [base64String, setBase64String] = useState([]);
+  const [extFilename, setExtFilename] = useState('');
+
   const {id} = useParams()
   let sessionCourse = sessionStorage.getItem('courseid')
   let sessionModule = sessionStorage.getItem('moduleid')
@@ -23,7 +25,7 @@ export default function CreateVideos({openCreateVideoModal, setCreateVideoModal,
 
 	const handleCloseModal = e => {
     e.preventDefault()
-    setCreateVideoModal(false)
+    // setCreateVideoModal(false)
   }
 
 	const saveVideo = async(e) => {
@@ -31,7 +33,7 @@ export default function CreateVideos({openCreateVideoModal, setCreateVideoModal,
     setLoading(true)
     let response = await new CoursesAPI().createVideo(
       sessionCourse, sessionModule,
-      {title, sequenceNo, fileName, path}
+      {title, sequenceNo, fileName: fileName+extFilename, base64String}
     )
     if(response.ok){
 			handleCloseModal(e)
@@ -86,6 +88,36 @@ export default function CreateVideos({openCreateVideoModal, setCreateVideoModal,
     progress: undefined,
   });
 
+  const handleSelectedVideo = (video) => {
+    console.log(video);
+    if(video != ''){
+      getBase64(video).then(
+        data => {
+          // let toAdd = {
+          //   fileName: itm.name,
+          //   base64String: data,
+          //   size: itm.size,
+          //   progress: 0,
+          //   status: ''
+          // };
+          console.log(video.name);
+          let extName = video.name.split('.').pop();
+          setExtFilename(`.${extName}`);
+          setBase64String(data);
+        }
+      );
+    }
+  }
+
+  const getBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
+  }
+
 	useEffect(() => {
   }, [])
 
@@ -114,13 +146,29 @@ export default function CreateVideos({openCreateVideoModal, setCreateVideoModal,
 										<Form.Label for="description">
 												File Name
 										</Form.Label>
-										<Form.Control 
+                    <InputGroup className="mb-4">
+                      <Form.Control 
+                        className="custom-input" 
+                        size="lg" 
+                        type="text" 
+                        placeholder="Enter filename"
+                        onChange={(e) => setFileName(e.target.value)}
+                      />
+                      <InputGroup.Text style={{width: 70}}>{extFilename}</InputGroup.Text>
+                    </InputGroup>
+								</Form.Group>
+                <Form.Group className="m-b-20">
+										<Form.Label for="description">
+												Upload Video
+										</Form.Label>
+                    <Form.Control className='' accept="video/mp4,video/x-m4v,video/*" type='file' style={{ backgroundColor: 'inherit' }} onChange={(e) => handleSelectedVideo(e.target.files[0])} />
+										{/* <Form.Control 
                       className="custom-input" 
                       size="lg" 
                       type="text" 
                       placeholder="Enter filename"
                       onChange={(e) => setFileName(e.target.value)}
-                    />
+                    /> */}
 								</Form.Group>
 
 								<Form.Group className="m-b-20">
