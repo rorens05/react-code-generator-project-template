@@ -68,7 +68,7 @@ console.log(subjectAreaName, 'sasasasasas');
             <Link to={user.isTeacher ? `coursecontent/${item.id}/learn` : `/school_courses/${item.id}`} onClick={() => setCourseId(item.id)} course={course} setLoading={setLoading} className="active card-title">
             <Card className="card-design b-0px">
               {/* <Card.Header className="card-header-courses" style={{backgroundImage: `url(${"https://cdn.tekteachlms.com/tficontent/_cover/Basic_calculus.jpg"})`}}> */}
-                  <Card.Header className="card-header-courses" style={{ backgroundImage: `url(${"item.courseCover"})` }}>
+                  <Card.Header className="card-header-courses" style={{ backgroundImage: `url(${item.courseCover})` }}>
                 <Row style={{color:"white"}}>
                     {user.isTeacher &&
                         <>
