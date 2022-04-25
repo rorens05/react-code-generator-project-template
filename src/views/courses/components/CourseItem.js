@@ -40,18 +40,35 @@ export default function CoursesItem({subjectAreaName, filter, setFilter, course,
       Edit
     </Tooltip>
   )
+
+  const arrageAlphabetical = (data) => {
+    let temp = data?.sort(function(a, b){
+      let nameA = a.courseName.toLocaleLowerCase();
+      let nameB = b.courseName.toLocaleLowerCase();
+      if (nameA < nameB) {
+          return -1;
+      }
+    });
+    return temp
+}
+
+console.log(subjectAreaName, 'sasasasasas');
   
   return (
     <React.Fragment>
-        {subjectAreaName.filter(item =>
+        {
+        // arrageAlphabetical(subjectAreaName).filter(item =>
+       subjectAreaName.filter(item =>
           item.courseName.toLowerCase().includes(filter.toLowerCase())).map
           ((item, index) => {  
         return(
-          <Col md={3}>
+          <>
+          {item?.status?(<>
+            <Col md={3}>
             <Link to={user.isTeacher ? `coursecontent/${item.id}/learn` : `/school_courses/${item.id}`} onClick={() => setCourseId(item.id)} course={course} setLoading={setLoading} className="active card-title">
-            
             <Card className="card-design b-0px">
-              <Card.Header className="card-header-courses">
+              {/* <Card.Header className="card-header-courses" style={{backgroundImage: `url(${"https://cdn.tekteachlms.com/tficontent/_cover/Basic_calculus.jpg"})`}}> */}
+                  <Card.Header className="card-header-courses" style={{ backgroundImage: `url(${"item.courseCover"})` }}>
                 <Row style={{color:"white"}}>
                     {user.isTeacher &&
                         <>
@@ -81,7 +98,7 @@ export default function CoursesItem({subjectAreaName, filter, setFilter, course,
                         </>
                       }
                     <Col md={12} className="t-a-c m-t-20">
-                      <i className="fa fa-book-open fa-7x"></i>
+                      {/* <i className="fa fa-book-open fa-7x"></i> */}
                     </Col>
                 </Row>
               </Card.Header>
@@ -97,6 +114,7 @@ export default function CoursesItem({subjectAreaName, filter, setFilter, course,
                     </Card.Subtitle>
                     <Card.Text>
                       {item.description}
+                      {item.courseCover === null && "No Cover"}
                     </Card.Text>
                     <Card.Text>
                       {item.authorName}
@@ -105,6 +123,9 @@ export default function CoursesItem({subjectAreaName, filter, setFilter, course,
             </Card>
             </Link>
           </Col>
+          </>):(<></>)}
+
+          </>
         )
         })  
     }
