@@ -38,7 +38,7 @@ function FileHeader(props) {
             }
           );
         }else(
-          toast.error('Please selsct files below 25mb.')
+          toast.error('Please select a file below 25mb.')
         )
       })
     }
@@ -236,6 +236,9 @@ function FileHeader(props) {
                   <i className='text-center fa fa-download font-size-30'/>
                 </div>
                 <input className='opacity-0 w-100 height-80px' id='inputFile' multiple type='file' placeholder='Choose color' style={{ backgroundColor: 'inherit' }} onChange={(e) => handlefilesUpload(e.target.files)} />
+              </Col>
+              <Col className='d-flex align-items-center'>
+                <p>Maximum file size: 25 MB.</p>
               </Col>
           </Row>
           <Table responsive="sm">

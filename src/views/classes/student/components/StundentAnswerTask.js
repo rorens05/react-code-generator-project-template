@@ -59,7 +59,7 @@ function StundentAnswerTask({answerTaskToggle, answerTaskModal, taskId}) {
             }
           );
         }else{
-          toast.error('Please selsct files below 25mb.');
+          toast.error('Please select a file below 25mb.');
         }
       })
     }
