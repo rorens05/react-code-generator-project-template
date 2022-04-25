@@ -140,7 +140,7 @@ export default function CourseContent({children}) {
               <Link className={currentLoc.includes('task') ? "active-nav-item" : 'nav-item'} to={`/courses/${id}/task`}>
                 Task
               </Link>
-              <Link className={currentLoc.includes('links') ? "active-nav-item" : 'nav-item'} to={`/courses/${id}/links`}>
+              <Link className={currentLoc.includes('resources') ? "active-nav-item" : 'nav-item'} to={`/courses/${id}/resources`}>
                 Teacher Resources
               </Link>
               <Link className={currentLoc.includes('discussion') ? "active-nav-item" : 'nav-item'} to={`/courses/${id}/discussion`}>
@@ -184,11 +184,11 @@ export default function CourseContent({children}) {
                   <i className="fas fa-edit" />
                 </OverlayTrigger>
               </Link>
-              <Link className={currentLoc.includes('links') ? "active-nav-item" : 'nav-item'} to={`/courses/${id}/links`}>
+              <Link className={currentLoc.includes('resources') ? "active-nav-item" : 'nav-item'} to={`/courses/${id}/resources`}>
                 <OverlayTrigger
                   placement="right"
                   delay={{ show: 1, hide: 25 }}
-                  overlay={renderTooltipLink}>
+                  overlay={renderTooltipTeacherResources}>
                   <i className="fas fa-link" />
                 </OverlayTrigger>
               </Link>

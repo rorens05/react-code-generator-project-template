@@ -13,7 +13,7 @@ function ClassLinks() {
   const [openEditModal, setOpenEditModal] = useState(false)
   const [conference, setConference] = useState([])
   const [videos, setVidoes] = useState([])
-  const [links, setLinks] = useState([])
+  const [links, setLinks] = useState(null)
   const [editLinks, setEditLinks] = useState('')
   const {id} = useParams();
   const [searchTerm, setSearchTerm] = useState('')
@@ -21,7 +21,7 @@ function ClassLinks() {
   const [confeUrlItem, setConfeUrlItem] = useState('')
   const [itemId, setItemId] = useState()
   const [showTask, setShowTask] = useState(false);
-  const [taskName, setTaskName] = useState('')
+  const [linkName, setLinkName] = useState('')
 
 
   const onSearch = (text) => {
@@ -65,6 +65,7 @@ function ClassLinks() {
     let typeId = '3'
     let response = await new CoursesAPI().getLink(id, typeId)
     if(response.ok){
+      console.log('haru' ,response.data)
       setLinks(response.data)
     }else{
       alert("Something went wrong while fetching all Conference")
@@ -77,7 +78,7 @@ function ClassLinks() {
 
   return (
    <CourseContent>
-     <CourseBreadcrumbs title={links} clicked={() => clickedTab()}/>
+     <CourseBreadcrumbs title="Teacher Resources"/>
       <HeaderLinks onSearch={onSearch} getConfe={getConfe} getVideos={getVideos} getLinks={getLinks}  />
       <div style={{paddingBottom:'10px'}}>
         <AccordionConference  searchTerm={searchTerm} getConfe={getConfe} conference={conference} setOpenEditModal={setOpenEditModal}  setEditLinks={setEditLinks} />
