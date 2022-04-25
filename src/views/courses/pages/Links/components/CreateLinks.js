@@ -21,7 +21,8 @@ function CreateLinks({modal, toggle, getConfe, getVideos, getLinks}) {
     e.preventDefault()
     let cid = sessionStorage.getItem('courseid')
     let courseId = JSON.parse(cid);
-    let response = await new CoursesAPI().createLinks(courseId, typeId, {courseId, typeId, description, url})
+    let type =  typeId
+    let response = await new CoursesAPI().createLinks(courseId, typeId, {courseId, type, description, url})
       if(response.ok){
         // alert('Add')
         setCreateNotify(true)
