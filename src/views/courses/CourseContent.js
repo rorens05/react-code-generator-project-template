@@ -112,6 +112,12 @@ export default function CourseContent({children}) {
     </Tooltip>
   )
 
+  const renderTooltipVideos = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Videos Upload
+    </Tooltip>
+  )
+
   return (
     <MainContainer loading={loading} fluid activeHeader={'courses'} style=''>
         <Col style={{height: 100}} />
@@ -151,6 +157,9 @@ export default function CourseContent({children}) {
               </Link>
               <Link className={currentLoc.includes('files') ? "active-nav-item" : 'nav-item'} to={`/courses/${id}/files`}>
                 Files
+              </Link>
+              <Link className={currentLoc.includes('videos') ? "active-nav-item" : 'nav-item'} to={`/courses/${id}/videos`}>
+                Videos Upload
               </Link>
             </ListGroup>
           </Col>
@@ -215,6 +224,14 @@ export default function CourseContent({children}) {
                   delay={{ show: 1, hide: 25 }}
                   overlay={renderTooltipFiles}>
                   <i className="fas fa-folder-open" />
+                </OverlayTrigger>
+              </Link>
+              <Link className={currentLoc.includes('videos') ? "active-nav-item" : 'nav-item'} to={`/courses/${id}/videos`}>
+                <OverlayTrigger
+                  placement="right"
+                  delay={{ show: 1, hide: 25 }}
+                  overlay={renderTooltipVideos}>
+                  <i className="fas fa-video" />
                 </OverlayTrigger>
               </Link>
             </ListGroup>
