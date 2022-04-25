@@ -153,22 +153,22 @@ export default function Courses() {
           </div>
           <div style={{textAlign:'center', paddingBottom:' 20px'}}>
              <Button onClick={() => handleOnclick(course)} className="m-r-5 color-white tficolorbg-button" size="sm">All</Button>
-             <Button onClick={() => handleOnclick(ictItem)} className="m-r-5 color-white tficolorbg-button" size="sm">ICT</Button>
-             <Button onClick={() => handleOnclick(englishItem)} className="m-r-5 color-white tficolorbg-button" size="sm">English</Button>
-             <Button onClick={() => handleOnclick(mathItem)} className="m-r-5 color-white tficolorbg-button" size="sm">Math</Button>
-             <Button onClick={() => handleOnclick(filipinoitem)} className="m-r-5 color-white tficolorbg-button" size="sm">Filipino</Button>
-             <Button onClick={() => handleOnclick(scienceItem)} className="m-r-5 color-white tficolorbg-button" size="sm">Science</Button>
              <Button onClick={() => handleOnclick(aralinPanlipunanItem)} className="m-r-5 color-white tficolorbg-button" size="sm">Aralin Panlipunan</Button>
-             <Button onClick={() => handleOnclick(stemItem)} className="m-r-5 color-white tficolorbg-button" size="sm">SHS-STEM</Button>
-             <Button onClick={() => handleOnclick(abmItem)} className="m-r-5 color-white tficolorbg-button" size="sm">SHS-ABM</Button>
-             <Button onClick={() => handleOnclick(appliedItem)} className="m-r-5 color-white tficolorbg-button" size="sm">SHS-APPLIED</Button>
-             <Button onClick={() => handleOnclick(hummsItem)} className="m-r-5 color-white tficolorbg-button" size="sm">SHS-HUMMS</Button>
-             <Button onClick={() => handleOnclick(coreItem)} className="m-r-5 color-white tficolorbg-button" size="sm">SHS-CORE</Button>
              <Button onClick={() => handleOnclick(cleItem)} className="m-r-5 color-white tficolorbg-button" size="sm">CLE</Button>
+             <Button onClick={() => handleOnclick(englishItem)} className="m-r-5 color-white tficolorbg-button" size="sm">English</Button>
+             <Button onClick={() => handleOnclick(filipinoitem)} className="m-r-5 color-white tficolorbg-button" size="sm">Filipino</Button>
              <Button onClick={() => handleOnclick(godsParkItem)} className="m-r-5 color-white tficolorbg-button" size="sm">God's Park</Button>
              <Button onClick={() => handleOnclick(heleItem)} className="m-r-5 color-white tficolorbg-button" size="sm">HELE</Button>
+             <Button onClick={() => handleOnclick(ictItem)} className="m-r-5 color-white tficolorbg-button" size="sm">ICT</Button>
              <Button onClick={() => handleOnclick(mapehItem)} className="m-r-5 color-white tficolorbg-button" size="sm">MAPEH</Button>
+             <Button onClick={() => handleOnclick(mathItem)} className="m-r-5 color-white tficolorbg-button" size="sm">Math</Button>
              <Button onClick={() => handleOnclick(roboticsItem)} className="m-r-5 color-white tficolorbg-button" size="sm">Robotics</Button>
+             <Button onClick={() => handleOnclick(scienceItem)} className="m-r-5 color-white tficolorbg-button" size="sm">Science</Button>
+             <Button onClick={() => handleOnclick(abmItem)} className="m-r-5 color-white tficolorbg-button" size="sm">SHS-ABM</Button>
+             <Button onClick={() => handleOnclick(appliedItem)} className="m-r-5 color-white tficolorbg-button" size="sm">SHS-APPLIED</Button>
+             <Button onClick={() => handleOnclick(coreItem)} className="m-r-5 color-white tficolorbg-button" size="sm">SHS-CORE</Button>
+             <Button onClick={() => handleOnclick(hummsItem)} className="m-r-5 color-white tficolorbg-button" size="sm">SHS-HUMMS</Button>
+             <Button onClick={() => handleOnclick(stemItem)} className="m-r-5 color-white tficolorbg-button" size="sm">SHS-STEM</Button>
              <Button onClick={() => handleOnclick(tleItem)} className="m-r-5 color-white tficolorbg-button" size="sm">TLE</Button>
            </div>
           <div className="row m-b-20 justify-content-center">
