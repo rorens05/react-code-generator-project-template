@@ -34,7 +34,8 @@ function AccordionEdit({openEditModal, setOpenEditModal, editLinks, getConfe, ge
         progress: undefined,
         });
     }else{
-      let linkId = editLinks?.classLink?.id
+      let linkId = editLinks?.id
+      let courseId = sessionStorage.getItem('courseid')
       let response = await new CoursesAPI().editClassLinks(id, linkId, {description, url})
       if(response.ok){
         // alert('Link Updated')
@@ -52,8 +53,8 @@ function AccordionEdit({openEditModal, setOpenEditModal, editLinks, getConfe, ge
 
   useEffect(() => {
     if(editLinks !== null) {
-      setEditDescription(editLinks?.classLink?.description)
-      setEditUrl(editLinks?.classLink?.url)
+      setEditDescription(editLinks?.description)
+      setEditUrl(editLinks?.url)
 		}
   }, [editLinks])
 

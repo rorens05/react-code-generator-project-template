@@ -69,7 +69,7 @@ function AccordionLinks({links, getLinks, setOpenEditModal, setEditLinks, search
           onCancel={cancelSweetAlert}
           focusCancelBtn
         >
-            You will not be able to recover this imaginary file!
+            You will not be able to recover this data!
         </SweetAlert>
         <Accordion.Item eventKey="0">
         <Accordion.Header>
@@ -109,7 +109,7 @@ function AccordionLinks({links, getLinks, setOpenEditModal, setEditLinks, search
                     placement="bottom"
                     delay={{ show: 1, hide: 0 }}
                     overlay={renderTooltipDelete}>
-                  <Button onClick={() => handleDeleteNotify(item?.classLink.id)} className="m-r-5 color-white tficolorbg-button" size="sm"> <i class="fas fa-trash-alt"></i> </Button>
+                  <Button onClick={() => handleDeleteNotify(item?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"> <i class="fas fa-trash-alt"></i> </Button>
                 </OverlayTrigger>
                 </Col>
               </>
