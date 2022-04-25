@@ -875,6 +875,10 @@ border-top-right-radius: 0px !important;
   text-decoration: none !important;
 }
 
+.lessonName{
+  cursor: pointer;
+}
+
 .color-white {
   color:white !important;
 }
