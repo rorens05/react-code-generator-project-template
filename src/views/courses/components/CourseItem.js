@@ -47,9 +47,10 @@ export default function CoursesItem({subjectAreaName, filter, setFilter, course,
           item.courseName.toLowerCase().includes(filter.toLowerCase())).map
           ((item, index) => {  
         return(
-          <Col md={3}>
+          <>
+          {item?.status?(<>
+            <Col md={3}>
             <Link to={user.isTeacher ? `coursecontent/${item.id}/learn` : `/school_courses/${item.id}`} onClick={() => setCourseId(item.id)} course={course} setLoading={setLoading} className="active card-title">
-            
             <Card className="card-design b-0px">
               <Card.Header className="card-header-courses">
                 <Row style={{color:"white"}}>
@@ -105,6 +106,9 @@ export default function CoursesItem({subjectAreaName, filter, setFilter, course,
             </Card>
             </Link>
           </Col>
+          </>):(<></>)}
+
+          </>
         )
         })  
     }
