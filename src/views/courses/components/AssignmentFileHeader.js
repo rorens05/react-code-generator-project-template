@@ -222,6 +222,9 @@ function FileHeader(props) {
                 </div>
                 <input className='opacity-0 w-100 height-80px' id='inputFile' multiple type='file' placeholder='Choose color' style={{ backgroundColor: 'inherit' }} onChange={(e) => handlefilesUpload(e.target.files)} />
               </Col>
+              <Col className='d-flex align-items-center'>
+                <p>Maximum file size: 25 MB.</p>
+              </Col>
           </Row>
           <Table responsive="sm">
             <thead>
