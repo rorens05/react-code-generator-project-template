@@ -252,5 +252,35 @@ export default class CoursesAPI extends Base {
       data
     })
   } 
+  
+  getLink = async (id, typeId) => {
+    return this.sendRequest({
+      path: `/api/Course/${id}/link/type/${typeId}`,
+      method: 'GET',
+    });
+  }
+
+  createLinks = async (id, typeId, data) =>{
+    return this.sendRequest({
+      path: `/api/Course/${id}/link/type/${typeId}`,
+      method: 'POST',
+      data
+    })
+  }
+
+  deleteLinks = async (id, linkId) =>{
+    return this.sendRequest({
+      path: `/api/Course/${id}/link/${linkId}`,
+      method: 'DELETE'
+    })
+  }
+
+  editClassLinks = async (id, linkId, data) => {
+    return this.sendRequest({
+      path: `/api/Course/${id}/link/${linkId}`,
+      method: 'PUT',
+      data
+    })
+  }
 
 }

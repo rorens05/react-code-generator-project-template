@@ -51,45 +51,61 @@ export default function Courses() {
     let response = await new CoursesAPI().getCourses()
     setLoading(false)
     if(response.ok){
-      const sorted = response.data.sort((a, b) => a.subjectArea.subjectAreaName > b.subjectArea.subjectAreaName ? 1:-1);
+      const sorted = response.data.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1);
       setSubjectAreaName(sorted);
-      const sortedCourse = response.data.sort((a, b) => a.subjectArea.subjectAreaName > b.subjectArea.subjectAreaName ? 1:-1);
+      const sortedCourse = response.data.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1);
       setCourse(sortedCourse);
 
       const dataIct = response.data.filter((item) => item.subjectArea.subjectAreaName == 'ICT')
-      setIctItem(dataIct)
+      setIctItem(dataIct.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
+
       const dataEnglish = response.data.filter((item) => item.subjectArea.subjectAreaName == 'English')
-      setEnglishItem(dataEnglish)
+      setEnglishItem(dataEnglish.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
+
       const dataMath = response.data.filter((item) => item.subjectArea.subjectAreaName == 'Math')
-      setMathItem(dataMath)
+      setMathItem(dataMath.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
+
       const dataFilipino = response.data.filter((item) => item.subjectArea.subjectAreaName == 'Filipino')
-      setFilipinoItem(dataFilipino)
+      setFilipinoItem(dataFilipino.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
+
       const dataScience = response.data.filter((item) => item.subjectArea.subjectAreaName == 'Science')
-      setScienceItem(dataScience)
+      setScienceItem(dataScience.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
+
       const dataAralinPanlipunan = response.data.filter((item) => item.subjectArea.subjectAreaName == 'Aralin Panlipunan')
-      setAralinPanlipunanItem(dataAralinPanlipunan)
+      setAralinPanlipunanItem(dataAralinPanlipunan.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
+
       const dataStem = response.data.filter((item) => item.subjectArea.subjectAreaName == 'STEM')
-      setStemItem(dataStem)
+      setStemItem(dataStem.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
+
       const dataApplied = response.data.filter((item) => item.subjectArea.subjectAreaName == 'APPLIED')
-      setAppliedItem(dataApplied)
+      setAppliedItem(dataApplied.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
+
       const dataCode = response.data.filter((item) => item.subjectArea.subjectAreaName == 'CORE')
-      setCoreItem(dataCode)
+      setCoreItem(dataCode.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
+
       const dataAbm = response.data.filter((item) => item.subjectArea.subjectAreaName == 'ABM')
-      setAbmItem(dataAbm)
+      setAbmItem(dataAbm.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
+
       const dataHumms = response.data.filter((item) => item.subjectArea.subjectAreaName == 'HUMMS')
-      setHummsItem(dataHumms)
+      setHummsItem(dataHumms.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
+
       const dataRobotics = response.data.filter((item) => item.subjectArea.subjectAreaName == 'Robotics')
-      setRoboticsItem(dataRobotics)
+      setRoboticsItem(dataRobotics.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
+
       const dataTle = response.data.filter((item) => item.subjectArea.subjectAreaName == 'TLE')
-      setTleItem(dataTle)
+      setTleItem(dataTle.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
+
       const dataHele = response.data.filter((item) => item.subjectArea.subjectAreaName == 'HELE')
-      setHeleitem(dataHele)
+      setHeleitem(dataHele.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
+
       const dataMapeh = response.data.filter((item) => item.subjectArea.subjectAreaName == 'MAPEH ')
-      setMapehItem(dataMapeh)
+      setMapehItem(dataMapeh.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
+
       const dataCle = response.data.filter((item) => item.subjectArea.subjectAreaName == 'CLE')
-      setCleItem(dataCle)
+      setCleItem(dataCle.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
+
       const dataGodsPark = response.data.filter((item) => item.subjectArea.subjectAreaName == "God's Park ")
-      setGodsParkItem(dataGodsPark)
+      setGodsParkItem(dataGodsPark.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
     }else{
       alert("Something went wrong while fetching all courses")
     }
@@ -143,17 +159,17 @@ export default function Courses() {
              <Button onClick={() => handleOnclick(filipinoitem)} className="m-r-5 color-white tficolorbg-button" size="sm">Filipino</Button>
              <Button onClick={() => handleOnclick(scienceItem)} className="m-r-5 color-white tficolorbg-button" size="sm">Science</Button>
              <Button onClick={() => handleOnclick(aralinPanlipunanItem)} className="m-r-5 color-white tficolorbg-button" size="sm">Aralin Panlipunan</Button>
-             <Button onClick={() => handleOnclick(stemItem)} className="m-r-5 color-white tficolorbg-button" size="sm">STEM</Button>
-             <Button onClick={() => handleOnclick(abmItem)} className="m-r-5 color-white tficolorbg-button" size="sm">ABM</Button>
-             <Button onClick={() => handleOnclick(appliedItem)} className="m-r-5 color-white tficolorbg-button" size="sm">APPLIED</Button>
-             <Button onClick={() => handleOnclick(coreItem)} className="m-r-5 color-white tficolorbg-button" size="sm">CORE</Button>
-             <Button onClick={() => handleOnclick(hummsItem)} className="m-r-5 color-white tficolorbg-button" size="sm">HUMMS</Button>
-             <Button onClick={() => handleOnclick(roboticsItem)} className="m-r-5 color-white tficolorbg-button" size="sm">Robotics</Button>
-             <Button onClick={() => handleOnclick(tleItem)} className="m-r-5 color-white tficolorbg-button" size="sm">TLE</Button>
-             <Button onClick={() => handleOnclick(heleItem)} className="m-r-5 color-white tficolorbg-button" size="sm">HELE</Button>
-             <Button onClick={() => handleOnclick(mapehItem)} className="m-r-5 color-white tficolorbg-button" size="sm">MAPEH</Button>
+             <Button onClick={() => handleOnclick(stemItem)} className="m-r-5 color-white tficolorbg-button" size="sm">SHS-STEM</Button>
+             <Button onClick={() => handleOnclick(abmItem)} className="m-r-5 color-white tficolorbg-button" size="sm">SHS-ABM</Button>
+             <Button onClick={() => handleOnclick(appliedItem)} className="m-r-5 color-white tficolorbg-button" size="sm">SHS-APPLIED</Button>
+             <Button onClick={() => handleOnclick(hummsItem)} className="m-r-5 color-white tficolorbg-button" size="sm">SHS-HUMMS</Button>
+             <Button onClick={() => handleOnclick(coreItem)} className="m-r-5 color-white tficolorbg-button" size="sm">SHS-CORE</Button>
              <Button onClick={() => handleOnclick(cleItem)} className="m-r-5 color-white tficolorbg-button" size="sm">CLE</Button>
              <Button onClick={() => handleOnclick(godsParkItem)} className="m-r-5 color-white tficolorbg-button" size="sm">God's Park</Button>
+             <Button onClick={() => handleOnclick(heleItem)} className="m-r-5 color-white tficolorbg-button" size="sm">HELE</Button>
+             <Button onClick={() => handleOnclick(mapehItem)} className="m-r-5 color-white tficolorbg-button" size="sm">MAPEH</Button>
+             <Button onClick={() => handleOnclick(roboticsItem)} className="m-r-5 color-white tficolorbg-button" size="sm">Robotics</Button>
+             <Button onClick={() => handleOnclick(tleItem)} className="m-r-5 color-white tficolorbg-button" size="sm">TLE</Button>
            </div>
           <div className="row m-b-20 justify-content-center">
             <CoursesItem getCourses={getCourses} subjectAreaName={subjectAreaName} filter={filter} setFilter={setFilter} course={course} setLoading={setLoading} setOpenEditModal={setOpenEditModal} setSelectedCourse={setSelectedCourse}/>

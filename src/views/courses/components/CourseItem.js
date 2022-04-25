@@ -108,15 +108,17 @@ export default function CoursesItem({subjectAreaName, filter, getCourses, setFil
   
   return (
     <React.Fragment>
-        {subjectAreaName.filter(item =>
+        { subjectAreaName.filter(item =>
           item.courseName.toLowerCase().includes(filter.toLowerCase())).map
           ((item, index) => {  
         return(
-          <Col md={3}>
+          <>
+          {item?.status?(<>
+            <Col md={3}>
             <Link to={user.isTeacher ? `coursecontent/${item.id}/learn` : `/school_courses/${item.id}`} onClick={() => setCourseId(item.id)} course={course} setLoading={setLoading} className="active card-title">
-            
             <Card className="card-design b-0px">
-              <Card.Header className="card-header-courses">
+              <Card.Header className="card-header-courses" style={{backgroundImage: item.courseCover ? `url(${item.courseCover})` : `url(${"item.courseCover"})`}}>
+                  {/* <Card.Header className="card-header-courses" style={{backgroundImage: `url(${"item.courseCover"})` }}> */}
                 <Row style={{color:"white"}}>
                     {user.isTeacher &&
                         <>
@@ -149,7 +151,7 @@ export default function CoursesItem({subjectAreaName, filter, getCourses, setFil
                         </>
                       }
                     <Col md={12} className="t-a-c m-t-20">
-                      <i className="fa fa-book-open fa-7x"></i>
+                      {/* <i className="fa fa-book-open fa-7x"></i> */}
                     </Col>
                 </Row>
               </Card.Header>
@@ -165,6 +167,7 @@ export default function CoursesItem({subjectAreaName, filter, getCourses, setFil
                     </Card.Subtitle>
                     <Card.Text>
                       {item.description}
+                      {item.courseCover === null && "No Cover"}
                     </Card.Text>
                     <Card.Text>
                       {item.authorName}
@@ -173,6 +176,9 @@ export default function CoursesItem({subjectAreaName, filter, getCourses, setFil
             </Card>
             </Link>
           </Col>
+          </>):(<></>)}
+
+          </>
         )
         })  
     }
