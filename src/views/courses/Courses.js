@@ -56,55 +56,55 @@ export default function Courses() {
       const sortedCourse = response.data.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1);
       setCourse(sortedCourse);
 
-      const dataIct = response.data.filter((item) => item.subjectArea.subjectAreaName == 'ICT')
+      const dataIct = response.data.filter((item) => item.subjectArea.id == '1')
       setIctItem(dataIct.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
 
-      const dataEnglish = response.data.filter((item) => item.subjectArea.subjectAreaName == 'English')
+      const dataEnglish = response.data.filter((item) => item.subjectArea.id == '2')
       setEnglishItem(dataEnglish.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
 
-      const dataMath = response.data.filter((item) => item.subjectArea.subjectAreaName == 'Math')
+      const dataMath = response.data.filter((item) => item.subjectArea.id == '3')
       setMathItem(dataMath.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
 
-      const dataFilipino = response.data.filter((item) => item.subjectArea.subjectAreaName == 'Filipino')
+      const dataFilipino = response.data.filter((item) => item.subjectArea.id == '4')
       setFilipinoItem(dataFilipino.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
 
-      const dataScience = response.data.filter((item) => item.subjectArea.subjectAreaName == 'Science')
+      const dataScience = response.data.filter((item) => item.subjectArea.id == '5')
       setScienceItem(dataScience.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
 
-      const dataAralinPanlipunan = response.data.filter((item) => item.subjectArea.subjectAreaName == 'Aralin Panlipunan')
+      const dataAralinPanlipunan = response.data.filter((item) => item.subjectArea.id == '6')
       setAralinPanlipunanItem(dataAralinPanlipunan.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
 
-      const dataStem = response.data.filter((item) => item.subjectArea.subjectAreaName == 'STEM')
+      const dataStem = response.data.filter((item) => item.subjectArea.id == '7')
       setStemItem(dataStem.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
 
-      const dataApplied = response.data.filter((item) => item.subjectArea.subjectAreaName == 'APPLIED')
+      const dataApplied = response.data.filter((item) => item.subjectArea.id == '9')
       setAppliedItem(dataApplied.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
 
-      const dataCode = response.data.filter((item) => item.subjectArea.subjectAreaName == 'CORE')
+      const dataCode = response.data.filter((item) => item.subjectArea.id == '10')
       setCoreItem(dataCode.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
 
-      const dataAbm = response.data.filter((item) => item.subjectArea.subjectAreaName == 'ABM')
+      const dataAbm = response.data.filter((item) => item.subjectArea.id == '8')
       setAbmItem(dataAbm.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
 
-      const dataHumms = response.data.filter((item) => item.subjectArea.subjectAreaName == 'HUMMS')
+      const dataHumms = response.data.filter((item) => item.subjectArea.id == '11')
       setHummsItem(dataHumms.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
 
-      const dataRobotics = response.data.filter((item) => item.subjectArea.subjectAreaName == 'Robotics')
+      const dataRobotics = response.data.filter((item) => item.subjectArea.id == '12')
       setRoboticsItem(dataRobotics.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
 
-      const dataTle = response.data.filter((item) => item.subjectArea.subjectAreaName == 'TLE')
+      const dataTle = response.data.filter((item) => item.subjectArea.id == '14')
       setTleItem(dataTle.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
 
-      const dataHele = response.data.filter((item) => item.subjectArea.subjectAreaName == 'HELE')
+      const dataHele = response.data.filter((item) => item.subjectArea.id == '15')
       setHeleitem(dataHele.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
 
-      const dataMapeh = response.data.filter((item) => item.subjectArea.subjectAreaName == 'MAPEH ')
+      const dataMapeh = response.data.filter((item) => item.subjectArea.id == '16 ')
       setMapehItem(dataMapeh.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
 
-      const dataCle = response.data.filter((item) => item.subjectArea.subjectAreaName == 'CLE')
+      const dataCle = response.data.filter((item) => item.subjectArea.id == '17')
       setCleItem(dataCle.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
 
-      const dataGodsPark = response.data.filter((item) => item.subjectArea.subjectAreaName == "God's Park ")
+      const dataGodsPark = response.data.filter((item) => item.subjectArea.id == "18")
       setGodsParkItem(dataGodsPark.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
     }else{
       alert("Something went wrong while fetching all courses")
