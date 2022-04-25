@@ -19,7 +19,8 @@ function CreateLinks({modal, toggle, getConfe, getVideos, getLinks}) {
   
   const addLinks = async (e) => {
     e.preventDefault()
-    let courseId = sessionStorage.getItem('courseid')
+    let cid = sessionStorage.getItem('courseid')
+    let courseId = JSON.parse(cid);
     let response = await new CoursesAPI().createLinks(courseId, typeId, {courseId, typeId, description, url})
       if(response.ok){
         // alert('Add')
