@@ -102,7 +102,7 @@ function CreateClassModal({modal, toggle,getClasses}) {
   const handleGetSelected = (data) => {
     console.log(data)
     let selected = course.find(e => e.courseName == data);
-    setGetCourseId(selected?.id);
+    setGetCourseId(selected?.id.toString());
   }
 
 	return (
@@ -148,7 +148,7 @@ function CreateClassModal({modal, toggle,getClasses}) {
                 <Form.Select onChange={(e) => setAcademicTermId(e.target.value)}>
                   <option>-- Select Academic Term HERE --</option>
                   {academicTerm.map(item =>{
-                      return(<option>{item.academicTermName}</option>)
+                      return(<option value={item.id}>{item.academicTermName}</option>)
                       })
                     }
                 </Form.Select> 
