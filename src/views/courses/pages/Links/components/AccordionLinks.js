@@ -6,6 +6,7 @@ import CoursesAPI from '../../../../../api/CoursesAPI'
 import SweetAlert from 'react-bootstrap-sweetalert';
 import moment from 'moment';
 import { UserContext } from '../../../../../context/UserContext'
+import { toast } from 'react-toastify';
 
 function AccordionLinks({links, getLinks, setOpenEditModal, setEditLinks, searchTerm}) {
   const [deleteNotify, setDeleteNotify] = useState(false)
@@ -38,8 +39,15 @@ function AccordionLinks({links, getLinks, setOpenEditModal, setEditLinks, search
       setDeleteNotify(false)
       getLinks()
     }else{
-      alert("Something went wrong while fetching all Conference")
-      
+      toast.error(response.data.errorMessage, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        }); 
     }
   }
 
