@@ -421,3 +421,7 @@ code {
 input[id^="courseInput"]::-webkit-input-placeholder { 
   color: var(--primary-color) !important;
 }
+
+input[id^="courseInput2"]::-webkit-input-placeholder { 
+  color: var(--primary-color) !important;
+}
