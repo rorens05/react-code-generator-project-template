@@ -51,45 +51,61 @@ export default function Courses() {
     let response = await new CoursesAPI().getCourses()
     setLoading(false)
     if(response.ok){
-      const sorted = response.data.sort((a,b) => a.courseName > b.courseName ? 1 : -1);
+      const sorted = response.data.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1);
       setSubjectAreaName(sorted);
-      const sortedCourse = response.data.sort((a,b) => a.courseName > b.courseName ? 1 : -1);
+      const sortedCourse = response.data.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1);
       setCourse(sortedCourse);
 
       const dataIct = response.data.filter((item) => item.subjectArea.subjectAreaName == 'ICT')
-      setIctItem(dataIct.sort((a,b) => a.courseName > b.courseName ? 1 : -1))
+      setIctItem(dataIct.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
+
       const dataEnglish = response.data.filter((item) => item.subjectArea.subjectAreaName == 'English')
-      setEnglishItem(dataEnglish.sort((a,b) => a.courseName > b.courseName ? 1 : -1))
+      setEnglishItem(dataEnglish.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
+
       const dataMath = response.data.filter((item) => item.subjectArea.subjectAreaName == 'Math')
-      setMathItem(dataMath.sort((a,b) => a.courseName > b.courseName ? 1 : -1))
+      setMathItem(dataMath.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
+
       const dataFilipino = response.data.filter((item) => item.subjectArea.subjectAreaName == 'Filipino')
-      setFilipinoItem(dataFilipino.sort((a,b) => a.courseName > b.courseName ? 1 : -1))
+      setFilipinoItem(dataFilipino.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
+
       const dataScience = response.data.filter((item) => item.subjectArea.subjectAreaName == 'Science')
-      setScienceItem(dataScience.sort((a,b) => a.courseName > b.courseName ? 1 : -1))
+      setScienceItem(dataScience.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
+
       const dataAralinPanlipunan = response.data.filter((item) => item.subjectArea.subjectAreaName == 'Aralin Panlipunan')
-      setAralinPanlipunanItem(dataAralinPanlipunan.sort((a,b) => a.courseName > b.courseName ? 1 : -1))
+      setAralinPanlipunanItem(dataAralinPanlipunan.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
+
       const dataStem = response.data.filter((item) => item.subjectArea.subjectAreaName == 'STEM')
-      setStemItem(dataStem.sort((a,b) => a.courseName > b.courseName ? 1 : -1))
+      setStemItem(dataStem.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
+
       const dataApplied = response.data.filter((item) => item.subjectArea.subjectAreaName == 'APPLIED')
-      setAppliedItem(dataApplied.sort((a,b) => a.courseName > b.courseName ? 1 : -1))
+      setAppliedItem(dataApplied.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
+
       const dataCode = response.data.filter((item) => item.subjectArea.subjectAreaName == 'CORE')
-      setCoreItem(dataCode.sort((a,b) => a.courseName > b.courseName ? 1 : -1))
+      setCoreItem(dataCode.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
+
       const dataAbm = response.data.filter((item) => item.subjectArea.subjectAreaName == 'ABM')
-      setAbmItem(dataAbm.sort((a,b) => a.courseName > b.courseName ? 1 : -1))
+      setAbmItem(dataAbm.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
+
       const dataHumms = response.data.filter((item) => item.subjectArea.subjectAreaName == 'HUMMS')
-      setHummsItem(dataHumms.sort((a,b) => a.courseName > b.courseName ? 1 : -1))
+      setHummsItem(dataHumms.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
+
       const dataRobotics = response.data.filter((item) => item.subjectArea.subjectAreaName == 'Robotics')
-      setRoboticsItem(dataRobotics.sort((a,b) => a.courseName > b.courseName ? 1 : -1))
+      setRoboticsItem(dataRobotics.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
+
       const dataTle = response.data.filter((item) => item.subjectArea.subjectAreaName == 'TLE')
-      setTleItem(dataTle.sort((a,b) => a.courseName > b.courseName ? 1 : -1))
+      setTleItem(dataTle.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
+
       const dataHele = response.data.filter((item) => item.subjectArea.subjectAreaName == 'HELE')
-      setHeleitem(dataHele.sort((a,b) => a.courseName > b.courseName ? 1 : -1))
+      setHeleitem(dataHele.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
+
       const dataMapeh = response.data.filter((item) => item.subjectArea.subjectAreaName == 'MAPEH ')
-      setMapehItem(dataMapeh.sort((a,b) => a.courseName > b.courseName ? 1 : -1))
+      setMapehItem(dataMapeh.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
+
       const dataCle = response.data.filter((item) => item.subjectArea.subjectAreaName == 'CLE')
-      setCleItem(dataCle.sort((a,b) => a.courseName > b.courseName ? 1 : -1))
+      setCleItem(dataCle.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
+
       const dataGodsPark = response.data.filter((item) => item.subjectArea.subjectAreaName == "God's Park ")
-      setGodsParkItem(dataGodsPark.sort((a,b) => a.courseName > b.courseName ? 1 : -1))
+      setGodsParkItem(dataGodsPark.sort((a,b) => a.courseName.toLowerCase() > b.courseName.toLowerCase() ? 1 : -1))
     }else{
       alert("Something went wrong while fetching all courses")
     }
