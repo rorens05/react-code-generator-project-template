@@ -40,10 +40,25 @@ export default function CoursesItem({subjectAreaName, filter, setFilter, course,
       Edit
     </Tooltip>
   )
+
+  const arrageAlphabetical = (data) => {
+    let temp = data?.sort(function(a, b){
+      let nameA = a.courseName.toLocaleLowerCase();
+      let nameB = b.courseName.toLocaleLowerCase();
+      if (nameA < nameB) {
+          return -1;
+      }
+    });
+    return temp
+}
+
+console.log(subjectAreaName, 'sasasasasas');
   
   return (
     <React.Fragment>
-        {subjectAreaName.filter(item =>
+        {
+        // arrageAlphabetical(subjectAreaName).filter(item =>
+       subjectAreaName.filter(item =>
           item.courseName.toLowerCase().includes(filter.toLowerCase())).map
           ((item, index) => {  
         return(
