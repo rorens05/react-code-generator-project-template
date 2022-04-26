@@ -109,7 +109,7 @@ export default function ExamParts({
                       setShowModal(true);
                       setSelectedPart(part);
                     }}
-                  >1
+                  >
                     <i class='fas fa-edit'></i>
                   </a>
                   </OverlayTrigger>
@@ -120,7 +120,7 @@ export default function ExamParts({
                   <a href='#delete-part' onClick={(e) => {
                     setShowWarning(true)
                     setSelectedId(part)
-                  }}>2
+                  }}>
                     <i class='fas fa-trash-alt'></i>
                   </a>
                   </OverlayTrigger>
