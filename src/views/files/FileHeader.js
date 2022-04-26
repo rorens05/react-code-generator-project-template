@@ -1,10 +1,10 @@
-import React, {useState, useEffect, useRef} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import {Button, Modal,Table, ProgressBar, Col, Row,  InputGroup, FormControl, Tooltip, OverlayTrigger} from 'react-bootstrap';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import FilesAPI from '../../api/FilesApi';
 import CoursesAPI from '../../api/CoursesAPI'
-
+import { UserContext } from '../../context/UserContext'
 
 function FileHeader(props) {
   const [showUploadModal, setShowUploadModal] = useState(false);
@@ -14,8 +14,11 @@ function FileHeader(props) {
   const [showAddFolderModal, setShowAddFolderModal] = useState(false);
   const [folderName, setFolderName] = useState('')
   const [folderCreatedCourse, setFolderCreatedCourse] = useState(false); 
-  const [courseInfo, setCourseInfo] = useState("")
+  const [courseInfo, setCourseInfo] = useState("");
+  const [displayButtons, setDisplayButtons] = useState(true);
 
+  const userContext = useContext(UserContext)
+  const {user} = userContext.data
   const courseid = sessionStorage.getItem('courseid')
 
   const getCourseInformation = async() => {
@@ -217,7 +220,7 @@ function FileHeader(props) {
         <div>
           <p className='title-header'>{props.title}</p>
         </div>
-        {courseInfo?.isTechfactors? (<></>):(<>
+        {displayButtons ? (<>
         <div>
           <OverlayTrigger
             placement="right"
@@ -237,7 +240,9 @@ function FileHeader(props) {
         <div>
           <p><Button style={{paddingTop:14}} className='btn-create-discussion' variant="link" onClick={() => setShowUploadModal(true)}> + Upload Files  </Button></p>
         </div>
-        </>)}
+        </>)
+        :
+        <></>}
       </div>
       <Modal size="lg" show={showUploadModal} onHide={() => setShowUploadModal(false)} aria-labelledby="example-modal-sizes-title-lg">
         <Modal.Header closeButton>
