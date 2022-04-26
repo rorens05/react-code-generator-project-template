@@ -93,6 +93,12 @@ export default function ClassSideNavigation({children}) {
   const renderTooltipVideos = (props) => (
     <Tooltip id="button-tooltip" {...props}>
       Videos Upload
+      </Tooltip>
+  )
+  
+  const renderTooltipTeacherResources = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Teacher Resources
     </Tooltip>
   )
 
@@ -144,8 +150,13 @@ export default function ClassSideNavigation({children}) {
         <Link className={currentLoc.includes('task') ? "active-nav-item" : 'nav-item'} to={`/classes/${id}/task`}>
           Task
         </Link>
+        {user?.teacher === "null" &&
+          <Link className={currentLoc.includes('resources') ? "active-nav-item" : 'nav-item'} to={`/classes/${id}/resources`}>
+            Teacher Resources
+          </Link>
+        }
         <Link className={currentLoc.includes('links') ? "active-nav-item" : 'nav-item'} to={`/classes/${id}/links`}>
-          Teacher Resources
+          Links
         </Link>
         <Link className={currentLoc.includes('discussion') ? "active-nav-item" : 'nav-item'} to={`/classes/${id}/discussion`}>
           Discussion
@@ -162,18 +173,17 @@ export default function ClassSideNavigation({children}) {
             Videos Upload
           </Link>
         }
-
-          {
-            (user?.teacher != null) && 
-            <>
               <Link className={currentLoc.includes('files') ? "active-nav-item" : 'nav-item'} to={`/classes/${id}/files`}>
                 Class Files
               </Link>
+             {
+             (user?.teacher != null) && 
+              <>
                <Link className={currentLoc.includes('classList') ? "active-nav-item" : 'nav-item'} to={`/classes/${id}/classList`}>
                 Class List
               </Link>
             </>
-          }
+            }
         </ListGroup>
       </Col>
       :
@@ -238,6 +248,14 @@ export default function ClassSideNavigation({children}) {
             <i className='fas fa-chalkboard-teacher' />
           </OverlayTrigger>
         </Link>
+        <Link className={currentLoc.includes('resources') ? "active-nav-item" : 'nav-item'} to={`/courses/${id}/resources`}>
+            <OverlayTrigger
+              placement="right"
+              delay={{ show: 1, hide: 25 }}
+              overlay={renderTooltipTeacherResources}>
+              <i className="fas fa-link" />
+            </OverlayTrigger>
+          </Link>
         <Link className={currentLoc.includes('links') ? "active-nav-item" : 'nav-item'} to={`/classes/${id}/links`}>
           <OverlayTrigger
             placement="right"

@@ -261,6 +261,14 @@ export default class CoursesAPI extends Base {
     })
   }
 
+  uploadCover = async(id, data) => {
+    return this.sendRequest({
+      path: `/api/Upload/course/${id}/cover`,
+      method: 'POST',
+      data
+    })
+  } 
+  
   getLink = async (id, typeId) => {
     return this.sendRequest({
       path: `/api/Course/${id}/link/type/${typeId}`,

@@ -2,7 +2,7 @@ import React, {useState, useEffect, useRef} from 'react'
 import {Button, Modal,Table, ProgressBar, Col, Row,  InputGroup, FormControl, Tooltip, OverlayTrigger} from 'react-bootstrap';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import FilesAPI from '../../../api/FilesApi';
+import FilesAPI from '../../api/FilesApi';
 
 function FileHeader(props) {
   const [showUploadModal, setShowUploadModal] = useState(false);
@@ -16,29 +16,25 @@ function FileHeader(props) {
     return itm.progress != 100
   })
 
-  console.log(props.subFolder, 'heeeeeeeere')
   const handlefilesUpload = (file) => {
     if(file != ''){
+      
       Object.values(file).map((itm, index) => {
-        let maxSize = 25000000;
-        if(itm.size <= maxSize){
-          console.log(itm, index)
-          let temp = []
-          getBase64(itm).then(
-            data => {
-              let toAdd = {
-                fileName: itm.name,
-                base64String: data,
-                size: itm.size,
-                progress: 0
-              };
-              files.push(toAdd)
-              setFiles([...files]);
-            }
-          );
-        }else{
-          toast.error('Please select a file below 25mb.');
-        }
+        // console.log(itm, index)
+        let temp = []
+        getBase64(itm).then(
+          data => {
+            let toAdd = {
+              fileName: itm.name,
+              base64String: data,
+              size: itm.size,
+              progress: 0,
+              status: ''
+            };
+            files.push(toAdd)
+            setFiles([...files]);
+          }
+        );
       })
     }
   }
@@ -69,7 +65,7 @@ function FileHeader(props) {
           }
           files[index].progress = 30;
           setFiles([...files])
-          let response = await new FilesAPI().newCourseFile(toSave)
+          let response = await new FilesAPI().newTeacherResourceFile(toSave)
           if(response.ok){
             files[index].progress = 100;
             setFiles([...files])
@@ -79,11 +75,17 @@ function FileHeader(props) {
             setDoneUpload(allUploaded.length == 0 ? true : false)
             setUploadStarted(allUploaded.length == 0 ? false : true)
           }else{
-            setShowUploadModal(false)
             setFiles([])
             setDoneUpload(false)
             setUploadStarted(false)
-            toast.error(response.data?.errorMessage.replace('distributor', 'contributor')); 
+            if(response.data?.errorMessage.includes('exist')){
+              files[index].progress = 100;
+              files[index].status = 'failed';
+              setFiles([...files])
+            }else{
+              setShowUploadModal(false)
+              toast.error(response.data?.errorMessage.replace('distributor', 'contributor')); 
+            }
           }
         }
       })
@@ -113,11 +115,18 @@ function FileHeader(props) {
             setDoneUpload(allUploaded.length == 0 ? true : false)
             setUploadStarted(allUploaded.length == 0 ? false : true)
           }else{
-            setShowUploadModal(false)
             setFiles([])
             setDoneUpload(false)
             setUploadStarted(false)
-            toast.error(response.data?.errorMessage.replace('distributor', 'contributor'));
+            if(response.data?.errorMessage.includes('exist')){
+              files[index].progress = 100;
+              files[index].status = 'failed';
+              setFiles([...files])
+            }else{
+              setShowUploadModal(false)
+              toast.error(response.data?.errorMessage.replace('distributor', 'contributor')); 
+            }
+            // toast.error(response.data?.errorMessage.replace('distributor', 'contributor'));
           }
         }
       })
@@ -151,13 +160,13 @@ function FileHeader(props) {
           "folderName": folderName,
           "subFolderLocation": props.subFolder
       }
-      let response = await new FilesAPI().createCourseFolder(props.id, data)
+      let response = await new FilesAPI().createTeacherResourceFolder(props.id, data)
       if(response.ok){
-        console.log(response, 'herrrrrrrree')
         props.doneUpload()
         setShowAddFolderModal(false)
       }else{
-        toast.error('Something went wrong while creating folder.'); 
+        setShowAddFolderModal(false)
+        // toast.error(response.data?.errorMessage.replace('distributor', 'contributor')); 
       }
     }
     if(props.type == 'Class'){
@@ -167,11 +176,11 @@ function FileHeader(props) {
       }
       let response = await new FilesAPI().createCLassFolder(props.id, data)
       if(response.ok){
-        console.log(response, 'herrrrrrrree')
         props.doneUpload()
         setShowAddFolderModal(false)
       }else{
-        toast.error('Something went wrong while creating folder.'); 
+        setShowAddFolderModal(false)
+        toast.error(response.data?.errorMessage.replace('distributor', 'contributor'));
       }
     }
   }
@@ -180,9 +189,9 @@ function FileHeader(props) {
     <div>
       <div style={{flexDirection: 'row', paddingLeft: 0}} className="pages-header file-content">
         <div>
-          <p className='title-header'>Files</p>
+          <p className='title-header'>{props.title}</p>
         </div>
-        {/* <div>
+        <div>
           <OverlayTrigger
             placement="right"
             delay={{ show: 1, hide: 0 }}
@@ -196,7 +205,7 @@ function FileHeader(props) {
         </div>
         <div>
           <h5 style={{paddingTop: 15}} className="fileupload"> OR </h5>
-        </div> */}
+        </div>
         <div>
           <p><Button style={{paddingTop:14}} className='btn-create-discussion' variant="link" onClick={() => setShowUploadModal(true)}> + Upload Files  </Button></p>
         </div>
@@ -222,9 +231,6 @@ function FileHeader(props) {
                 </div>
                 <input className='opacity-0 w-100 height-80px' id='inputFile' multiple type='file' placeholder='Choose color' style={{ backgroundColor: 'inherit' }} onChange={(e) => handlefilesUpload(e.target.files)} />
               </Col>
-              <Col className='d-flex align-items-center'>
-                <p>Maximum file size: 25 MB.</p>
-              </Col>
           </Row>
           <Table responsive="sm">
             <thead>
@@ -239,8 +245,9 @@ function FileHeader(props) {
               return(
                 <tr key={item.fileName}>
                   <td>{item.fileName}</td>
-                  <td><ProgressBar variant="warning" now={item.progress} /></td>
-                  <td>{item.size} B <i class="fas fa-times td-file-page" onClick={()=> handelRemoveSelectedFiles(index)}></i></td>
+                  {item.status == 'failed' ? <td style={{fontSize: 14, color: 'red'}}>Failed to upload.File already exist.</td> : <td><ProgressBar variant="warning" now={item.progress} /></td>}
+                  {/* <td><ProgressBar variant="warning" now={item.progress} /></td> */}
+                  <td>{item.size} KB <i class="fas fa-times td-file-page" onClick={()=> handelRemoveSelectedFiles(index)}></i></td>
                 </tr>
               );
              })}
@@ -291,8 +298,8 @@ function FileHeader(props) {
                 return(
                   <tr key={item.fileName}>
                     <td>{item.fileName}</td>
-                    <td><ProgressBar variant="warning" now={item.progress} /></td>
-                    <td>{item.size} B <i class="fas fa-times td-file-page" onClick={()=> handelRemoveSelectedFiles(index)}></i></td>
+                   {item.status == 'failed' ? <td style={{fontSize: 14, color: 'red'}}>Failed to upload.File already exist.</td> : <td><ProgressBar variant="warning" now={item.progress} /></td>}
+                    <td>{item.size} KB <i class="fas fa-times td-file-page" onClick={()=> handelRemoveSelectedFiles(index)}></i></td>
                   </tr>
                 );
               })
