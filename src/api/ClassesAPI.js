@@ -594,6 +594,11 @@ creatTask = async (mId, cId,  data) => {
       method: 'GET'
     })
   }
-
+  getExamReport = async (classId) => {
+    this.sendRequest({
+      path:`/api/Class/${classId}/test/report`,
+      method: 'GET'
+    })
+  }
 
 }
