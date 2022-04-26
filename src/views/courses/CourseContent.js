@@ -125,7 +125,7 @@ export default function CourseContent({children}) {
                 </Col>
                 <Col className="t-a-r" sm={3}>
                   <Col className="text-align-right">
-                    <i className="fas fa-chevron-left cursor-pointer" style={{color: '#EE9337'}} onClick={()=> handleClicked(false)}/>
+                    <i className="fas fa-chevron-left cursor-pointer"  onClick={()=> handleClicked(false)}/>
                   </Col>
                 </Col>
               </Row>
@@ -160,7 +160,7 @@ export default function CourseContent({children}) {
           :
           <Col className="row-course-bg course-widget-font pt-2" sm={1}>
             <Col className="text-align-right mb-2">
-              <i className="fas fa-chevron-right" style={{color: '#EE9337'}} onClick={()=> handleClicked(true)}/>
+              <i className="fas fa-chevron-right cursor-pointer" onClick={()=> handleClicked(true)}/>
             </Col>
             <ListGroup>
               <Link className={currentLoc.includes('learn') ? "active-nav-item" : 'nav-item'} to={`/coursecontent/${id}/learn`}>
