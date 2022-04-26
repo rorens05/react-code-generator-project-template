@@ -23,9 +23,9 @@ export default function ExamCreation() {
   const [noAssigned, setNoAssigned] = useState(false)
   const [selectedPart, setSelectedPart] = useState(null);
   const [editable, setEditable] = useState(true)
-  const [courseInfos, setCourseInfos] = useState('')
+  const [courseInfos, setCourseInfos] = useState([])
   const courseid = sessionStorage.getItem('courseid')
-
+  
   const getCourseInformation = async () =>{
     let response = await new CoursesAPI().getCourseInformation(courseid)
     if(response.ok){
@@ -36,6 +36,8 @@ export default function ExamCreation() {
   useEffect(() => {
     getCourseInformation();
   }, [])
+
+  
 
   const getExamInformation = async () => {
     setLoading(true);
@@ -206,13 +208,12 @@ export default function ExamCreation() {
     }
   }, []);
 
-  useEffect(() => {
-    if (courseInfos === true){
+  useEffect(() =>{
+    if(courseInfos === true){
       setEditable(false)
     }
-  }, []);
+  }, [courseInfos])
 
-  console.log('123qwe:', courseInfos)
   
 
   return (
