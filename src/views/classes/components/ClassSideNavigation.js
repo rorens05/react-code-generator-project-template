@@ -33,7 +33,6 @@ export default function ClassSideNavigation({children}) {
     let response = await new DiscussionAPI().getClassInfo(id)
     if(response.ok){
       setClassInfo(response.data)
-      console.log(response.data)
     }else{
       alert("Something went wrong while fetching all courses")
     }
@@ -88,6 +87,12 @@ export default function ClassSideNavigation({children}) {
   const renderTooltipFiles = (props) => (
     <Tooltip id="button-tooltip" {...props}>
       Files
+    </Tooltip>
+  )
+
+  const renderTooltipVideos = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Videos Upload
     </Tooltip>
   )
 
@@ -151,8 +156,14 @@ export default function ClassSideNavigation({children}) {
         <Link className={currentLoc.includes('interactives') ? "active-nav-item" : 'nav-item'} to={`/classes/${id}/interactives`}>
           Class Interactives
         </Link>
+        {
+          classInfo?.classInformation?.course?.isTechfactors && 
+          <Link className={currentLoc.includes('videos') ? "active-nav-item" : 'nav-item'} to={`/classes/${id}/videos`}>
+            Videos Upload
+          </Link>
+        }
 
-          { 
+          {
             (user?.teacher != null) && 
             <>
               <Link className={currentLoc.includes('files') ? "active-nav-item" : 'nav-item'} to={`/classes/${id}/files`}>
@@ -235,6 +246,17 @@ export default function ClassSideNavigation({children}) {
             <i className='fa fa-link' />
           </OverlayTrigger>
         </Link>
+        {
+          classInfo?.classInformation.course?.isTechfactors && 
+          <Link className={currentLoc.includes('videos') ? "active-nav-item" : 'nav-item'} to={`/courses/${id}/videos`}>
+            <OverlayTrigger
+              placement="right"
+              delay={{ show: 1, hide: 25 }}
+              overlay={renderTooltipVideos}>
+              <i className="fas fa-video" />
+            </OverlayTrigger>
+          </Link>
+        }
           {(user?.teacher != null)
           &&
           <>

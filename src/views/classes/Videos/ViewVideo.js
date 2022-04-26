@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Tab, Row, Col, Button, InputGroup, FormControl, Accordion } from 'react-bootstrap';
-import CoursesAPI from "../../../../api/CoursesAPI";
 import ReactPlayer from 'react-player'
 export default function ViewVideo({selectedVideo, setShowVideo}) {
 

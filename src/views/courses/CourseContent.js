@@ -36,7 +36,7 @@ export default function CourseContent({children}) {
     setLoading(false)
     if(response.ok){
       setCourseInfo(response.data)
-      console.log(response.data)
+      console.log(response.data, 'infoooooooooooooooooo')
     }else{
       alert("Something went wrong while fetching course information.")
     }
@@ -158,9 +158,12 @@ export default function CourseContent({children}) {
               <Link className={currentLoc.includes('files') ? "active-nav-item" : 'nav-item'} to={`/courses/${id}/files`}>
                 Files
               </Link>
-              <Link className={currentLoc.includes('videos') ? "active-nav-item" : 'nav-item'} to={`/courses/${id}/videos`}>
-                Videos Upload
-              </Link>
+              {
+                courseInfo.isTechfactors && 
+                <Link className={currentLoc.includes('videos') ? "active-nav-item" : 'nav-item'} to={`/courses/${id}/videos`}>
+                  Videos Upload
+                </Link>
+              }
             </ListGroup>
           </Col>
           :
@@ -226,14 +229,17 @@ export default function CourseContent({children}) {
                   <i className="fas fa-folder-open" />
                 </OverlayTrigger>
               </Link>
-              <Link className={currentLoc.includes('videos') ? "active-nav-item" : 'nav-item'} to={`/courses/${id}/videos`}>
-                <OverlayTrigger
-                  placement="right"
-                  delay={{ show: 1, hide: 25 }}
-                  overlay={renderTooltipVideos}>
-                  <i className="fas fa-video" />
-                </OverlayTrigger>
-              </Link>
+              {
+                courseInfo.isTechfactors && 
+                <Link className={currentLoc.includes('videos') ? "active-nav-item" : 'nav-item'} to={`/courses/${id}/videos`}>
+                  <OverlayTrigger
+                    placement="right"
+                    delay={{ show: 1, hide: 25 }}
+                    overlay={renderTooltipVideos}>
+                    <i className="fas fa-video" />
+                  </OverlayTrigger>
+                </Link>
+              }
             </ListGroup>
           </Col>
           }

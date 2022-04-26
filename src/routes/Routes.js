@@ -62,6 +62,7 @@ import StudentsList from "../views/school-profile/StudentsList";
 import SchoolAdminList from '../views/school-profile/SchoolAdmin';
 import FilesClass from '../views/files/ClassFiles';
 import FilesCourse from '../views/files/CourseFiles';
+import ClassVideos from "../views/classes/Videos/ClassVideo";
 
 
 export default function Routes() {
@@ -103,6 +104,8 @@ export default function Routes() {
             <PrivateRoute path='/classes/:id/links' exact component={ClassLinks} />
             <PrivateRoute path='/classes/:id/classList' exact component={ClassList} />
             <PrivateRoute path='/classes/:id/files' exact component={ClassFiles} />
+            <PrivateRoute path='/classes/:id/videos' exact component={ClassVideos} />
+
 
             <PrivateRoute path='/exam' exact component={Exam}/>
             <PrivateRoute path='/reports' exact component={Reports}/>
