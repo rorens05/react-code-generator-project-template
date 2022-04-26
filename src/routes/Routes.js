@@ -88,6 +88,7 @@ export default function Routes() {
             <PrivateRoute path='/courses/:id/task' exact component={CoursesTask}/>
             <PrivateRoute path='/courses/:id/files' exact component={CourseFiles}/>
             <PrivateRoute path='/courses/:id/resources' exact component={CoursesResources}/>
+            <PrivateRoute path='/courses/:id/links' exact component={CourseLinks}/>
 
             <PrivateRoute path='/classes' exact component={Classes}/>
             <PrivateRoute path='/classescontent/:id/feed' exact component={ClassFeed}/>

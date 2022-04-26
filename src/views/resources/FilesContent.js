@@ -85,7 +85,7 @@ function FilesContent(props) {
       "fileName": itemToDelete.name,
       "subFolderLocation": props.subFolder,
     }
-    let response = await new FilesAPI().deleteCourseFile(props.id, data)
+    let response = await new FilesAPI().deleteCourseTeacherResourceFile(props.id, data)
     if(response.ok){
       setDeleteNotify(false)
       props.deleted();
