@@ -22,6 +22,7 @@ export default function ExamParts({
   const userContext = useContext(UserContext);
   const { user } = userContext.data;
   const [courseInfo, setCourseInfo] = useState("")
+  
 
   const courseid = sessionStorage.getItem('courseid')
 
@@ -63,7 +64,7 @@ export default function ExamParts({
   )
 
   return (
-    <Accordion defaultActiveKey='0' className='exam-part-creation'>
+    <Accordion  defaultActiveKey='0' className='exam-part-creation'>
       <SweetAlert
         warning
         showCancel
@@ -94,8 +95,10 @@ export default function ExamParts({
                 <span>{`${part.questionDtos.length} Question(s)`}</span>
               </div>
             </div>
-            {courseInfo?.isTechfactors? (<></>):(<>
-              {user?.isTeacher &&
+            {/* {courseInfo?.isTechfactors? (<></>):(<>
+
+            </>)} */}
+            {user?.isTeacher &&
             <>  
               {editable && (
                 <div className='exam-actions' >
@@ -120,7 +123,7 @@ export default function ExamParts({
                   <a href='#delete-part' onClick={(e) => {
                     setShowWarning(true)
                     setSelectedId(part)
-                  }}>
+                  }}>1
                     <i class='fas fa-trash-alt'></i>
                   </a>
                   </OverlayTrigger>
@@ -128,7 +131,6 @@ export default function ExamParts({
               )}
             </>
             }
-            </>)}
            
          
           </Accordion.Header>
