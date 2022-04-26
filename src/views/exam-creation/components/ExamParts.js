@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Accordion, Button, Tooltip, OverlayTrigger } from "react-bootstrap";
 import SweetAlert from "react-bootstrap-sweetalert";
 import { displayQuestionType } from "../../../utils/displayQuestionType";
 import { useContext } from "react";
 import Questions from "./questions/Questions";
 import { UserContext } from "../../../context/UserContext";
+import CoursesAPI from "../../../api/CoursesAPI";
 
 export default function ExamParts({
   exam,
@@ -20,6 +21,24 @@ export default function ExamParts({
   const [showWarning, setShowWarning] = useState(false)
   const userContext = useContext(UserContext);
   const { user } = userContext.data;
+  const [courseInfo, setCourseInfo] = useState("")
+
+  const courseid = sessionStorage.getItem('courseid')
+
+  const getCourseInformation = async() => {
+    setLoading(true)
+    let response = await new CoursesAPI().getCourseInformation(courseid)
+    setLoading(false)
+    if(response.ok){
+      setCourseInfo(response.data)
+    }else{
+      alert("Something went wrong while fetching course information")
+    }
+  }
+
+  useEffect(() => {
+    getCourseInformation();
+  }, [])
 
   const arrageAlphabetical = (data) => {
     let temp = Object.values(data).sort(function(a, b){
@@ -75,7 +94,8 @@ export default function ExamParts({
                 <span>{`${part.questionDtos.length} Question(s)`}</span>
               </div>
             </div>
-            {user?.isTeacher &&
+            {courseInfo?.isTechfactors? (<></>):(<>
+              {user?.isTeacher &&
             <>  
               {editable && (
                 <div className='exam-actions' >
@@ -89,7 +109,7 @@ export default function ExamParts({
                       setShowModal(true);
                       setSelectedPart(part);
                     }}
-                  >
+                  >1
                     <i class='fas fa-edit'></i>
                   </a>
                   </OverlayTrigger>
@@ -100,7 +120,7 @@ export default function ExamParts({
                   <a href='#delete-part' onClick={(e) => {
                     setShowWarning(true)
                     setSelectedId(part)
-                  }}>
+                  }}>2
                     <i class='fas fa-trash-alt'></i>
                   </a>
                   </OverlayTrigger>
@@ -108,6 +128,8 @@ export default function ExamParts({
               )}
             </>
             }
+            </>)}
+           
          
           </Accordion.Header>
           <Accordion.Body>
