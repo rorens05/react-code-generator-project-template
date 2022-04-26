@@ -117,7 +117,7 @@ export default function ClassSideNavigation({children}) {
   }
 
   return (
-    <MainContainer activeHeader={'classes'} loading={loading} fluid style='not-scrollable'>
+    <MainContainer activeHeader={'classes'} loading={loading} fluid style=''>
     <Col style={{height: 100}} />
     <Row>
       {showTab ? <Col className="row-course-bg course-widget-font" sm={3}>
@@ -150,7 +150,7 @@ export default function ClassSideNavigation({children}) {
         <Link className={currentLoc.includes('task') ? "active-nav-item" : 'nav-item'} to={`/classes/${id}/task`}>
           Task
         </Link>
-        {user?.teacher === "null" &&
+        {user?.teacher !== null &&
           <Link className={currentLoc.includes('resources') ? "active-nav-item" : 'nav-item'} to={`/classes/${id}/resources`}>
             Teacher Resources
           </Link>
