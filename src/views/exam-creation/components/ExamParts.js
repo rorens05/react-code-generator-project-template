@@ -123,7 +123,7 @@ export default function ExamParts({
                   <a href='#delete-part' onClick={(e) => {
                     setShowWarning(true)
                     setSelectedId(part)
-                  }}>1
+                  }}>
                     <i class='fas fa-trash-alt'></i>
                   </a>
                   </OverlayTrigger>
