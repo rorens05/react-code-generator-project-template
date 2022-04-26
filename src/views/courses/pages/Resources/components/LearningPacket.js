@@ -7,7 +7,7 @@ import SweetAlert from 'react-bootstrap-sweetalert';
 import moment from 'moment';
 import { UserContext } from '../../../../../context/UserContext'
 
-function AccordionLinks({links, getLinks, setOpenEditModal, setEditLinks, searchTerm}) {
+function AccordionVideos({videos, getVideos, setOpenEditModal, setEditLinks, searchTerm}) {
   const [deleteNotify, setDeleteNotify] = useState(false)
   const [itemId, setItemId] = useState('')
   const {id} = useParams();
@@ -31,12 +31,12 @@ function AccordionLinks({links, getLinks, setOpenEditModal, setEditLinks, search
     
   }
 
-  const deleteLink = async(item) => {
+  const deleteVidoes = async(item) => {
     let response = await new CoursesAPI().deleteLinks(id, item)
     if(response.ok){
-      // alert('Link Deleted')
+      // alert('Vidoe Deleted')
       setDeleteNotify(false)
-      getLinks()
+      getVideos()
     }else{
       alert("Something went wrong while fetching all Conference")
       
@@ -57,15 +57,15 @@ function AccordionLinks({links, getLinks, setOpenEditModal, setEditLinks, search
 
   return (
     <div>
-      <Accordion>
-      <SweetAlert
+       <Accordion>
+       <SweetAlert
           warning
           showCancel
           show={deleteNotify}
           confirmBtnText="Yes, delete it!"
           confirmBtnBsStyle="danger"
           title="Are you sure?"
-          onConfirm={() => deleteLink(itemId)}
+          onConfirm={() => deleteVidoes(itemId)}
           onCancel={cancelSweetAlert}
           focusCancelBtn
         >
@@ -74,23 +74,23 @@ function AccordionLinks({links, getLinks, setOpenEditModal, setEditLinks, search
         <Accordion.Item eventKey="0">
         <Accordion.Header>
           <div className='unit-exam' style={{fontSize:'25px'}}>
-            Other Links 
+            Videos 
           </div>
         </Accordion.Header>
         <Accordion.Body>
-          {links?.filter((item) => {
+          {videos?.filter((item) => {
             if(searchTerm == ''){
               return item
-            }else if(item?.description.toLowerCase().includes(searchTerm.toLowerCase())){
+            } else if(item?.description.toLowerCase().includes(searchTerm.toLowerCase())){
               return item
             }
-          }).map(item => {
-            return( 
+          }).map(item =>{
+            return(
             <Row style={{margin:'10px'}}>
               <Col sm={9}>
                 <div className='title-exam'>
-                {/* <Link style={{color:'#EE9337', textDecoration:'none'}} to={item?.url}>{item?.description}</Link> */}
-                <a target="_blank" style={{color:'#EE9337', textDecoration:'none'}} href={item?.url}>{item?.description}</a>
+                  {/* <Link style={{color:'#EE9337', textDecoration:'none'}} to={item?.url}>{item?.description}</Link> */}
+                  <a target="_blank" style={{color:'#EE9337', textDecoration:'none'}} href={item?.url}>{item?.description}</a>
                 </div>
               </Col>
               {(user.teacher === null)?(
@@ -99,18 +99,18 @@ function AccordionLinks({links, getLinks, setOpenEditModal, setEditLinks, search
               ):(
               <>
                 <Col sm={3} className='icon-exam'>
-                <OverlayTrigger
+                  <OverlayTrigger
                     placement="bottom"
                     delay={{ show: 1, hide: 0 }}
                     overlay={renderTooltipEdit}>
-                  <Button onClick={(e) => handleOpeEditModal(e, item)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i className="fa fa-edit"></i></Button>
-                 </OverlayTrigger> 
-                 <OverlayTrigger
+                      <Button onClick={(e) => handleOpeEditModal(e, item)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i className="fa fa-edit"></i></Button>
+                  </OverlayTrigger> 
+                  <OverlayTrigger
                     placement="bottom"
                     delay={{ show: 1, hide: 0 }}
                     overlay={renderTooltipDelete}>
-                  <Button onClick={() => handleDeleteNotify(item?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"> <i class="fas fa-trash-alt"></i> </Button>
-                </OverlayTrigger>
+                      <Button onClick={() => handleDeleteNotify(item?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"> <i class="fas fa-trash-alt"></i> </Button>
+                  </OverlayTrigger>
                 </Col>
               </>
               )}
@@ -133,7 +133,6 @@ function AccordionLinks({links, getLinks, setOpenEditModal, setEditLinks, search
                 </div>
             </Row>)
           })}
-         
         </Accordion.Body>
         </Accordion.Item>
       </Accordion>
@@ -141,4 +140,4 @@ function AccordionLinks({links, getLinks, setOpenEditModal, setEditLinks, search
   )
 }
 
-export default AccordionLinks
+export default AccordionVideos

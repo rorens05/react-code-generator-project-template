@@ -7,12 +7,14 @@ import SweetAlert from 'react-bootstrap-sweetalert';
 import moment from 'moment';
 import { UserContext } from '../../../../../context/UserContext'
 
-function AccordionLinks({links, getLinks, setOpenEditModal, setEditLinks, searchTerm}) {
+
+function AccordionConference({conference, getConfe, setOpenEditModal, setEditLinks, searchTerm}) {
   const [deleteNotify, setDeleteNotify] = useState(false)
-  const [itemId, setItemId] = useState('')
+  const [deleteitemId, setDeleteItemId] = useState('')
   const {id} = useParams();
   const userContext = useContext(UserContext)
   const {user} = userContext.data
+  const [confiId, setConfiId] = useState()
 
   const cancelSweetAlert = () => {
     setDeleteNotify(false)
@@ -20,23 +22,22 @@ function AccordionLinks({links, getLinks, setOpenEditModal, setEditLinks, search
 
   const handleDeleteNotify = (item) =>{
     setDeleteNotify(true)
-    setItemId(item)
+    setDeleteItemId(item)
   }
+ 
 
-  const handleOpeEditModal = (e, item) => {
+  const handleOpeEditModal = (e, confeItems) => {
     e.preventDefault()
-    setEditLinks(item)
-    console.log(item)
+    setEditLinks(confeItems)
     setOpenEditModal(true)
     
   }
 
-  const deleteLink = async(item) => {
+  const deleteConference = async(item) => {
     let response = await new CoursesAPI().deleteLinks(id, item)
     if(response.ok){
-      // alert('Link Deleted')
       setDeleteNotify(false)
-      getLinks()
+      getConfe()
     }else{
       alert("Something went wrong while fetching all Conference")
       
@@ -58,74 +59,72 @@ function AccordionLinks({links, getLinks, setOpenEditModal, setEditLinks, search
   return (
     <div>
       <Accordion>
-      <SweetAlert
+        <SweetAlert
           warning
           showCancel
           show={deleteNotify}
           confirmBtnText="Yes, delete it!"
           confirmBtnBsStyle="danger"
           title="Are you sure?"
-          onConfirm={() => deleteLink(itemId)}
+          onConfirm={() => deleteConference(deleteitemId)}
           onCancel={cancelSweetAlert}
           focusCancelBtn
         >
             You will not be able to recover this data!
-        </SweetAlert>
+          </SweetAlert>
         <Accordion.Item eventKey="0">
         <Accordion.Header>
           <div className='unit-exam' style={{fontSize:'25px'}}>
-            Other Links 
+            Conference 
           </div>
         </Accordion.Header>
         <Accordion.Body>
-          {links?.filter((item) => {
-            if(searchTerm == ''){
-              return item
-            }else if(item?.description.toLowerCase().includes(searchTerm.toLowerCase())){
-              return item
-            }
-          }).map(item => {
-            return( 
+        {conference?.filter((item) => {
+          if(searchTerm == ''){
+            return item
+          }else if(item?.description.toLowerCase().includes(searchTerm.toLowerCase())){
+            return item
+          }
+        }).map(item => {
+          return ( 
             <Row style={{margin:'10px'}}>
               <Col sm={9}>
                 <div className='title-exam'>
-                {/* <Link style={{color:'#EE9337', textDecoration:'none'}} to={item?.url}>{item?.description}</Link> */}
-                <a target="_blank" style={{color:'#EE9337', textDecoration:'none'}} href={item?.url}>{item?.description}</a>
+                  {/* <Link style={{color:'#EE9337', textDecoration:'none'}} to={item?.url}>  {item?.description} </Link> */}
+                  <a target="_blank" style={{color:'#EE9337', textDecoration:'none'}}  href={item?.url}> {item?.description}</a>
                 </div>
               </Col>
               {(user.teacher === null)?(
-              <>
-              </>
+              <></>
               ):(
               <>
                 <Col sm={3} className='icon-exam'>
-                <OverlayTrigger
+                  <OverlayTrigger
                     placement="bottom"
                     delay={{ show: 1, hide: 0 }}
                     overlay={renderTooltipEdit}>
-                  <Button onClick={(e) => handleOpeEditModal(e, item)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i className="fa fa-edit"></i></Button>
-                 </OverlayTrigger> 
-                 <OverlayTrigger
+                     <Button onClick={(e) => handleOpeEditModal(e, item)}  className="m-r-5 color-white tficolorbg-button" size="sm"><i className="fa fa-edit"></i></Button>
+                  </OverlayTrigger>
+                  <OverlayTrigger
                     placement="bottom"
                     delay={{ show: 1, hide: 0 }}
                     overlay={renderTooltipDelete}>
-                  <Button onClick={() => handleDeleteNotify(item?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"> <i class="fas fa-trash-alt"></i> </Button>
-                </OverlayTrigger>
+                    <Button onClick={() => handleDeleteNotify(item?.id)} className="m-r-5 color-white tficolorbg-button" size="sm"> <i class="fas fa-trash-alt"></i> </Button>
+                  </OverlayTrigger>
                 </Col>
               </>
               )}
+
               <Col sm={9}>
               </Col>
                 <Col sm={3} style={{textAlign:'right'}} className='due-date-discusstion' >
                   <div className='inline-flex'>
-                    <div className='text-color-bcbcbc'>
-                    {
+                      {
                       item.classLink === null ?
                       <span>Post Date {moment(item?.createdDate).format('ll')}</span>
                       :
                       <span>Post Date {moment(item?.classLink?.createdDate).format('ll')}</span>
-                    }
-                    </div>
+                      }
                   </div>
                 </Col>
                 <div className='text-color-bcbcbc' >
@@ -133,7 +132,6 @@ function AccordionLinks({links, getLinks, setOpenEditModal, setEditLinks, search
                 </div>
             </Row>)
           })}
-         
         </Accordion.Body>
         </Accordion.Item>
       </Accordion>
@@ -141,4 +139,4 @@ function AccordionLinks({links, getLinks, setOpenEditModal, setEditLinks, search
   )
 }
 
-export default AccordionLinks
+export default AccordionConference

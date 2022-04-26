@@ -1,15 +1,15 @@
 import React, { useState, useEffect} from 'react'
 import CoursesAPI from '../../../../api/CoursesAPI'
 import { useParams } from 'react-router'
-import AccordionConference from './components/AccordionConference'
-import AccordionLinks from './components/AccordionLinks'
-import AccordionVideos from './components/AccordionVideos'
+import AccordionConference from './components/LessonSlides'
+import AccordionLinks from './components/LessonPlan'
+import AccordionVideos from './components/LearningPacket'
 import HeaderLinks from './components/HeaderLinks'
 import AccordionEdit from './components/AccordionEdit';
 import CourseBreadcrumbs from "../../components/CourseBreadcrumbs";
 import CourseContent from "../../CourseContent";
 
-function CourseLinks() {
+function CourseResources() {
   const [openEditModal, setOpenEditModal] = useState(false)
   const [conference, setConference] = useState([])
   const [videos, setVidoes] = useState([])
@@ -93,4 +93,4 @@ function CourseLinks() {
     </CourseContent>
   )
 }
-export default CourseLinks
+export default CourseResources
