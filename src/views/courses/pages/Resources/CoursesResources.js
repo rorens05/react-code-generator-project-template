@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {Accordion, Row, Col, InputGroup, FormControl} from 'react-bootstrap'
-import FilesContent from '../../../files/FilesContent';
-import FileHeader from '../../../files/FileHeader'
+import FilesContent from '../../../resources/FilesContent';
+import FileHeader from '../../../resources/FileHeader'
 import FilesAPI from '../../../../api/FilesApi';
 import CourseContent from "../../CourseContent";
 import {useParams} from 'react-router';
@@ -17,20 +17,20 @@ function CoursesResources() {
   const subFolderDirectory = breadCrumbsItemCourse.map(item => { return `/${item.value}`})
 
   useEffect(() => {
-    handleGetCourseFiles('')
+    handleGetTeacherResources('')
   }, [])
 
   const handleRefetch = () => {
-    handleGetCourseFiles(subFolderDirectory.join(''))
+    handleGetTeacherResources(subFolderDirectory.join(''))
   }
 
-  const handleGetCourseFiles = async(name) => {
+  const handleGetTeacherResources = async(name) => {
     // setLoading(true)
     setSelectedName(name);
     let data = {
       "subFolderLocation": name
     }
-    let response = await new FilesAPI().getCourseFiles(id, data)
+    let response = await new FilesAPI().getTeacherResources(id, data)
     // setLoading(false)
     if(response.ok){
       setFilesToDisplay(response.data.files);
@@ -42,7 +42,7 @@ function CoursesResources() {
 
   const handleClickedCourseBread = () => {
     setBreadCrumbsItemCourse([]);
-    handleGetCourseFiles('')
+    handleGetTeacherResources('')
   }
 
   const handleClickedFolder = (name) =>{
@@ -51,14 +51,14 @@ function CoursesResources() {
       value: name
     }
     breadCrumbsItemCourse.push(temp)
-    handleGetCourseFiles(`${subFolderDirectory.join('')}/${name}`);
+    handleGetTeacherResources(`${subFolderDirectory.join('')}/${name}`);
   }
 
   const handleClickedBreadcrumbsItem = (value, index, type) => {
     if(type == 'Course'){
      subFolderDirectory.length = index+1
       breadCrumbsItemCourse.length = index+1;
-      handleGetCourseFiles(subFolderDirectory.join(''));
+      handleGetTeacherResources(subFolderDirectory.join(''));
     }
   }
 
@@ -76,7 +76,7 @@ function CoursesResources() {
           </div>
         </div>
         <p style={{fontSize: '20px'}}>
-          <span onClick={()=> handleClickedCourseBread()} className={breadCrumbsItemCourse.length == 0 ? 'fix-color-bread' : 'colored-files-bread'}></span>
+          <span onClick={()=> handleClickedCourseBread()} className={breadCrumbsItemCourse.length == 0 ? 'fix-color-bread' : 'colored-files-bread'}>Teacher Resources</span>
           {
             breadCrumbsItemCourse.map((item, index) => {
               return(
