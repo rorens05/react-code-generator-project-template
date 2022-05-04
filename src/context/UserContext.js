@@ -4,7 +4,6 @@ import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
 import { SIGNALR_URL } from '../contants/url';
 import Logger from '../utils/logger';
 import { onExamRoute } from '../utils/windowLocationHelper';
-import SchoolAPI from '../api/SchoolAPI';
 
 export const UserContext = React.createContext();
 export class UserContextProvider extends Component {
@@ -52,10 +51,6 @@ export class UserContextProvider extends Component {
       console.log({themeResponse})
       if(themeResponse.ok) {
         this.setThemeColor(themeResponse.data)
-      }
-      let themeLogoResponse = await new SchoolAPI().getSchoolLogo()
-      if(themeLogoResponse.ok) {
-        this.setThemeLogo(themeLogoResponse.data)
       }
       await this.setState({loading: false, user })
     } else {
