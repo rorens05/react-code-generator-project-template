@@ -16,7 +16,6 @@ export default function Routes() {
     <div className="content">
       <Router>
         <Switch>
-          <PublicRoute path='/students' exact component={PageNotFound}/>
           <PublicRoute path='/404' exact component={PageNotFound}/>
           <PrivateRoute path='/' exact component={Home}/>
           <Redirect to="/404"/>
