@@ -1,4 +1,7 @@
 const toBase64 = async(file) => {
+  if(file == null){
+    return null
+  }
   let data = await new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
