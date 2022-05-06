@@ -10,7 +10,7 @@ export default class SchoolAPI extends Base {
   
   show = async id => {
     return this.sendRequest({
-      path: `/api/DynamicTable/School/id`,
+      path: `/api/DynamicTable/School/${id}`,
     });
   }
 
@@ -24,7 +24,7 @@ export default class SchoolAPI extends Base {
 
   update = async (id, data) => {
     return this.sendRequest({
-      path: `/api/DynamicTable/School/id`,
+      path: `/api/DynamicTable/School/${id}`,
       method: 'PUT',
       data,
     });
@@ -32,7 +32,7 @@ export default class SchoolAPI extends Base {
 
   destroy = async id => {
     return this.sendRequest({
-      path: `/api/DynamicTable/School/id`,
+      path: `/api/DynamicTable/School/${id}`,
       method: 'DELETE',
     });
   }
